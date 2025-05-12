@@ -8,7 +8,7 @@
     
     <!-- 폼 데이터를 전송 -->
     <h3>입양/분양 게시글 작성</h3>
-    <form action="AdoptionWriterServlet" method="post" enctype="multipart/form-data">
+    <form action="AdoptionWriter.mvc" method="post" enctype="multipart/form-data">
     <div>
 		<label>입양/분양 선택 : </label>
 	    <select name="type" required>
@@ -59,14 +59,14 @@
     			"어류":["1자 어항류","2자 어항류", "3자 어항류", "4자 어항류", "5자 혹은 6자 대형어항류", "갑각류", "조개류", "달팽이류"]
     	}
     
-    function updateDetailOptions(){
+    function updateDetailOption(){
     		const main = document.getElementById("animalTypeMain")
     		const detail = document.getElementById("animalTypeDetail")
     		
     		detail.innerHTML ="";
     		
-    		if(main && detailOptions[main]){
-    			detailOptions[main].forEach(function(option)
+    		if(main && detailOption[main.value]){
+    			detailOptions[main.value].forEach(function(option)
     				const opt = document.createElement("option");
     				opt.value = option;
     				opt.text = option;
