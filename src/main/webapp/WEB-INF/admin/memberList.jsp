@@ -18,7 +18,7 @@
 				</tr>		
 			</thead>
 			
-			<tbody class="text-secondary">
+			<tbody class="text-secondary" id="tableBody">
 				<c:if test="${ not empty memberList }">
 					<c:forEach var="member" items="${memberList}" varStatus="status">
 						<tr>
@@ -36,7 +36,7 @@
 								</c:if>
 								
 								<c:if test="${member.ignore}">
-									<fmt:formatDate value="${member.ignoreDate}" pattern="yyyy/MM/dd" />
+									<fmt:formatDate value="${member.ignoreDate}" pattern="yyyy/MM/dd HH:mm:SS" />
 								</c:if>
 							</td>
 							

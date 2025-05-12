@@ -2,6 +2,7 @@ package com.miniproject.controller;
 
 import java.io.IOException;
 
+import com.miniproject.ajax.AjaxController;
 import com.miniproject.service.*;
 import com.miniproject.service.admin.*;
 import com.miniproject.service.admin.member.MemberListService;
@@ -44,25 +45,35 @@ public class AdminContoller extends HttpServlet {
 		String viewPage = null;
 
 		CommandProcess service;
-		
+
 		/*
 		 * 어드민인지 확인 절차 필요
 		 */
 
-		
-		// 메인 화면, 관리 메뉴들이 존재 
+		// ajax 요청 처리
+		String[] splitTest1 = command.split("/");
+		if (splitTest1.length > 0) {
+			String str = splitTest1[splitTest1.length - 1];
+			String[] splitTest2 = str.split("\\.");
+
+			if (splitTest2.length > 1 && splitTest2[1].equals("ajax")) {
+				AjaxController ajax = new AjaxController();
+				ajax.doAjax(request, response, str);
+				return;
+			}
+		}
+
+		// 메인 화면, 관리 메뉴들이 존재
 		if (command.equals("/admin/main") || command.equals("/admin/*")) {
 			service = new AdminMainService();
 			viewPage = service.requestProcess(request, response);
 		}
-		
+
 		// 멤버 관리 화면
 		else if (command.equals("/admin/member")) {
 			service = new MemberListService();
 			viewPage = service.requestProcess(request, response);
 		}
-		
-		
 
 		if (viewPage != null) {
 			String view = viewPage.split(":")[0];
@@ -81,6 +92,7 @@ public class AdminContoller extends HttpServlet {
 				rd.forward(request, response);
 			}
 		}
+
 	}
 
 }

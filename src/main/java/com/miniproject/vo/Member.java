@@ -54,6 +54,10 @@ public class Member {
 		this.ignore = ignore;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Member [no=" + no + ", name=" + name + ", regDate=" + regDate + ", ignoreDate=" + ignoreDate
+				+ ", ignore=" + ignore + "]";
+	}
 
 }
