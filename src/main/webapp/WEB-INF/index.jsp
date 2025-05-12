@@ -8,6 +8,7 @@
 	<link href="${pageContext.request.contextPath}/bootstrap/bootstrap.min.css" rel="stylesheet" >
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css">
 	<script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/member.js"></script>
 	<style>
 	</style>
 </head>

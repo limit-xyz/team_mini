@@ -1,6 +1,7 @@
-package com.miniproject.service.admin;
+package com.miniproject.service.admin.member;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import com.miniproject.dao.MemberDao;
@@ -22,9 +23,12 @@ public class MemberListService implements CommandProcess {
 		MemberDao dao = new MemberDao();
 		memberList = dao.getMemberList();
 		
+		LocalDate today = LocalDate.now();
+	   
 		request.setAttribute("memberList", memberList);
+		request.setAttribute("today", today);
 		
-		return "admin/member";
+		return "admin/memberList";
 	}
 
 }

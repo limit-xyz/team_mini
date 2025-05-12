@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -37,8 +38,16 @@ public class MemberDao {
 
 				do {
 					Member member = new Member();
-					member.setNo(rs.getInt("id"));
+					member.setNo(rs.getInt("no"));
 					member.setName(rs.getString("name"));
+					member.setRegDate(rs.getTimestamp("reg_date"));
+					member.setIgnoreDate(rs.getTimestamp("ignore_date"));
+					
+					LocalDate today = LocalDate.now();
+					LocalDate ignoreDate = member.getIgnoreDate().toLocalDateTime().toLocalDate();
+					
+					boolean isIgnore = ignoreDate.isBefore(today);
+					member.setIgnore(isIgnore);
 
 					memberList.add(member);
 

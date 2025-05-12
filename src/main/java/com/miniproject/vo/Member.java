@@ -1,17 +1,17 @@
 package com.miniproject.vo;
 
+import java.sql.Timestamp;
+
 public class Member {
 
 	int no;
 	String name;
+	Timestamp regDate;
+	Timestamp ignoreDate;
+	boolean ignore;
 
 	public Member() {
-		
-	}
-	
-	public Member(int no, String name) {
-		this.no = no;
-		this.name = name;
+
 	}
 
 	public int getNo() {
@@ -22,6 +22,18 @@ public class Member {
 		return name;
 	}
 
+	public Timestamp getRegDate() {
+		return regDate;
+	}
+
+	public Timestamp getIgnoreDate() {
+		return ignoreDate;
+	}
+
+	public boolean isIgnore() {
+		return ignore;
+	}
+
 	public void setNo(int no) {
 		this.no = no;
 	}
@@ -29,6 +41,19 @@ public class Member {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public void setRegDate(Timestamp regDate) {
+		this.regDate = regDate;
+	}
+
+	public void setIgnoreDate(Timestamp ignoreDate) {
+		this.ignoreDate = ignoreDate;
+	}
+
+	public void setIgnore(boolean ignore) {
+		this.ignore = ignore;
+	}
+
 	
-	
+
 }
