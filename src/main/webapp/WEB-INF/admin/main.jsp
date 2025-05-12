@@ -3,6 +3,6 @@
 
 <div class="row">
 	<div class="col">
-		테스트
+		<a href="member">멤버 목록</a>
 	</div>
 </div>

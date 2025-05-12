@@ -2,6 +2,9 @@ package com.miniproject.controller;
 
 import java.io.IOException;
 
+import com.miniproject.service.*;
+import com.miniproject.service.admin.*;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -33,10 +36,32 @@ public class AdminContoller extends HttpServlet {
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		String requestURI = request.getRequestURI();
+		String contextPath = request.getContextPath();
+
+		String command = requestURI.substring(contextPath.length());
 		String viewPage = null;
 
-		if (true)
-			viewPage = "admin/main";
+		CommandProcess service;
+		
+		/*
+		 * 어드민인지 확인 절차 필요
+		 */
+
+		
+		// 메인 화면, 관리 메뉴들이 존재 
+		if (command.equals("/admin/main") || command.equals("/admin/*")) {
+			service = new AdminMainService();
+			viewPage = service.requestProcess(request, response);
+		}
+		
+		// 멤버 관리 화면
+		else if (command.equals("/admin/member")) {
+			service = new MemberListService();
+			viewPage = service.requestProcess(request, response);
+		}
+		
+		
 
 		if (viewPage != null) {
 			String view = viewPage.split(":")[0];
