@@ -1,4 +1,4 @@
-package com.miniproject.adoption.model;
+package com.miniproject.dao;
 
 public class DaoPost {
 
