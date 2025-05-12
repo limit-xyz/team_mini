@@ -1,11 +1,11 @@
-package com.miniproject.ajax;
+package com.miniproject.admin.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import com.google.gson.Gson;
-import com.miniproject.dao.MemberDao;
-import com.miniproject.vo.Member;
+import com.miniproject.admin.dao.MemberDao;
+import com.miniproject.admin.vo.Member;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

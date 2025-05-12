@@ -1,4 +1,4 @@
-package com.miniproject.dao;
+package com.miniproject.admin.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import com.miniproject.vo.Member;
+import com.miniproject.admin.vo.Member;
 
 public class MemberDao {
 
@@ -117,8 +117,6 @@ public class MemberDao {
 	// 멤버 삭제
 	public void deleteMember(int no) {
 		String deleteMemberSql = "DELETE FROM project_member WHERE no=?";
-
-		Member member = null;
 
 		try {
 			conn = DBManager.getConnection();

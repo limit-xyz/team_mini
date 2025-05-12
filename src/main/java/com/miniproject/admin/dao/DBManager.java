@@ -1,4 +1,4 @@
-package com.miniproject.dao;
+package com.miniproject.admin.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

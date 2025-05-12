@@ -1,18 +1,15 @@
-package com.miniproject.ajax;
+package com.miniproject.admin.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
-import com.google.gson.Gson;
-import com.miniproject.dao.MemberDao;
-import com.miniproject.vo.Member;
+import com.miniproject.admin.dao.MemberDao;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class MemberDeleteAction implements AjaxProcess {
+public class MemberReleaseAction implements AjaxProcess {
 
 	@Override
 	public void ajaxProcess(HttpServletRequest request, HttpServletResponse response)
@@ -21,15 +18,10 @@ public class MemberDeleteAction implements AjaxProcess {
 		int no = Integer.parseInt(request.getParameter("no"));
 
 		MemberDao dao = new MemberDao();
-		dao.deleteMember(no);
-		
-		ArrayList<Member> memberList = dao.getMemberList();
-		
-		Gson gson = new Gson();
-		String result = gson.toJson(memberList);
+		dao.releaseMember(no);
 
 		response.setContentType("application/json; charset:utf-8");
 		PrintWriter out = response.getWriter();
-		out.print(result);
+		out.print("ok");
 	}
 }

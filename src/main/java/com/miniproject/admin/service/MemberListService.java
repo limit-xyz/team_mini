@@ -1,12 +1,11 @@
-package com.miniproject.service.admin.member;
+package com.miniproject.admin.service;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import com.miniproject.dao.MemberDao;
-import com.miniproject.service.CommandProcess;
-import com.miniproject.vo.Member;
+import com.miniproject.admin.dao.MemberDao;
+import com.miniproject.admin.vo.Member;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

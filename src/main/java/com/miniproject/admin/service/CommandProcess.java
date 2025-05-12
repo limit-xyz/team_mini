@@ -1,4 +1,4 @@
-package com.miniproject.ajax;
+package com.miniproject.admin.service;
 
 import java.io.IOException;
 
@@ -6,7 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public interface AjaxProcess {
-	public void ajaxProcess(HttpServletRequest request, HttpServletResponse response)
+public interface CommandProcess {
+	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException;
 }
