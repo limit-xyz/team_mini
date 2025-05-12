@@ -3,7 +3,7 @@ package com.miniproject.adoption.service;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.miniproject.adoption.dto.AdoptionDao;
+import com.miniproject.adoption.dto.AdoptionDao01;
 import com.miniproject.adoption.dto.AdoptionWriteDao;
 
 import jakarta.servlet.ServletException;
@@ -16,7 +16,7 @@ public class AdoptionListService implements CommandProcess {
 	public String requestProcess(
 			HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		AdoptionDao dao = new AdoptionDao();
+		AdoptionDao01 dao = new AdoptionDao01();
 		ArrayList<AdoptionWriteDao> list = dao.getAdopTionList();
 		request.setAttribute("adoptionList", list);
 		
