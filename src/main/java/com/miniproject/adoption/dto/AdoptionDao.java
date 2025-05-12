@@ -7,31 +7,22 @@ import java.util.ArrayList;
 
 public class AdoptionDao {
 
-	private static final String USER = "hr";
-	private static final String PASS = "hr";
-	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	
+
 	Connection conn;
 	PreparedStatement pstmt;
 	ResultSet rs;
 	
-	
-	public AdoptionDao() {
-		try {
-		Class.forName(DRIVER);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public ArrayList<AdoptionWriteDao> getAdopTionList(){
-		String sql = "Select * From adoption_post Order by Post_Id Desc";
-		ArrayList<AdoptionWriteDao> list = new ArrayList<>();
+	// 게시글 하나만 조회
+	public AdoptionWriteDao getAdopTionById(int postId){
+		AdoptionWriteDao = null;
+		String sql = "Select * From adoption_post WHERE Post_Id=?";
 		
-		try(Connection conn = DriverManager.getConnection(URL, USER, PASS);
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery()) {
+		
+		try{
+			conn = DriverManager.getConnection(URL, USER, PASS);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postId);
+			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
 				AdoptionWriteDao dto = new AdoptionWriteDao(
@@ -48,13 +39,16 @@ public class AdoptionDao {
 					rs.getInt("views")
 				
 				);
-				list.add(dto);
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			
+		} finally { 
+			close();
 		}
 		
-	return list;
+	return dto;
 }
 	
 }
