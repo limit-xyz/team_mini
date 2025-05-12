@@ -34,7 +34,7 @@
     	</select><br><br>
     
     <label>지역 : </label>
-    <input type="text" name="region" required><br><br>
+    <input type="text" name="region" required> ※ 현재 서비스 지역은 서울지역에 한하여 제공되고 있습니다.<br><br>
     
     <label>제목 : </label>
     <input type="text" name="title" required><br><br>

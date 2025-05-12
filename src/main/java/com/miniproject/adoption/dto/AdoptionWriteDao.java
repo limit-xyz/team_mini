@@ -2,14 +2,8 @@ package com.miniproject.adoption.dto;
 
 import java.sql.Timestamp;
 
-public class AdoptionDTO {
+public class AdoptionWriteDao {
 
-	
-	private static final String USER = "hr";
-	private static final String PASS = "hr";
-	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	
 	private int PostId;
 	private String userId;
 	private String title;
@@ -23,9 +17,9 @@ public class AdoptionDTO {
 	private int views;
 	
 	
-	public AdoptionDTO() {};
+	public AdoptionWriteDao() {};
 	
-	public AdoptionDTO(int postId, String userId, String title, String content, String type,
+	public AdoptionWriteDao(int postId, String userId, String title, String content, String type,
             String region, String animalTypeMain, String animalTypeDetail, String imagePath, 
             Timestamp createdAt, int views) {
 		this.PostId = postId;
@@ -128,24 +122,6 @@ public class AdoptionDTO {
 	public void setViews(int views) {
 		this.views = views;
 	}
-
-	public static String getUser() {
-		return USER;
-	}
-
-	public static String getPass() {
-		return PASS;
-	}
-
-	public static String getDriver() {
-		return DRIVER;
-	}
-
-	public static String getUrl() {
-		return URL;
-	}
 	
-	
-
 	
 }
