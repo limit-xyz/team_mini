@@ -1,0 +1,208 @@
+@charset "UTF-8";
+
+/* -------------------------------------------------------------------------- */
+/* Reset CSS                                  */
+/* (A more modern approach)                             */
+/* -------------------------------------------------------------------------- */
+
+/*
+  1. Use a more intuitive box model (opinionated).
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+  2. Remove default margin and padding on most elements.
+*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a, /* a 태그도 기본 마진/패딩 제거에 포함 */
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%; /* 기본 폰트 크기를 브라우저 기본값에 따르도록 함 */
+  font: inherit; /* 상위 요소의 폰트 속성 상속 */
+  vertical-align: baseline;
+}
+
+/*
+  3. Set core root defaults.
+*/
+html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/*
+  4. Remove list styles on ul, ol elements.
+*/
+ol,
+ul {
+  list-style: none;
+}
+
+/*
+  5. Make images easier to work with.
+*/
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/*
+  6. Inherit fonts for inputs and buttons.
+*/
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/*
+  7. Remove all animations and transitions for people that prefer not to see them.
+   (Usually for accessibility reasons - uncomment if needed)
+*/
+/*
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+*/
+
+/*
+  8. Reset table elements.
+*/
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*
+  9. Reset anchor (a) tag styles.
+   - 기본 색상 제거 (상위 요소 색상 상속)
+   - 밑줄 제거
+   - (필요시) 커서 모양도 기본값으로 변경할 수 있으나, 링크로서의 인지성을 위해 보통 유지합니다.
+*/
+a {
+  color: inherit; /* 부모 요소의 색상을 상속받도록 변경 */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+/* (선택 사항) a 태그에 마우스를 올렸을 때도 밑줄이 생기지 않게 하려면: */
+/*
+a:hover {
+  text-decoration: none;
+}
+*/
+
+/* (선택 사항) a 태그가 클릭 가능한 요소임을 나타내는 커서(pointer) 모양을 일반 텍스트처럼 보이게 하려면 (주의해서 사용): */
+/*
+a {
+  cursor: default;
+}
+*/
+
+/*
+  10. Body 기본 스타일 (선택 사항, 프로젝트에 맞게 조절)
+*/
+body {
+  line-height: 1.5; /* 가독성을 위한 기본 줄 간격 설정 */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 시스템 기본 폰트 우선 사용 */
+  background-color: #fff;
+  color: #333;
+}
