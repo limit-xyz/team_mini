@@ -2,6 +2,7 @@ package com.miniproject.adoption.controller;
 
 import java.io.IOException;
 
+import com.miniproject.adoption.service.AdoptionListService;
 import com.miniproject.adoption.service.CommandProcess;
 
 import jakarta.servlet.RequestDispatcher;
@@ -48,21 +49,26 @@ public class AdoptBoardController extends HttpServlet{
 		CommandProcess service = null;
 	
 		if(command.equals("/adoptionList.mvc")) {
-			service = new AdoptionListService();
+			service = new AdoptionListService();						 
 			viewPage = service.requestProcess(request, response);
 		}
+		
+		RequestDispatcher rd = null;
 		
 		if (viewPage !=null) {
 			String view = viewPage.split(":")[0]; 
 			if (view.equals("r") || view.equals("redirect")) {
 				response.sendRedirect(viewPage.split(":")[1]);
+				return;
 			} else if (view.equals("f") || view.equals("forward")) {
-				RequestDispatcher rd =request.getRequestDispatcher(viewPage.split(":")[1]);
-				rd.forward(request,response);
-			} else {
-				RequestDispatcher rd = request.getRequestDispatcher(PREFIX + view + SUFFIX);
-			} 	rd.forward(request, response);
+				rd =request.getRequestDispatcher(viewPage.split(":")[1]);
 				
+			} else {
+				rd = request.getRequestDispatcher(PREFIX + view + SUFFIX);
+			} 	
+				if(rd != null) {
+					rd.forward(request, response);
+				}
 			}
 		}
 	}
