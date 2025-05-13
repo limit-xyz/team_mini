@@ -1,19 +1,19 @@
-package com.miniproject.admin.dao;
+package com.miniproject.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import com.miniproject.admin.vo.Member;
+import com.miniproject.vo.Member;
 
-public class MemberDao {
+public class MemberDaoDoyoung {
 
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 
-	public MemberDao() {
+	public MemberDaoDoyoung() {
 	}
 
 	// 멤버 목록 가져오기

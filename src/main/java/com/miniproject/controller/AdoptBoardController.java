@@ -1,4 +1,4 @@
-package com.miniproject.adoption.controller;
+package com.miniproject.controller;
 
 import java.io.IOException;
 

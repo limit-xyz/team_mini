@@ -1,4 +1,4 @@
-package com.miniproject.admin.vo;
+package com.miniproject.vo;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;

@@ -3,8 +3,8 @@ package com.miniproject.adoption.service;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.miniproject.adoption.dto.AdoptionDao01;
-import com.miniproject.adoption.dto.AdoptionWriteDto;
+import com.miniproject.dao.AdoptionDao01;
+import com.miniproject.dao.AdoptionWriteDto;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

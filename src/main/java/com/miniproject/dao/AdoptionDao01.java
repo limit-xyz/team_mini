@@ -1,4 +1,4 @@
-package com.miniproject.adoption.dto;
+package com.miniproject.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -108,7 +108,7 @@ public class AdoptionDao01 {
 				// 3. DB에 SQL 쿼리를 발행하는 객체를 활성화된 커넥션으로부터 구한다.
 				// PreparedStatement
 				pstmt = conn.prepareStatement(sqlBoardList);
-				pstmt.setString(1,  "%" + keyword + "%");
+//				pstmt.setString(1,  "%" + keyword + "%");			여기 주석처리 했음 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 				pstmt.setInt(2, startRow);
 				pstmt.setInt(3, endRow);
 				

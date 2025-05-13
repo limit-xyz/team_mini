@@ -3,8 +3,8 @@ package com.miniproject.admin.service;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.miniproject.admin.dao.InquiryDao;
-import com.miniproject.admin.vo.Inquiry;
+import com.miniproject.dao.InquiryDao;
+import com.miniproject.vo.Inquiry;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

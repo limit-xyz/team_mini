@@ -1,109 +1,50 @@
+  <!-- 헤더  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-<!-- Content -->
-<div class="row">
-	<div class="col">
-		<table class="table table-bordered table-hover my-3">
-		
-			<thead>
-				<tr class="table-dark text-center">
-					<th style="width: 8%;">NO</th>
-					<th style="width: 20%;">이름</th>
-					<th style="width: 25%;">가입일</th>
-					<th style="width: 25%;">차단 해제일</th>
-					<th style="width: 22%;">명령</th>
-				</tr>		
-			</thead>
-			
-			<!--
-			<tbody class="text-secondary" id="tableBody">
-				<c:if test="${ not empty memberList }">
-					<c:forEach var="member" items="${memberList}" varStatus="status">
-						<tr>
-							<td class="text-center">${ member.no }</td>
-							
-							<td>${ member.name }</td>
-							
-							<td class="text-end">
-								<fmt:formatDate value="${member.regDate}" pattern="yyyy/MM/dd" />
-							</td>
-							
-							<td class="text-end">
-								<c:if test="${not member.ignore}">
-									<p>-</p>
-								</c:if>
-								
-								<c:if test="${member.ignore}">
-									<fmt:formatDate value="${member.ignoreDate}" pattern="yyyy/MM/dd HH:mm:SS" />
-								</c:if>
-							</td>
-							
-							<td class="text-center">
-								<button type="button" class="ignoreMember btn btn-warning" data-no="${member.no}"
-									data-bs-toggle="modal" data-bs-target="#staticBackdrop">차단</button>
-								<button type="button" class="releaseMember btn btn-success" data-no="${member.no}">차단해제</button>
-    							<button type="button" class="deleteMember btn btn-danger" data-no="${member.no}">삭제</button>
-							</td>
-						</tr>
-					</c:forEach>
-				</c:if>							
-
-				<c:if test="${ empty memberList }">
-					<tr>
-						<td colspan="5" class="text-center">멤버가 존재하지 않음</td>
-					</tr>
-				</c:if>
-				
-			</tbody>
-			-->
-		</table>
-		
-		<div class="row">
-			<div class="col text-center">
-				<a href="main">돌아가기</a>
-			</div>
-		</div>
-		
-	</div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
-	data-bs-keyboard="false" tabindex="-1"
-	aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-
-			<div class="modal-header bg-primary bg-gradient text-white">
-				<h1 class="modal-title fs-5 fw-bold" id="modalLabel">회원 차단</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"
-					aria-label="Close"></button>
-			</div>
-
-			<form id="ignoreMemberForm">
-				<div class="modal-body">
-					<div class="mb-3">
-						<h5><span id="ignoreNo"></span>번 유저를 차단합니다.</h5>
-						<label for="ignoreDate" class="form-label">얼마나 차단하시겠습니까?</label>
-						<div class="input-group" style="width: 120px;">
-							<input type="number" class="form-control" id="ignoreDate" name="ignoreDate">
-							<span class="input-group-text">일</span>				
-						</div>
-						
-					</div>
-				</div>
-
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary ">확인</button>
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">취소</button>
-				</div>
-			</form>
-			
-		</div>
-	</div>
-</div>
-<!-- Content End -->
+    pageEncoding="UTF-8"%>
+    
+    <div class="headerWrap bg-success p-2 text-dark bg-opacity-25">
+      <div class="container ">
+        <div class="row text-end">
+          <div class="col" style="font-size:14px;">
+            <a href="loginForm.member" class="" >로그인</a>
+            <a href="memberJoinForm.member" class="ms-3">회원가입</a>
+            <!-- 첫페이지 qna -->
+            <a href="qna.qna" class="ms-3">고객센터</a>
+          </div>
+        </div>
+        <nav class="navbar navbar-expand-lg ">
+          <div class="container-fluid">
+            <a class="navbar-brand h-40" href="#"><img src="images/logo.png" alt=""></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+              <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll fs-6" style="--bs-scroll-height: 100px;">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#">미용 예약</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">병원 예약</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">펫과사전</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">상품 정보</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">커뮤니티</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">입양/분양</a>
+                </li>
+              </ul>
+              <form class="d-flex " role="search">
+                <input class="form-control me-2 rounded-pill" type="search" placeholder="검색어를 입력해주세요." aria-label="Search">
+                <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+              </form>
+            </div>
+          </div>
+        </nav>
+        </div>
+      </div>

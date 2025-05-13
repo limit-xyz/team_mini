@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import com.google.gson.Gson;
-import com.miniproject.admin.dao.MemberDao;
-import com.miniproject.admin.vo.Member;
+import com.miniproject.dao.MemberDaoDoyoung;
+import com.miniproject.vo.Member;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +21,7 @@ public class MemberBanAction implements AjaxProcess {
 		String reason = request.getParameter("reason");
 		int banDate = Integer.parseInt(request.getParameter("date"));
 
-		MemberDao dao = new MemberDao();
+		MemberDaoDoyoung dao = new MemberDaoDoyoung();
 		Member member = dao.banMember(id, reason, banDate);
 		
 		Gson gson = new Gson();

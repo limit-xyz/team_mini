@@ -1,9 +1,8 @@
-package com.miniproject.admin.controller;
+package com.miniproject.controller;
 
 import java.io.IOException;
 
 import com.miniproject.admin.ajax.AjaxController;
-import com.miniproject.admin.dao.MemberDao;
 import com.miniproject.admin.service.*;
 
 import jakarta.servlet.RequestDispatcher;

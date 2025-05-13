@@ -1,11 +1,11 @@
-package com.miniproject.admin.dao;
+package com.miniproject.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import com.miniproject.admin.vo.Inquiry;
+import com.miniproject.vo.Inquiry;
 
 public class InquiryDao {
 

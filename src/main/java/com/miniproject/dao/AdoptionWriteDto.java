@@ -1,4 +1,4 @@
-package com.miniproject.adoption.dto;
+package com.miniproject.dao;
 
 import java.sql.Timestamp;
 
