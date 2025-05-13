@@ -3,7 +3,7 @@ package com.miniproject.admin.service;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.miniproject.dao.MemberDaoDoyoung;
+import com.miniproject.dao.MemberDao;
 import com.miniproject.vo.Member;
 
 import jakarta.servlet.ServletException;
@@ -18,7 +18,7 @@ public class MemberListService implements CommandProcess {
 		
 		ArrayList<Member> memberList = new ArrayList<>();
 		
-		MemberDaoDoyoung dao = new MemberDaoDoyoung();
+		MemberDao dao = new MemberDao();
 		memberList = dao.getMemberList();
 	   
 		request.setAttribute("memberList", memberList);

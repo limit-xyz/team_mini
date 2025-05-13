@@ -7,7 +7,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import com.miniproject.vo.Member;
-import com.miniproject.vo.Member1;
 
 public class MemberDao {
 

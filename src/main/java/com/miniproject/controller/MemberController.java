@@ -3,12 +3,12 @@ package com.miniproject.controller;
 import java.io.File;
 import java.io.IOException;
 
-import com.miniproject.leeyunshik.service.CommandProcess;
-import com.miniproject.leeyunshik.service.IdCheckService;
-import com.miniproject.leeyunshik.service.LoginFormService;
-import com.miniproject.leeyunshik.service.LoginService;
-import com.miniproject.leeyunshik.service.MemberJoinFormService;
-import com.miniproject.leeyunshik.service.MemberJoinResultService;
+import com.miniproject.helper.service.CommandProcess;
+import com.miniproject.helper.service.IdCheckService;
+import com.miniproject.helper.service.LoginFormService;
+import com.miniproject.helper.service.LoginService;
+import com.miniproject.helper.service.MemberJoinFormService;
+import com.miniproject.helper.service.MemberJoinResultService;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;

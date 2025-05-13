@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
-import com.miniproject.dao.MemberDaoDoyoung;
+import com.miniproject.dao.MemberDao;
 import com.miniproject.vo.Member;
 
 import jakarta.servlet.ServletException;
@@ -20,11 +20,11 @@ public class MemberDeleteAction implements AjaxProcess {
 
 		String id = request.getParameter("id");
 
-		MemberDaoDoyoung dao = new MemberDaoDoyoung();
+		MemberDao dao = new MemberDao();
 		dao.deleteMember(id);
-		
+
 		ArrayList<Member> memberList = dao.getMemberList();
-		
+
 		Gson gson = new Gson();
 		String result = gson.toJson(memberList);
 

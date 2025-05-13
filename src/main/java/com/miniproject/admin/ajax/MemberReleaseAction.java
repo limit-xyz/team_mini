@@ -3,7 +3,7 @@ package com.miniproject.admin.ajax;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import com.miniproject.dao.MemberDaoDoyoung;
+import com.miniproject.dao.MemberDao;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +17,7 @@ public class MemberReleaseAction implements AjaxProcess {
 
 		String id = request.getParameter("id");
 
-		MemberDaoDoyoung dao = new MemberDaoDoyoung();
+		MemberDao dao = new MemberDao();
 		dao.releaseMember(id);
 
 		response.setContentType("application/json; charset:utf-8");

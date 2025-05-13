@@ -20,7 +20,7 @@ public class Member {
 //	String banReason;		차단 사유, 설정 안해도 됨
 //	String role;			기본값 user, 설정 안해도 됨
 //	boolean ban;			member.setBan(member.getBanDate()); 하면 설정됨
-	
+
 	String id;
 	String name;
 	String password;
@@ -167,5 +167,4 @@ public class Member {
 				+ ", role=" + role + ", ban=" + ban + "]";
 	}
 
-	
 }

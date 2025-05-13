@@ -2,10 +2,9 @@ package com.miniproject.admin.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.spi.FileSystemProvider;
 
 import com.google.gson.Gson;
-import com.miniproject.dao.MemberDaoDoyoung;
+import com.miniproject.dao.MemberDao;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +20,7 @@ public class MemberRoleAction implements AjaxProcess {
 		String role = request.getParameter("role");
 		boolean isChange = Boolean.parseBoolean(request.getParameter("change"));
 
-		MemberDaoDoyoung dao = new MemberDaoDoyoung();
+		MemberDao dao = new MemberDao();
 		role = dao.roleMember(id, role, isChange);
 
 		Gson gson = new Gson();
