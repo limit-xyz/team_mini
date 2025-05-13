@@ -2,30 +2,30 @@ package com.miniproject.admin.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.spi.FileSystemProvider;
 
 import com.google.gson.Gson;
 import com.miniproject.admin.dao.MemberDao;
-import com.miniproject.admin.vo.Member;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class MemberBanAction implements AjaxProcess {
+public class MemberRoleAction implements AjaxProcess {
 
 	@Override
 	public void ajaxProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		String id = request.getParameter("id");
-		String reason = request.getParameter("reason");
-		int banDate = Integer.parseInt(request.getParameter("date"));
+		String role = request.getParameter("role");
+		boolean isChange = Boolean.parseBoolean(request.getParameter("change"));
 
 		MemberDao dao = new MemberDao();
-		Member member = dao.banMember(id, reason, banDate);
-		
+		role = dao.roleMember(id, role, isChange);
+
 		Gson gson = new Gson();
-		String result = gson.toJson(member);
+		String result = gson.toJson(role);
 
 		response.setContentType("application/json; charset:utf-8");
 		PrintWriter out = response.getWriter();

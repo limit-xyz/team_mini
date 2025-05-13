@@ -55,7 +55,16 @@
 								</c:if>
 							</td>
 							
-							<td class="text-center">${ member.role.toUpperCase() }</td>
+							<td class="userRole" data-user-id="${member.id}">
+									<select class="userRoleSelect form-select" ${member.role == 'admin' ? 'disabled' : ''}>
+											<option value='admin' ${member.role == 'admin' ? 'selected' : 'hidden'}>ADMIN</option>
+											<option value='beautician' ${member.role == 'beautician' ? 'selected' : ''}>BEAUTICIAN</option>
+											<option value='doctor' ${member.role == 'doctor' ? 'selected' : ''}>DOCTOR</option>
+											<option value='expert' ${member.role == 'expert' ? 'selected' : ''}>EXPERT</option>
+											<option value='seller' ${member.role == 'seller' ? 'selected' : ''}>SELLER</option>
+											<option value='user' ${member.role == 'user' ? 'selected' : ''}>USER</option>
+									</select>
+							</td>
 							
 							<td class="text-center">
 								<c:if test='${member.role != "admin"}'>
@@ -65,6 +74,8 @@
 	    							<button type="button" class="deleteMember btn btn-danger" data-user-id="${member.id}">유저삭제</button>
     							</c:if>
 							</td>
+							
+							<td class="banReason d-none">${member.banReason}</td>
 						</tr>
 					</c:forEach>
 				</c:if>							

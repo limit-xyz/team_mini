@@ -3,6 +3,7 @@ package com.miniproject.admin.controller;
 import java.io.IOException;
 
 import com.miniproject.admin.ajax.AjaxController;
+import com.miniproject.admin.dao.MemberDao;
 import com.miniproject.admin.service.*;
 
 import jakarta.servlet.RequestDispatcher;
@@ -44,9 +45,14 @@ public class AdminContoller extends HttpServlet {
 
 		CommandProcess service;
 
-		/*
-		 * 어드민인지 확인 절차 필요
-		 */
+//		// admin 검증
+//		String requestId = (String) request.getSession().getAttribute("id");
+//		MemberDao dao = new MemberDao();
+//		boolean isAdmin = dao.isAdmin(requestId);
+//		if (!isAdmin) {
+//			System.out.println("콰과광");
+//			return;
+//		}
 
 		// ajax 요청 처리
 		String[] splitTest1 = command.split("/");

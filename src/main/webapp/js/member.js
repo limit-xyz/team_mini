@@ -23,7 +23,7 @@ $(function() {
 					$tbody.empty();
 
 					$.each(regData, function(i, member) {
-						
+
 						let regDate = dateToString(new Date(member.regDate), false);
 						let birthDate = dateToString(new Date(member.birthDate), false);
 						let banDate = dateToString(new Date(member.banDate), true);
@@ -40,7 +40,18 @@ $(function() {
 							+ " <td class='banDate text-end'>"
 							+ ((member.ban) ? `<p>${banDate}</p>` : "<p>-</p>")
 							+ " </td>"
-							+ ` <td class="text-center">${member.role.toUpperCase()}</td>`
+
+							+ `	<td class='userRole' data-user-id='${member.id}'>`
+							+ `		<select class='userRoleSelect form-select' ${member.role == 'admin' ? 'disabled' : ''}>`
+							+ `			<option value='admin' ${member.role == 'admin' ? 'selected' : 'hidden'}>ADMIN</option>`
+							+ `			<option value='beautician' ${member.role == 'beautician' ? 'selected' : ''}>BEAUTICIAN</option>`
+							+ `			<option value='doctor' ${member.role == 'doctor' ? 'selected' : ''}>DOCTOR</option>`
+							+ `			<option value='expert' ${member.role == 'expert' ? 'selected' : ''}>EXPERT</option>`
+							+ `			<option value='seller' ${member.role == 'seller' ? 'selected' : ''}>SELLER</option>`
+							+ `			<option value='user' ${member.role == 'user' ? 'selected' : ''}>USER</option>`
+							+ "		</select>"
+							+ "	</td>"
+
 							+ " <td class='text-center'>";
 
 						if (member.role != "admin") {
@@ -53,6 +64,7 @@ $(function() {
 
 
 						result += " </td>";
+						result += ` <td class="">${member.banReason}</td>`;
 						result += "</tr>";
 
 						$tbody.append(result);
@@ -67,6 +79,62 @@ $(function() {
 		return false;
 	});
 
+
+
+	// 멤버 역할 변경 메소드
+	$(document).on("change", ".userRoleSelect", function() {
+		var $this = $(this);
+		var role = $(this).val();
+		var userId = $(this).parent().data("userId");
+
+		var isRoleChange = confirm(userId + " 의 역할을 " + $(this).val().toUpperCase() + " 로 바꾸시겠습니까?");
+
+		if (isRoleChange) {
+
+			data = {
+				"id": userId,
+				"role": role,
+				"change": true
+			}
+
+			$.ajax({
+				"url": "memberRole.ajax",
+				"data": data,
+				"type": "post",
+				"dataType": "json",
+				"success": function() {
+					alert("변경 완료");
+				},
+				"error": function() {
+					console.log("error")
+				}
+			});
+		}
+
+		else {
+			data = {
+				"id": userId,
+				"role": "",
+				"change": false
+			}
+
+			$.ajax({
+				"url": "memberRole.ajax",
+				"data": data,
+				"type": "post",
+				"dataType": "json",
+				"success": function(resData) {
+					$this.val(resData);
+				},
+				"error": function() {
+					console.log("error")
+				}
+			});
+		}
+
+
+		return false;
+	});
 
 
 	// 멤버 차단 클릭 메소드, 모달 창의 내용을 초기화하고 띄움
@@ -105,19 +173,18 @@ $(function() {
 			"date": banDate,
 			"reason": banReason
 		}
-		
+
 		$.ajax({
 			"url": "memberBan.ajax",
 			"data": data,
 			"type": "post",
 			"dataType": "json",
 			"success": function(regData) {
-				
-				console.log(regData);
 
 				// 현재 this 가 모달창이라, 위치 찾기
 				var $button = $("#tableBody").find(`button[data-user-id="${userId}"]`);
 				var $banDate = $button.parent().parent().find($(".banDate"));
+				var $banReason = $button.parent().parent().find($(".banReason"));
 
 				// 가져온 데이터로 새로고침
 				$banDate.empty();
@@ -125,6 +192,8 @@ $(function() {
 				let strDate = dateToString(date, true);
 				var result = `<p>${strDate}</p>`
 				$banDate.append(result);
+
+				$banReason.text(regData.banReason);
 
 				// 모달창 닫기
 				var modal = bootstrap.Modal.getInstance($('#staticBackdrop')[0]);
@@ -150,7 +219,8 @@ $(function() {
 		}
 
 		var userId = $(this).data('userId');
-		var isRelease = confirm(userId + " 의 차단을 해제하시겠습니까?");
+		var banReason = $(this).parent().parent().find($(".banReason")).text();
+		var isRelease = confirm(userId + " 의 차단을 해제하시겠습니까?\n\n[차단 사유] \n" + banReason);
 
 		if (isRelease) {
 
@@ -178,6 +248,7 @@ $(function() {
 		return false;
 	});
 });
+
 
 function dateModifier(str) {
 	if (str < 10)

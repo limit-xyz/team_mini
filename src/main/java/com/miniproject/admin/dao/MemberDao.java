@@ -3,7 +3,6 @@ package com.miniproject.admin.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import com.miniproject.admin.vo.Member;
@@ -64,9 +63,41 @@ public class MemberDao {
 		return memberList;
 	}
 
+	// 멤버 역할 변경
+	public String roleMember(String id, String role, boolean isChange) {
+		String changeRoleSql = "UPDATE member SET role=? WHERE id=?";
+		String getRoleSql = "SELECT role FROM member WHERE id=?";
+
+		try {
+			conn = DBManager.getConnection();
+			if (isChange) {
+				pstmt = conn.prepareStatement(changeRoleSql);
+				pstmt.setString(1, role);
+				pstmt.setString(2, id);
+				pstmt.executeUpdate();
+			} else {
+				pstmt = conn.prepareStatement(getRoleSql);
+				pstmt.setString(1, id);
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					role = rs.getString("role");
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+
+		return role;
+	}
+
 	// 멤버 차단하고, 갱신된 차단일자 저장
-	public Member banMember(String id, int banDate) {
-		String banMemberSql = "UPDATE member SET ban_date = SYSDATE + ? WHERE id=?";
+	public Member banMember(String id, String reason, int banDate) {
+		String banMemberSql = "UPDATE member SET ban_date = SYSDATE + ?, ban_reason=? WHERE id=?";
 		String getMemberSql = "SELECT * FROM member WHERE id=?";
 
 		Member member = null;
@@ -75,13 +106,14 @@ public class MemberDao {
 			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(banMemberSql);
 			pstmt.setInt(1, banDate);
-			pstmt.setString(2, id);
+			pstmt.setString(2, reason);
+			pstmt.setString(3, id);
 			pstmt.executeUpdate();
 
 			pstmt = conn.prepareStatement(getMemberSql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
-			
+
 			if (rs.next()) {
 				member = new Member();
 
@@ -100,7 +132,7 @@ public class MemberDao {
 				member.setRole(rs.getString("role"));
 
 				member.setBan(member.getBanDate());
-				
+
 				member.toString();
 			}
 
@@ -147,5 +179,26 @@ public class MemberDao {
 		} finally {
 			DBManager.close(conn, pstmt, rs);
 		}
+	}
+	
+	public boolean isAdmin(String id) {
+		String CheckAdminSql = "SELECT role FROM member WHERE id=?";
+		String role = "";
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(CheckAdminSql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next())
+				role = rs.getString("role");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return role.equals("admin");
 	}
 }
