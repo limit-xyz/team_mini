@@ -1,4 +1,4 @@
-package com.mimproject.vo;
+package com.miniproject.vo;
 
 public class AnimalHospital {
 	private int id;

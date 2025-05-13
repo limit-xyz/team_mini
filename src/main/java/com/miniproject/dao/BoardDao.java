@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.mimproject.vo.AnimalHospital;
+import com.miniproject.vo.AnimalHospital;
 
 import jakarta.servlet.http.HttpServlet;
 

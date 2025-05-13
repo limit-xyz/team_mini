@@ -5,8 +5,8 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import com.google.gson.Gson;
-import com.mimproject.vo.AnimalHospital;
 import com.miniproject.dao.BoardDao;
+import com.miniproject.vo.AnimalHospital;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
