@@ -3,53 +3,69 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AdoptionDao {
-
-
+	
+	
+	private static final String USER = "hr";
+	private static final String PASS = "hr";
+	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
+	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
+	
 	Connection conn;
 	PreparedStatement pstmt;
 	ResultSet rs;
 	
+	public AdoptionDao() {
+		try {
+		  Class.forName(DRIVER);
+		} catch(ClassNotFoundException e) {
+		  e.printStackTrace();		
+		}
+	}
+	
+	
 	// 게시글 하나만 조회
-	public AdoptionWriteDao getAdopTionById(int postId){
-		AdoptionWriteDao = null;
-		String sql = "Select * From adoption_post WHERE Post_Id=?";
+	public ArrayList<AdoptionWriteDao> getAdopTionList(){
 		
+		String sql = "Select * From adoption_post Order by Post_Id Desc";
+		ArrayList<AdoptionWriteDao> AList = null;
 		
-		try{
+		try {
 			conn = DriverManager.getConnection(URL, USER, PASS);
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, postId);
 			rs = pstmt.executeQuery();
 			
+			AList = new ArrayList<>();
+			
 			while (rs.next()) {
-				AdoptionWriteDao dto = new AdoptionWriteDao(
-					rs.getInt("post_id"),
-					rs.getString("user_id"),
-					rs.getString("title"),
-					rs.getString("content"),
-					rs.getString("type"),
-					rs.getString("region"),
-					rs.getString("animal_type_main"),
-					rs.getString("animal_type_detail"),
-					rs.getString("image_path"),
-					rs.getTimestamp("created_at"),
-					rs.getInt("views")
+				AdoptionWriteDao dto = new AdoptionWriteDao();
+					dto.setPostId(rs.getInt("post_id"));
+					dto.setTitle(rs.getString(2));
+					dto.setUserId(rs.getString("user_id"));
+					dto.setCreatedAt(rs.getTimestamp("reg_date"));
+					dto.setViews(rs.getInt("read_count"));
+					
 				
-				);
-				
-			}
+			
+				AList.add(dto);
+			};
 		} catch (Exception e) {
 			e.printStackTrace();
-			
 		} finally { 
-			close();
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
-	return dto;
-}
+	return AList;
+} //getAdopTionList
 	
 }
 	

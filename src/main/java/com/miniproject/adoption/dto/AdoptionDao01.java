@@ -7,31 +7,18 @@ import java.util.ArrayList;
 
 public class AdoptionDao01 {
 
-	private static final String USER = "hr";
-	private static final String PASS = "hr";
-	private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	
 	Connection conn;
 	PreparedStatement pstmt;
 	ResultSet rs;
-	
-	
-	public AdoptionDao01() {
-		try {
-		Class.forName(DRIVER);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-	
+		
 	public ArrayList<AdoptionWriteDao> getAdopTionList(){
 		String sql = "Select * From adoption_post Order by Post_Id Desc";
 		ArrayList<AdoptionWriteDao> list = new ArrayList<>();
 		
-		try(Connection conn = DriverManager.getConnection(URL, USER, PASS);
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery()) {
+		try {
+			conn = DriverManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
 				AdoptionWriteDao dto = new AdoptionWriteDao(
@@ -47,7 +34,7 @@ public class AdoptionDao01 {
 					rs.getTimestamp("created_at"),
 					rs.getInt("views")
 				
-				);
+			};
 				list.add(dto);
 			}
 		} catch (Exception e) {

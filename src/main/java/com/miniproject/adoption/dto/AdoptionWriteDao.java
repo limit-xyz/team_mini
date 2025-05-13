@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class AdoptionWriteDao {
 
-	private int PostId;
+	private int postId;
 	private String userId;
 	private String title;
 	private String content;
@@ -22,7 +22,7 @@ public class AdoptionWriteDao {
 	public AdoptionWriteDao(int postId, String userId, String title, String content, String type,
             String region, String animalTypeMain, String animalTypeDetail, String imagePath, 
             Timestamp createdAt, int views) {
-		this.PostId = postId;
+		this.postId = postId;
 		this.userId = userId;
 		this.title = title;
 		this.content = content;
@@ -36,11 +36,11 @@ public class AdoptionWriteDao {
 	}
 
 	public int getPostId() {
-		return PostId;
+		return postId;
 	}
 
 	public void setPostId(int postId) {
-		PostId = postId;
+		postId = postId;
 	}
 
 	public String getUserId() {
@@ -122,6 +122,7 @@ public class AdoptionWriteDao {
 	public void setViews(int views) {
 		this.views = views;
 	}
+
 	
 	
 }
