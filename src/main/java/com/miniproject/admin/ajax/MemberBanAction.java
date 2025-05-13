@@ -11,17 +11,17 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class MemberIgnoreAction implements AjaxProcess {
+public class MemberBanAction implements AjaxProcess {
 
 	@Override
 	public void ajaxProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		int no = Integer.parseInt(request.getParameter("no"));
+		String id = request.getParameter("id");
 		int ignoreDate = Integer.parseInt(request.getParameter("date"));
 
 		MemberDao dao = new MemberDao();
-		Member member = dao.ignoreMember(no, ignoreDate);
+		Member member = dao.banMember(id, ignoreDate);
 		
 		Gson gson = new Gson();
 		String result = gson.toJson(member);

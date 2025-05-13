@@ -15,10 +15,10 @@ public class MemberReleaseAction implements AjaxProcess {
 	public void ajaxProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		int no = Integer.parseInt(request.getParameter("no"));
+		String id = request.getParameter("id");
 
 		MemberDao dao = new MemberDao();
-		dao.releaseMember(no);
+		dao.releaseMember(id);
 
 		response.setContentType("application/json; charset:utf-8");
 		PrintWriter out = response.getWriter();

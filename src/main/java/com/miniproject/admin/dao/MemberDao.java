@@ -20,7 +20,7 @@ public class MemberDao {
 	// 멤버 목록 가져오기
 	public ArrayList<Member> getMemberList() {
 
-		String memberListSql = "SELECT * FROM project_member";
+		String memberListSql = "SELECT * FROM member";
 
 		ArrayList<Member> memberList = null;
 
@@ -35,16 +35,21 @@ public class MemberDao {
 
 				do {
 					Member member = new Member();
-					member.setNo(rs.getInt("no"));
+					member.setId(rs.getString("id"));
 					member.setName(rs.getString("name"));
+					member.setPassword(rs.getString("password"));
+					member.setGender(rs.getString("gender"));
+					member.setMobile(rs.getString("mobile"));
+					member.setAddress(rs.getString("address"));
+					member.setEmail(rs.getString("email"));
 					member.setRegDate(rs.getTimestamp("reg_date"));
-					member.setIgnoreDate(rs.getTimestamp("ignore_date"));
+					member.setIntroduction(rs.getString("introduction"));
+					member.setBirthDate(rs.getTimestamp("birth_date"));
+					member.setBanDate(rs.getTimestamp("ban_date"));
+					member.setBanReason(rs.getString("ban_reason"));
+					member.setRole(rs.getString("role"));
 
-					LocalDate today = LocalDate.now();
-					LocalDate ignoreDate = member.getIgnoreDate().toLocalDateTime().toLocalDate();
-
-					boolean isIgnore = today.isBefore(ignoreDate);
-					member.setIgnore(isIgnore);
+					member.setBan(member.getBanDate());
 
 					memberList.add(member);
 
@@ -60,31 +65,43 @@ public class MemberDao {
 	}
 
 	// 멤버 차단하고, 갱신된 차단일자 저장
-	public Member ignoreMember(int no, int ignoreDate) {
-		String ignoreMemberSql = "UPDATE project_member SET ignore_date = SYSDATE + ? WHERE no = ?";
-		String getDateSql = "SELECT * FROM project_member WHERE no=?";
+	public Member banMember(String id, int banDate) {
+		String banMemberSql = "UPDATE member SET ban_date = SYSDATE + ? WHERE id=?";
+		String getMemberSql = "SELECT * FROM member WHERE id=?";
 
 		Member member = null;
 
 		try {
 			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(ignoreMemberSql);
-			pstmt.setInt(1, ignoreDate);
-			pstmt.setInt(2, no);
+			pstmt = conn.prepareStatement(banMemberSql);
+			pstmt.setInt(1, banDate);
+			pstmt.setString(2, id);
 			pstmt.executeUpdate();
 
-			pstmt = conn.prepareStatement(getDateSql);
-			pstmt.setInt(1, no);
+			pstmt = conn.prepareStatement(getMemberSql);
+			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
-
+			
 			if (rs.next()) {
 				member = new Member();
 
-				member.setNo(rs.getInt("no"));
+				member.setId(rs.getString("id"));
 				member.setName(rs.getString("name"));
+				member.setPassword(rs.getString("password"));
+				member.setGender(rs.getString("gender"));
+				member.setMobile(rs.getString("mobile"));
+				member.setAddress(rs.getString("address"));
+				member.setEmail(rs.getString("email"));
 				member.setRegDate(rs.getTimestamp("reg_date"));
-				member.setIgnoreDate(rs.getTimestamp("ignore_date"));
-				member.setIgnore(true);
+				member.setIntroduction(rs.getString("introduction"));
+				member.setBirthDate(rs.getTimestamp("birth_date"));
+				member.setBanDate(rs.getTimestamp("ban_date"));
+				member.setBanReason(rs.getString("ban_reason"));
+				member.setRole(rs.getString("role"));
+
+				member.setBan(member.getBanDate());
+				
+				member.toString();
 			}
 
 		} catch (Exception e) {
@@ -97,13 +114,13 @@ public class MemberDao {
 	}
 
 	// 멤버 차단 해제
-	public void releaseMember(int no) {
-		String ignoreMemberSql = "UPDATE project_member SET ignore_date = SYSDATE WHERE no = ?";
+	public void releaseMember(String id) {
+		String releaseMemberSql = "UPDATE member SET ban_date = SYSDATE-1 WHERE id=?";
 
 		try {
 			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(ignoreMemberSql);
-			pstmt.setInt(1, no);
+			pstmt = conn.prepareStatement(releaseMemberSql);
+			pstmt.setString(1, id);
 			pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -115,13 +132,13 @@ public class MemberDao {
 	}
 
 	// 멤버 삭제
-	public void deleteMember(int no) {
-		String deleteMemberSql = "DELETE FROM project_member WHERE no=?";
+	public void deleteMember(String id) {
+		String deleteMemberSql = "DELETE FROM member WHERE id=?";
 
 		try {
 			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(deleteMemberSql);
-			pstmt.setInt(1, no);
+			pstmt.setString(1, id);
 			pstmt.executeUpdate();
 
 		} catch (Exception e) {

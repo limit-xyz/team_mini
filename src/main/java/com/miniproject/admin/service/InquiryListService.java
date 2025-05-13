@@ -3,27 +3,27 @@ package com.miniproject.admin.service;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.miniproject.admin.dao.MemberDao;
-import com.miniproject.admin.vo.Member;
+import com.miniproject.admin.dao.InquiryDao;
+import com.miniproject.admin.vo.Inquiry;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class MemberListService implements CommandProcess {
+public class InquiryListService implements CommandProcess {
 
 	@Override
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		ArrayList<Member> memberList = new ArrayList<>();
+		ArrayList<Inquiry> inquiryList = new ArrayList<>();
 		
-		MemberDao dao = new MemberDao();
-		memberList = dao.getMemberList();
-	   
-		request.setAttribute("memberList", memberList);
+		InquiryDao dao = new InquiryDao();
+		inquiryList = dao.getInquiryList();
 		
-		return "admin/memberList";
+		request.setAttribute("inquiryList", inquiryList);
+		
+		return "admin/inquiryList";
 	}
 
 }

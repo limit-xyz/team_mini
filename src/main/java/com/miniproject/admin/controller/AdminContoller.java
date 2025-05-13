@@ -72,6 +72,12 @@ public class AdminContoller extends HttpServlet {
 			service = new MemberListService();
 			viewPage = service.requestProcess(request, response);
 		}
+		
+		// 문의내역 관리 화면
+		else if (command.equals("/admin/inquiry")) {
+			service = new InquiryListService();
+			viewPage = service.requestProcess(request, response);
+		}
 
 		if (viewPage != null) {
 			String view = viewPage.split(":")[0];

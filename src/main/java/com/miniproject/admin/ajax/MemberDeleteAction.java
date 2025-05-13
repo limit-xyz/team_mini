@@ -18,10 +18,10 @@ public class MemberDeleteAction implements AjaxProcess {
 	public void ajaxProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		int no = Integer.parseInt(request.getParameter("no"));
+		String id = request.getParameter("id");
 
 		MemberDao dao = new MemberDao();
-		dao.deleteMember(no);
+		dao.deleteMember(id);
 		
 		ArrayList<Member> memberList = dao.getMemberList();
 		

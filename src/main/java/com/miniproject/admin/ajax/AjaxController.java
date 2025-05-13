@@ -13,8 +13,8 @@ public class AjaxController {
 
 		AjaxProcess ajaxAction = null;
 
-		if (command.equals("memberIgnore.ajax")) {
-			ajaxAction = new MemberIgnoreAction();
+		if (command.equals("memberBan.ajax")) {
+			ajaxAction = new MemberBanAction();
 			ajaxAction.ajaxProcess(request, response);
 		}
 		
