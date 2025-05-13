@@ -10,83 +10,55 @@
 		
 			<thead>
 				<tr class="table-dark text-center">
-					<th>아이디</th>
-					<th>이름</th>
-					<th>성별</th>
-					<th>전화번호</th>
-					<th>주소</th>
-					<th>가입일</th>
-					<th>생일</th>
-					<th>차단 해제일</th>
-					<th>역할</th>
-					<th>작업</th>
+					<th style="width: 8%;">NO</th>
+					<th style="width: 20%;">이름</th>
+					<th style="width: 25%;">가입일</th>
+					<th style="width: 25%;">차단 해제일</th>
+					<th style="width: 22%;">명령</th>
 				</tr>		
 			</thead>
 			
+			<!--
 			<tbody class="text-secondary" id="tableBody">
 				<c:if test="${ not empty memberList }">
 					<c:forEach var="member" items="${memberList}" varStatus="status">
 						<tr>
-							<td class="text-center">${ member.id }</td>
+							<td class="text-center">${ member.no }</td>
 							
-							<td class="text-center">${ member.name }</td>
-							
-							<td class="text-center">${ member.gender }</td>
-							
-							<td class="text-center">${ member.mobile }</td>
-							
-							<td class="text-center">${ member.address }</td>
+							<td>${ member.name }</td>
 							
 							<td class="text-end">
 								<fmt:formatDate value="${member.regDate}" pattern="yyyy/MM/dd" />
 							</td>
 							
 							<td class="text-end">
-								<fmt:formatDate value="${member.birthDate}" pattern="yyyy/MM/dd" />
-							</td>
-							
-							<td class="banDate text-end">
-								<c:if test="${not member.ban}">
+								<c:if test="${not member.ignore}">
 									<p>-</p>
 								</c:if>
 								
-								<c:if test="${member.ban}">
-									<fmt:formatDate value="${member.banDate}" pattern="yyyy/MM/dd HH:mm:SS" />
+								<c:if test="${member.ignore}">
+									<fmt:formatDate value="${member.ignoreDate}" pattern="yyyy/MM/dd HH:mm:SS" />
 								</c:if>
 							</td>
 							
-							<td class="userRole" data-user-id="${member.id}">
-									<select class="userRoleSelect form-select" ${member.role == 'admin' ? 'disabled' : ''}>
-											<option value='admin' ${member.role == 'admin' ? 'selected' : 'hidden'}>ADMIN</option>
-											<option value='beautician' ${member.role == 'beautician' ? 'selected' : ''}>BEAUTICIAN</option>
-											<option value='doctor' ${member.role == 'doctor' ? 'selected' : ''}>DOCTOR</option>
-											<option value='expert' ${member.role == 'expert' ? 'selected' : ''}>EXPERT</option>
-											<option value='seller' ${member.role == 'seller' ? 'selected' : ''}>SELLER</option>
-											<option value='user' ${member.role == 'user' ? 'selected' : ''}>USER</option>
-									</select>
-							</td>
-							
 							<td class="text-center">
-								<c:if test='${member.role != "admin"}'>
-									<button type="button" class="banMember btn btn-warning me-2" data-user-id="${member.id}"
-										data-bs-toggle="modal" data-bs-target="#staticBackdrop">임시차단</button>
-									<button type="button" class="releaseMember btn btn-success me-2" data-user-id="${member.id}">차단해제</button>
-	    							<button type="button" class="deleteMember btn btn-danger" data-user-id="${member.id}">유저삭제</button>
-    							</c:if>
+								<button type="button" class="ignoreMember btn btn-warning" data-no="${member.no}"
+									data-bs-toggle="modal" data-bs-target="#staticBackdrop">차단</button>
+								<button type="button" class="releaseMember btn btn-success" data-no="${member.no}">차단해제</button>
+    							<button type="button" class="deleteMember btn btn-danger" data-no="${member.no}">삭제</button>
 							</td>
-							
-							<td class="banReason d-none">${member.banReason}</td>
 						</tr>
 					</c:forEach>
 				</c:if>							
 
 				<c:if test="${ empty memberList }">
 					<tr>
-						<td colspan="10" class="text-center">멤버가 존재하지 않음</td>
+						<td colspan="5" class="text-center">멤버가 존재하지 않음</td>
 					</tr>
 				</c:if>
 				
 			</tbody>
+			-->
 		</table>
 		
 		<div class="row">
@@ -111,18 +83,16 @@
 					aria-label="Close"></button>
 			</div>
 
-			<form id="banMemberForm">
+			<form id="ignoreMemberForm">
 				<div class="modal-body">
 					<div class="mb-3">
-						<h5><span id="banUserId"></span> 를 차단합니다.</h5>
-						<label for="banDate" class="form-label">얼마나 차단하시겠습니까?</label>
+						<h5><span id="ignoreNo"></span>번 유저를 차단합니다.</h5>
+						<label for="ignoreDate" class="form-label">얼마나 차단하시겠습니까?</label>
 						<div class="input-group" style="width: 120px;">
-							<input type="number" class="form-control" id="banDate" name="banDate">
+							<input type="number" class="form-control" id="ignoreDate" name="ignoreDate">
 							<span class="input-group-text">일</span>				
 						</div>
 						
-						<label for="banReason" class="form-label">차단 사유</label>
-						<textarea class="form-control" name="banReason" id="banReason" rows="3"></textarea>						
 					</div>
 				</div>
 
