@@ -9,7 +9,7 @@ import org.apache.tomcat.jdbc.pool.DataSource;
 public class DBManager {
 
 	private static DataSource DS = null;
-	private static Connection CONN = null;
+	
 	
 	private DBManager(){}
 		
@@ -26,11 +26,11 @@ public class DBManager {
 		
 		public static Connection getConnection() {
 			try {
-				CONN = DS.getConnection();
+				return DS.getConnection();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			return CONN;
+			return null;
 		}
 		
 		public static void close(Connection conn, PreparedStatement pstmt) {

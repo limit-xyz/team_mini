@@ -15,6 +15,7 @@ CREATE TABLE adoption_post(
   image_path VARCHAR@(300),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   views  INT DEFAULT 0
+  --approval_status 
 );
 
 /* jspbbs에서 사용할 시퀀스

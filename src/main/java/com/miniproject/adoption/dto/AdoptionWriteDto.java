@@ -2,7 +2,7 @@ package com.miniproject.adoption.dto;
 
 import java.sql.Timestamp;
 
-public class AdoptionWriteDao {
+public class AdoptionWriteDto {
 
 	private int postId;
 	private String userId;
@@ -17,9 +17,9 @@ public class AdoptionWriteDao {
 	private int views;
 	
 	
-	public AdoptionWriteDao() {};
+	public AdoptionWriteDto() {};
 	
-	public AdoptionWriteDao(int postId, String userId, String title, String content, String type,
+	public AdoptionWriteDto(int postId, String userId, String title, String content, String type,
             String region, String animalTypeMain, String animalTypeDetail, String imagePath, 
             Timestamp createdAt, int views) {
 		this.postId = postId;
@@ -40,7 +40,7 @@ public class AdoptionWriteDao {
 	}
 
 	public void setPostId(int postId) {
-		postId = postId;
+		this.postId = postId;
 	}
 
 	public String getUserId() {

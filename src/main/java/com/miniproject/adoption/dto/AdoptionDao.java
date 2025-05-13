@@ -28,10 +28,10 @@ public class AdoptionDao {
 	
 	
 	// 게시글 하나만 조회
-	public ArrayList<AdoptionWriteDao> getAdopTionList(){
+	public ArrayList<AdoptionWriteDto> getAdopTionList(){
 		
 		String sql = "Select * From adoption_post Order by Post_Id Desc";
-		ArrayList<AdoptionWriteDao> AList = null;
+		ArrayList<AdoptionWriteDto> AList = null;
 		
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASS);
@@ -41,7 +41,7 @@ public class AdoptionDao {
 			AList = new ArrayList<>();
 			
 			while (rs.next()) {
-				AdoptionWriteDao dto = new AdoptionWriteDao();
+				AdoptionWriteDto dto = new AdoptionWriteDto();
 					dto.setPostId(rs.getInt("post_id"));
 					dto.setTitle(rs.getString(2));
 					dto.setUserId(rs.getString("user_id"));
