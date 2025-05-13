@@ -55,7 +55,8 @@ public class AdoptionDao01 {
 		}
 		
 	return list;
-}
+} //getAdopTionList
+	
 	
 	public AdoptionWriteDao getAdopTionById(int postId){
 		AdoptionWriteDao = null;
@@ -94,6 +95,7 @@ public class AdoptionDao01 {
 		
 	return dto;
 	
+}
 }
 	
 	
