@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css">	
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" type="text/css" href="css/global.css" />
-	<link rel="stylesheet" type="text/css" href="css/member.css" />		
+	
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -22,17 +22,7 @@
 <body>
 <%@ include file="pages/header.jsp" %>
 	<div class="container">
-	<%--
-	"/WEB-INF/index.jsp?body=" + "board/boardList" + ".jsp"  
-	--%>
-		
-		<%--
-			<jsp:include page="board/boardList.jsp" />  
-			<jsp:include page="error/errorpage.jsp" />
-			request.getParameter("body");
-		--%>
 		<jsp:include page="${ param.body }" />
-		
 	</div>
 	<%@ include file="pages/footer.jsp" %>
     <script src="bootstrap/bootstrap.bundle.min.js"></script>		

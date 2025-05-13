@@ -100,7 +100,7 @@ $(function() {
 			return false;
 		}
 		
-		url = "overlapIdCheck.mvc?id=" + id;
+		url = "idCheck.member?id=" + id;
 		
 		// 새 창을 띄워서 서버로 요청을 보낸다.
 		window.open(url, "idCheck", "toolbar=no, scrollbars=no, resizeable=no, " 

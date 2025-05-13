@@ -3,8 +3,8 @@
     <link rel="stylesheet" type="text/css" href="css/loginform.css" />		
 			<div class="row my-5" id="global-content">
 				<div class="col align-content-center" style="min-height: 600px;">
-					<form class="my-5" id="loginForm" action="login.main" method="post">
-							<h2 class="fw-bold">Member Login</h2>
+					<form class="my-5" id="loginForm" action="login.member" method="post">
+							<h2 class="fw-bold">로그인</h2>
 							<fieldset>	
 								<legend>Member Loin</legend>
 								<div id="login">

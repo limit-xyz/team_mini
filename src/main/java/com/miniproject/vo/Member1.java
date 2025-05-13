@@ -5,14 +5,15 @@ import java.sql.Timestamp;
 /* 한 명의 회원 정보를 저장하는 클래스
  * 회원 정보를 저장하고 있는 테이블의 필드와 1:1 맵핑되는 Beans 클래스
  **/
-public class Member {	
+public class Member1 {	
 	
 	private String name, id, pass, email, mobile;
 	private String phone, zipcode, address1, address2;
 	private boolean  emailGet;
 	private Timestamp regDate;		
+	private boolean  admin;
 	
-	public Member() { }	
+	public Member1() { }	
 	
 	public String getName() {
 		return name;
@@ -79,5 +80,14 @@ public class Member {
 	}
 	public void setRegDate(Timestamp regDate) {
 		this.regDate = regDate;
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}	
+	
 }

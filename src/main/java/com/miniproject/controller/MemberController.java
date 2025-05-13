@@ -4,6 +4,11 @@ import java.io.File;
 import java.io.IOException;
 
 import com.miniproject.service.CommandProcess;
+import com.miniproject.service.IdCheckService;
+import com.miniproject.service.LoginFormService;
+import com.miniproject.service.LoginService;
+import com.miniproject.service.MemberJoinFormService;
+import com.miniproject.service.MemberJoinResultService;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -60,10 +65,23 @@ public class MemberController extends HttpServlet {
 		if(command.equals("/*.member") 
 				|| command.equals("/loginForm.member")) {
 			// 게시 글 리스트 요청을 처리하는 BoardListService 클래스 실행
-			service = new MainService();
+			service = new LoginFormService();
 			viewPage = service.requestProcess(request, response);
 			
-		} 
+		}else if (command.equals("/login.member")) {
+			service = new LoginService();
+			viewPage = service.requestProcess(request, response);
+		}else if (command.equals("/memberJoinForm.member")) {
+			service = new MemberJoinFormService();
+			viewPage = service.requestProcess(request, response);
+		}else if (command.equals("/idCheck.member")) {
+			service = new IdCheckService();
+			viewPage = service.requestProcess(request, response);
+		}else if (command.equals("/memberJoinResult.member")) {
+			service = new MemberJoinResultService();
+			viewPage = service.requestProcess(request, response);
+		}   
+		 
 		
 		if(viewPage != null) {
 			// "boardList", "r:boardList.mvc", "redirect:boardList.mvc"

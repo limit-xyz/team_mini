@@ -6,8 +6,8 @@
       <div class="container ">
         <div class="row text-end">
           <div class="col" style="font-size:14px;">
-            <a class="loginForm.member" href="">로그인</a>
-            <a href="" class="ms-3">회원가입</a>
+            <a href="loginForm.member" class="" >로그인</a>
+            <a href="memberJoinForm.member" class="ms-3">회원가입</a>
             <!-- 첫페이지 qna -->
             <a href="qna.qna" class="ms-3">고객센터</a>
           </div>

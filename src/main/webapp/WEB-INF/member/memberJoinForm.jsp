@@ -8,6 +8,9 @@
 -->    
 <script src=
 "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+ 
+
 <div class="row my-5" id="global-content">
 	<div class="col">
 		<div class="row my-3 text-center">
@@ -15,7 +18,7 @@
 				<h2 class="fs-3 fw-bold">회원 정보 입력</h2>
 			</div>
 		</div>
-		<form action="joinResult.member" name="joinForm" method="post" id="joinForm">
+		<form action="memberJoinResult.member" name="joinForm" method="post" id="joinForm">
 			<%-- 
 				회원 아이디 중복 검사를 했는지의 정보를 hidden 필드로 저장 
 			--%>
@@ -134,7 +137,7 @@
 						<div class="col-md-3">
 							<div class="form-check">
 								<input type="radio" class="form-check-input" name="emailGet" id="emailNo" value="false">
-								<label class="form-check-label" for="emailNo">수신않함</label>
+								<label class="form-check-label" for="emailNo">수신안함</label>
 							</div>
 						</div>	
 					</div>					
