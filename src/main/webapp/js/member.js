@@ -64,7 +64,7 @@ $(function() {
 
 
 						result += " </td>";
-						result += ` <td class="">${member.banReason}</td>`;
+						result += `<td class="banReason d-none">${member.banReason}</td>`;
 						result += "</tr>";
 
 						$tbody.append(result);
