@@ -3,6 +3,7 @@ package com.miniproject.controller;
 import java.io.IOException;
 
 import com.miniproject.adoption.service.AdoptionListService;
+import com.miniproject.adoption.service.AdoptionWriteFormService;
 import com.miniproject.adoption.service.CommandProcess;
 
 import jakarta.servlet.RequestDispatcher;
@@ -52,7 +53,7 @@ public class AdoptBoardController extends HttpServlet{
 			service = new AdoptionListService();						 
 			viewPage = service.requestProcess(request, response);
 		} else if (command.equals("/AdoptionWriteForm.mvc")) {
-			service = new adoptionWriteForm();						 
+			service = new AdoptionWriteFormService();						 
 			viewPage = service.requestProcess(request, response);
 		} else if (command.equals("/AdoptionWrite.mvc")) {
 			service = new AdoptionWriteService();						 

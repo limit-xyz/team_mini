@@ -13,7 +13,7 @@ public class AdoptionDeleteService implements CommandProcess{
 	@Override
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int postId = Integer.parseInt((request.getParameter("postId"));
+		int postId = Integer.parseInt(request.getParameter("postId"));
 		AdoptionDao01 dao = new AdoptionDao01();
 		dao.deleteAdoption(postId);
 		

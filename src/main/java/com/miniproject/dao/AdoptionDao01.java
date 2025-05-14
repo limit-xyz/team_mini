@@ -432,7 +432,7 @@ public class AdoptionDao01 {
 		} //getAdopTionList
 		
 		// 게시글 삭제
-			public void deleteAdoption(AdoptionWriteDto dto){
+			public void deleteAdoption(int postId){
 			String sql = "DELETE FROM adoption_post WHERE post_id = ?";
 		
 				try{
@@ -460,7 +460,7 @@ public class AdoptionDao01 {
 						
 				try {
 						conn=DBManager.getConnection();
-						pstmt=conn.prepareStatement(sql){
+						pstmt=conn.prepareStatement(sql);{
 		
 				try{
 					 conn = DBManager.getConnection();
@@ -485,7 +485,8 @@ public class AdoptionDao01 {
 				}
 						
 					return result;
-					
+						
+				};
 			}
 			
 			
