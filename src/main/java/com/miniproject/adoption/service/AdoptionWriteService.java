@@ -39,7 +39,7 @@ public class AdoptionWriteService implements CommandProcess{
 		dto.setAnimalTypeMain(animalTypeMain);
 		dto.setAnimalTypeDetail(animalTypeDetail);
 		dto.setImagePath(imagePath);
-		dto.setCreatedAt(new Timestamp(System.currentTimeMillis());
+		dto.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 		dto.setViews(0);
 		
 		//Dao 호출

@@ -432,18 +432,15 @@ public class AdoptionDao01 {
 		} //getAdopTionList
 		
 		// 게시글 삭제
-			public int deleteAdoption(AdoptionWriteDto dto){
-				int result = 0;
-				String sql = "DELETE FROM adoption_post WHERE post_id = ?";
-				
-
-				
+			public void deleteAdoption(AdoptionWriteDto dto){
+			String sql = "DELETE FROM adoption_post WHERE post_id = ?";
+		
 				try{
 					 conn = DBManager.getConnection();
 					 pstmt = conn.prepareStatement(sql);
-					 pstmt.setInt(1, dto.getPostId());
-					 result = pstmt.executeUpdate();
-						
+					 pstmt.setInt(1, postId);
+					 pstmt.executeUpdate();
+											
 				} catch (Exception e) {
 					e.printStackTrace();
 					
@@ -451,7 +448,6 @@ public class AdoptionDao01 {
 					DBManager.close(conn, pstmt, rs);
 				}
 				
-				return result;
 			
 			}
 			
@@ -460,8 +456,11 @@ public class AdoptionDao01 {
 			public int updateAdoption(AdoptionWriteDto dto){
 				int result = 0;
 				String sql = "Update adoption_post Set title = ?, content = ?, type = ?, region = ?, "
-						+ "animal_type_main = ?, animal_type_detail = ?, image_path = ?  WHere post_id =?";
+						+ "WHere post_id =?";
 						
+				try {
+						conn=DBManager.getConnection();
+						pstmt=conn.prepareStatement(sql){
 		
 				try{
 					 conn = DBManager.getConnection();
