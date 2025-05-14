@@ -51,7 +51,11 @@ public class AdoptBoardController extends HttpServlet{
 		if(command.equals("/adoptionList.mvc")) {
 			service = new AdoptionListService();						 
 			viewPage = service.requestProcess(request, response);
-		}
+		} else if (command.equals("/AdoptionWriteService.mvc")) {
+			service = new AdoptionListService();						 
+			viewPage = service.requestProcess(request, response);
+		}	
+			
 		
 		RequestDispatcher rd = null;
 		

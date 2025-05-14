@@ -15,7 +15,7 @@ CREATE TABLE adoption_post(
   image_path VARCHAR@(300),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   views  INT DEFAULT 0
-  --approval_status 
+  --approval_status  <- 입양 /분양 상태를 입양 완료/ 분양완료/ 진행중 대기 상태 등으로 표기할 예정
 );
 
 /* jspbbs에서 사용할 시퀀스

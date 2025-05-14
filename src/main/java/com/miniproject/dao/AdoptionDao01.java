@@ -11,9 +11,9 @@ import java.util.List;
 
 public class AdoptionDao01 {
 
-	Connection conn;
-	PreparedStatement pstmt;
-	ResultSet rs;
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
 		
 	
 	
@@ -104,8 +104,8 @@ public class AdoptionDao01 {
 			String sql = "SELECT * FROM ( "
 					+ "    SELECT ROWNUM num, sub.* FROM "
 					+ "        (SELECT * FROM adoption_post "
-					+ " WHERE type =? and" + searchColumn 
-					+ "			LIKE ? and animal_type_main =? and type=? "
+					+ " WHERE " + searchColumn + "LIKE ?"
+					+ " and animal_type_main =? and type=? "
 					+ " ORDER BY post_id DESC) sub) "
 					+ " WHERE num >= ? AND num <= ?";
 			
@@ -119,9 +119,9 @@ public class AdoptionDao01 {
 				// 3. DB에 SQL 쿼리를 발행하는 객체를 활성화된 커넥션으로부터 구한다.
 				// PreparedStatement
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, type);
-				pstmt.setString(2,  "%" + keyword + "%");			//여기 주석처리 했음 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-				pstmt.setString(3, animalTypeMian);
+				pstmt.setString(1,  "%" + keyword + "%");			//여기 주석처리 했음 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+				pstmt.setString(2, animalTypeMian);
+				pstmt.setString(3, type);
 				pstmt.setInt(4, startRow);
 				pstmt.setInt(5, endRow);
 				
@@ -231,10 +231,6 @@ public class AdoptionDao01 {
 			String sql = "Select * From adoption_post Order by Post_Id Desc";
 			ArrayList<AdoptionWriteDto> list = new ArrayList<>();
 			
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			
 			try {
 				conn = DBManager.getConnection();
 				pstmt = conn.prepareStatement(sql);
@@ -323,9 +319,7 @@ public class AdoptionDao01 {
 			int result = 0;
 			String sql = "INSERT INTO adoption_post (post_id, user_id, title, content, type, region, animal_type_main, animal_type_detail, image_path, created_at, views) "
 					   + "VALUES (adoption_post_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSTIMESTAMP, 0)";
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			
+					
 			try{
 			 conn = DBManager.getConnection();
 			 DBManager.setAutoCommit(conn, false);
@@ -358,10 +352,7 @@ public class AdoptionDao01 {
 			AdoptionWriteDto dto = null;
 			String sql = "SELECT * FROM adoption_post WHERE post_id = ?";
 		
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			
+						
 			try {
 				conn = DBManager.getConnection();
 				pstmt = conn.prepareStatement(sql);
@@ -424,9 +415,7 @@ public class AdoptionDao01 {
 				String sql = "Update adoption_post Set title = ?, content = ?, type = ?, region = ?, "
 						+ "animal_type_main = ?, animal_type_detail = ?, image_path = ?  WHere post_id =?";
 						
-				Connection conn = null;
-				PreparedStatement pstmt = null;
-						
+		
 				try{
 					 conn = DBManager.getConnection();
 					 pstmt = conn.prepareStatement(sql);
@@ -459,9 +448,7 @@ public class AdoptionDao01 {
 		public void increaseViews(int postId){
 				
 				String sql = "Update adoption_post Set views = views + 1 Where post_id =?";
-				Connection conn = null;
-				PreparedStatement pstmt = null;
-				
+			
 				
 				try{
 					conn = DBManager.getConnection();
