@@ -8,7 +8,7 @@ CREATE TABLE adoption_post(
   user_id	 VARCHAR2(50 CHAR) NOT NULL,
   title 	 VARCHAR2(50 CHAR) NOT NULL,
   content  VARCHAR2(1000 CHAR) NOT NULL,
-  type		 VARCHAR2(10) NOT NULL, --'입양' 또는 '분양'
+  adoption_type		 VARCHAR2(10) NOT NULL, --'입양' 또는 '분양'
   region 	 VARCHAR2(100),
   animal_type_main VARCHAR(50),	--'강아지' 또는 '고양이'
   animal_type_detail VARCHAR(50), --'대형견'/'소형견' or '단모종'/장모종'

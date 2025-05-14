@@ -137,7 +137,7 @@ public class AdoptionDao01 {
 	//------------------------------------------------------------------
 	// 제목, 작성자, 내용에 검색어가 포함된 게시 글 리스트를 읽어와 반환하는 메서드
 		public ArrayList<AdoptionWriteDto> searchList( //String approval_status
-				String searchColumn,String keyword, String animalTypeMian,String type, int startRow, int endRow) {
+				String searchColumn,String keyword, String adoptiontype, String animalTypeMain, int startRow, int endRow) {
 			
 			List<String> allowedTypes = Arrays.asList("title", "user_id", "region");
 			if(searchColumn == null || !allowedTypes.contains(searchColumn)) {
@@ -163,8 +163,8 @@ public class AdoptionDao01 {
 				// PreparedStatement
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1,  "%" + keyword + "%");			//여기 주석처리 했음 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-				pstmt.setString(2, animalTypeMian);
-				pstmt.setString(3, type);
+				pstmt.setString(2, adoptiontype);
+				pstmt.setString(3, animalTypeMain);
 				pstmt.setInt(4, startRow);
 				pstmt.setInt(5, endRow);
 				

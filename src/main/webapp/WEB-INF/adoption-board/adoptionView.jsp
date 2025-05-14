@@ -5,7 +5,7 @@
 <h3>${post.title }</h3>
 <p>작성자 : ${post.userId }</p>
 <p>내용 : ${post.content }</p>
-<p>타입 : ${post.type }</p>
+<p>타입 : ${post.adoptionType }</p>
 <p>종류 : ${post.animalTypeMain}(${post.animalTypeDetail} })</p>
 <p>지역 : ${post.region }</p>
 <p>작성일 : ${post.createdAt }</p>
