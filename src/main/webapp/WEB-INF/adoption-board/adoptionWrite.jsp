@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
     <!-- content -->
     <div>
@@ -9,13 +9,16 @@
     <!-- 폼 데이터를 전송 -->
     <h3>입양/분양 게시글 작성</h3>
     <form action="AdoptionWriter.mvc" method="post" enctype="multipart/form-data">
+     <label>제목 : <input type="text" name="title" required></label><br/>
+     <label>작성자 ID : <input type="text" name="userId" required></label><br/>
+    
     <div>
 		<label>입양/분양 선택 : </label>
 	    <select name="type" required>
 	    	<option value="입양">입양</option>
 	    	<option value="분양">분양</option>
 	    </select>	    
-    </div><br><br>
+    </div><br/>
     <div>
     <label>동물 종류 : </label>
 	    <select name="animalTypeMain" id="animalTypeMain" onchange="updateDetailOption()" required>
@@ -26,24 +29,21 @@
 	    	<option value="파충류">파충류</option>
 	    	<option value="어류">어류</option>
 	    </select>	    
-    </div><br><br>
+    </div><br/>
     
     <label>세부 유형 : </label>
     	<select name="animalTypeDetail" id="animalTypeDetail" required>
     	<option value="">동물의 종류를 선택해주세요</option>
-    	</select><br><br>
+    	</select><br/>
     
     <label>지역 : </label>
-    <input type="text" name="region" required> ※ 현재 서비스 지역은 서울지역에 한하여 제공되고 있습니다.<br><br>
+    <input type="text" name="region" > ※ 현재 서비스 지역은 서울지역에 한하여 제공되고 있습니다.<br/>
     
-    <label>제목 : </label>
-    <input type="text" name="title" required><br><br>
+   
+    <label>내용 : <textarea name="content" rews="6" cols="50" required>내용을 입력해주세요</textarea></label><br/>
     
-    <label>내용 : </label>
-    <textarea name="content" required>내용을 입력해주세요</textarea><br><br>
-    
-    <label>이미지 업로드 : </label>
-    <input type="file" name="image"><br><br>
+    <label>이미지 업로드 : 
+    <input type="file" name="imagePath"></label><br/>
     
     <input type ="submit" value="등록">
     

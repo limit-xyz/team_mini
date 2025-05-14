@@ -8,20 +8,21 @@ public class AdoptionWriteDto {
 	private String userId;
 	private String title;
 	private String content;
-	private String type;
+	private String type; // 입양, 분양 중 선택
 	private String region;
-	private String animalTypeMain;
-	private String animalTypeDetail;
+	private String animalTypeMain; // 강아지 고양이 등 대분류
+	private String animalTypeDetail; // 소형견 대형견 장묘종 단묘종 등 소분류
 	private String imagePath;
 	private Timestamp createdAt;
 	private int views;
+	private String approvalStatus; // 입양 진행중 진행 완료 대기중 등 상태 표시용
 	
 	
 	public AdoptionWriteDto() {};
 	
 	public AdoptionWriteDto(int postId, String userId, String title, String content, String type,
             String region, String animalTypeMain, String animalTypeDetail, String imagePath, 
-            Timestamp createdAt, int views) {
+            Timestamp createdAt, int views, String approvalStatus) {
 		this.postId = postId;
 		this.userId = userId;
 		this.title = title;
@@ -33,6 +34,7 @@ public class AdoptionWriteDto {
 		this.imagePath = imagePath;
 		this.createdAt = createdAt;
 		this.views = views;
+		this.approvalStatus = approvalStatus;
 	}
 
 	public int getPostId() {
@@ -121,6 +123,14 @@ public class AdoptionWriteDto {
 
 	public void setViews(int views) {
 		this.views = views;
+	}
+
+	public String getApprovalStatus() {
+		return approvalStatus;
+	}
+
+	public void setApprovalStatus(String approvalStatus) {
+		this.approvalStatus = approvalStatus;
 	}
 
 	

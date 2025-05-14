@@ -16,6 +16,49 @@ public class AdoptionDao01 {
 	ResultSet rs = null;
 		
 	
+	public AdoptionWriteDto getPostById(int postId){
+		
+		String sql = "Select * From adoption_post WHERE Post_Id = ?";
+		AdoptionWriteDto dto = null;
+		
+		
+		try{
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, postId);
+					
+			rs= pstmt.executeQuery();
+			
+			if (rs.next()) {
+				 dto = new AdoptionWriteDto();
+					dto.setPostId(rs.getInt("post_id"));
+					dto.setUserId(rs.getString("user_id"));
+					dto.setTitle(rs.getString("title"));
+					dto.setContent(rs.getString("content"));
+					dto.setType(rs.getString("type"));
+					dto.setRegion(rs.getString("region"));
+					dto.setAnimalTypeMain(rs.getString("animal_type_main"));
+					dto.setAnimalTypeDetail(rs.getString("animal_type_detail"));
+					dto.setImagePath(rs.getString("image_path"));
+					dto.setCreatedAt(rs.getTimestamp("created_at"));
+					dto.setViews(rs.getInt("views"));
+					dto.setApprovalStatus(rs.getString("approval_status"));
+			}
+			DBManager.commit(conn);
+				
+		} catch (Exception e) {
+			DBManager.rollback(conn);
+			e.printStackTrace();
+			
+		} finally { 
+			DBManager.close(conn, pstmt, rs);
+		}
+		
+		return dto;
+	
+	}
+	
 	
 	// 페이지 단위로 게시글 목록 조회
 		public ArrayList<AdoptionWriteDto> boardList(int startRow, int endRow) {
@@ -248,7 +291,8 @@ public class AdoptionDao01 {
 						rs.getString("animal_type_detail"),
 						rs.getString("image_path"),
 						rs.getTimestamp("created_at"),
-						rs.getInt("views")
+						rs.getInt("views"),
+						rs.getString("approvalStatus")
 					);
 					list.add(dto);
 				}
@@ -315,7 +359,7 @@ public class AdoptionDao01 {
 		}
 
 			// 게시글 작성
-		public int insertAdoption(AdoptionWriteDto dto){
+		public int insertAdoptionPost(AdoptionWriteDto dto){
 			int result = 0;
 			String sql = "INSERT INTO adoption_post (post_id, user_id, title, content, type, region, animal_type_main, animal_type_detail, image_path, created_at, views) "
 					   + "VALUES (adoption_post_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSTIMESTAMP, 0)";
@@ -332,6 +376,8 @@ public class AdoptionDao01 {
 				 pstmt.setString(6, dto.getAnimalTypeMain());
 				 pstmt.setString(7, dto.getAnimalTypeDetail());
 				 pstmt.setString(8, dto.getImagePath());
+				 pstmt.setTimestamp(9, dto.getCreatedAt());
+				 pstmt.setInt(10, dto.getViews());
 			
 				 result = pstmt.executeUpdate();
 				 DBManager.commit(conn);
@@ -371,7 +417,8 @@ public class AdoptionDao01 {
 					rs.getString("animal_type_detail"),
 					rs.getString("image_path"),
 					rs.getTimestamp("created_at"),
-					rs.getInt("views")
+					rs.getInt("views"),
+					rs.getString("approvalStatus")
 					);
 			
 			}
