@@ -12,10 +12,10 @@ CREATE TABLE adoption_post(
   region 	 VARCHAR2(100),
   animal_type_main VARCHAR(50),	--'강아지' 또는 '고양이'
   animal_type_detail VARCHAR(50), --'대형견'/'소형견' or '단모종'/장모종'
-  image_path VARCHAR@(300),
+  image_path VARCHAR2(300),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   views  INT DEFAULT 0
-  --approval_status  <- 입양 /분양 상태를 입양 완료/ 분양완료/ 진행중 대기 상태 등으로 표기할 예정
+  approval_status VARCHAR2(20 CHAR)   <- 입양 /분양 상태를 입양 완료/ 분양완료/ 진행중 대기 상태 등으로 표기할 예정
 );
 
 /* jspbbs에서 사용할 시퀀스

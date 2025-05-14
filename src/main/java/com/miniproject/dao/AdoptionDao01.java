@@ -147,7 +147,7 @@ public class AdoptionDao01 {
 			String sql = "SELECT * FROM ( "
 					+ "    SELECT ROWNUM num, sub.* FROM "
 					+ "        (SELECT * FROM adoption_post "
-					+ " WHERE " + searchColumn + "LIKE ?"
+					+ " WHERE " + searchColumn + " LIKE ?"
 					+ " and animal_type_main =? and type=? "
 					+ " ORDER BY post_id DESC) sub) "
 					+ " WHERE num >= ? AND num <= ?";
@@ -292,7 +292,7 @@ public class AdoptionDao01 {
 						rs.getString("image_path"),
 						rs.getTimestamp("created_at"),
 						rs.getInt("views"),
-						rs.getString("approvalStatus")
+						rs.getString("approval_status")
 					);
 					list.add(dto);
 				}
