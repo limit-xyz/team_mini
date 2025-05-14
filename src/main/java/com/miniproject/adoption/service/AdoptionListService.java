@@ -16,12 +16,13 @@ public class AdoptionListService implements CommandProcess {
 	public String requestProcess(
 			HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		AdoptionDao01 dao = new AdoptionDao01();
 		ArrayList<AdoptionWriteDto> list = dao.getAdopTionList();
 		request.setAttribute("adoptionList", list);
 		
 		
-		return "adoption/adiptionList.mvc";
+		return "adoption-board/adoptionList";
 	}
 
 }

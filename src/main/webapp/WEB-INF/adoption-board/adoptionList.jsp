@@ -69,7 +69,7 @@
 	<!-- 검색 게시 글 리스트 이면서 게시글이 없는 경우 -->
 		<c:if test="${searchOption and empty bList}">
 			<tr>
-				<td colspan="5" class="text-center">
+				<td colspan="6" class="text-center">
 					"${keyword}"가 포함된 게시 글이 존재하지 않음
 				</td>
 			</tr>
@@ -78,7 +78,7 @@
 	<!-- 일반 게시 글 리스트 이면서 게시글이 없는 경우 -->
 							<c:if test="${not searchOption and empty bList}">
 								<tr>
-									<td colspan="5" class="text-center">게시 글이 존재하지 않음</td>
+									<td colspan="6" class="text-center">게시 글이 존재하지 않음</td>
 								</tr>
 							</c:if>
 							</tbody>

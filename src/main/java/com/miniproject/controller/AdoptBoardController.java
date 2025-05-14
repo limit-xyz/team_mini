@@ -2,9 +2,8 @@ package com.miniproject.controller;
 
 import java.io.IOException;
 
-import com.miniproject.adoption.service.AdoptionListService;
-import com.miniproject.adoption.service.AdoptionWriteFormService;
-import com.miniproject.adoption.service.CommandProcess;
+import com.miniproject.adoption.service.*;
+
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
@@ -49,14 +48,23 @@ public class AdoptBoardController extends HttpServlet{
 		String viewPage = null;
 		CommandProcess service = null;
 	
-		if(command.equals("/adoptionList.mvc")) {
-			service = new AdoptionListService();						 
+		if(command.equals("/adoptionList.mvc") || command.equals("/*.mvc")) {
+			service = new AdoptionListService();					
 			viewPage = service.requestProcess(request, response);
 		} else if (command.equals("/AdoptionWriteForm.mvc")) {
 			service = new AdoptionWriteFormService();						 
 			viewPage = service.requestProcess(request, response);
 		} else if (command.equals("/AdoptionWrite.mvc")) {
 			service = new AdoptionWriteService();						 
+			viewPage = service.requestProcess(request, response);
+		}	else if (command.equals("/AdoptionDetail.mvc")) {
+			service = new AdoptionDetailService();						 
+			viewPage = service.requestProcess(request, response);
+		}	else if (command.equals("/AdoptionView.mvc")) {
+			service = new AdoptionViewService();						 
+			viewPage = service.requestProcess(request, response);
+		}	else if (command.equals("/AdoptionView.mvc")) {
+			service = new AdoptionViewService();						 
 			viewPage = service.requestProcess(request, response);
 		}	
 			
