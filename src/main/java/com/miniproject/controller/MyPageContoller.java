@@ -1,22 +1,45 @@
 package com.miniproject.controller;
 
+import java.io.File;
 import java.io.IOException;
 
-import com.miniproject.admin.ajax.AdminAjaxController;
-import com.miniproject.admin.service.*;
+import com.miniproject.mypage.service.*;
+import com.miniproject.mypage.ajax.MyPageAjaxController;
 
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "adminController", urlPatterns = "/admin/*")
-public class AdminContoller extends HttpServlet {
+@MultipartConfig(fileSizeThreshold = 1024 * 10, // 10KB
+		maxFileSize = 1024 * 1024 * 10, // 10MB
+		maxRequestSize = 1024 * 1024 * 10 * 10) // 100MB
+
+@WebServlet(name = "myPageController", urlPatterns = "/member/mypage/*")
+public class MyPageContoller extends HttpServlet {
 
 	private final String PREFIX = "/WEB-INF/index.jsp?body=";
 	private final String SUFFIX = ".jsp";
+
+	@Override
+	public void init() throws ServletException {
+
+		ServletContext sc = getServletContext();
+		String uploadDir = sc.getInitParameter("uploadDir");
+		String realPath = sc.getRealPath(uploadDir);
+
+		File parentFile = new File(realPath);
+		if (!(parentFile.exists() && parentFile.isDirectory())) {
+			parentFile.mkdir();
+		}
+		getServletContext().setAttribute("uploadDir", uploadDir);
+		getServletContext().setAttribute("parentFile", parentFile);
+		System.out.println("init - " + parentFile);
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -44,10 +67,10 @@ public class AdminContoller extends HttpServlet {
 
 		CommandProcess service;
 
-//		// admin 검증
+//		// 로그인 여부 검증
 //		String requestId = (String) request.getSession().getAttribute("id");
 //		MemberDao dao = new MemberDao();
-//		boolean isAdmin = dao.isAdmin(requestId);
+//		boolean isLogin = dao.isLogin(requestId);
 //		if (!isAdmin) {
 //			System.out.println("콰과광");
 //			return;
@@ -60,27 +83,27 @@ public class AdminContoller extends HttpServlet {
 			String[] splitTest2 = str.split("\\.");
 
 			if (splitTest2.length > 1 && splitTest2[1].equals("ajax")) {
-				AdminAjaxController ajax = new AdminAjaxController();
+				MyPageAjaxController ajax = new MyPageAjaxController();
 				ajax.doAjax(request, response, str);
 				return;
 			}
 		}
-
-		// 메인 화면, 관리 메뉴들이 존재
-		if (command.equals("/admin/main") || command.equals("/admin/*")) {
-			service = new AdminMainService();
-			viewPage = service.requestProcess(request, response);
+	
+		// 예약 목록 확인 화면
+		if (command.equals("/member/mypage/reservation")) {
+//			service = new AdminMainService();
+//			viewPage = service.requestProcess(request, response);
 		}
 
-		// 멤버 관리 화면
-		else if (command.equals("/admin/member")) {
-			service = new MemberListService();
-			viewPage = service.requestProcess(request, response);
+		// 자신의 게시글 목록 화면
+		else if (command.equals("/member/mypage/boards")) {
+//			service = new InquiryListService();
+//			viewPage = service.requestProcess(request, response);
 		}
-		
-		// 문의내역 관리 화면
-		else if (command.equals("/admin/inquiry")) {
-			service = new InquiryListService();
+
+		// 반려동물 다이어리 화면
+		else if (command.equals("/member/mypage/diary")) {
+			service = new DiaryListService();
 			viewPage = service.requestProcess(request, response);
 		}
 
@@ -101,7 +124,6 @@ public class AdminContoller extends HttpServlet {
 				rd.forward(request, response);
 			}
 		}
-
 	}
 
 }

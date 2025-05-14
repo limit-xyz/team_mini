@@ -6,7 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class AjaxController {
+public class AdminAjaxController {
 
 	public void doAjax(HttpServletRequest request, HttpServletResponse response, String command)
 			throws ServletException, IOException {
