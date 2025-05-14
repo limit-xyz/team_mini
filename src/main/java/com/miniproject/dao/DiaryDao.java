@@ -17,6 +17,39 @@ public class DiaryDao {
 	public DiaryDao() {
 	}
 
+	// 다이어리 상세 가져오기
+	public Diary getDiary(int no) {
+
+		String diaryDetailSql = "SELECT * FROM diary WHERE diary_no=?";
+
+		Diary diary = null;
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(diaryDetailSql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				diary = new Diary();
+
+				diary.setNo(rs.getInt("diary_no"));
+				diary.setMemberId(rs.getString("member_id"));
+				diary.setPetName(rs.getString("pet_name"));
+				diary.setTitle(rs.getString("title"));
+				diary.setContent(rs.getString("content"));
+				diary.setRegDate(rs.getTimestamp("reg_date"));
+				diary.setPhoto(rs.getString("photo"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return diary;
+	}
+
 	// 다이어리 목록 가져오기
 	public ArrayList<Diary> getDiaryList(String id) {
 

@@ -88,22 +88,46 @@ public class MyPageContoller extends HttpServlet {
 				return;
 			}
 		}
-	
-		// 예약 목록 확인 화면
+
+		// 예약 목록 확인
 		if (command.equals("/member/mypage/reservation")) {
 //			service = new AdminMainService();
 //			viewPage = service.requestProcess(request, response);
 		}
 
-		// 자신의 게시글 목록 화면
+		// 자신의 게시글 목록
 		else if (command.equals("/member/mypage/boards")) {
 //			service = new InquiryListService();
 //			viewPage = service.requestProcess(request, response);
 		}
 
-		// 반려동물 다이어리 화면
-		else if (command.equals("/member/mypage/diary")) {
+		// 반려동물 다이어리 리스트
+		else if (command.equals("/member/mypage/diaryList")) {
 			service = new DiaryListService();
+			viewPage = service.requestProcess(request, response);
+		}
+
+		// 반려동물 다이어리 상세
+		else if (command.equals("/member/mypage/diaryDetail")) {
+			service = new DiaryDetailService();
+			viewPage = service.requestProcess(request, response);
+		}
+
+		// 반려동물 다이어리 수정 폼 요청
+		else if (command.equals("/member/mypage/diaryUpdateForm")) {
+			service = new DiaryUpdateFormService();
+			viewPage = service.requestProcess(request, response);
+		}
+
+		// 반려동물 다이어리 수정
+		else if (command.equals("/member/mypage/diaryUpdateProcess")) {
+			service = new DiaryUpdateService();
+			viewPage = service.requestProcess(request, response);
+		}
+
+		// 반려동물 다이어리 삭제
+		else if (command.equals("/member/mypage/diaryDelete")) {
+			service = new DiaryDeleteService();
 			viewPage = service.requestProcess(request, response);
 		}
 

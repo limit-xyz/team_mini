@@ -25,7 +25,7 @@
 				<a href="${pageContext.request.contextPath}/member/mypage/reservation"  class="p-3" style="border: 1px solid black; background-color:#EEE;">예약 내역 보기</a>
 			</div>
 				<div class="col">
-				<a href="${pageContext.request.contextPath}/member/mypage/diary"  class="p-3" style="border: 1px solid black; background-color:#EEE;">다이어리 보기</a>
+				<a href="${pageContext.request.contextPath}/member/mypage/diaryList"  class="p-3" style="border: 1px solid black; background-color:#EEE;">다이어리 보기</a>
 			</div>
 				<div class="col">
 				<a href="${pageContext.request.contextPath}/member/mypage/boards"  class="p-3" style="border: 1px solid black; background-color:#EEE;">작성 게시글 보기</a>

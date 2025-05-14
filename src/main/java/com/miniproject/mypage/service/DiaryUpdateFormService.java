@@ -10,27 +10,22 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class DiaryListService implements CommandProcess {
+public class DiaryUpdateFormService implements CommandProcess {
 
 	@Override
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		ArrayList<Diary> diaryList = new ArrayList<>();
+		Diary diary = null;
 		
-		String id = (String) request.getSession().getAttribute("id");
-		
-		// 임시 사용
-		if (id == null) {	
-			id = "user02";
-		}
+		int no = Integer.parseInt(request.getParameter("no"));
 		
 		DiaryDao dao = new DiaryDao();
-		diaryList = dao.getDiaryList(id);
+		diary = dao.getDiary(no);
 	   
-		request.setAttribute("diaryList", diaryList);
+		request.setAttribute("diary", diary);
 		
-		return "member/mypage/diaryList";
+		return "member/mypage/diaryDetail";
 	}
 
 }
