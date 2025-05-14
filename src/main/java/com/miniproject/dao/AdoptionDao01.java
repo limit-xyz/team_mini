@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class AdoptionDao01 {
@@ -92,14 +94,23 @@ public class AdoptionDao01 {
 	//------------------------------------------------------------------
 	// 제목, 작성자, 내용에 검색어가 포함된 게시 글 리스트를 읽어와 반환하는 메서드
 		public ArrayList<AdoptionWriteDto> searchList( //String approval_status
-				String type, String AnimalTypeMian, int startRow, int endRow) {
+				String searchColumn,String keyword, String animalTypeMian,String type, int startRow, int endRow) {
 			
-			String sqlBoardList = "SELECT * FROM ( "
+			List<String> allowedTypes = Arrays.asList("title", "user_id", "region");
+			if(searchColumn == null || !allowedTypes.contains(searchColumn)) {
+				throw new IllegalArgumentException("허용되지 않은 검색 컬럼 입니다." + searchColumn);
+			}
+			
+			String sql = "SELECT * FROM ( "
 					+ "    SELECT ROWNUM num, sub.* FROM "
-					+ "        (SELECT * FROM adoption_post WHERE " + type 
-					+ "			LIKE ? ORDER BY no DESC) sub) "
+					+ "        (SELECT * FROM adoption_post "
+					+ " WHERE type =? and" + searchColumn 
+					+ "			LIKE ? and animal_type_main =? and type=? "
+					+ " ORDER BY post_id DESC) sub) "
 					+ " WHERE num >= ? AND num <= ?";
-			ArrayList<AdoptionWriteDto> bList = null;
+			
+			ArrayList<AdoptionWriteDto> bList = new ArrayList<>();
+			
 			
 			try {			
 				// 2. DB에 연결
@@ -107,29 +118,31 @@ public class AdoptionDao01 {
 				
 				// 3. DB에 SQL 쿼리를 발행하는 객체를 활성화된 커넥션으로부터 구한다.
 				// PreparedStatement
-				pstmt = conn.prepareStatement(sqlBoardList);
-//				pstmt.setString(1,  "%" + keyword + "%");			여기 주석처리 했음 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-				pstmt.setInt(2, startRow);
-				pstmt.setInt(3, endRow);
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, type);
+				pstmt.setString(2,  "%" + keyword + "%");			//여기 주석처리 했음 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+				pstmt.setString(3, animalTypeMian);
+				pstmt.setInt(4, startRow);
+				pstmt.setInt(5, endRow);
 				
 				// 4. 쿼리를 발행하여 SELECT한 결과를 ResultSet 객체로 받는다.
 				rs = pstmt.executeQuery();
 				
-				// 여러 개의 Board 객체를 담을 ArrayList를 사용
-				bList = new ArrayList<>();
+				
 				
 				// 5. 쿼리를 실행 결과를 while 반복하면서 Board 객체에 담고 List 담는다.
 				while(rs.next()) {
-					AdoptionWriteDto b = new AdoptionWriteDto();
-					b.setPostId(rs.getInt("post_id"));
-					b.setTitle(rs.getString("title"));
-					b.setUserId(rs.getString("user_id"));
-					b.setCreatedAt(rs.getTimestamp("created_at"));
-					b.setViews(rs.getInt("views"));
+					AdoptionWriteDto dto = new AdoptionWriteDto();
+					dto.setPostId(rs.getInt("post_id"));
+					dto.setTitle(rs.getString("title"));
+					dto.setUserId(rs.getString("user_id"));
+					dto.setCreatedAt(rs.getTimestamp("created_at"));
+					dto.setViews(rs.getInt("views"));
 					// b.setApprovalStatus(rs.getString("approval_status"));
-					b.setImagePath(rs.getString("image_path"));
+					dto.setImagePath(rs.getString("image_path"));
+					dto.setType(rs.getString("type"));
 					
-					bList.add(b);
+					bList.add(dto);
 				}
 			} catch(SQLException e) {
 				e.printStackTrace();
