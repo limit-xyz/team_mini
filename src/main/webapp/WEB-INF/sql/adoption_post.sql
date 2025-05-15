@@ -24,30 +24,12 @@ CREATE TABLE adoption_post(
 DROP SEQUENCE adoption_seq;
 
 CREATE SEQUENCE adoption_seq;
-START WITH 1
-INCREMENT BY 1
-NOCACHE;
-
-CREATE OR REPLACE TRIGGER adoption_post_trigger
-BEFORE INSERT ON adoption_post
-FOR EACH ROW
-BEGIN
-  -- 시퀀스를 사용하여 post_id 값 설정
-  SELECT adoption_seq.NEXTVAL
-  INTO :new.post_id
-  FROM dual;
-
-  -- created_at 기본값 설정
-  :new.created_at := SYSDATE;
-
-  -- views_count 기본값 설정
-  :new.views_count := 0; -- views_count에 0을 설정
-END;
 
 
 
 -- 페이징 처리와 댓글 처리를 위해서 아래 SQL 쿼리를 COMMIT까지 10번 실행 한다. 
 -- 주의 : 199번과 200번 게시글을 댓글(reply) 테이블에서 참조하고 있음
+<<<<<<< HEAD
 <<<<<<< HEAD
 INSERT INTO adoption_post (user_id, title, content, type, region, animal_type_main, animal_type_detail, image_path, created_at, views)
 VALUES 
@@ -69,104 +51,103 @@ VALUES
 =======
 INSERT INTO adoption_post (
   user_id, title, content, adoption_type, region, animal_type_main,
+=======
+INSERT INTO adoption_post ( 
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
+>>>>>>> 7734db3768a0161c92d120c35106af81eae384fc
   animal_type_detail, image_path, created_at, views_count, approval_status
 ) VALUES
-('user_dog01', '말티즈 강아지 입양 보내요', '작고 귀여운 말티즈, 건강하고 활발해요.', '입양', '서울 마포구', '강아지', '소형견', 'images/maltese1.jpg', CURRENT_TIMESTAMP, 5, '진행중');
+(adoption_seq.NEXTVAL, 'user_dog01', '말티즈 강아지 입양 보내요', '작고 귀여운 말티즈, 건강하고 활발해요.', '입양', '서울 마포구', '강아지', '소형견', 'images/maltese1.jpg', CURRENT_TIMESTAMP, 5, '진행중');
 
 INSERT INTO adoption_post (
-  user_id, title, content, adoption_type, region, animal_type_main,
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
   animal_type_detail, image_path, created_at, views_count, approval_status
 ) VALUES
-('user_cat02', '러시안블루 고양이 분양', '순하고 조용한 러시안블루입니다.', '분양', '서울 송파구', '고양이', '단모종', 'images/russianblue.jpg', CURRENT_TIMESTAMP, 9, '분양 완료');
+(adoption_seq.NEXTVAL, 'user_cat02', '러시안블루 고양이 분양', '순하고 조용한 러시안블루입니다.', '분양', '서울 송파구', '고양이', '단모종', 'images/russianblue.jpg', CURRENT_TIMESTAMP, 9, '분양 완료');
 
 INSERT INTO adoption_post (
-  user_id, title, content, adoption_type, region, animal_type_main,
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
   animal_type_detail, image_path, created_at, views_count, approval_status
 ) VALUES
-('parrot_lover', '알록달록한 앵무새 입양', '말을 따라하는 똑똑한 앵무새예요.', '입양', '서울 종로구', '새', '앵무새', 'images/parrot2.jpg', CURRENT_TIMESTAMP, 11, '진행중');
+(adoption_seq.NEXTVAL, 'parrot_lover', '알록달록한 앵무새 입양', '말을 따라하는 똑똑한 앵무새예요.', '입양', '서울 종로구', '새', '앵무새', 'images/parrot2.jpg', CURRENT_TIMESTAMP, 11, '진행중');
 
 INSERT INTO adoption_post (
-  user_id, title, content, adoption_type, region, animal_type_main,
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
   animal_type_detail, image_path, created_at, views_count, approval_status
 ) VALUES
-('fish_fan', '열대어와 어항 분양', '다양한 열대어 포함된 어항입니다.', '분양', '서울 강서구', '어류', '4자 어항류', 'images/fish_tank.jpg', CURRENT_TIMESTAMP, 7, '진행중');
+(adoption_seq.NEXTVAL, 'fish_fan', '열대어와 어항 분양', '다양한 열대어 포함된 어항입니다.', '분양', '서울 강서구', '어류', '4자 어항류', 'images/fish_tank.jpg', CURRENT_TIMESTAMP, 7, '진행중');
 
 INSERT INTO adoption_post (
-  user_id, title, content, adoption_type, region, animal_type_main,
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
   animal_type_detail, image_path, created_at, views_count, approval_status
 ) VALUES
-('rabbit_mom', '토끼 입양 보내요', '아기 토끼 2마리 함께 입양 보냅니다.', '입양', '서울 은평구', '포유류', '토끼', 'images/rabbit2.jpg', CURRENT_TIMESTAMP, 4, '진행중');
+(adoption_seq.NEXTVAL, 'rabbit_mom', '토끼 입양 보내요', '아기 토끼 2마리 함께 입양 보냅니다.', '입양', '서울 은평구', '포유류', '토끼', 'images/rabbit2.jpg', CURRENT_TIMESTAMP, 4, '진행중');
 
 INSERT INTO adoption_post (
-  user_id, title, content, adoption_type, region, animal_type_main,
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
   animal_type_detail, image_path, created_at, views_count, approval_status
 ) VALUES
-('snake_user', '옥수수뱀 분양합니다', '온순한 파충류이며 관리 잘 되어 있습니다.', '분양', '서울 중랑구', '파충류', '뱀', 'images/cornsnake.jpg', CURRENT_TIMESTAMP, 6, '분양 완료');
+(adoption_seq.NEXTVAL, 'snake_user', '옥수수뱀 분양합니다', '온순한 파충류이며 관리 잘 되어 있습니다.', '분양', '서울 중랑구', '파충류', '뱀', 'images/cornsnake.jpg', CURRENT_TIMESTAMP, 6, '분양 완료');
 
 INSERT INTO adoption_post (
-  user_id, title, content, adoption_type, region, animal_type_main,
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
   animal_type_detail, image_path, created_at, views_count, approval_status
 ) VALUES
-('mix_dog01', '믹스견 입양 원해요', '중형 믹스견으로 사람을 좋아해요.', '입양', '서울 강북구', '강아지', '중형견', 'images/mixdog.jpg', CURRENT_TIMESTAMP, 3, '진행중');
+(adoption_seq.NEXTVAL, 'mix_dog01', '믹스견 입양 원해요', '중형 믹스견으로 사람을 좋아해요.', '입양', '서울 강북구', '강아지', '중형견', 'images/mixdog.jpg', CURRENT_TIMESTAMP, 3, '진행중');
 
 INSERT INTO adoption_post (
-  user_id, title, content, adoption_type, region, animal_type_main,
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
   animal_type_detail, image_path, created_at, views_count, approval_status
 ) VALUES
-('cat_lady33', '아기 고양이 분양', '2개월 된 아기 고양이입니다.', '분양', '서울 동대문구', '고양이', '단모종', 'images/kitten.jpg', CURRENT_TIMESTAMP, 10, '진행중');
+(adoption_seq.NEXTVAL, 'cat_lady33', '아기 고양이 분양', '2개월 된 아기 고양이입니다.', '분양', '서울 동대문구', '고양이', '단모종', 'images/kitten.jpg', CURRENT_TIMESTAMP, 10, '진행중');
 
 INSERT INTO adoption_post (
-  user_id, title, content, adoption_type, region, animal_type_main,
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
   animal_type_detail, image_path, created_at, views_count, approval_status
 ) VALUES
-('hedgie_home', '고슴도치 입양 보내요', '순한 성격의 고슴도치입니다.', '입양', '서울 서대문구', '포유류', '고슴도치', 'images/hedgehog2.jpg', CURRENT_TIMESTAMP, 2, '입양 완료');
+(adoption_seq.NEXTVAL, 'hedgie_home', '고슴도치 입양 보내요', '순한 성격의 고슴도치입니다.', '입양', '서울 서대문구', '포유류', '고슴도치', 'images/hedgehog2.jpg', CURRENT_TIMESTAMP, 2, '입양 완료');
 
 INSERT INTO adoption_post (
-  user_id, title, content, adoption_type, region, animal_type_main,
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
   animal_type_detail, image_path, created_at, views_count, approval_status
 ) VALUES
-('labrador_dad', '래브라도 리트리버 분양', '아이들과 잘 지냅니다.', '분양', '서울 용산구', '강아지', '대형견', 'images/labrador2.jpg', CURRENT_TIMESTAMP, 8, '분양 완료');
+(adoption_seq.NEXTVAL, 'labrador_dad', '래브라도 리트리버 분양', '아이들과 잘 지냅니다.', '분양', '서울 용산구', '강아지', '대형견', 'images/labrador2.jpg', CURRENT_TIMESTAMP, 8, '분양 완료');
 
 INSERT INTO adoption_post (
-  user_id, title, content, adoption_type, region, animal_type_main,
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
   animal_type_detail, image_path, created_at, views_count, approval_status
 ) VALUES
-('canary_fan', '노란 카나리아 입양 보낼게요', '노래 잘 부르는 새입니다.', '입양', '서울 중구', '새', '카나리아', 'images/canary2.jpg', CURRENT_TIMESTAMP, 3, '진행중');
+(adoption_seq.NEXTVAL, 'canary_fan', '노란 카나리아 입양 보낼게요', '노래 잘 부르는 새입니다.', '입양', '서울 중구', '새', '카나리아', 'images/canary2.jpg', CURRENT_TIMESTAMP, 3, '진행중');
 
 INSERT INTO adoption_post (
-  user_id, title, content, adoption_type, region, animal_type_main,
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
   animal_type_detail, image_path, created_at, views_count, approval_status
 ) VALUES
-('aqua_love', '금붕어 분양', '아이들이 키우던 금붕어입니다.', '분양', '서울 강남구', '어류', '2자 어항류', 'images/goldfish2.jpg', CURRENT_TIMESTAMP, 9, '분양 완료');
+(adoption_seq.NEXTVAL, 'aqua_love', '금붕어 분양', '아이들이 키우던 금붕어입니다.', '분양', '서울 강남구', '어류', '2자 어항류', 'images/goldfish2.jpg', CURRENT_TIMESTAMP, 9, '분양 완료');
 
 INSERT INTO adoption_post (
-  user_id, title, content, adoption_type, region, animal_type_main,
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
   animal_type_detail, image_path, created_at, views_count, approval_status
 ) VALUES
-('cat_baby', '장모종 고양이 입양', '털 빠짐 많지만 애교 많은 아이예요.', '입양', '서울 도봉구', '고양이', '장모종', 'images/longfurcat.jpg', CURRENT_TIMESTAMP, 6, '진행중');
+(adoption_seq.NEXTVAL, 'cat_baby', '장모종 고양이 입양', '털 빠짐 많지만 애교 많은 아이예요.', '입양', '서울 도봉구', '고양이', '장모종', 'images/longfurcat.jpg', CURRENT_TIMESTAMP, 6, '진행중');
 
 INSERT INTO adoption_post (
-  user_id, title, content, adoption_type, region, animal_type_main,
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
   animal_type_detail, image_path, created_at, views_count, approval_status
 ) VALUES
-('ferret_love', '페럿 분양합니다', '훈련이 잘 되어 있습니다.', '분양', '서울 관악구', '포유류', '페럿', 'images/ferret.jpg', CURRENT_TIMESTAMP, 4, '진행중');
+(adoption_seq.NEXTVAL, 'ferret_love', '페럿 분양합니다', '훈련이 잘 되어 있습니다.', '분양', '서울 관악구', '포유류', '페럿', 'images/ferret.jpg', CURRENT_TIMESTAMP, 4, '진행중');
 
 INSERT INTO adoption_post (
-  user_id, title, content, adoption_type, region, animal_type_main,
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
   animal_type_detail, image_path, created_at, views_count, approval_status
 ) VALUES
-('shiba_dog', '시바견 입양 원해요', '활발하고 똑똑한 시바견입니다.', '입양', '서울 성북구', '강아지', '중형견', 'images/shiba.jpg', CURRENT_TIMESTAMP, 7, '진행중');
+(adoption_seq.NEXTVAL, 'shiba_dog', '시바견 입양 원해요', '활발하고 똑똑한 시바견입니다.', '입양', '서울 성북구', '강아지', '중형견', 'images/shiba.jpg', CURRENT_TIMESTAMP, 7, '진행중');
 
 
 
 >>>>>>> 02af519f4e532e2896570b5d096daca67b890fbf
 COMMIT;
 SELECT * FROM adoption_post;
-
-
-
-
-
 
 
 
@@ -217,4 +198,3 @@ INSERT INTO reply(no, bbs_no, reply_content, reply_writer, reg_date) VALUES(repl
 
 commit;
 SELECT * FROM reply;
-
