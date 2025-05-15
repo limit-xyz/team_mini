@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.jspstudy.ch06.dao.DBManager;
+
 
 public class AdoptionDao01 {
 
@@ -114,12 +116,12 @@ public class AdoptionDao01 {
 	//----------------------------------------------------------
 	// 전체 게시글 수를 읽어오는 메서드 - paging 처리에 사용
 		public int getBoardCount() {
-			String sqlBoard = "SELECT COUNT(*) FROM adoption_post";
+			String sql = "SELECT COUNT(*) FROM adoption_post";
 			int count = 0;
 			
 			try {
 				conn = DBManager.getConnection();		
-				pstmt = conn.prepareStatement(sqlBoard);			
+				pstmt = conn.prepareStatement(sql);			
 				rs = pstmt.executeQuery();
 
 				if(rs.next()) {
@@ -203,13 +205,13 @@ public class AdoptionDao01 {
 	// 검색어가 포함된 게시글 수를 읽어오는 메서드 - 검색 paging 처리에 사용
 		public int getBoardCount(String adoption_type, String keyword) {
 			// title, writer, content
-			String sqlBoard = "SELECT COUNT(*) FROM adoption_post "
+			String sql = "SELECT COUNT(*) FROM adoption_post "
 					+ " WHERE " + adoption_type + " LIKE '%' || ? || '%'";
 			int count = 0;
 			
 			try {
 				conn = DBManager.getConnection();		
-				pstmt = conn.prepareStatement(sqlBoard);
+				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, keyword);
 				rs = pstmt.executeQuery();
 
@@ -233,6 +235,7 @@ public class AdoptionDao01 {
 		String replyListSql = "SELECT * FROM reply WHERE bbs_no=? "
 							+ " ORDER BY no DESC";		
 		ArrayList<Reply> replyList = null;
+		
 		
 		try {			
 			// 2. DB에 연결
@@ -269,12 +272,48 @@ public class AdoptionDao01 {
 		}
 		
 		*/
+		// 게시 글 수정, 삭제시 게시 글 비밀번호가 맞는지 체크하는 메서드
+		public boolean isUserIdCheck(int postId, String userId) {
+			
+			String sql = "SELECT userId FROM adoption_post WHERE no=?";
+			boolean isUserId = false;
+			
+			try {			
+				// 2. DB에 연결
+				conn = DBManager.getConnection();
+				
+				// 3. DB에 SQL 쿼리를 발행하는 객체를 활성화된 커넥션으로부터 구한다.
+				// PreparedStatement
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, postId);			
+				
+				// 4. 쿼리를 발행하여 SELECT한 결과를 ResultSet 객체로 받는다.
+				rs = pstmt.executeQuery();
+				
+				// 5. 쿼리를 실행 결과를 while 반복하면서 Board 객체에 담고 List 담는다.
+				if(rs.next()) {
+					isUserId = rs.getString(1).equals(userId);
+				}			
+				
+			} catch(SQLException e) {
+				e.printStackTrace();
+				
+			} finally {
+				// 6. DB 작업에 사용한 객체는 처음 가져온 역순으로 닫다.
+				DBManager.close(conn, pstmt, rs);
+			}
+			
+			return isUserId;
+		} // end isPassCheck()	
+		
+		
+		
 		
 		//---------------------------------------------------------
 		// 게시글 전체 조회
 		public ArrayList<AdoptionWriteDto> getAdopTionList(){
 			String sql = "Select * From adoption_post Order by Post_Id Desc";
-			ArrayList<AdoptionWriteDto> blist = new ArrayList<>();
+			ArrayList<AdoptionWriteDto> blist = null;
 			
 			try {
 				conn = DBManager.getConnection();
@@ -436,11 +475,12 @@ public class AdoptionDao01 {
 		
 		// 게시글 삭제
 			public void deleteAdoption(int postId){
-			String sql = "DELETE FROM adoption_post WHERE post_id = ?";
+			String deleteAdoption = "DELETE FROM adoption_post WHERE post_id = ?";
 		
+			
 				try{
 					 conn = DBManager.getConnection();
-					 pstmt = conn.prepareStatement(sql);
+					 pstmt = conn.prepareStatement(deleteAdoption);
 					 pstmt.setInt(1, postId);
 					 pstmt.executeUpdate();
 											
@@ -448,9 +488,10 @@ public class AdoptionDao01 {
 					e.printStackTrace();
 					
 				} finally { 
-					DBManager.close(conn, pstmt, rs);
+					DBManager.close(conn, pstmt);
 				}
 				
+			
 			
 			}
 			

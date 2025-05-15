@@ -22,7 +22,7 @@ public class AdoptionListService implements CommandProcess {
 			throws ServletException, IOException {
 		
 		String pageNum = request.getParameter("pageNum");
-		String searchColumn = request.getParameter("serchColumn");
+		String searchColumn = request.getParameter("searchColumn");
 		String keyword = request.getParameter("keyword");		
 		String adoptionType = request.getParameter("adoptionType");
 		String animalTypeMain = request.getParameter("animalTypeMain");
