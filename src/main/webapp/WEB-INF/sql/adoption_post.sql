@@ -30,9 +30,6 @@ CREATE SEQUENCE adoption_seq;
 -- 페이징 처리와 댓글 처리를 위해서 아래 SQL 쿼리를 COMMIT까지 10번 실행 한다. 
 -- 주의 : 199번과 200번 게시글을 댓글(reply) 테이블에서 참조하고 있음
 
-INSERT INTO adoption_post (
-  user_id, title, content, adoption_type, region, animal_type_main,
-=======
 INSERT INTO adoption_post ( 
   post_id, user_id, title, content, adoption_type, region, animal_type_main,
   animal_type_detail, image_path, created_at, views_count, approval_status
