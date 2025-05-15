@@ -372,11 +372,11 @@ $(function() {
 			return false;
 		}
 		
-		url = "idCheck.member?id=" + id;
+		url = "idCheck?id=" + id;
 		
-		// 새 창을 띄워서 서버로 요청을 보낸다.
-		window.open(url, "idCheck", "toolbar=no, scrollbars=no, resizeable=no, " 
-			+"status=no, menubar=no, width=500, height=400");
+		// 수정 후
+		let features = "toolbar=no,scrollbars=no,resizable=no,status=no,menubar=no,width=500,height=400";
+		window.open(url, "idCheck", features);
 		
 	});
 		

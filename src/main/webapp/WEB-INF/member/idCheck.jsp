@@ -9,9 +9,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="bootstrap/bootstrap.min.css" rel="stylesheet" >
-<script src="js/jquery-3.7.1.min.js"></script>
-<script src="js/member.js"></script>
+<link href="${pageContext.request.contextPath}/bootstrap/bootstrap.min.css" rel="stylesheet" >
+<script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/member.js"></script>
 <title>중복 아이디 체크</title>
 </head>
 <body>
@@ -66,7 +66,7 @@
 					</div>	
 				</div>	
 					<script>
-					/*
+					/*  
 						// 새창으로 띄운 아이디 중복 확인 창에서 "아이디 사용 버튼" 이벤트 처리
 						let btn  = document.querySelector("#btnIdCheckClose");
 					

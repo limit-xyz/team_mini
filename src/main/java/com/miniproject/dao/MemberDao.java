@@ -18,29 +18,117 @@ public class MemberDao {
 	}
 
 	// 멤버 목록 가져오기
-	public ArrayList<Member> getMemberList() {
+		public ArrayList<Member> getMemberList() {
 
-		String memberListSql = "SELECT * FROM member";
+			String memberListSql = "SELECT * FROM member";
 
-		ArrayList<Member> memberList = null;
+			ArrayList<Member> memberList = null;
 
-		try {
-			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(memberListSql);
-			rs = pstmt.executeQuery();
+			try {
+				conn = DBManager.getConnection();
+				pstmt = conn.prepareStatement(memberListSql);
+				rs = pstmt.executeQuery();
 
-			if (rs.next()) {
+				if (rs.next()) {
 
-				memberList = new ArrayList<Member>();
+					memberList = new ArrayList<Member>();
 
-				do {
-					Member member = new Member();
+					do {
+						Member member = new Member();
+						member.setId(rs.getString("id"));
+						member.setName(rs.getString("name"));
+						member.setPassword(rs.getString("password"));
+						member.setGender(rs.getString("gender"));
+						member.setMobile(rs.getString("mobile"));
+						member.setZipcode(rs.getString("zipcode"));
+						member.setAddress1(rs.getString("address1"));
+						member.setAddress2(rs.getString("address2"));
+						member.setEmail(rs.getString("email"));
+						member.setRegDate(rs.getTimestamp("reg_date"));
+						member.setIntroduction(rs.getString("introduction"));
+						member.setBirthDate(rs.getTimestamp("birth_date"));
+						member.setBanDate(rs.getTimestamp("ban_date"));
+						member.setBanReason(rs.getString("ban_reason"));
+						member.setRole(rs.getString("role"));
+
+						member.setBan(member.getBanDate());
+
+						memberList.add(member);
+
+					} while (rs.next());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+
+			} finally {
+				DBManager.close(conn, pstmt, rs);
+			}
+			return memberList;
+		}
+
+		// 멤버 역할 변경
+		public String roleMember(String id, String role, boolean isChange) {
+			String changeRoleSql = "UPDATE member SET role=? WHERE id=?";
+			String getRoleSql = "SELECT role FROM member WHERE id=?";
+
+			try {
+				conn = DBManager.getConnection();
+				if (isChange) {
+					pstmt = conn.prepareStatement(changeRoleSql);
+					pstmt.setString(1, role);
+					pstmt.setString(2, id);
+					pstmt.executeUpdate();
+				} else {
+					pstmt = conn.prepareStatement(getRoleSql);
+					pstmt.setString(1, id);
+					rs = pstmt.executeQuery();
+
+					if (rs.next()) {
+						role = rs.getString("role");
+					}
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+
+			} finally {
+				DBManager.close(conn, pstmt, rs);
+			}
+
+			return role;
+		}
+
+
+		// 멤버 차단하고, 갱신된 차단일자 저장
+		public Member banMember(String id, String reason, int banDate) {
+			String banMemberSql = "UPDATE member SET ban_date = SYSDATE + ?, ban_reason=? WHERE id=?";
+			String getMemberSql = "SELECT * FROM member WHERE id=?";
+
+			Member member = null;
+
+			try {
+				conn = DBManager.getConnection();
+				pstmt = conn.prepareStatement(banMemberSql);
+				pstmt.setInt(1, banDate);
+				pstmt.setString(2, reason);
+				pstmt.setString(3, id);
+				pstmt.executeUpdate();
+
+				pstmt = conn.prepareStatement(getMemberSql);
+				pstmt.setString(1, id);
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					member = new Member();
+
 					member.setId(rs.getString("id"));
 					member.setName(rs.getString("name"));
 					member.setPassword(rs.getString("password"));
 					member.setGender(rs.getString("gender"));
 					member.setMobile(rs.getString("mobile"));
-					member.setAddress(rs.getString("address"));
+					member.setZipcode(rs.getString("zipcode"));
+					member.setAddress1(rs.getString("address1"));
+					member.setAddress2(rs.getString("address2"));
 					member.setEmail(rs.getString("email"));
 					member.setRegDate(rs.getTimestamp("reg_date"));
 					member.setIntroduction(rs.getString("introduction"));
@@ -50,135 +138,52 @@ public class MemberDao {
 					member.setRole(rs.getString("role"));
 
 					member.setBan(member.getBanDate());
-
-					memberList.add(member);
-
-				} while (rs.next());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		} finally {
-			DBManager.close(conn, pstmt, rs);
-		}
-		return memberList;
-	}
-
-	// 멤버 역할 변경
-	public String roleMember(String id, String role, boolean isChange) {
-		String changeRoleSql = "UPDATE member SET role=? WHERE id=?";
-		String getRoleSql = "SELECT role FROM member WHERE id=?";
-
-		try {
-			conn = DBManager.getConnection();
-			if (isChange) {
-				pstmt = conn.prepareStatement(changeRoleSql);
-				pstmt.setString(1, role);
-				pstmt.setString(2, id);
-				pstmt.executeUpdate();
-			} else {
-				pstmt = conn.prepareStatement(getRoleSql);
-				pstmt.setString(1, id);
-				rs = pstmt.executeQuery();
-
-				if (rs.next()) {
-					role = rs.getString("role");
 				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+
+			} finally {
+				DBManager.close(conn, pstmt, rs);
 			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		} finally {
-			DBManager.close(conn, pstmt, rs);
+			return member;
 		}
 
-		return role;
-	}
+		// 멤버 차단 해제
+		public void releaseMember(String id) {
+			String releaseMemberSql = "UPDATE member SET ban_date = SYSDATE-1 WHERE id=?";
 
-	// 멤버 차단하고, 갱신된 차단일자 저장
-	public Member banMember(String id, String reason, int banDate) {
-		String banMemberSql = "UPDATE member SET ban_date = SYSDATE + ?, ban_reason=? WHERE id=?";
-		String getMemberSql = "SELECT * FROM member WHERE id=?";
+			try {
+				conn = DBManager.getConnection();
+				pstmt = conn.prepareStatement(releaseMemberSql);
+				pstmt.setString(1, id);
+				pstmt.executeUpdate();
 
-		Member member = null;
+			} catch (Exception e) {
+				e.printStackTrace();
 
-		try {
-			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(banMemberSql);
-			pstmt.setInt(1, banDate);
-			pstmt.setString(2, reason);
-			pstmt.setString(3, id);
-			pstmt.executeUpdate();
-
-			pstmt = conn.prepareStatement(getMemberSql);
-			pstmt.setString(1, id);
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				member = new Member();
-
-				member.setId(rs.getString("id"));
-				member.setName(rs.getString("name"));
-				member.setPassword(rs.getString("password"));
-				member.setGender(rs.getString("gender"));
-				member.setMobile(rs.getString("mobile"));
-				member.setAddress(rs.getString("address"));
-				member.setEmail(rs.getString("email"));
-				member.setRegDate(rs.getTimestamp("reg_date"));
-				member.setIntroduction(rs.getString("introduction"));
-				member.setBirthDate(rs.getTimestamp("birth_date"));
-				member.setBanDate(rs.getTimestamp("ban_date"));
-				member.setBanReason(rs.getString("ban_reason"));
-				member.setRole(rs.getString("role"));
-
-				member.setBan(member.getBanDate());
+			} finally {
+				DBManager.close(conn, pstmt, rs);
 			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		} finally {
-			DBManager.close(conn, pstmt, rs);
 		}
-		return member;
-	}
 
-	// 멤버 차단 해제
-	public void releaseMember(String id) {
-		String releaseMemberSql = "UPDATE member SET ban_date = SYSDATE-1 WHERE id=?";
+		// 멤버 삭제
+		public void deleteMember(String id) {
+			String deleteMemberSql = "DELETE FROM member WHERE id=?";
 
-		try {
-			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(releaseMemberSql);
-			pstmt.setString(1, id);
-			pstmt.executeUpdate();
+			try {
+				conn = DBManager.getConnection();
+				pstmt = conn.prepareStatement(deleteMemberSql);
+				pstmt.setString(1, id);
+				pstmt.executeUpdate();
 
-		} catch (Exception e) {
-			e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
 
-		} finally {
-			DBManager.close(conn, pstmt, rs);
+			} finally {
+				DBManager.close(conn, pstmt, rs);
+			}
 		}
-	}
-
-	// 멤버 삭제
-	public void deleteMember(String id) {
-		String deleteMemberSql = "DELETE FROM member WHERE id=?";
-
-		try {
-			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(deleteMemberSql);
-			pstmt.setString(1, id);
-			pstmt.executeUpdate();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		} finally {
-			DBManager.close(conn, pstmt, rs);
-		}
-	}
 
 	public void updateMember(Member member) {
 
@@ -196,12 +201,13 @@ public class MemberDao {
 			pstmt.setString(2, member.getName());
 			pstmt.setString(3, member.getPassword());
 			pstmt.setString(4, member.getGender());
-			pstmt.setString(5, member.getEmail());
-			pstmt.setString(6, member.getMobile());
-			pstmt.setString(7, member.getAddress());
-			pstmt.setString(8, member.getIntroduction());
-			pstmt.setTimestamp(9, member.getBirthDate());
-			pstmt.setString(10, member.getId());
+			pstmt.setString(5, member.getMobile());
+			pstmt.setString(6, member.getZipcode());
+			pstmt.setString(7, member.getAddress1());
+			pstmt.setString(8, member.getAddress2());
+			pstmt.setString(9, member.getEmail());
+			pstmt.setString(10, member.getIntroduction());
+			pstmt.setTimestamp(11, member.getBirthDate());
 
 			// DB에 쿼리를 발행하여 회원 정보를 저장한다.
 			pstmt.executeUpdate();
@@ -241,7 +247,9 @@ public class MemberDao {
 				member.setPassword(rs.getString("password"));
 				member.setGender(rs.getString("gender"));
 				member.setMobile(rs.getString("mobile"));
-				member.setAddress(rs.getString("address"));
+				member.setAddress1(rs.getString("address1"));
+				member.setAddress2(rs.getString("address2"));
+				member.setZipcode(rs.getString("zipcode"));
 				member.setEmail(rs.getString("email"));
 				member.setRegDate(rs.getTimestamp("reg_date"));
 				member.setIntroduction(rs.getString("introduction"));
@@ -277,10 +285,10 @@ public class MemberDao {
 //	boolean ban;			member.setBan(member.getBanDate()); 하면 설정됨
 
 // 	회원 정보를 DB에 등록하는 메서드   (아직 수정 안함) ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-	
+//  memberJoinResulte에서 데이터를 가져옴	
 	public void joinMember(Member member) {
-/*
-		String joinSql = "INSERT INTO member " + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE , 0)";
+
+		String joinSql = "INSERT INTO member " + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE ,?,?,SYSDATE-1,null,user)";
 
 		try {
 			// DBCP로부터 Connection을 대여한다.
@@ -291,14 +299,16 @@ public class MemberDao {
 			// loginSql 쿼리의 플레이스홀더(?)에 대응하는 데이터를 설정한다.
 			pstmt.setString(1, member.getId());
 			pstmt.setString(2, member.getName());
-			pstmt.setString(3, member.getPass());
-			pstmt.setString(4, member.getEmail());
+			pstmt.setString(3, member.getPassword());
+			pstmt.setString(4, member.getGender());
 			pstmt.setString(5, member.getMobile());
-			pstmt.setString(6, member.getPhone());
-			pstmt.setString(7, member.getZipcode());
-			pstmt.setString(8, member.getAddress1());
-			pstmt.setString(9, member.getAddress2());
-			pstmt.setBoolean(10, member.isEmailGet());
+			pstmt.setString(6, member.getZipcode());
+			pstmt.setString(7, member.getAddress1());
+			pstmt.setString(8, member.getAddress2());
+			pstmt.setString(9, member.getEmail());
+			pstmt.setString(10, member.getIntroduction());
+			pstmt.setTimestamp(11, member.getBirthDate());
+			
 
 			// DB에 쿼리를 발행하여 회원 정보를 저장한다.
 			pstmt.executeUpdate();
@@ -307,7 +317,7 @@ public class MemberDao {
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt, rs);
-		}*/
+		}
 	}
 
 // 회원 아이디가 중복되는지 확인해 주는 메서드  ( 아직 수정 안함)
