@@ -43,11 +43,11 @@
 					<tr>
 					<th>파 일</th>
 					<td colspan="3">
-					<c:if test="${empty adopboard.file1 }">
+					<c:if test="${empty adopboard.imagePath }">
 					첨부파일 없음
 					</c:if>
-					<c:if test"${not empty adopboard.file1}">
-					<a href="fileDownload.mvc?fileName=${adopboard.file1}">파일 다운로드</a>
+					<c:if test"${not empty imagePath}">
+					<a href="imagePathDownload.mvc?fileName=${adopboard.imagePath}">파일 다운로드</a>
 					</c:if>
 				</td>
 				</tr>

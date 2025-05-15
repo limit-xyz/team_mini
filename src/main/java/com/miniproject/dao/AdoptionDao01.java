@@ -141,7 +141,7 @@ public class AdoptionDao01 {
 		public ArrayList<AdoptionWriteDto> searchList( //String approval_status
 				String searchColumn,String keyword, String adoptiontype, String animalTypeMain, int startRow, int endRow) {
 			
-			List<String> allowedTypes = Arrays.asList("title", "user_id", "adoptiontype", "animalTypeMain");
+			List<String> allowedTypes = Arrays.asList("title", "user_id", "region");
 			if(searchColumn == null || !allowedTypes.contains(searchColumn)) {
 				throw new IllegalArgumentException("허용되지 않은 검색 컬럼 입니다." + searchColumn);
 			}
