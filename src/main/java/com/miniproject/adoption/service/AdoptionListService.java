@@ -18,11 +18,11 @@ public class AdoptionListService implements CommandProcess {
 			throws ServletException, IOException {
 
 		AdoptionDao01 dao = new AdoptionDao01();
-		ArrayList<AdoptionWriteDto> list = dao.getAdopTionList();
-		request.setAttribute("adoptionList", list);
+		ArrayList<AdoptionWriteDto> blist = dao.getAdopTionList();
+		request.setAttribute("blist", blist);
 		
 		
-		return "adoption-board/adoptionList";
+		return "adoption-board/adopboardList";
 	}
 
 }

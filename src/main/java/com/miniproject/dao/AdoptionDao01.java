@@ -36,13 +36,13 @@ public class AdoptionDao01 {
 					dto.setUserId(rs.getString("user_id"));
 					dto.setTitle(rs.getString("title"));
 					dto.setContent(rs.getString("content"));
-					dto.setType(rs.getString("type"));
+					dto.setAdoptionType(rs.getString("adoption_type"));
 					dto.setRegion(rs.getString("region"));
 					dto.setAnimalTypeMain(rs.getString("animal_type_main"));
 					dto.setAnimalTypeDetail(rs.getString("animal_type_detail"));
 					dto.setImagePath(rs.getString("image_path"));
 					dto.setCreatedAt(rs.getTimestamp("created_at"));
-					dto.setViews(rs.getInt("views"));
+					dto.setViewsCount(rs.getInt("views_count"));
 					dto.setApprovalStatus(rs.getString("approval_status"));
 			}
 			DBManager.commit(conn);
@@ -66,7 +66,7 @@ public class AdoptionDao01 {
 			String sql = "SELECT * FROM (SELECT ROWNUM num, sub.* "
 					+ "    FROM (SELECT * FROM adoption_post ORDER BY post_id DESC) sub) "
 					+ " WHERE num >= ? AND num <= ?";
-			ArrayList<AdoptionWriteDto> bList = null;
+			ArrayList<AdoptionWriteDto> blist = null;
 			
 			try {		
 				// 2. DB에 연결
@@ -81,7 +81,7 @@ public class AdoptionDao01 {
 				rs = pstmt.executeQuery();
 				
 				// 여러 개의 Board 객체를 담을 ArrayList를 사용
-				bList = new ArrayList<>();
+				blist = new ArrayList<>();
 				
 				// 5. 쿼리를 실행 결과를 while 반복하면서 Board 객체에 담고 List 담는다.
 				while(rs.next()) {
@@ -90,12 +90,14 @@ public class AdoptionDao01 {
 					b.setTitle(rs.getString("title"));
 					b.setUserId(rs.getString("user_id"));
 					b.setCreatedAt(rs.getTimestamp("created_at"));
-					b.setViews(rs.getInt("views"));
-					// b.setPass(rs.getString("approval_status"));
+					b.setViewsCount(rs.getInt("views_count"));
+					//b.set(rs.getString("approval_status"));
 					b.setImagePath(rs.getString("image_path"));
 				
-					bList.add(b);
+					
+					blist.add(b);
 				}
+				
 			} catch(SQLException e) {
 				e.printStackTrace();
 				
@@ -104,7 +106,7 @@ public class AdoptionDao01 {
 				DBManager.close(conn, pstmt, rs);
 			}
 			
-			return bList;
+			return blist;
 		}
 		
 	
@@ -139,7 +141,7 @@ public class AdoptionDao01 {
 		public ArrayList<AdoptionWriteDto> searchList( //String approval_status
 				String searchColumn,String keyword, String adoptiontype, String animalTypeMain, int startRow, int endRow) {
 			
-			List<String> allowedTypes = Arrays.asList("title", "user_id", "region");
+			List<String> allowedTypes = Arrays.asList("title", "user_id", "adoptiontype", "animalTypeMain");
 			if(searchColumn == null || !allowedTypes.contains(searchColumn)) {
 				throw new IllegalArgumentException("허용되지 않은 검색 컬럼 입니다." + searchColumn);
 			}
@@ -148,11 +150,11 @@ public class AdoptionDao01 {
 					+ "    SELECT ROWNUM num, sub.* FROM "
 					+ "        (SELECT * FROM adoption_post "
 					+ " WHERE " + searchColumn + " LIKE ?"
-					+ " and animal_type_main =? and type=? "
+					+ " and adoption_type=? and animal_type_main =? "
 					+ " ORDER BY post_id DESC) sub) "
 					+ " WHERE num >= ? AND num <= ?";
 			
-			ArrayList<AdoptionWriteDto> bList = new ArrayList<>();
+			ArrayList<AdoptionWriteDto> blist = new ArrayList<>();
 			
 			
 			try {			
@@ -180,12 +182,12 @@ public class AdoptionDao01 {
 					dto.setTitle(rs.getString("title"));
 					dto.setUserId(rs.getString("user_id"));
 					dto.setCreatedAt(rs.getTimestamp("created_at"));
-					dto.setViews(rs.getInt("views"));
+					dto.setViewsCount(rs.getInt("views_count"));
 					// b.setApprovalStatus(rs.getString("approval_status"));
 					dto.setImagePath(rs.getString("image_path"));
-					dto.setType(rs.getString("type"));
+					dto.setAdoptionType(rs.getString("adoption_type"));
 					
-					bList.add(dto);
+					blist.add(dto);
 				}
 			} catch(SQLException e) {
 				e.printStackTrace();
@@ -194,15 +196,15 @@ public class AdoptionDao01 {
 				DBManager.close(conn, pstmt, rs);
 			}
 			
-			return bList;
+			return blist;
 		}
 	
 	//-----------------------------------------------------------------------
 	// 검색어가 포함된 게시글 수를 읽어오는 메서드 - 검색 paging 처리에 사용
-		public int getBoardCount(String type, String keyword) {
+		public int getBoardCount(String adoption_type, String keyword) {
 			// title, writer, content
 			String sqlBoard = "SELECT COUNT(*) FROM adoption_post "
-					+ " WHERE " + type + " LIKE '%' || ? || '%'";
+					+ " WHERE " + adoption_type + " LIKE '%' || ? || '%'";
 			int count = 0;
 			
 			try {
@@ -272,7 +274,7 @@ public class AdoptionDao01 {
 		// 게시글 전체 조회
 		public ArrayList<AdoptionWriteDto> getAdopTionList(){
 			String sql = "Select * From adoption_post Order by Post_Id Desc";
-			ArrayList<AdoptionWriteDto> list = new ArrayList<>();
+			ArrayList<AdoptionWriteDto> blist = new ArrayList<>();
 			
 			try {
 				conn = DBManager.getConnection();
@@ -285,31 +287,32 @@ public class AdoptionDao01 {
 						rs.getString("user_id"),
 						rs.getString("title"),
 						rs.getString("content"),
-						rs.getString("type"),
+						rs.getString("adoption_type"),
 						rs.getString("region"),
 						rs.getString("animal_type_main"),
 						rs.getString("animal_type_detail"),
 						rs.getString("image_path"),
 						rs.getTimestamp("created_at"),
-						rs.getInt("views"),
+						rs.getInt("views_count"),
 						rs.getString("approval_status")
 					);
-					list.add(dto);
+					blist.add(dto);
 				}
+				
 			}	 catch (Exception e) {
 				e.printStackTrace();
 			}finally {
 				DBManager.close(conn, pstmt,rs);
 			}
 			
-			return list;
+			return blist;
 		} //getAdopTionList
 		
 		// 게시글 상세 조회
 		public AdoptionWriteDto getAdopTion(int postId, boolean state){
 			
 			String sqlAdoptionList = "Select * From adoption_post WHERE Post_Id=?";
-			String countSql = "UPDATE adoption_post SET views = views + 1 WHERE post_id=?";
+			String countSql = "UPDATE adoption_post SET views_count = views_count + 1 WHERE post_id=?";
 			AdoptionWriteDto dto = null;
 			PreparedStatement countStmt = null;
 			PreparedStatement selectStmt = null;
@@ -335,13 +338,13 @@ public class AdoptionDao01 {
 						dto.setUserId(rs.getString("user_id"));
 						dto.setTitle(rs.getString("title"));
 						dto.setContent(rs.getString("content"));
-						dto.setType(rs.getString("type"));
+						dto.setAdoptionType(rs.getString("adoption_type"));
 						dto.setRegion(rs.getString("region"));
 						dto.setAnimalTypeMain(rs.getString("animal_type_main"));
 						dto.setAnimalTypeDetail(rs.getString("animal_type_detail"));
 						dto.setImagePath(rs.getString("image_path"));
 						dto.setCreatedAt(rs.getTimestamp("created_at"));
-						dto.setViews(rs.getInt("views"));
+						dto.setViewsCount(rs.getInt("views_count"));
 				}
 				DBManager.commit(conn);
 					
@@ -361,7 +364,7 @@ public class AdoptionDao01 {
 			// 게시글 작성
 		public int insertAdoptionPost(AdoptionWriteDto dto){
 			int result = 0;
-			String sql = "INSERT INTO adoption_post (post_id, user_id, title, content, type, region, animal_type_main, animal_type_detail, image_path, created_at, views) "
+			String sql = "INSERT INTO adoption_post (post_id, user_id, title, content, adoption_type, region, animal_type_main, animal_type_detail, image_path, created_at, views_count) "
 					   + "VALUES (adoption_post_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSTIMESTAMP, 0)";
 					
 			try{
@@ -371,13 +374,13 @@ public class AdoptionDao01 {
 				 pstmt.setString(1, dto.getUserId());
 				 pstmt.setString(2, dto.getTitle());
 				 pstmt.setString(3, dto.getContent());
-				 pstmt.setString(4, dto.getType());
+				 pstmt.setString(4, dto.getAdoptionType());
 				 pstmt.setString(5, dto.getRegion());
 				 pstmt.setString(6, dto.getAnimalTypeMain());
 				 pstmt.setString(7, dto.getAnimalTypeDetail());
 				 pstmt.setString(8, dto.getImagePath());
 				 pstmt.setTimestamp(9, dto.getCreatedAt());
-				 pstmt.setInt(10, dto.getViews());
+				 pstmt.setInt(10, dto.getViewsCount());
 			
 				 result = pstmt.executeUpdate();
 				 DBManager.commit(conn);
@@ -411,13 +414,13 @@ public class AdoptionDao01 {
 					rs.getString("user_id"),
 					rs.getString("title"),
 					rs.getString("content"),
-					rs.getString("type"),
+					rs.getString("adoption_type"),
 					rs.getString("region"),
 					rs.getString("animal_type_main"),
 					rs.getString("animal_type_detail"),
 					rs.getString("image_path"),
 					rs.getTimestamp("created_at"),
-					rs.getInt("views"),
+					rs.getInt("views_count"),
 					rs.getString("approvalStatus")
 					);
 			
@@ -455,7 +458,7 @@ public class AdoptionDao01 {
 			// 게시글 수정
 			public int updateAdoption(AdoptionWriteDto dto){
 				int result = 0;
-				String sql = "Update adoption_post Set title = ?, content = ?, type = ?, region = ?, "
+				String sql = "Update adoption_post Set title = ?, content = ?, adoptionType = ?, region = ?, "
 						+ "WHere post_id =?";
 						
 				try {
@@ -467,7 +470,7 @@ public class AdoptionDao01 {
 					 pstmt = conn.prepareStatement(sql);
 					 pstmt.setString(1, dto.getTitle());
 					 pstmt.setString(2, dto.getContent());
-					 pstmt.setString(3, dto.getType());
+					 pstmt.setString(3, dto.getAdoptionType());
 					 pstmt.setString(4, dto.getRegion());
 					 pstmt.setString(5, dto.getAnimalTypeMain());
 					 pstmt.setString(6, dto.getAnimalTypeDetail());
@@ -486,15 +489,16 @@ public class AdoptionDao01 {
 						
 					return result;
 						
-				};
+				
 			}
-			
+		};
+	};
 			
 			
 			// 조회수 1증가
-		public void increaseViews(int postId){
+		public void increaseViews_count(int postId){
 				
-				String sql = "Update adoption_post Set views = views + 1 Where post_id =?";
+				String sql = "Update adoption_post Set views_count = views_count + 1 Where post_id =?";
 			
 				
 				try{

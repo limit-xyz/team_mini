@@ -9,11 +9,15 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+@MultipartConfig(fileSizeThreshold = 10 * 1024,
+			maxFileSize = 1024 * 1024 * 10,
+			maxRequestSize = 1024 * 1024 * 100)
 @WebServlet(name="adoptionController", urlPatterns="*.mvc")
 public class AdoptBoardController extends HttpServlet{
 
