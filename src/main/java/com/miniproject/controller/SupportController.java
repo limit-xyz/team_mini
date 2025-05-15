@@ -2,8 +2,8 @@ package com.miniproject.controller;
 
 import java.io.IOException;
 
-import com.miniproject.helper.service.CommandProcess;
-import com.miniproject.helper.service.MainService;
+import com.miniproject.common.service.CommandProcess;
+import com.miniproject.common.service.MainService;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;

@@ -4,8 +4,8 @@ import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 
-import com.miniproject.helper.service.CommandProcess;
-import com.miniproject.helper.service.MainService;
+import com.miniproject.common.service.CommandProcess;
+import com.miniproject.main.service.MainService;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -17,8 +17,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-
-@WebServlet(name="mainController", urlPatterns="*.main")
+@WebServlet(name="mainController", urlPatterns="/main/*")
 public class MainController extends HttpServlet {
 	
 	private final String PREFIX = "/WEB-INF/index.jsp?body=";
@@ -59,8 +58,8 @@ public class MainController extends HttpServlet {
 		
 		// 명령을 처리 - Service 클래스 이용 - dao이용
 		// 어떤 서비스 클래스가 실행될지 결정
-		if(command.equals("/*.main") 
-				|| command.equals("/main.main")) {
+		if(command.equals("/main/*") 
+				|| command.equals("/main/main")) {
 			// 게시 글 리스트 요청을 처리하는 BoardListService 클래스 실행
 			service = new MainService();
 			viewPage = service.requestProcess(request, response);

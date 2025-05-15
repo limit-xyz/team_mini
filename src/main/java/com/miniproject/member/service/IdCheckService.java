@@ -1,8 +1,9 @@
-package com.miniproject.helper.service;
+package com.miniproject.member.service;
 
 import java.io.IOException;
 
 import com.miniproject.dao.MemberDao;
+import com.miniproject.common.service.CommandProcess;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
