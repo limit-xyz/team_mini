@@ -6,6 +6,19 @@
 <!-- Content -->
 <div class="row">
 	<div class="col">
+	
+		<div class="row text-center">
+			<div class="col">
+				<h2 class="fs-3 fw-bold">나의 다이어리 리스트</h2>
+			</div>
+		</div>  
+		
+		<div class="row my-3">
+			<div class="col text-end">
+				<a href="diaryWriteForm" class="btn btn-outline-success">글쓰기</a>
+			</div>
+		</div>
+	
 		<table class="table table-bordered table-hover my-3">
 		
 			<thead>

@@ -90,4 +90,96 @@ public class DiaryDao {
 		return diaryList;
 	}
 
+	// 다이어리 쓰기
+	public void insertDiary(Diary diary) {
+		String insertDiarylSql = "INSERT INTO diary (diary_no, member_id, pet_name, title, content, photo) "
+				+ "VALUES (diary_seq.NEXTVAL, ?, ?, ?, ?, ?)";
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(insertDiarylSql);
+			pstmt.setString(1, diary.getMemberId());
+			pstmt.setString(2, diary.getPetName());
+			pstmt.setString(3, diary.getTitle());
+			pstmt.setString(4, diary.getContent());
+			pstmt.setString(5, diary.getPhoto());
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+	}
+
+	// 다이어리 쓰기
+	public void updateDiary(Diary diary, int no) {
+		String updateDiarylSql = "UPDATE diary SET pet_name=?, title=?, content=?, photo=? WHERE diary_no=?";
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(updateDiarylSql);
+			pstmt.setString(1, diary.getPetName());
+			pstmt.setString(2, diary.getTitle());
+			pstmt.setString(3, diary.getContent());
+			pstmt.setString(4, diary.getPhoto());
+			pstmt.setInt(5, diary.getNo());
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+	}
+
+	// 다이어리 삭제하기
+	public void deleteDiary(int no) {
+
+		String deleteDiarylSql = "DELETE FROM diary WHERE diary_no=?";
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(deleteDiarylSql);
+			pstmt.setInt(1, no);
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+	}
+
+	// 본인의 다이어리인지 체크
+	public boolean isDiaryOwner(String id, int no) {
+
+		if (id == null)
+			return false;
+
+		String isOwnerSql = "SELECT member_id FROM diary WHERE diary_no=?";
+
+		boolean isDiaryOwner = false;
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(isOwnerSql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				isDiaryOwner = id.equals(rs.getString("member_id"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return isDiaryOwner;
+	}
+
 }

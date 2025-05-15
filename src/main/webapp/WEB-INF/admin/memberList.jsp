@@ -3,9 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
 <!-- Content -->
 <div class="row">
 	<div class="col">
+	
+		<div class="row text-center">
+			<div class="col">
+				<h2 class="fs-3 fw-bold">멤버 리스트</h2>
+			</div>
+		</div>  
+	
 		<table class="table table-bordered table-hover my-3">
 		
 			<thead>
@@ -14,7 +22,7 @@
 					<th>이름</th>
 					<th>성별</th>
 					<th>전화번호</th>
-					<th>주소</th>
+					<th colspan=3>주소</th>
 					<th>가입일</th>
 					<th>생일</th>
 					<th>차단 해제일</th>
@@ -35,7 +43,11 @@
 							
 							<td class="text-center">${ member.mobile }</td>
 							
-							<td class="text-center">${ member.address }</td>
+							<td class="text-center">${ member.zipcode }</td>
+							
+							<td class="text-center">${ member.address1 }</td>
+							
+							<td class="text-center">${ member.address2 }</td>
 							
 							<td class="text-end">
 								<fmt:formatDate value="${member.regDate}" pattern="yyyy/MM/dd" />
@@ -82,7 +94,7 @@
 
 				<c:if test="${ empty memberList }">
 					<tr>
-						<td colspan="10" class="text-center">멤버가 존재하지 않음</td>
+						<td colspan="12" class="text-center">멤버가 존재하지 않음</td>
 					</tr>
 				</c:if>
 				
@@ -136,4 +148,5 @@
 		</div>
 	</div>
 </div>
+<script src="${pageContext.request.contextPath}/js/member_admin.js"></script>
 <!-- Content End -->

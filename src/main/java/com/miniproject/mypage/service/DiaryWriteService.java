@@ -9,22 +9,26 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class DiaryDetailService implements CommandProcess {
+public class DiaryWriteService implements CommandProcess {
 
 	@Override
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		String id = request.getParameter("memberId");
 		
-		Diary diary = null;
-		
-		int no = Integer.parseInt(request.getParameter("no"));
-		
+		Diary diary = new Diary();
+				
+		diary.setMemberId(id);
+		diary.setPetName(request.getParameter("petName"));
+		diary.setTitle(request.getParameter("title"));
+		diary.setContent(request.getParameter("content"));
+//		diary.setPhoto(request.getParameter("memberId"));
+
 		DiaryDao dao = new DiaryDao();
-		diary = dao.getDiary(no);
-	   
-		request.setAttribute("diary", diary);
-		
-		return "member/mypage/diaryDetail";
+		dao.insertDiary(diary);
+
+		return "r:diaryList?id=" + id;
 	}
 
 }

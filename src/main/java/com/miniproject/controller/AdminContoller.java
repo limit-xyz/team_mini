@@ -72,15 +72,21 @@ public class AdminContoller extends HttpServlet {
 			viewPage = service.requestProcess(request, response);
 		}
 
-		// 멤버 관리 화면
+		// 멤버 관리
 		else if (command.equals("/admin/member")) {
 			service = new MemberListService();
 			viewPage = service.requestProcess(request, response);
 		}
-		
-		// 문의내역 관리 화면
+
+		// 문의내역 관리
 		else if (command.equals("/admin/inquiry")) {
 			service = new InquiryListService();
+			viewPage = service.requestProcess(request, response);
+		}
+
+		// 임시 로그인
+		else if (command.equals("/admin/tempLogin")) {
+			service = new TempLoginService();
 			viewPage = service.requestProcess(request, response);
 		}
 

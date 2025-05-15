@@ -3,34 +3,23 @@ package com.miniproject.mypage.service;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import com.miniproject.dao.DiaryDao;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class DiaryDeleteService implements CommandProcess {
+public class DiaryWriteFormService implements CommandProcess {
 
 	@Override
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		int no = Integer.parseInt(request.getParameter("no"));
 		String id = (String) request.getSession().getAttribute("id");
 
-		DiaryDao dao = new DiaryDao();
-		boolean isDiaryOwner = dao.isDiaryOwner(id, no);
-
-		if (isDiaryOwner) {
-			dao.deleteDiary(no);
-			return "r:diaryList?id=" + id;
-		}
-
-		else {
+		if (id == null) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("<script>");
-			sb.append("	alert('잘못된 요청입니다.');");
-			sb.append("	history.back();");
+			sb.append("	alert('세션이 만료되었습니다.\n다시 로그인해주세요.');");
+			sb.append("	location.href='" + request.getContextPath() + "/admin/main'");
 			sb.append("</script>");
 
 			response.setContentType("text/html; charset=utf-8");
@@ -38,5 +27,8 @@ public class DiaryDeleteService implements CommandProcess {
 			out.println(sb.toString());
 			return null;
 		}
+
+		return "member/mypage/diaryWriteForm";
 	}
+
 }

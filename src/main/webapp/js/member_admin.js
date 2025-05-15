@@ -1,5 +1,5 @@
 $(function() {
-
+	
 	// 멤버 삭제 메소드
 	$(document).on("click", ".deleteMember", function() {
 		var userId = $(this).data('userId');
@@ -34,7 +34,9 @@ $(function() {
 							+ `	<td class="text-center">${member.name}</td>`
 							+ `	<td class="text-center">${member.gender}</td>`
 							+ `	<td class="text-center">${member.mobile}</td>`
-							+ `	<td class="text-center">${member.address}</td>`
+							+ `	<td class="text-center">${member.zipcode}</td>`
+							+ `	<td class="text-center">${member.address1}</td>`
+							+ `	<td class="text-center">${member.address2}</td>`
 							+ `	<td class='text-end'>${regDate}</td>`
 							+ `	<td class='text-end'>${birthDate}</td>`
 							+ " <td class='banDate text-end'>"

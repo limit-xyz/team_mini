@@ -6,7 +6,9 @@ CREATE TABLE member (
     password      VARCHAR2(50) NOT NULL,
     gender        VARCHAR2(10),
     mobile        VARCHAR2(20),
-    address       VARCHAR2(200),
+    zipcode		  VARCHAR2(200),
+    address1      VARCHAR2(200),
+    address2      VARCHAR2(200),
     email         VARCHAR2(100),
     reg_date      DATE DEFAULT SYSDATE NOT NULL,
     introduction  VARCHAR2(300),
@@ -16,37 +18,42 @@ CREATE TABLE member (
     role          VARCHAR2(20) DEFAULT 'user' NOT NULL
 );
 
+
 -- 관리자 계정
-INSERT INTO member (id, name, password, gender, mobile, address, email, reg_date, introduction, birth_date, role)
-VALUES ('midas', '관리자', '1234', 'M', '010-1111-2222', '서울시 강남구', 'midas@example.com', SYSDATE, '관리자 계정입니다.', TO_DATE('1980-01-01', 'YYYY-MM-DD'), 'admin');
+INSERT INTO member (id, name, password, gender, mobile, zipcode, address1, address2, email, introduction, birth_date, role)
+VALUES ('midas', '관리자', '1234', '남', '010-0000-0000', '00000 ', '서울특별시 종로구', '청운동 100호', 'admin@example.com', '최고 관리자입니다.', TO_DATE('1980-12-12', 'YYYY-MM-DD'), 'admin');
 
--- 일반 사용자 계정
-INSERT INTO member (id, name, password, gender, mobile, address, email, reg_date, introduction, birth_date, role)
-VALUES ('user01', '홍길동', '1234', 'M', '010-1234-5678', '서울시 종로구', 'hong@example.com', SYSDATE, '안녕하세요. 홍길동입니다.', TO_DATE('1990-05-10', 'YYYY-MM-DD'), 'user');
 
-INSERT INTO member (id, name, password, gender, mobile, address, email, reg_date, introduction, birth_date, role)
-VALUES ('user02', '김영희', '1234', 'F', '010-2345-6789', '부산시 해운대구', 'kimyh@example.com', SYSDATE, '반갑습니다. 김영희예요.', TO_DATE('1992-08-15', 'YYYY-MM-DD'), 'user');
+-- 일반 회원 10명
+INSERT INTO member (id, name, password, gender, mobile, zipcode, address1, address2, email, introduction, birth_date)
+VALUES ('user01', '홍길동', '1234', '남', '010-1234-5678', '12345 ', '서울특별시 강남구', '역삼동 101호', 'hong01@example.com', '안녕하세요, 홍길동입니다.', TO_DATE('1990-01-01', 'YYYY-MM-DD'));
 
-INSERT INTO member (id, name, password, gender, mobile, address, email, reg_date, introduction, birth_date, role)
-VALUES ('user03', '이철수', '1234', 'M', '010-3456-7890', '대구시 수성구', 'lee@example.com', SYSDATE, '이철수입니다.', TO_DATE('1988-03-22', 'YYYY-MM-DD'), 'user');
+INSERT INTO member (id, name, password, gender, mobile, zipcode, address1, address2, email, introduction, birth_date)
+VALUES ('user02', '김영희', '1234', '여', '010-2345-6789', '54321 ', '부산광역시 해운대구', '좌동 202호', 'kim02@example.com', '영희에요~ 반갑습니다!', TO_DATE('1992-02-14', 'YYYY-MM-DD'));
 
-INSERT INTO member (id, name, password, gender, mobile, address, email, reg_date, introduction, birth_date, role)
-VALUES ('user04', '박지민', '1234', 'F', '010-4567-8901', '인천시 남동구', 'parkjm@example.com', SYSDATE, '반가워요~', TO_DATE('1995-12-01', 'YYYY-MM-DD'), 'user');
+INSERT INTO member (id, name, password, gender, mobile, zipcode, address1, address2, email, introduction, birth_date)
+VALUES ('user03', '이철수', '1234', '남', '010-3456-7890', '67890 ', '대구광역시 수성구', '범어동 303호', 'lee03@example.com', '철수입니다.', TO_DATE('1988-03-03', 'YYYY-MM-DD'));
 
-INSERT INTO member (id, name, password, gender, mobile, address, email, reg_date, introduction, birth_date, role)
-VALUES ('user05', '최수정', '1234', 'F', '010-5678-9012', '광주시 북구', 'choisj@example.com', SYSDATE, '잘 부탁드려요.', TO_DATE('1993-07-19', 'YYYY-MM-DD'), 'user');
+INSERT INTO member (id, name, password, gender, mobile, zipcode, address1, address2, email, introduction, birth_date)
+VALUES ('user04', '박지민', '1234', '여', '010-4567-8901', '11111 ', '인천광역시 연수구', '송도동 404호', 'park04@example.com', '지민입니다~!', TO_DATE('1995-04-20', 'YYYY-MM-DD'));
 
-INSERT INTO member (id, name, password, gender, mobile, address, email, reg_date, introduction, birth_date, role)
-VALUES ('user06', '장도윤', '1234', 'M', '010-6789-0123', '울산시 남구', 'jangdy@example.com', SYSDATE, '장도윤입니다.', TO_DATE('1991-09-03', 'YYYY-MM-DD'), 'user');
+INSERT INTO member (id, name, password, gender, mobile, zipcode, address1, address2, email, introduction, birth_date)
+VALUES ('user05', '최유리', '1234', '여', '010-5678-9012', '22222 ', '광주광역시 북구', '두암동 505호', 'choi05@example.com', '유리입니다 :)', TO_DATE('1993-05-15', 'YYYY-MM-DD'));
 
-INSERT INTO member (id, name, password, gender, mobile, address, email, reg_date, introduction, birth_date, role)
-VALUES ('user07', '윤하늘', '1234', 'F', '010-7890-1234', '경기도 수원시', 'yunhn@example.com', SYSDATE, '하늘처럼 밝게!', TO_DATE('1994-11-30', 'YYYY-MM-DD'), 'user');
+INSERT INTO member (id, name, password, gender, mobile, zipcode, address1, address2, email, introduction, birth_date)
+VALUES ('user06', '정우성', '1234', '남', '010-6789-0123', '33333 ', '대전광역시 서구', '둔산동 606호', 'jung06@example.com', '정우성입니다.', TO_DATE('1985-06-10', 'YYYY-MM-DD'));
 
-INSERT INTO member (id, name, password, gender, mobile, address, email, reg_date, introduction, birth_date, role)
-VALUES ('user08', '백승훈', '1234', 'M', '010-8901-2345', '강원도 춘천시', 'baeksh@example.com', SYSDATE, '백승훈입니다.', TO_DATE('1989-06-14', 'YYYY-MM-DD'), 'user');
+INSERT INTO member (id, name, password, gender, mobile, zipcode, address1, address2, email, introduction, birth_date)
+VALUES ('user07', '한가인', '1234', '여', '010-7890-1234', '44444 ', '울산광역시 남구', '삼산동 707호', 'han07@example.com', '가인입니다^^', TO_DATE('1984-07-07', 'YYYY-MM-DD'));
 
-INSERT INTO member (id, name, password, gender, mobile, address, email, reg_date, introduction, birth_date, role)
-VALUES ('user09', '오지은', '1234', 'F', '010-9012-3456', '제주시 애월읍', 'ohje@example.com', SYSDATE, '제주도 살아요~', TO_DATE('1996-10-27', 'YYYY-MM-DD'), 'user');
+INSERT INTO member (id, name, password, gender, mobile, zipcode, address1, address2, email, introduction, birth_date)
+VALUES ('user08', '서강준', '1234', '남', '010-8901-2345', '55555 ', '경기도 성남시', '분당동 808호', 'seo08@example.com', '서강준이에요.', TO_DATE('1991-08-08', 'YYYY-MM-DD'));
+
+INSERT INTO member (id, name, password, gender, mobile, zipcode, address1, address2, email, introduction, birth_date)
+VALUES ('user09', '이지은', '1234', '여', '010-9012-3456', '66666 ', '경기도 고양시', '일산동 909호', 'lee09@example.com', '이지은입니다.', TO_DATE('1993-09-18', 'YYYY-MM-DD'));
+
+INSERT INTO member (id, name, password, gender, mobile, zipcode, address1, address2, email, introduction, birth_date)
+VALUES ('user10', '장동건', '1234', '남', '010-0123-4567', '77777 ', '강원도 춘천시', '석사동 1010호', 'jang10@example.com', '장동건입니다.', TO_DATE('1972-10-01', 'YYYY-MM-DD'));
 
 commit;
 

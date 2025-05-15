@@ -113,6 +113,18 @@ public class MyPageContoller extends HttpServlet {
 			viewPage = service.requestProcess(request, response);
 		}
 
+		// 반려동물 다이어리 쓰기 폼 요청
+		else if (command.equals("/member/mypage/diaryWriteForm")) {
+			service = new DiaryWriteFormService();
+			viewPage = service.requestProcess(request, response);
+		}
+
+		// 반려동물 다이어리 쓰기
+		else if (command.equals("/member/mypage/diaryWriteProcess")) {
+			service = new DiaryWriteService();
+			viewPage = service.requestProcess(request, response);
+		}
+
 		// 반려동물 다이어리 수정 폼 요청
 		else if (command.equals("/member/mypage/diaryUpdateForm")) {
 			service = new DiaryUpdateFormService();

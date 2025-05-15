@@ -5,28 +5,14 @@ import java.time.LocalDate;
 
 public class Member {
 
-//	member 객체
-//	String id;		
-//	String name;
-//	String password;
-//	String gender;
-//	String mobile;
-//	String address;
-//	String email;
-//	Timestamp regDate;
-//	String introduction;	
-//	Timestamp birthDate;	
-//	Timestamp banDate;		차단 남은 날짜 ,설정 안해도 됨
-//	String banReason;		차단 사유, 설정 안해도 됨
-//	String role;			기본값 user, 설정 안해도 됨
-//	boolean ban;			member.setBan(member.getBanDate()); 하면 설정됨
-
 	String id;
 	String name;
 	String password;
 	String gender;
 	String mobile;
-	String address;
+	String zipcode;
+	String address1;
+	String address2;
 	String email;
 	Timestamp regDate;
 	String introduction;
@@ -60,8 +46,16 @@ public class Member {
 		return mobile;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public String getAddress1() {
+		return address1;
+	}
+
+	public String getAddress2() {
+		return address2;
 	}
 
 	public String getEmail() {
@@ -116,8 +110,16 @@ public class Member {
 		this.mobile = mobile;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+
+	public void setAddress2(String address2) {
+		this.address2 = address2;
 	}
 
 	public void setEmail(String email) {
@@ -162,9 +164,16 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [id=" + id + ", name=" + name + ", password=" + password + ", gender=" + gender + ", mobile="
-				+ mobile + ", address=" + address + ", email=" + email + ", regDate=" + regDate + ", introduction="
-				+ introduction + ", birthDate=" + birthDate + ", banDate=" + banDate + ", banReason=" + banReason
-				+ ", role=" + role + ", ban=" + ban + "]";
+				+ mobile + ", zipcode=" + zipcode + ", address1=" + address1 + ", address2=" + address2 + ", email="
+				+ email + ", regDate=" + regDate + ", introduction=" + introduction + ", birthDate=" + birthDate
+				+ ", banDate=" + banDate + ", banReason=" + banReason + ", role=" + role + ", ban=" + ban + ", getId()="
+				+ getId() + ", getName()=" + getName() + ", getPassword()=" + getPassword() + ", getGender()="
+				+ getGender() + ", getMobile()=" + getMobile() + ", getZipcode()=" + getZipcode() + ", getAddress1()="
+				+ getAddress1() + ", getAddress2()=" + getAddress2() + ", getEmail()=" + getEmail() + ", getRegDate()="
+				+ getRegDate() + ", getIntroduction()=" + getIntroduction() + ", getBirthDate()=" + getBirthDate()
+				+ ", getBanDate()=" + getBanDate() + ", getBanReason()=" + getBanReason() + ", getRole()=" + getRole()
+				+ ", isBan()=" + isBan() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
 
 }
