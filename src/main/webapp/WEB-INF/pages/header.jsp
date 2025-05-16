@@ -9,7 +9,8 @@
         <div class="row text-end">
           <div class="col" style="font-size:14px;">
           	<c:if test="${ sessionScope.isLogin  && not sessionScope.isAdmin}">
-          	<h2>일반 계정</h2>
+          	<span>${id}님</span>
+          	<a href="${pageContext.request.contextPath}/member/logout" class="ms-3" >로그아웃</a>
           	</c:if>	
           	<c:if test="${ sessionScope.isLogin && sessionScope.isAdmin}">
           	<span>${id}님</span>
