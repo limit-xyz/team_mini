@@ -7,6 +7,7 @@ import com.miniproject.common.service.CommandProcess;
 import com.miniproject.member.service.IdCheckService;
 import com.miniproject.member.service.LoginFormService;
 import com.miniproject.member.service.LoginService;
+import com.miniproject.member.service.LogoutService;
 import com.miniproject.member.service.MemberJoinFormService;
 import com.miniproject.member.service.MemberJoinResultService;
 
@@ -70,6 +71,9 @@ public class MemberController extends HttpServlet {
 		}else if (command.equals("/member/login")) {
 			service = new LoginService();
 			viewPage = service.requestProcess(request, response);
+		}else if (command.equals("/member/logout")) {
+			service = new LogoutService();
+			viewPage = service.requestProcess(request, response);	
 		}else if (command.equals("/member/memberJoinForm")) {
 			service = new MemberJoinFormService();
 			viewPage = service.requestProcess(request, response);
