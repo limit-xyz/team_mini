@@ -2,6 +2,7 @@
 /build/
 =======
 **/webapp/WEB-INF/lib/
+/WEB-INF/resources/appkey.properties
 **/build/
 *.class
 
