@@ -10,7 +10,7 @@
 				<h2 class="fs-3 fw-bold">다이어리 작성</h2>
 			</div>
 		</div>  
-		<form action="diaryWriteProcess" id="diaryWriteForm"  class="row g-3 border-primary"
+		<form action="diaryWriteProcess?pageNum=${pageNum}" id="diaryWriteForm"  class="row g-3 border-primary"
 			method="post" enctype="multipart/form-data">
 			
 			<input type="hidden" name="memberId" value="${sessionScope.id}">
@@ -32,14 +32,14 @@
 	  		</div>
 	  		
 	  		<div class="col-8 offset-md-2">
-			    <label for="photo" class="form-label">사 진</label>
-			    <input type="file" class="form-control" name="photo"  id="photo" >
+			    <label for="photo" class="form-label">사 진 (정사각형 모양에 특화되어있음)</label>
+			    <input type="file" class="form-control" name="photo"  id="photo" accept="image/*" >
 	  		</div>	
 	  				  			
 	  		<div class="col-8 offset-md-2 text-center mt-5">
 			   <input type="submit" value="등록하기" class="btn btn-primary"/>
 					&nbsp;&nbsp;
-				<input type="button" value="목록보기" onclick="location.href='diaryList'" class="btn btn-primary"/>
+				<input type="button" value="목록보기" onclick="location.href='diaryList?pageNum=${pageNum}'" class="btn btn-primary"/>
 	  		</div>	
 	  		
 		</form>

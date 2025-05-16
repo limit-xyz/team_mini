@@ -28,6 +28,7 @@ public class DiaryWriteFormService implements CommandProcess {
 			return null;
 		}
 
+		request.setAttribute("pageNum", request.getParameter("pageNum"));
 		return "member/mypage/diaryWriteForm";
 	}
 

@@ -7,6 +7,10 @@
 <div class="row my-5" id="global-content">
 	<div class="col">
 	
+		<div style="visibility: hidden;">
+			<p id="pageNum">${pageNum}</p>
+		</div>
+	
 		<div class="row text-center">
 			<div class="col">
 				<h2 class="fs-3 fw-bold">다이어리 상세보기</h2>
@@ -45,7 +49,10 @@
 								없음
 							</c:if>
 							<c:if test="${ not empty diary.photo }">
-								<a href="fileDownload.mvc?fileName=${ diary.photo }">파일 다운로드</a>
+								<div style="width: 100%; max-width: 300px; aspect-ratio: 1 / 1;">
+									<img src="filePath.ajax?fileName=${diary.photo}"
+										class="img-fluid rounded" style="width: 100%; height: 100%; object-fit: cover;">
+								</div>
 							</c:if>
 							</td>		
 						</tr>
@@ -64,7 +71,7 @@
 			<div class="col text-center">				
 				<input class="btn btn-warning" type="button" id="diaryUpdate" value="수정하기" data-diary-no="${diary.no}" />
 				<input class="btn btn-danger"  type="button" id="diaryDelete" value="삭제하기" data-diary-no="${diary.no}" />				
-				<input class="btn btn-primary" type="button" value="목록보기"  onclick="location.href='diaryList'"/>
+				<input class="btn btn-primary" type="button" value="목록보기"  onclick="location.href='diaryList?pageNum=${pageNum}'"/>
 			</div>		
 		</div>
 	</div>	

@@ -17,13 +17,14 @@ public class DiaryDeleteService implements CommandProcess {
 
 		int no = Integer.parseInt(request.getParameter("no"));
 		String id = (String) request.getSession().getAttribute("id");
+		String pageNum = request.getParameter("pageNum");
 
 		DiaryDao dao = new DiaryDao();
 		boolean isDiaryOwner = dao.isDiaryOwner(id, no);
 
 		if (isDiaryOwner) {
 			dao.deleteDiary(no);
-			return "r:diaryList?id=" + id;
+			return "r:diaryList?id=" + id + "&pageNum=" + pageNum;
 		}
 
 		else {

@@ -18,13 +18,33 @@ public class MemberDeleteAction implements AjaxProcess {
 	public void ajaxProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String id = request.getParameter("id");
-
 		MemberDao dao = new MemberDao();
+		String id = request.getParameter("id");
 		dao.deleteMember(id);
 
-		ArrayList<Member> memberList = dao.getMemberList();
+		int PAGE_SIZE = (int) request.getServletContext().getAttribute("PAGE_SIZE");
+		int PAGE_GROUP = (int) request.getServletContext().getAttribute("PAGE_GROUP");
+		String pageNum = request.getParameter("pageNum");
+		if (pageNum == null) {
+			pageNum = "1";
+		}
+		int currentPage = Integer.parseInt(pageNum);
 
+		int startRow = currentPage * PAGE_SIZE - (PAGE_SIZE - 1);
+		int endRow = startRow + PAGE_SIZE - 1;
+		int listCount = 0;
+		listCount = dao.getMemberCount();
+
+		int pageCount = listCount / PAGE_SIZE + (listCount % PAGE_SIZE == 0 ? 0 : 1);
+
+		int startPage = (currentPage / PAGE_GROUP) * PAGE_GROUP + 1 - (currentPage % PAGE_GROUP == 0 ? PAGE_GROUP : 0);
+		int endPage = startPage + PAGE_GROUP - 1;
+		if (endPage > pageCount) {
+			endPage = pageCount;
+		}
+
+		ArrayList<Member> memberList = dao.getMemberList(startRow, endRow);
+		
 		Gson gson = new Gson();
 		String result = gson.toJson(memberList);
 

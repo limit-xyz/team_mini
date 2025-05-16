@@ -25,6 +25,7 @@ public class DiaryUpdateFormService implements CommandProcess {
 
 		if (isDiaryOwner) {
 			request.setAttribute("diary", diary);
+			request.setAttribute("pageNum", request.getParameter("pageNum"));
 			return "member/mypage/diaryUpdateForm";
 		}
 

@@ -17,16 +17,44 @@ public class MemberDao {
 	public MemberDao() {
 	}
 
-	// 멤버 목록 가져오기
-	public ArrayList<Member> getMemberList() {
+	// 멤버 수 카운트하기
+	public int getMemberCount() {
+		String getMemberCountSql = "SELECT count(*) count FROM member";
+		int count = 0;
 
-		String memberListSql = "SELECT * FROM member";
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(getMemberCountSql);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				count = rs.getInt("count");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+
+		return count;
+	}
+
+	// 멤버 목록 가져오기
+	public ArrayList<Member> getMemberList(int startRow, int endRow) {
+
+		String memberListSql = "SELECT * FROM"
+				+ "(SELECT ROWNUM num, sub.* FROM (SELECT * FROM member ORDER BY role) sub)"
+				+ " WHERE num BETWEEN ? AND ?";
 
 		ArrayList<Member> memberList = null;
 
 		try {
 			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(memberListSql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {

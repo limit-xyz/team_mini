@@ -17,6 +17,31 @@ public class DiaryDao {
 	public DiaryDao() {
 	}
 
+	// 다이어리 갯수 가져오기
+	public int getDiaryCount(String id) {
+		String getMemberCountSql = "SELECT count(*) count FROM diary WHERE member_id=?";
+		int count = 0;
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(getMemberCountSql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				count = rs.getInt("count");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+
+		return count;
+	}
+
 	// 다이어리 상세 가져오기
 	public Diary getDiary(int no) {
 
@@ -51,9 +76,10 @@ public class DiaryDao {
 	}
 
 	// 다이어리 목록 가져오기
-	public ArrayList<Diary> getDiaryList(String id) {
+	public ArrayList<Diary> getDiaryList(String id, int startRow, int endRow) {
 
-		String diaryListSql = "SELECT * FROM diary WHERE member_id=? ORDER BY diary_no DESC";
+		String diaryListSql = "SELECT * FROM ( SELECT ROWNUM num, sub.* FROM "
+				+ "(SELECT * FROM diary WHERE member_id=? ORDER BY diary_no DESC) sub)" + "WHERE num BETWEEN ? AND ?";
 
 		ArrayList<Diary> diaryList = null;
 
@@ -61,6 +87,8 @@ public class DiaryDao {
 			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(diaryListSql);
 			pstmt.setString(1, id);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {

@@ -23,6 +23,7 @@ public class DiaryDetailService implements CommandProcess {
 		diary = dao.getDiary(no);
 	   
 		request.setAttribute("diary", diary);
+		request.setAttribute("pageNum", request.getParameter("pageNum"));
 		
 		return "member/mypage/diaryDetail";
 	}

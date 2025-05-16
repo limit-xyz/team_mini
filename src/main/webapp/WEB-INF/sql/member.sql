@@ -58,3 +58,32 @@ VALUES ('user10', '장동건', '1234', '남', '010-0123-4567', '77777 ', '강원
 commit;
 
 SELECT * FROM member;
+
+
+
+-- 아래는 페이징 테스트용 쓰레기값 넣기
+CREATE SEQUENCE m_s1;
+CREATE SEQUENCE m_s2;
+CREATE SEQUENCE m_s3;
+
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+INSERT INTO member (id, name, password) VALUES (m_s1.NEXTVAL, m_s2.NEXTVAL, m_s3.NEXTVAL);
+COMMIT;

@@ -81,3 +81,31 @@ VALUES (diary_seq.NEXTVAL, 'user03', '초코', '애견 용품 쇼핑', '새 옷�
 COMMIT;
 
 SELECT * FROM diary;
+
+
+-- 페이징 처리용 더미값 집어넣기
+CREATE SEQUENCE d_s1;
+CREATE SEQUENCE d_s2;
+CREATE SEQUENCE d_s3;
+
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+INSERT INTO diary (diary_no, member_id, pet_name, title, content) VALUES (diary_seq.NEXTVAL, 'user02', d_s1.NEXTVAL, d_s2.NEXTVAL, d_s3.NEXTVAL);
+COMMIT;

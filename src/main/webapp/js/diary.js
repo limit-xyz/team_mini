@@ -2,8 +2,9 @@ $(function() {
 
 	// 다이어리 상세보기
 	$(document).on("click", ".diaryDetail", function() {
+		var pageNum = $("#pageNum").text();
 		var no = $(this).data("diaryNo");
-		location.href = "diaryDetail?no=" + no;
+		location.href = "diaryDetail?no=" + no + "&pageNum=" + pageNum;
 	});
 
 	// 다이어리 쓰기 폼 유효성 검사
@@ -29,8 +30,10 @@ $(function() {
 
 	// 다이어리 수정 폼 요청
 	$(document).on("click", "#diaryUpdate", function() {
+
+		var pageNum = $("#pageNum").text();
 		var no = $(this).data("diaryNo");
-		location.href = "diaryUpdateForm?no=" + no;
+		location.href = "diaryUpdateForm?no=" + no + "&pageNum=" + pageNum;
 	});
 
 
@@ -58,7 +61,8 @@ $(function() {
 
 	// 다이어리 삭제
 	$(document).on("click", "#diaryDelete", function() {
+		var pageNum = $("#pageNum").text();
 		var no = $(this).data("diaryNo");
-		location.href = "diaryDelete?no=" + no;
+		location.href = "diaryDelete?no=" + no + "&pageNum=" + pageNum;
 	});
 });

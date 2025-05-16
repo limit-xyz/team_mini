@@ -1,14 +1,17 @@
 $(function() {
-	
+
 	// 멤버 삭제 메소드
 	$(document).on("click", ".deleteMember", function() {
 		var userId = $(this).data('userId');
+		var pageNum = $("#pageNum").text();
+		console.log(pageNum);
 
 		var isDelete = confirm("유저 " + userId + " 를 삭제하시겠습니까?\n이 명령은 되돌릴 수 없습니다.")
 
 		if (isDelete) {
 			data = {
-				"id": userId
+				"id": userId,
+				"pageNum": pageNum
 			}
 
 			$.ajax({
@@ -24,19 +27,19 @@ $(function() {
 
 					$.each(regData, function(i, member) {
 
-						let regDate = dateToString(new Date(member.regDate), false);
-						let birthDate = dateToString(new Date(member.birthDate), false);
-						let banDate = dateToString(new Date(member.banDate), true);
+						let regDate = dateToString(member.regDate, false);
+						let birthDate = dateToString(member.birthDate, false);
+						let banDate = dateToString(member.banDate, true);
 
 						var result =
 							"<tr>"
-							+ `	<td class="text-center">${member.id}</td>`
-							+ `	<td class="text-center">${member.name}</td>`
-							+ `	<td class="text-center">${member.gender}</td>`
-							+ `	<td class="text-center">${member.mobile}</td>`
-							+ `	<td class="text-center">${member.zipcode}</td>`
-							+ `	<td class="text-center">${member.address1}</td>`
-							+ `	<td class="text-center">${member.address2}</td>`
+							+ `	<td class="text-center">${printMember(member.id)}</td>`
+							+ `	<td class="text-center">${printMember(member.name)}</td>`
+							+ `	<td class="text-center">${printMember(member.gender)}</td>`
+							+ `	<td class="text-center">${printMember(member.mobile)}</td>`
+							+ `	<td class="text-center">${printMember(member.zipcode)}</td>`
+							+ `	<td class="text-center">${printMember(member.address1)}</td>`
+							+ `	<td class="text-center">${printMember(member.address2)}</td>`
 							+ `	<td class='text-end'>${regDate}</td>`
 							+ `	<td class='text-end'>${birthDate}</td>`
 							+ " <td class='banDate text-end'>"
@@ -258,14 +261,29 @@ function dateModifier(str) {
 	return str;
 };
 
-function dateToString(date, isHour) {
+function dateToString(input, isHour) {
+	if (input == null)
+		return "";
+	
 	if (isHour) {
+		
+		var date = new Date(input);
+		
 		return date.getFullYear() + "/" + dateModifier(date.getMonth() + 1) + "/" + dateModifier(date.getDate()) + " " +
 			dateModifier(date.getHours()) + ":" + dateModifier(date.getMinutes()) + ":" + dateModifier(date.getSeconds());
 	}
 
 	else {
+		
+		var date = new Date(input);
+		
 		return date.getFullYear() + "/" + dateModifier(date.getMonth() + 1) + "/" + dateModifier(date.getDate());
 	}
+}
 
+function printMember(data) {
+	if (data == null)
+		return "";
+	else
+		return data;
 }

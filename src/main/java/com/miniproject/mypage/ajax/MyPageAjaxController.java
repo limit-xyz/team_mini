@@ -13,11 +13,11 @@ public class MyPageAjaxController{
 
 		AjaxProcess ajaxAction = null;
 		
-//		// 멤버 역할 변경
-//		if (command.equals("memberRole.ajax")) {
-//			ajaxAction = new MemberRoleAction();
-//			ajaxAction.ajaxProcess(request, response);
-//		}
+		// 파일 경로 요청
+		if (command.equals("filePath.ajax")) {
+			ajaxAction = new FilePathAction();
+			ajaxAction.ajaxProcess(request, response);
+		}
 
 
 

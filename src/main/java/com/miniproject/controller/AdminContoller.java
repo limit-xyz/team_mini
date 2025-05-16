@@ -1,11 +1,13 @@
 package com.miniproject.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import com.miniproject.admin.ajax.AdminAjaxController;
 import com.miniproject.admin.service.*;
 
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -35,6 +37,12 @@ public class AdminContoller extends HttpServlet {
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		ServletContext app = request.getServletContext();
+		if (app.getAttribute("PAGE_SIZE") == null) {
+			request.getServletContext().setAttribute("PAGE_SIZE", 10);
+			request.getServletContext().setAttribute("PAGE_GROUP", 10);
+		}
 
 		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();

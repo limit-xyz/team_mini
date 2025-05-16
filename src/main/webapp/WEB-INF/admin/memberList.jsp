@@ -8,6 +8,10 @@
 <div class="row">
 	<div class="col">
 	
+		<div style="visibility: hidden;">
+			<p id="pageNum">${currentPage}</p>
+		</div>
+	
 		<div class="row text-center">
 			<div class="col">
 				<h2 class="fs-3 fw-bold">멤버 리스트</h2>
@@ -109,6 +113,46 @@
 		
 	</div>
 </div>
+
+
+<div class="row">
+	<div class="col">
+		<nav aria-label="Page navigation">
+		  <ul class="pagination justify-content-center">
+		  
+		  	<c:if test="${ startPage > PAGE_GROUP }">
+			    <li class="page-item">
+			      <a class="page-link" href="member?pageNum=${ startPage - PAGE_GROUP }">Prev</a>
+			    </li>
+		    </c:if>
+		   	
+		    <c:forEach var="i" begin="${startPage}" end="${endPage}">
+		    	<c:if test="${i == currentPage }">
+			    	<li class="page-item active" aria-current="page">
+			    		<span class="page-link">${i}</span>
+			    	</li>
+		    	</c:if>
+		    	
+		    	<c:if test="${i != currentPage }">
+			    	<li class="page-item">
+			    		<a class="page-link" href="member?pageNum=${ i }">${i}</a>
+			    	</li>
+			    </c:if>					    
+		    </c:forEach>							    
+
+			<c:if test="${ endPage < pageCount }">
+			    <li class="page-item">
+			      <a class="page-link" href="member?pageNum=${ startPage + PAGE_GROUP }">Next</a>
+			    </li>
+		  	</c:if>
+		  	
+		  </ul>
+		</nav>
+	</div>
+</div>
+
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
