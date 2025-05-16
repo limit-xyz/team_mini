@@ -68,7 +68,7 @@ public class AdoptBoardController extends HttpServlet{
 		String viewPage = null;
 		CommandProcess service = null;
 	
-		if(command.equals("/adoptionList.mvc") || command.equals("/*.mvc")) {
+		if(command.equals("/AdoptionList.mvc") || command.equals("/*.mvc")) {
 			service = new AdoptionListService();					
 			viewPage = service.requestProcess(request, response);
 		} else if (command.equals("/AdoptionWriteForm.mvc")) {
@@ -89,7 +89,7 @@ public class AdoptBoardController extends HttpServlet{
 		}	else if (command.equals("/AdoptionDelete.mvc")) {
 			service = new AdoptionDeleteService();						 
 			viewPage = service.requestProcess(request, response);
-		}	else if (command.equals("/adoptionupdateForm.mvc")) {
+		}	else if (command.equals("/AdoptionupdateForm.mvc")) {
 			service = new AdoptionUpdateFormService();						 
 			viewPage = service.requestProcess(request, response);
 		}	

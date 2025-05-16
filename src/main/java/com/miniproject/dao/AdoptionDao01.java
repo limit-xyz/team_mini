@@ -618,8 +618,9 @@ public class AdoptionDao01 {
 		// 특정 게시글의 댓글 목록 조회
 		public List<AdoptionReplyDto> getReplyList(int postId) {
 		    List<AdoptionReplyDto> replyList = new ArrayList<>();
-		    String sql = "INSERT INTO adoption_reply (reply_id, post_id, user_id, content, is_secret) "
-		                 + "VALUES (adoption_reply_seq.NEXTVAL, ?, ?, ?, ?)";
+		    String sql = "SELECT reply_id, post_id, user_id, reply_content, "
+		    		+ "reply_writer, created_at, is_secret FROM adoption_reply"
+		    		+ "WHERE post_id = ? ";
 
 		    try {
 		        conn = DBManager.getConnection();
@@ -632,9 +633,9 @@ public class AdoptionDao01 {
 		    	 reply.setReplyId(rs.getInt("reply_id"));
 		    	 reply.setPostId(rs.getInt("post_id"));
 		    	 reply.setUserId(rs.getString("user_id"));
-		    	 reply.setContent(rs.getString("content"));
-		    	 reply.setCreatedAt(rs.getString("created_at"));
-		    	 reply.setIsSecret(rs.getString("is_secret"));
+		    	 reply.setContent(rs.getString("reply_content"));
+		    	 reply.setCreatedAt(rs.getTimestamp("created_at"));
+		    	 reply.setIsSecret(rs.getBoolean("is_secret"));
 		    	 replyList.add(reply);
 		     }
 

@@ -38,10 +38,10 @@
 			</div>
 			<div class="row">
 				<div class="col">
-					<a href="adoptboardList.mvc" class="btn btn-outline-success">리스트</a>
+					<a href="AdoptboardList.mvc" class="btn btn-outline-success">리스트</a>
 				</div>
 				<div class="col text-end">
-					<a href="adoptionWrite.mvc" class="btn btn-outline-success">글쓰기</a>
+					<a href="AdoptionWrite.mvc" class="btn btn-outline-success">글쓰기</a>
 				</div>
 			</div>
 		</c:if>
@@ -49,7 +49,7 @@
 		<c:if test="${not searchOption}">
 			<div class="row">
 				<div class="col text-end">
-					<a href="adoptionWrite.mvc" class="btn btn-outline-success">글쓰기</a>
+					<a href="AdoptionWrite.mvc" class="btn btn-outline-success">글쓰기</a>
 				</div>
 			</div>
 		</c:if>
@@ -75,7 +75,7 @@
 									<td>${adopboard.postId}</td>
 									<td>${adopboard.approvalStatus}</td>
 									<td class="text-secondary"><a
-										href="adoptionDetailList.mvc?no=${adopboard.postId}
+										href="AdoptionDetailList.mvc?no=${adopboard.postId}
 							&pageNum=${currentPage}&type=${searchColumn}&keyword=${keyword}
 							&approvalStatus=${approvalStatus}"
 										class="text-secondary text-decoration-none">${adopboard.title}</a>
@@ -102,7 +102,7 @@
 									<td>${adopboard.postId}</td>
 									<td>${adopboard.approvalStatus}</td>
 									<td class="text-secondary"><a
-										href="adoptionDetail.mvc?postId=${adopboard.postId}&pageNum=${currentPage}"
+										href="AdoptionDetail.mvc?postId=${adopboard.postId}&pageNum=${currentPage}"
 										class="text-secondary text-decoration-none">${adopboard.title}</td>
 									<td>${adopboard.userId}</td>
 									<td>${adopboard.adoptionType}</td>
@@ -132,7 +132,7 @@
 						<ul class="pagination justify-content-center">
 							<c:if test="${startPage > pageGroup}">
 								<li class="page-item"><a class="page-link"
-									href="adoptionList.mvc?pageNum=${startPage - pageGroup}&type=${searchColumn}&keyword=${keyword}">Pre</a>
+									href="AdoptionList.mvc?pageNum=${startPage - pageGroup}&type=${searchColumn}&keyword=${keyword}">Pre</a>
 								</li>
 							</c:if>
 							<c:forEach var="i" begin="${startPage}" end="${endPage}">
@@ -144,13 +144,13 @@
 								</c:if>
 								<c:if test="${i != currentPage}">
 									<li class="page-item"><a class="page-link"
-										href="adoptionList.mvc?pageNum=${i}&type=${searchColumn}&keyword=${keyword}">${i}</a>
+										href="AdoptionList.mvc?pageNum=${i}&type=${searchColumn}&keyword=${keyword}">${i}</a>
 									</li>
 								</c:if>
 							</c:forEach>
 							<c:if test="${endPage < pageCount}">
 								<li class="page-item"><a class="page-link"
-									href="adoptionList.mvc?pageNum=${startPage + pageGroup}&type=${searchColumn}&keyword=${keyword}">Next</a>
+									href="AdoptionList.mvc?pageNum=${startPage + pageGroup}&type=${searchColumn}&keyword=${keyword}">Next</a>
 								</li>
 							</c:if>
 						</ul>
@@ -167,7 +167,7 @@
 						<ul class="pagination justify-content-center">
 							<c:if test="${startPage > pageGroup}">
 								<li class="page-item"><a class="page-link"
-									href="adoptionList.mvc?pageNum=${startPage - pageGroup}">Pre</a></li>
+									href="AdoptionList.mvc?pageNum=${startPage - pageGroup}">Pre</a></li>
 							</c:if>
 							<c:forEach var="i" begin="${startPage}" end="${endPage}">
 								<%-- 현재 페이지 - 링크x active --%>
@@ -177,12 +177,12 @@
 								</c:if>
 								<c:if test="${i != currentPage}">
 									<li class="page-item"><a class="page-link"
-										href="adoptionList.mvc?pageNum=${i}">${i}</a></li>
+										href="AdoptionList.mvc?pageNum=${i}">${i}</a></li>
 								</c:if>
 							</c:forEach>
 							<c:if test="${endPage < pageCount}">
 								<li class="page-item"><a class="page-link"
-									href="adoptionList.mvc?pageNum=${startPage + pageGroup}">Next</a>
+									href="AdoptionList.mvc?pageNum=${startPage + pageGroup}">Next</a>
 								</li>
 							</c:if>
 						</ul>

@@ -9,6 +9,7 @@ import com.miniproject.dao.AdoptionDao01;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class AdoptionDeleteService implements CommandProcess{
 
@@ -16,25 +17,37 @@ public class AdoptionDeleteService implements CommandProcess{
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String postId1 = request.getParameter("postId");
-		String userId = request.getParameter("userId");
+		String postIdStr = request.getParameter("postId");
 		String pageNum = request.getParameter("pageNum");
 		
-		if(postId1 == null || postId1.equals("") 
+		if(postIdStr == null || postIdStr.equals("") 
 				|| pageNum == null || pageNum.equals("")) {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("	alert('잘못된 접근...')");
-			out.println("	location.href='boardList'");
+			out.println("	location.href='adoptionList.mvc'");
 			out.println("</script>");
 		}			
 		
-		AdoptionDao01 dao = new AdoptionDao01();
-		int postId = Integer.parseInt(request.getParameter("postId1"));
-		boolean isUserIdcheck = dao.isUserIdCheck(postId, userId);
+		HttpSession session = request.getSession();
+		String loggedInUserId = (String) session.getAttribute("userId");  // 세션에서 userId 가져오기
+
+		if(loggedInUserId == null) { //로그인 확인
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("	alert('로그인 후 삭제할 수 있습니다.')");
+			out.println("	history.back();");
+			out.println("</script>");
+			return null;
+		}
 		
-		if(!isUserIdcheck) {
+		AdoptionDao01 dao = new AdoptionDao01();
+		int postId = Integer.parseInt(postIdStr);
+		boolean isUserIdCheck = dao.isUserIdCheck(postId,  loggedInUserId); // 세션 userId로 권한 확인
+		
+		if(!isUserIdCheck) { //로그인 확인
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
@@ -44,21 +57,23 @@ public class AdoptionDeleteService implements CommandProcess{
 			out.close();
 			return null;
 		}
+		
+		
 		dao.deleteAdoption(postId);
 		
 		String type = request.getParameter("type");
 		String keyword = request.getParameter("keyword");
-		boolean searchOption = (type == null || type.equals("")
-				|| keyword == null || keyword.equals("")) ? false : true;
+		boolean searchOption = (type != null || !type.equals("")
+				|| keyword != null || !keyword.equals("")); 
 		
-		String url = "AdoptionListService?pageNum=" + pageNum;
+		String url = "AdoptionList?pageNum=" + pageNum;
 		
 		if(searchOption) {
 			keyword = URLEncoder.encode(keyword, "UTF-8");
-			url+="&type=" + type + "&keyword=" + keyword; 
+			url += "&searchColumn=" + type + "&keyword=" + keyword; 
 		}
 			System.out.println(url);
-		return "redirect:/adoptionList.mvc";
+		return "redirect:" + url;
 	}
 
 }

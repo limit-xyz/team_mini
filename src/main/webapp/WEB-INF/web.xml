@@ -14,6 +14,12 @@
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 
+<context-param>
+    <param-name>uploadDir</param-name>
+    <param-value>/upload</param-value>
+</context-param>
+
+
 	<error-page>
 		<error-code>500</error-code>
 		<location>/WEB-INF/index.jsp?body=errors/errorpage.jsp</location>

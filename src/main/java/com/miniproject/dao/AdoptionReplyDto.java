@@ -7,25 +7,25 @@ public class AdoptionReplyDto {
 	private int postId;
 	private int replyId;
 	private String userId;
-	private String replyContent;
+	private String content;
 	private String replyWriter;
 	private Timestamp createdAt;
 	private boolean isSecret;
 	
 	
 	public AdoptionReplyDto() {}
-	public AdoptionReplyDto(int replyId, String replyContent, String replyWriter) {
+	public AdoptionReplyDto(int replyId, String content, String replyWriter) {
 		this.replyId = replyId;
-		this.replyContent = replyContent;
+		this.content = content;
 		this.replyWriter = replyWriter;
 
 	}
-	public AdoptionReplyDto (int postId, int replyId, String userId, String replyContent,
+	public AdoptionReplyDto (int postId, int replyId, String userId, String content,
 			String replyWriter, Timestamp createdAt, boolean isSecret) {
 		this.postId = postId;
 		this.replyId = replyId;
 		this.userId = userId;
-		this.replyContent = replyContent;
+		this.content = content;
 		this.replyWriter = replyWriter;
 		this.createdAt = createdAt;
 		this.isSecret = isSecret;
@@ -52,11 +52,11 @@ public class AdoptionReplyDto {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getreplyContent() {
-		return replyContent;
+	public String getContent() {
+		return content;
 	}
-	public void setreplyContent(String replyContent) {
-		this.replyContent = replyContent;
+	public void setContent(String content) {
+		this.content = content;
 	}
 	public Timestamp getCreatedAt() {
 		return createdAt;
@@ -64,10 +64,10 @@ public class AdoptionReplyDto {
 	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
-	public boolean isSecret() {
+	public boolean getIsSecret() {
 		return isSecret;
 	}
-	public void setSecret(boolean isSecret) {
+	public void setIsSecret(boolean isSecret) {
 		this.isSecret = isSecret;
 	}
 	

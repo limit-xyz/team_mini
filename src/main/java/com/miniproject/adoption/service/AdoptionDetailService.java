@@ -24,17 +24,17 @@ public class AdoptionDetailService implements CommandProcess{
 		boolean isLogin = session.getAttribute("isLogin") != null 
 				&& (Boolean) session.getAttribute("isLogin");
 		
-		if(! isLogin) {//로그인이 아닐경우
-			response.setContentType("text/html; charset=utf-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>");
-			out.println("	alert('로그인 전용 서비스 입니다.')");
-			out.println("	location.href='loginForm.member'"); //--로그인 메뉴창 생성시 연동 필요
-			out.println("</script>");
-			
-			return null;
-			
-		}
+//		if(! isLogin) {//로그인이 아닐경우
+//			response.setContentType("text/html; charset=utf-8");
+//			PrintWriter out = response.getWriter();
+//			out.println("<script>");
+//			out.println("	alert('로그인 전용 서비스 입니다.')");
+//			out.println("	location.href='loginForm.member'"); //--로그인 메뉴창 생성시 연동 필요
+//			out.println("</script>");
+//			
+//			return null;
+//			
+//		}
 		
 		String postIdParam = request.getParameter("postId");
 		String pageNum = request.getParameter("pageNum");
@@ -55,10 +55,20 @@ public class AdoptionDetailService implements CommandProcess{
 		}
 		int postId = Integer.parseInt(postIdParam);
 		
-		boolean searchOption = (searchColumn != null || !searchColumn.equals("")
-				|| adoptionType != null || !adoptionType.equals("") 
-				|| keyword != null || !keyword.equals("")
-				|| animalTypeMain != null || !animalTypeMain.equals(""));
+
+		boolean searchOption = false;
+		if (searchColumn != null && !searchColumn.isEmpty()) {
+			searchOption = true;
+		}
+		if (keyword != null && !keyword.isEmpty()) {
+			searchOption = true;
+		}
+		if (adoptionType != null && !adoptionType.isEmpty()) {
+			searchOption = true;
+		}
+		if (animalTypeMain != null && !animalTypeMain.isEmpty()) {
+			searchOption = true;
+		}
 		
 		AdoptionDao01 dao = new AdoptionDao01();
 		

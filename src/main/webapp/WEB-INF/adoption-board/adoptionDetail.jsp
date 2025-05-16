@@ -67,7 +67,7 @@
 				<!--  검색 리스트에서 넘어온 경우 다시 보내기 -->
 				<c:if test="${searchOption }">
 				<input type="button" class="btn btn-warning" value="목록보기"
-				onclick="location.href='adoptionList.mvc?pageNum=${pageNum }'">
+				onclick="location.href='AdoptionList.mvc?pageNum=${pageNum }'">
 				</c:if>
 				</div>
 			</div>

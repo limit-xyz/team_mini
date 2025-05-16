@@ -20,12 +20,31 @@ public class AdoptionListService implements CommandProcess {
 	public String requestProcess(
 			HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+	
 		String pageNumParam = request.getParameter("pageNum");
 		String searchColumn = request.getParameter("searchColumn");
 		String keyword = request.getParameter("keyword");		
 		String adoptionType = request.getParameter("adoptionType");
 		String animalTypeMain = request.getParameter("animalTypeMain");
+		
+		boolean searchOption = false;
+		if(searchColumn !=null && !searchColumn.isEmpty()) {
+			searchOption = true;
+		}
+		
+		if(keyword !=null && !keyword.isEmpty()) {
+			searchOption = true;
+		}
+		
+		if(adoptionType !=null && !adoptionType.isEmpty()) {
+			searchOption = true;
+		}
+		
+		if(animalTypeMain !=null && !animalTypeMain.isEmpty()) {
+			searchOption = true;
+		}
+		
+		
 		
 		int currentPage = 1;
 		
@@ -43,12 +62,12 @@ public class AdoptionListService implements CommandProcess {
 		ArrayList<AdoptionWriteDto> blist;
 		int listCount = 0;
 		
-		// 검색 게시 글 리스트 - type, keyword 동시에 있으면
-		boolean searchOption = (searchColumn != null || !searchColumn.equals("") 
-				|| keyword != null || !keyword.equals("") 				
-				|| adoptionType != null || !adoptionType.equals("") 
-				|| animalTypeMain != null || !animalTypeMain.equals(""));
-		
+//		// 검색 게시 글 리스트 - type, keyword 동시에 있으면
+//		boolean searchOption = (searchColumn != null || !searchColumn.equals("")) 
+//				|| (keyword != null || !keyword.equals("")) 				
+//				|| (adoptionType != null || !adoptionType.equals("")) 
+//				|| (animalTypeMain != null || !animalTypeMain.equals(""));
+//		
 		if(!searchOption) { // 일반 게시 글 리스트			
 			blist = dao.boardList(startRow, endRow);
 			listCount = dao.getBoardCount();
