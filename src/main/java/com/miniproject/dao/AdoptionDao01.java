@@ -647,27 +647,27 @@ public class AdoptionDao01 {
 		    return replyList;
 		}
 		
-		// 뎃글 삭제 (본인 또는 관리자 권한 필요)
-				public int deleteReply (int replyId, String userId) {// 사용자 권한 id 로만 삭제
-					int result = 0;
-					String sql = "DELETE FROM adoption_reply WHERE reply_id =? AND user_id = ?";
+// 댓글 삭제 (본인 또는 관리자 권한 필요)
+		public int deleteReply (int replyId, String userId ) {// 사용자 권한 id 로만 삭제
+			int result = 0;
+			String sql = "DELETE FROM adoption_reply WHERE reply_id =? AND user_id = ?";
 
-				    try {
-				        conn = DBManager.getConnection();
-				        pstmt = conn.prepareStatement(sql);
-				        pstmt.setInt(1, replyId);
-				        pstmt.setString(2, userId);
-				        result = pstmt.executeUpdate();
-				    
-				        
-				    } catch (SQLException e) {
-				        e.printStackTrace();
-				    } finally {
-				        DBManager.close(conn, pstmt, rs);
-				    }
-				    return result;
-				}
-				
+		    try {
+		        conn = DBManager.getConnection();
+		        pstmt = conn.prepareStatement(sql);
+		        pstmt.setInt(1, replyId);
+		        pstmt.setString(2, userId);
+		        result = pstmt.executeUpdate();
+		    
+		        
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        DBManager.close(conn, pstmt, rs);
+		    }
+		    return result;
+		}
+		
 				
 		// 특정 게시글의 댓글수 조회
 		public int getReplyCount (int postId) {
@@ -710,6 +710,34 @@ public class AdoptionDao01 {
 			
 			return result;
 		}
+		
+		public boolean isReplyWriter (int replyId, String userId) {
+			boolean isWriter = false;
+			String sql = "SELECT user_id FROM adoption_reply WHERE reply_id = ?";
+			
+			try {
+				conn = DBManager.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, replyId);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					String writerId = rs.getString("user_id");
+					if(writerId != null && writerId.equals(userId)) {
+						isWriter = true;
+					}
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				DBManager.close(conn, pstmt, rs);
+			}
+			
+			return isWriter;
+		}
+		
+				
+				
 }
 
 

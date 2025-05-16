@@ -24,17 +24,17 @@ public class AdoptionDetailService implements CommandProcess{
 		boolean isLogin = session.getAttribute("isLogin") != null 
 				&& (Boolean) session.getAttribute("isLogin");
 		
-//		if(! isLogin) {//로그인이 아닐경우
-//			response.setContentType("text/html; charset=utf-8");
-//			PrintWriter out = response.getWriter();
-//			out.println("<script>");
-//			out.println("	alert('로그인 전용 서비스 입니다.')");
-//			out.println("	location.href='loginForm.member'"); //--로그인 메뉴창 생성시 연동 필요
-//			out.println("</script>");
-//			
-//			return null;
-//			
-//		}
+		if(! isLogin) {//로그인이 아닐경우
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("	alert('로그인 전용 서비스 입니다.')");
+			out.println("	location.href='loginForm.member'"); //--로그인 메뉴창 생성시 연동 필요
+			out.println("</script>");
+			
+			return null;
+			
+		}
 		
 		String postIdParam = request.getParameter("postId");
 		String pageNum = request.getParameter("pageNum");
@@ -75,9 +75,11 @@ public class AdoptionDetailService implements CommandProcess{
 		AdoptionWriteDto adoptionDetail = dao.getAdopTion(postId, true);
 		
 		List<AdoptionReplyDto> replyList = dao.getReplyList(postId);
+		int replyCount = dao.getReplyCount(postId); // 댓글수 조회
 		
 		request.setAttribute("AdoptionWriteDto", adoptionDetail);
 		request.setAttribute("replyList", replyList);
+		requset.setAttribute("replyCount", replyCount);
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("searchOption", searchOption);
 		
