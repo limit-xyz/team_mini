@@ -18,14 +18,29 @@ public class DiaryDao {
 	}
 
 	// 다이어리 갯수 가져오기
-	public int getDiaryCount(String id) {
-		String getMemberCountSql = "SELECT count(*) count FROM diary WHERE member_id=?";
+	public int getDiaryCount(String id, String type, String keyword) {
+
+		String getMemberCountSql = "";
+		boolean isSearch = false;
+
+		if (type == null || keyword == null || type.equals("") || keyword.equals("") ) {
+			getMemberCountSql = "SELECT count(*) count FROM diary WHERE member_id=?";
+		} else {
+			getMemberCountSql = "SELECT count(*) count FROM diary WHERE member_id=? AND " + type + " LIKE ?";
+			isSearch = true;
+		}
+
 		int count = 0;
 
 		try {
 			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(getMemberCountSql);
-			pstmt.setString(1, id);
+			if (isSearch) {
+				pstmt.setString(1, id);
+				pstmt.setString(2, "%" + keyword + "%");
+			} else {
+				pstmt.setString(1, id);
+			}
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -89,6 +104,51 @@ public class DiaryDao {
 			pstmt.setString(1, id);
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+
+				diaryList = new ArrayList<Diary>();
+
+				do {
+					Diary diary = new Diary();
+					diary.setNo(rs.getInt("diary_no"));
+					diary.setMemberId(rs.getString("member_id"));
+					diary.setPetName(rs.getString("pet_name"));
+					diary.setTitle(rs.getString("title"));
+					diary.setContent(rs.getString("content"));
+					diary.setRegDate(rs.getTimestamp("reg_date"));
+					diary.setPhoto(rs.getString("photo"));
+
+					diaryList.add(diary);
+
+				} while (rs.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return diaryList;
+	}
+
+	// 검색한 다이어리 목록 가져오기
+	public ArrayList<Diary> searchDiaryList(String id, String type, String keyword, int startRow, int endRow) {
+
+		String diaryListSql = "SELECT * FROM ( SELECT ROWNUM num, sub.* FROM "
+				+ "(SELECT * FROM diary WHERE member_id=? AND " + type
+				+ " LIKE ? ORDER BY diary_no DESC) sub) WHERE num BETWEEN ? AND ?";
+
+		ArrayList<Diary> diaryList = null;
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(diaryListSql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, "%" + keyword + "%");
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {

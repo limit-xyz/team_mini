@@ -21,6 +21,12 @@ public class DiaryListService implements CommandProcess {
 		DiaryDao dao = new DiaryDao();
 
 		String id = (String) request.getSession().getAttribute("id");
+		String searchType = request.getParameter("searchDiaryType");
+		String searchKeyword = request.getParameter("searchDiaryKeyword");
+
+		boolean isSearch = false;
+		if (searchType != null && searchKeyword != null && !searchType.equals("") && !searchKeyword.equals(""))
+			isSearch = true;
 
 		if (id == null) {
 			StringBuilder sb = new StringBuilder();
@@ -46,7 +52,8 @@ public class DiaryListService implements CommandProcess {
 		int startRow = currentPage * PAGE_SIZE - (PAGE_SIZE - 1);
 		int endRow = startRow + PAGE_SIZE - 1;
 		int listCount = 0;
-		listCount = dao.getDiaryCount(id);
+
+		listCount = dao.getDiaryCount(id, searchType, searchKeyword);
 
 		int pageCount = listCount / PAGE_SIZE + (listCount % PAGE_SIZE == 0 ? 0 : 1);
 
@@ -56,8 +63,16 @@ public class DiaryListService implements CommandProcess {
 			endPage = pageCount;
 		}
 
-		diaryList = dao.getDiaryList(id, startRow, endRow);
+		if (isSearch) {
+			request.setAttribute("searchDiaryOption", "1");
+			request.setAttribute("searchDiaryType", searchType);
+			request.setAttribute("searchDiaryKeyword", searchKeyword);
+			diaryList = dao.searchDiaryList(id, searchType, searchKeyword, startRow, endRow);
+		}
 
+		else {
+			diaryList = dao.getDiaryList(id, startRow, endRow);
+		}
 		request.setAttribute("diaryList", diaryList);
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("pageCount", pageCount);

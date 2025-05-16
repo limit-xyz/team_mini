@@ -9,6 +9,8 @@
 	
 		<div style="visibility: hidden;">
 			<p id="pageNum">${pageNum}</p>
+			<p id="searchDiaryTypePara">${searchDiaryType}</p>
+			<p id="searchDiaryKeywordPara">${searchDiaryKeyword}</p>
 		</div>
 	
 		<div class="row text-center">
@@ -19,7 +21,8 @@
 		
 		<div class="row my-3">
 			<div class="col text-end">
-				<a href="diaryWriteForm?pageNum=${pageNum}" class="btn btn-outline-success">글쓰기</a>
+				<a class="btn btn-outline-success"
+				href="diaryWriteForm?pageNum=${pageNum}&searchDiaryType=${searchDiaryType}&searchDiaryKeyword=${searchDiaryKeyword}">글쓰기</a>
 			</div>
 		</div>
 	
@@ -58,7 +61,13 @@
 
 				<c:if test="${ empty diaryList }">
 					<tr>
-						<td colspan="5" class="text-center">다이어리가 존재하지 않음</td>
+						<c:if test="${searchDiaryOption == '1'}">
+							<td colspan="12" class="text-center">검색 결과가 존재하지 않음</td>
+						</c:if>
+						
+						<c:if test="${not searchDiaryOption == '1'}">
+							<td colspan="12" class="text-center">다이어리가 존재하지 않음</td>
+						</c:if>
 					</tr>
 				</c:if>
 				
@@ -83,7 +92,8 @@
 		  
 		  	<c:if test="${ startPage > PAGE_GROUP }">
 			    <li class="page-item">
-			      <a class="page-link" href="diaryList?pageNum=${ startPage - PAGE_GROUP }">Prev</a>
+			      <a class="page-link"
+			      href="diaryList?pageNum=${ startPage - PAGE_GROUP }&searchDiaryType=${searchDiaryType}&searchDiaryKeyword=${searchDiaryKeyword}">Prev</a>
 			    </li>
 		    </c:if>
 		   	
@@ -96,14 +106,15 @@
 		    	
 		    	<c:if test="${i != pageNum }">
 			    	<li class="page-item">
-			    		<a class="page-link" href="diaryList?pageNum=${ i }">${i}</a>
+			    		<a class="page-link" href="diaryList?pageNum=${i}&searchDiaryType=${searchDiaryType}&searchDiaryKeyword=${searchDiaryKeyword}">${i}</a>
 			    	</li>
 			    </c:if>					    
 		    </c:forEach>							    
 
 			<c:if test="${ endPage < pageCount }">
 			    <li class="page-item">
-			      <a class="page-link" href="diaryList?pageNum=${ startPage + PAGE_GROUP }">Next</a>
+			      <a class="page-link"
+			      href="diaryList?pageNum=${startPage + PAGE_GROUP}&searchDiaryType=${searchDiaryType}&searchDiaryKeyword=${searchDiaryKeyword}">Next</a>
 			    </li>
 		  	</c:if>
 		  </ul>
@@ -111,6 +122,26 @@
 	</div>
 </div>
 
+<div class="row my-1">
+	<div class="col">
+		<form name="searchDiaryForm" id="searchDiaryForm"  action="diaryList"
+			class="row justify-content-center my-2 ">
+			<div class="col-auto">
+				<select name="searchDiaryType" class="form-select">
+					<option value="title" ${searchDiaryType == 'title' ? "selected" : ""}>제목</option>
+					<option value="content" ${searchDiaryType == 'content' ? "selected" : ""}>내용</option>
+					<option value="pet_name" ${searchDiaryType == 'pet_name' ? "selected" : ""}>반려동물명</option>
+				</select>
+			</div>
+			<div class="col-4">
+				<input type="text" name="searchDiaryKeyword" class="form-control" id="searchDiaryKeyword" value="${searchDiaryKeyword}"/>
+			</div>
+			<div class="col-auto">
+				<input type="submit" value="검 색" class="btn btn-primary"/>
+			</div>
+		</form>	
+	</div>
+</div>
 
 
 <!-- Modal -->

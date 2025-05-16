@@ -2,9 +2,24 @@ $(function() {
 
 	// 다이어리 상세보기
 	$(document).on("click", ".diaryDetail", function() {
-		var pageNum = $("#pageNum").text();
 		var no = $(this).data("diaryNo");
-		location.href = "diaryDetail?no=" + no + "&pageNum=" + pageNum;
+		var pageNum = $("#pageNum").text();
+		var searchDiaryType = $("#searchDiaryTypePara").text();
+		var searchDiaryKeyword = $("#searchDiaryKeywordPara").text();
+
+		location.href = "diaryDetail?no=" + no + "&pageNum=" + pageNum +
+			"&searchDiaryType=" + searchDiaryType + "&searchDiaryKeyword=" + searchDiaryKeyword;
+	});
+
+	// 검색창 유효성 검사
+	$("#searchDiaryForm").on("submit", function() {
+		var searchKeyword = $("#searchDiaryKeyword").val();
+
+		if (searchKeyword.length < 1) {
+			alert("검색어를 입력해주세요");
+			$("#searchDiaryKeyword").focus();
+			return false;
+		}
 	});
 
 	// 다이어리 쓰기 폼 유효성 검사
@@ -31,9 +46,13 @@ $(function() {
 	// 다이어리 수정 폼 요청
 	$(document).on("click", "#diaryUpdate", function() {
 
-		var pageNum = $("#pageNum").text();
 		var no = $(this).data("diaryNo");
-		location.href = "diaryUpdateForm?no=" + no + "&pageNum=" + pageNum;
+		var pageNum = $("#pageNum").text();
+		var searchDiaryType = $("#searchDiaryTypePara").text();
+		var searchDiaryKeyword = $("#searchDiaryKeywordPara").text();
+
+		location.href = "diaryUpdateForm?no=" + no + "&pageNum=" + pageNum +
+			"&searchDiaryType=" + searchDiaryType + "&searchDiaryKeyword=" + searchDiaryKeyword;
 	});
 
 
@@ -61,8 +80,12 @@ $(function() {
 
 	// 다이어리 삭제
 	$(document).on("click", "#diaryDelete", function() {
-		var pageNum = $("#pageNum").text();
 		var no = $(this).data("diaryNo");
-		location.href = "diaryDelete?no=" + no + "&pageNum=" + pageNum;
+		var pageNum = $("#pageNum").text();
+		var searchDiaryType = $("#searchDiaryTypePara").text();
+		var searchDiaryKeyword = $("#searchDiaryKeywordPara").text();
+
+		location.href = "diaryDelete?no=" + no + "&pageNum=" + pageNum +
+			"&searchDiaryType=" + searchDiaryType + "&searchDiaryKeyword=" + searchDiaryKeyword;
 	});
 });

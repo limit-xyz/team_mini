@@ -18,13 +18,24 @@ public class MemberDao {
 	}
 
 	// 멤버 수 카운트하기
-	public int getMemberCount() {
-		String getMemberCountSql = "SELECT count(*) count FROM member";
+	public int getMemberCount(String searchMemberId) {
+
+		String getMemberCountSql = "";
+		boolean isSearch = false;
+
+		if (searchMemberId == null)
+			getMemberCountSql = "SELECT count(*) count FROM member";
+		else {
+			isSearch = true;
+			getMemberCountSql = "SELECT count(*) count FROM member WHERE id LIKE ?";
+		}
 		int count = 0;
 
 		try {
 			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(getMemberCountSql);
+			if (isSearch)
+				pstmt.setString(1, "%" + searchMemberId + "%");
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -42,10 +53,11 @@ public class MemberDao {
 	}
 
 	// 멤버 목록 가져오기
-	public ArrayList<Member> getMemberList(int startRow, int endRow) {
+	public ArrayList<Member> getMemberList(int startRow, int endRow, boolean isBanSort) {
 
-		String memberListSql = "SELECT * FROM"
-				+ "(SELECT ROWNUM num, sub.* FROM (SELECT * FROM member ORDER BY role) sub)"
+		String memberListSql = "SELECT * FROM (SELECT ROWNUM num, sub.* FROM "
+				+ (isBanSort ? "(SELECT * FROM member ORDER BY ban_date desc, role) sub)"
+						: "(SELECT * FROM member ORDER BY role) sub)")
 				+ " WHERE num BETWEEN ? AND ?";
 
 		ArrayList<Member> memberList = null;
@@ -55,6 +67,59 @@ public class MemberDao {
 			pstmt = conn.prepareStatement(memberListSql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+
+				memberList = new ArrayList<Member>();
+
+				do {
+					Member member = new Member();
+					member.setId(rs.getString("id"));
+					member.setName(rs.getString("name"));
+					member.setPassword(rs.getString("password"));
+					member.setGender(rs.getString("gender"));
+					member.setMobile(rs.getString("mobile"));
+					member.setZipcode(rs.getString("zipcode"));
+					member.setAddress1(rs.getString("address1"));
+					member.setAddress2(rs.getString("address2"));
+					member.setEmail(rs.getString("email"));
+					member.setRegDate(rs.getTimestamp("reg_date"));
+					member.setIntroduction(rs.getString("introduction"));
+					member.setBirthDate(rs.getTimestamp("birth_date"));
+					member.setBanDate(rs.getTimestamp("ban_date"));
+					member.setBanReason(rs.getString("ban_reason"));
+					member.setRole(rs.getString("role"));
+
+					member.setBan(member.getBanDate());
+
+					memberList.add(member);
+
+				} while (rs.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return memberList;
+	}
+
+	// 검색된 멤버 목록 가져오기
+	public ArrayList<Member> searchMemberList(String memberId, int startRow, int endRow) {
+
+		String searchMemberListSql = "SELECT * FROM (SELECT ROWNUM num, sub.* FROM "
+				+ "(SELECT * FROM member WHERE id LIKE ? ORDER BY role) sub) WHERE num BETWEEN ? AND ?";
+
+		ArrayList<Member> memberList = null;
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(searchMemberListSql);
+			pstmt.setString(1, "%" + memberId + "%");
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {

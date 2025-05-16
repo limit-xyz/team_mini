@@ -39,7 +39,8 @@
 	  		<div class="col-8 offset-md-2 text-center mt-5">
 			   <input type="submit" value="등록하기" class="btn btn-primary"/>
 					&nbsp;&nbsp;
-				<input type="button" value="목록보기" onclick="location.href='diaryList?pageNum=${pageNum}'" class="btn btn-primary"/>
+				<input type="button" value="목록보기" class="btn btn-primary"
+				onclick="location.href='diaryList?pageNum=${pageNum}&searchDiaryType=${searchDiaryType}&searchDiaryKeyword=${searchDiaryKeyword}'"/>
 	  		</div>	
 	  		
 		</form>

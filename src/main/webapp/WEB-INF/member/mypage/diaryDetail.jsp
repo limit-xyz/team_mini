@@ -9,6 +9,8 @@
 	
 		<div style="visibility: hidden;">
 			<p id="pageNum">${pageNum}</p>
+			<p id="searchDiaryTypePara">${searchDiaryType}</p>
+			<p id="searchDiaryKeywordPara">${searchDiaryKeyword}</p>
 		</div>
 	
 		<div class="row text-center">
@@ -71,7 +73,8 @@
 			<div class="col text-center">				
 				<input class="btn btn-warning" type="button" id="diaryUpdate" value="수정하기" data-diary-no="${diary.no}" />
 				<input class="btn btn-danger"  type="button" id="diaryDelete" value="삭제하기" data-diary-no="${diary.no}" />				
-				<input class="btn btn-primary" type="button" value="목록보기"  onclick="location.href='diaryList?pageNum=${pageNum}'"/>
+				<input class="btn btn-primary" type="button" value="목록보기" 
+				onclick="location.href='diaryList?pageNum=${pageNum}&searchDiaryType=${searchDiaryType}&searchDiaryKeyword=${searchDiaryKeyword}'"/>
 			</div>		
 		</div>
 	</div>	

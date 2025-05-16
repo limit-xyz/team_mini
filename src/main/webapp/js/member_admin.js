@@ -1,17 +1,31 @@
 $(function() {
 
+	// 검색창 유효성 검사
+	$("#searchMemberForm").on("submit", function() {
+		var memberId = $("#serachMemberId").val();
+
+		if (memberId.length < 1) {
+			alert("검색어를 입력해주세요");
+			$("#serachMemberId").focus();
+			return false;
+		}
+	});
+
 	// 멤버 삭제 메소드
 	$(document).on("click", ".deleteMember", function() {
 		var userId = $(this).data('userId');
 		var pageNum = $("#pageNum").text();
-		console.log(pageNum);
+		var isBanSort = $("#isBanSort").text();
+		var serachMemberId = $("#searchId").text();
 
 		var isDelete = confirm("유저 " + userId + " 를 삭제하시겠습니까?\n이 명령은 되돌릴 수 없습니다.")
 
 		if (isDelete) {
 			data = {
 				"id": userId,
-				"pageNum": pageNum
+				"pageNum": pageNum,
+				"isBanSort": isBanSort,
+				"serachMemberId": serachMemberId
 			}
 
 			$.ajax({
@@ -264,19 +278,19 @@ function dateModifier(str) {
 function dateToString(input, isHour) {
 	if (input == null)
 		return "";
-	
+
 	if (isHour) {
-		
+
 		var date = new Date(input);
-		
+
 		return date.getFullYear() + "/" + dateModifier(date.getMonth() + 1) + "/" + dateModifier(date.getDate()) + " " +
 			dateModifier(date.getHours()) + ":" + dateModifier(date.getMinutes()) + ":" + dateModifier(date.getSeconds());
 	}
 
 	else {
-		
+
 		var date = new Date(input);
-		
+
 		return date.getFullYear() + "/" + dateModifier(date.getMonth() + 1) + "/" + dateModifier(date.getDate());
 	}
 }

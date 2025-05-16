@@ -18,6 +18,12 @@ public class DiaryUpdateFormService implements CommandProcess {
 
 		int no = Integer.parseInt(request.getParameter("no"));
 		String id = (String) request.getSession().getAttribute("id");
+		String searchType = request.getParameter("searchDiaryType");
+		String searchKeyword = request.getParameter("searchDiaryKeyword");
+
+		boolean isSearch = false;
+		if (searchType != null && searchKeyword != null && !searchType.equals("") && !searchKeyword.equals(""))
+			isSearch = true;
 
 		DiaryDao dao = new DiaryDao();
 		boolean isDiaryOwner = dao.isDiaryOwner(id, no);
@@ -26,6 +32,11 @@ public class DiaryUpdateFormService implements CommandProcess {
 		if (isDiaryOwner) {
 			request.setAttribute("diary", diary);
 			request.setAttribute("pageNum", request.getParameter("pageNum"));
+			if (isSearch) {
+				request.setAttribute("searchDiaryOption", "1");
+				request.setAttribute("searchDiaryType", searchType);
+				request.setAttribute("searchDiaryKeyword", searchKeyword);
+			}
 			return "member/mypage/diaryUpdateForm";
 		}
 

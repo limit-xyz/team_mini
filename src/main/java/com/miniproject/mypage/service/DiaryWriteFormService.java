@@ -14,6 +14,12 @@ public class DiaryWriteFormService implements CommandProcess {
 			throws ServletException, IOException {
 
 		String id = (String) request.getSession().getAttribute("id");
+		String searchType = request.getParameter("searchDiaryType");
+		String searchKeyword = request.getParameter("searchDiaryKeyword");
+
+		boolean isSearch = false;
+		if (searchType != null && searchKeyword != null && !searchType.equals("") && !searchKeyword.equals(""))
+			isSearch = true;
 
 		if (id == null) {
 			StringBuilder sb = new StringBuilder();
@@ -26,6 +32,12 @@ public class DiaryWriteFormService implements CommandProcess {
 			PrintWriter out = response.getWriter();
 			out.println(sb.toString());
 			return null;
+		}
+		
+		if (isSearch) {
+			request.setAttribute("searchDiaryOption", "1");
+			request.setAttribute("searchDiaryType", searchType);
+			request.setAttribute("searchDiaryKeyword", searchKeyword);
 		}
 
 		request.setAttribute("pageNum", request.getParameter("pageNum"));

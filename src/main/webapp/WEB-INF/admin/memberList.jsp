@@ -10,6 +10,8 @@
 	
 		<div style="visibility: hidden;">
 			<p id="pageNum">${currentPage}</p>
+			<p id="isBanSort">${isBanSort}</p>
+			<p id="searchId">${searchId}</p>
 		</div>
 	
 		<div class="row text-center">
@@ -29,7 +31,7 @@
 					<th colspan=3>주소</th>
 					<th>가입일</th>
 					<th>생일</th>
-					<th>차단 해제일</th>
+					<th onclick="location.href=`member?banSort=1`">차단 해제일</th>
 					<th>역할</th>
 					<th>작업</th>
 				</tr>		
@@ -98,7 +100,13 @@
 
 				<c:if test="${ empty memberList }">
 					<tr>
-						<td colspan="12" class="text-center">멤버가 존재하지 않음</td>
+						<c:if test="${searchOption == '1'}">
+							<td colspan="12" class="text-center">검색 결과가 존재하지 않음</td>
+						</c:if>
+						
+						<c:if test="${not searchOption == '1'}">
+							<td colspan="12" class="text-center">멤버가 존재하지 않음</td>
+						</c:if>
 					</tr>
 				</c:if>
 				
@@ -122,7 +130,7 @@
 		  
 		  	<c:if test="${ startPage > PAGE_GROUP }">
 			    <li class="page-item">
-			      <a class="page-link" href="member?pageNum=${ startPage - PAGE_GROUP }">Prev</a>
+			      <a class="page-link" href="member?pageNum=${ startPage - PAGE_GROUP }&searchMemberId=${searchId}">Prev</a>
 			    </li>
 		    </c:if>
 		   	
@@ -135,14 +143,14 @@
 		    	
 		    	<c:if test="${i != currentPage }">
 			    	<li class="page-item">
-			    		<a class="page-link" href="member?pageNum=${ i }">${i}</a>
+			    		<a class="page-link" href="member?pageNum=${ i }&searchMemberId=${searchId}">${i}</a>
 			    	</li>
 			    </c:if>					    
 		    </c:forEach>							    
 
 			<c:if test="${ endPage < pageCount }">
 			    <li class="page-item">
-			      <a class="page-link" href="member?pageNum=${ startPage + PAGE_GROUP }">Next</a>
+			      <a class="page-link" href="member?pageNum=${ startPage + PAGE_GROUP }&searchMemberId=${searchId}">Next</a>
 			    </li>
 		  	</c:if>
 		  	
@@ -151,6 +159,26 @@
 	</div>
 </div>
 
+					    	
+<div class="row my-1">
+	<div class="col">
+		<form name="searchMemberForm" id="searchMemberForm"  action="member"
+			class="row justify-content-center my-2 ">
+			
+			<div class="col-1">
+				<label class="form-label"  for="searchMemberId">아이디 검색</label>
+			</div>
+			
+			<div class="col-4">
+				<input type="text" name="searchMemberId" class="form-control" id="searchMemberId" value="${searchId}"/>
+			</div>
+			
+			<div class="col-auto">
+				<input type="submit" value="검 색" class="btn btn-primary"/>
+			</div>
+		</form>			
+	</div>
+</div>
 
 
 

@@ -19,7 +19,6 @@ public class MemberListService implements CommandProcess {
 		ArrayList<Member> memberList = new ArrayList<>();
 		MemberDao dao = new MemberDao();
 
-		
 		String pageNum = request.getParameter("pageNum");
 		if (pageNum == null) {
 			pageNum = "1";
@@ -31,7 +30,9 @@ public class MemberListService implements CommandProcess {
 		int startRow = currentPage * PAGE_SIZE - (PAGE_SIZE - 1);
 		int endRow = startRow + PAGE_SIZE - 1;
 		int listCount = 0;
-		listCount = dao.getMemberCount();
+		
+		String searchId = request.getParameter("searchMemberId");
+		listCount = dao.getMemberCount(searchId);
 
 		int pageCount = listCount / PAGE_SIZE + (listCount % PAGE_SIZE == 0 ? 0 : 1);
 
@@ -40,8 +41,23 @@ public class MemberListService implements CommandProcess {
 		if (endPage > pageCount) {
 			endPage = pageCount;
 		}
+		
+		if (searchId == null) {
+			boolean isBanSort = false;
+			if (request.getParameter("banSort") != null) {
+				request.setAttribute("searchOption", "0");
+				request.setAttribute("isBanSort", "1");
+				isBanSort = true;
+			}
 
-		memberList = dao.getMemberList(startRow, endRow);
+			memberList = dao.getMemberList(startRow, endRow, isBanSort);
+		}
+
+		else {
+			request.setAttribute("searchId", searchId);
+			request.setAttribute("searchOption", "1");
+			memberList = dao.searchMemberList(searchId, startRow, endRow);
+		}
 
 		request.setAttribute("memberList", memberList);
 		request.setAttribute("currentPage", currentPage);

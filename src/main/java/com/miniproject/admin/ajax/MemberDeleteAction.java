@@ -33,7 +33,9 @@ public class MemberDeleteAction implements AjaxProcess {
 		int startRow = currentPage * PAGE_SIZE - (PAGE_SIZE - 1);
 		int endRow = startRow + PAGE_SIZE - 1;
 		int listCount = 0;
-		listCount = dao.getMemberCount();
+
+		String searchId = request.getParameter("serachMemberId");
+		listCount = dao.getMemberCount(searchId);
 
 		int pageCount = listCount / PAGE_SIZE + (listCount % PAGE_SIZE == 0 ? 0 : 1);
 
@@ -43,8 +45,12 @@ public class MemberDeleteAction implements AjaxProcess {
 			endPage = pageCount;
 		}
 
-		ArrayList<Member> memberList = dao.getMemberList(startRow, endRow);
-		
+		ArrayList<Member> memberList;
+		if (searchId == null)
+			memberList = dao.getMemberList(startRow, endRow, false);
+		else
+			memberList = dao.searchMemberList(searchId, startRow, endRow);
+
 		Gson gson = new Gson();
 		String result = gson.toJson(memberList);
 

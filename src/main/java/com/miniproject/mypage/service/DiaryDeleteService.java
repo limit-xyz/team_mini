@@ -19,12 +19,23 @@ public class DiaryDeleteService implements CommandProcess {
 		String id = (String) request.getSession().getAttribute("id");
 		String pageNum = request.getParameter("pageNum");
 
+		String searchType = request.getParameter("searchDiaryType");
+		String searchKeyword = request.getParameter("searchDiaryKeyword");
+		boolean isSearch = false;
+		if (searchType != null && searchKeyword != null && !searchType.equals("") && !searchKeyword.equals(""))
+			isSearch = true;
+
 		DiaryDao dao = new DiaryDao();
 		boolean isDiaryOwner = dao.isDiaryOwner(id, no);
 
 		if (isDiaryOwner) {
+			String url = "r:diaryList?id=" + id + "&pageNum=" + pageNum;
+			if (isSearch) {
+				url += String.format("&searchDiaryType=%s&searchDiaryContent=%s", searchType, searchKeyword);
+			}
+
 			dao.deleteDiary(no);
-			return "r:diaryList?id=" + id + "&pageNum=" + pageNum;
+			return url;
 		}
 
 		else {
