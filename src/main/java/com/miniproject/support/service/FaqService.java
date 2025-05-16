@@ -46,6 +46,35 @@ public class FaqService implements CommandProcess{
 		
 		int listCount = 0;
 		
+		boolean searchOption = keyword == null? false : true;
+		
+		//검색인지 아닌지 판단하는 if문 
+		if(!searchOption) { // 일반 게시 글 리스트			
+			bList = dao.boardList(startRow, endRow);
+			listCount = dao.getBoardCount();
+			
+		} else { // 검색 게시 글 리스트
+			bList = dao.searchList(type, keyword, startRow, endRow);
+			listCount = dao.getBoardCount(type, keyword);
+		}
+		
+		int pageCount = listCount / PAGE_SIZE 
+				+ (listCount % PAGE_SIZE == 0 ? 0 : 1);
+		
+		
+		int startPage = (currentPage / PAGE_GROUP) * PAGE_GROUP + 1
+				- (currentPage % PAGE_GROUP == 0 ? PAGE_GROUP : 0);
+		
+		// 페이지 네이션 마지막 페이지
+		int endPage = startPage + PAGE_GROUP - 1;
+		
+		// 전체 페이지가 17페이지 = endPage ?
+		if(endPage > pageCount) {
+			endPage = pageCount;
+		}
+		
+		
+		
 		faqList = dao.getFaq();
 		
 		
