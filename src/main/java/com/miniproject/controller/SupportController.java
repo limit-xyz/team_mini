@@ -3,7 +3,7 @@ package com.miniproject.controller;
 import java.io.IOException;
 
 import com.miniproject.common.service.CommandProcess;
-import com.miniproject.common.service.MainService;
+import com.miniproject.support.service.FaqService;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -12,9 +12,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class SupportController {
-	@WebServlet(name="suportController", urlPatterns="*.suport")
-	public class MainController extends HttpServlet {
+	@WebServlet(name="suportController", urlPatterns="/support/*")
+	public class SupportController extends HttpServlet {
 		
 		private final String PREFIX = "/WEB-INF/index.jsp?body=";
 		private final String SUFFIX = ".jsp";
@@ -54,10 +53,10 @@ public class SupportController {
 			
 			// 명령을 처리 - Service 클래스 이용 - dao이용
 			// 어떤 서비스 클래스가 실행될지 결정
-			if(command.equals("/*.main") 
-					|| command.equals("/main.main")) {
+			if(command.equals("/support/*") 
+					|| command.equals("/support/faq")) {
 				// 게시 글 리스트 요청을 처리하는 BoardListService 클래스 실행
-				service = new MainService();
+				service = new FaqService();
 				viewPage = service.requestProcess(request, response);
 				System.out.println(viewPage);
 			}
@@ -86,4 +85,3 @@ public class SupportController {
 		}
 	}
 
-}
