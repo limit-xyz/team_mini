@@ -288,7 +288,7 @@ public class MemberDao {
 //  memberJoinResulte에서 데이터를 가져옴	
 	public void joinMember(Member member) {
 
-		String joinSql = "INSERT INTO member " + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE ,?,?,SYSDATE-1,null,user)";
+		String joinSql = "INSERT INTO member " + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE ,?,?,SYSDATE-1,null,?)";
 
 		try {
 			// DBCP로부터 Connection을 대여한다.
@@ -308,7 +308,7 @@ public class MemberDao {
 			pstmt.setString(9, member.getEmail());
 			pstmt.setString(10, member.getIntroduction());
 			pstmt.setTimestamp(11, member.getBirthDate());
-			
+			pstmt.setString(12, "user");
 
 			// DB에 쿼리를 발행하여 회원 정보를 저장한다.
 			pstmt.executeUpdate();
