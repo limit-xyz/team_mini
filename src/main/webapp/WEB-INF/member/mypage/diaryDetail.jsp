@@ -19,21 +19,27 @@
 				<table class="table table-bordered" >
 					<tbody>					
 						<tr>
-							<th>제 목</th>
+							<th class="col-2">제 목</th>
 							<td colspan="3">${ diary.title }</td>		
 						</tr>
 						
 						<tr>
-							<th>작성자</th>
-							<td>${ diary.memberId }</td>
-							<th>작성일</th>
+							<th class="col-2">작성자</th>
+							<td class="col-4">${ diary.memberId }</td>
+							
+							<th class="col-2">작성일</th>
 							<td>
 								<fmt:formatDate value="${ diary.regDate }" pattern="yyyy-MM-dd HH:mm:ss" />
 							</td>		
 						</tr>
+						
+						<tr>
+							<th class="col-2">반려동물명</th>
+							<td colspan="3">${ diary.petName }</td>
+						</tr>
 
 						<tr>
-							<th>사  진</th>
+							<th class="col-2">사  진</th>
 							<td colspan="3">
 							<c:if test="${ empty diary.photo }">
 								없음
@@ -44,7 +50,7 @@
 							</td>		
 						</tr>
 						<tr>		
-							<td colspan="4">
+							<td colspan="6">
 								<pre>${ diary.content }</pre>
 							</td>
 						</tr>	

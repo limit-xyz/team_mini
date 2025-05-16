@@ -20,7 +20,7 @@
 			    <input type="text" class="form-control" name="title"  id="title" >
 	  		</div>
 	  		
-	  		<div class="col-5 offset-md-2">
+	  		<div class="col-8 offset-md-2">
 			    <label for="petName" class="form-label">누구의 다이어리를 작성하시나요?</label>
 			    <input type="text" class="form-control" name="petName"  id="petName" 
 			    	placeholder="반려동물의 이름을 입력해 주세요">

@@ -23,7 +23,7 @@
 			    <input type="text" class="form-control" name="title"  id="title"  value="${diary.title}">
 	  		</div>
 	  		
-	  		<div class="col-5 offset-md-2">
+	  		<div class="col-8 offset-md-2">
 			    <label for="petName" class="form-label">누구의 다이어리를 작성하시나요?</label>
 			    <input type="text" class="form-control" name="petName"  id="petName" value="${diary.petName}"
 			    	placeholder="반려동물의 이름을 입력해 주세요">
@@ -37,7 +37,7 @@
 	  		</div>
 	  		
 	  		<div class="col-8 offset-md-2">
-			    <label for="photo" class="form-label">파 일</label>
+			    <label for="photo" class="form-label">사 진</label>
 			    <input type="file" class="form-control" name="photo"  id="photo" >
 	  		</div>	
 	  				  			

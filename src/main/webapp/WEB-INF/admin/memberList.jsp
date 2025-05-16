@@ -63,7 +63,7 @@
 								</c:if>
 								
 								<c:if test="${member.ban}">
-									<fmt:formatDate value="${member.banDate}" pattern="yyyy/MM/dd HH:mm:SS" />
+									<fmt:formatDate value="${member.banDate}" pattern="yyyy/MM/dd HH:mm:ss" />
 								</c:if>
 							</td>
 							
