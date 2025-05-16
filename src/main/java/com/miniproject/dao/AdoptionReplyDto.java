@@ -1,8 +1,8 @@
-package com.miniproject.vo;
+package com.miniproject.dao;
 
 import java.sql.Timestamp;
 
-public class AdopReply {
+public class AdoptionReplyDto {
 
 	private int postId;
 	private int replyId;
@@ -13,14 +13,14 @@ public class AdopReply {
 	private boolean isSecret;
 	
 	
-	public AdopReply() {}
-	public AdopReply(int replyId, String replyContent, String replyWriter) {
+	public AdoptionReplyDto() {}
+	public AdoptionReplyDto(int replyId, String replyContent, String replyWriter) {
 		this.replyId = replyId;
 		this.replyContent = replyContent;
 		this.replyWriter = replyWriter;
 
 	}
-	public AdopReply (int postId, int replyId, String userId, String replyContent,
+	public AdoptionReplyDto (int postId, int replyId, String userId, String replyContent,
 			String replyWriter, Timestamp createdAt, boolean isSecret) {
 		this.postId = postId;
 		this.replyId = replyId;

@@ -21,29 +21,33 @@ public class AdoptionListService implements CommandProcess {
 			HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String pageNum = request.getParameter("pageNum");
+		String pageNumParam = request.getParameter("pageNum");
 		String searchColumn = request.getParameter("searchColumn");
 		String keyword = request.getParameter("keyword");		
 		String adoptionType = request.getParameter("adoptionType");
 		String animalTypeMain = request.getParameter("animalTypeMain");
 		
-		if(pageNum == null) {
-			pageNum = "1";
-		}
-		int currentPage = Integer.parseInt(pageNum);
+		int currentPage = 1;
 		
-		int startRow = currentPage * PAGE_SIZE -(PAGE_SIZE -1);
-		int endRow = startRow + PAGE_SIZE -1;
+		if(pageNumParam  != null) {
+			try {
+				currentPage = Integer.parseInt(pageNumParam);
+			} catch (NumberFormatException e ) {
+			}
+		}
+		
+		 int startRow = (currentPage - 1) * PAGE_SIZE + 1;
+	        int endRow = currentPage * PAGE_SIZE;
 		
 		AdoptionDao01 dao = new AdoptionDao01();
-		ArrayList<AdoptionWriteDto> blist = dao.getAdopTionList();
+		ArrayList<AdoptionWriteDto> blist;
 		int listCount = 0;
 		
 		// 검색 게시 글 리스트 - type, keyword 동시에 있으면
-		boolean searchOption = (searchColumn == null || searchColumn.equals("") 
-				|| keyword == null || keyword.equals("") 				
-				|| adoptionType == null || adoptionType.equals("") 
-				|| animalTypeMain == null || animalTypeMain.equals("")) ? false : true;
+		boolean searchOption = (searchColumn != null || !searchColumn.equals("") 
+				|| keyword != null || !keyword.equals("") 				
+				|| adoptionType != null || !adoptionType.equals("") 
+				|| animalTypeMain != null || !animalTypeMain.equals(""));
 		
 		if(!searchOption) { // 일반 게시 글 리스트			
 			blist = dao.boardList(startRow, endRow);
@@ -51,21 +55,20 @@ public class AdoptionListService implements CommandProcess {
 		
 		} else {
 			blist = dao.searchList(searchColumn, keyword, adoptionType, animalTypeMain, startRow, endRow);
-			listCount = dao.getBoardCount(searchColumn, keyword);
-			
+			listCount = dao.getSearchBoardCount(searchColumn, keyword, adoptionType, animalTypeMain);
+		
 		}
 			
-		int pageCount = listCount / PAGE_SIZE 
-				+ (listCount % PAGE_SIZE == 0 ? 0 : 1);
+		    int pageCount = (listCount + PAGE_SIZE - 1) / PAGE_SIZE;
 		
-		int startPage = (currentPage / PAGE_GROUP) * PAGE_GROUP + 1
-				- (currentPage % PAGE_GROUP == 0 ? PAGE_GROUP : 0);
+		    int startPage = (currentPage / PAGE_GROUP) * PAGE_GROUP + 1
+		            - (currentPage % PAGE_GROUP == 0 ? PAGE_GROUP : 0);
 		
-		int endPage = startPage + PAGE_GROUP - 1;
+		    int endPage = startPage + PAGE_GROUP - 1;
 		
-		if(endPage > pageCount) {
-			endPage = pageCount;
-		}
+		    if (endPage > pageCount) {
+		        endPage = pageCount;
+		    }
 		
 		
 		request.setAttribute("blist", blist);

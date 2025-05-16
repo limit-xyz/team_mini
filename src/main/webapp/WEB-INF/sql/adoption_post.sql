@@ -128,15 +128,19 @@ SELECT * FROM adoption_post;
 /* 먼저 HR 스키마에 reply 테이블과 reply 테이블에서 사용할 SEQUENCE를 생성한다.
  * 아래의 댓글 데이터를 reply 테이블에 추가한다.
  **/
-DROP TABLE reply;
-CREATE TABLE reply(
-	no NUMBER(7) PRIMARY KEY,
-	bbs_no NUMBER(7) NOT NULL,
-	reply_content VARCHAR2(500 CHAR),
-	reply_writer VARCHAR2(20 CHAR) NOT NULL,
-	reg_date TIMESTAMP NOT NULL,	
-	CONSTRAINT reply_fk FOREIGN KEY(bbs_no) REFERENCES jspbbs(no)
+drop table adoption_reply;
+CREATE TABLE adoption_reply (
+    reply_id NUMBER PRIMARY KEY,
+    post_id NUMBER NOT NULL,
+    user_id VARCHAR2(50 CHAR) NOT NULL,
+    content VARCHAR2(500 CHAR) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_secret CHAR(1) DEFAULT 'N', -- 비밀 댓글 여부 ('Y' 또는 'N')
+    FOREIGN KEY (post_id) REFERENCES adoption_post(post_id) ON DELETE CASCADE
 );
+
+DROP SEQUENCE adoption_reply_seq;
+CREATE SEQUENCE adoption_reply_seq;
 
 -- 댓글 테이블의 시퀀스
 DROP SEQUENCE reply_seq;
@@ -145,8 +149,20 @@ CREATE SEQUENCE reply_seq
       INCREMENT BY 1      
       NOCACHE
       NOORDER
-      NOCYCLE;
-
+      NOCYCLE
+SELECT
+    ap.post_id,
+    ap.title,
+    COUNT(ar.reply_id) AS comment_count
+FROM
+    adoption_post ap
+LEFT JOIN
+    adoption_reply ar ON ap.post_id = ar.post_id
+GROUP BY
+    ap.post_id, ap.title
+ORDER BY
+    ap.post_id DESC;
+      
 
 -- 댓글 데이터 추가하기 - 1번만 실행 한다. --
 INSERT INTO reply(no, bbs_no, reply_content, reply_writer, reg_date) VALUES(reply_seq.NEXTVAL, 200, '항상 감사합니다.' || CHR(13) || CHR(10) || ' 땡큐!~', 'midas', '2023-05-08 13:44:32');

@@ -1,5 +1,6 @@
 package com.miniproject.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import com.miniproject.adoption.service.*;
@@ -24,7 +25,22 @@ public class AdoptBoardController extends HttpServlet{
 	private final String PREFIX = "/WEB-INF/index.jsp?body=";
 	private final String SUFFIX = ".jsp";
 	
-
+	@Override
+	public void init() throws ServletException {		
+		ServletContext sc = getServletContext();
+		String uploadDir = sc.getInitParameter("uploadDir");
+		String realPath = sc.getRealPath(uploadDir);
+				
+		File parentFile = new File(realPath);
+		if(! (parentFile.exists() && parentFile.isDirectory())) {
+			parentFile.mkdir();
+		}
+		
+		sc.setAttribute("uploadDir", uploadDir);
+		sc.setAttribute("parentFile", parentFile);
+		System.out.println("init - " + parentFile);		
+	}
+	
 	@Override
 	protected void doGet(
 			HttpServletRequest request, HttpServletResponse response) 
@@ -69,6 +85,12 @@ public class AdoptBoardController extends HttpServlet{
 			viewPage = service.requestProcess(request, response);
 		}	else if (command.equals("/AdoptionView.mvc")) {
 			service = new AdoptionViewService();						 
+			viewPage = service.requestProcess(request, response);
+		}	else if (command.equals("/AdoptionDelete.mvc")) {
+			service = new AdoptionDeleteService();						 
+			viewPage = service.requestProcess(request, response);
+		}	else if (command.equals("/adoptionupdateForm.mvc")) {
+			service = new AdoptionUpdateFormService();						 
 			viewPage = service.requestProcess(request, response);
 		}	
 			

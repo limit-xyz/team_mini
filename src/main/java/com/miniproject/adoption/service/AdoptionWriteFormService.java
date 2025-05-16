@@ -23,7 +23,7 @@ public class AdoptionWriteFormService implements CommandProcess{
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("	alert('로그인 전용 게시글 입니다.')");
-			out.println("	location.href=' 로그인 전용창'");  -- 로그인 메뉴창 생성시 연동 필요
+			out.println("	location.href='loginForm.member'");  //-- 로그인 메뉴창 생성시 연동 필요
 			out.println("</script>");
 			
 		}

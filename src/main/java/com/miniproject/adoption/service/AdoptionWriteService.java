@@ -42,7 +42,8 @@ public class AdoptionWriteService implements CommandProcess{
 					if(part.getSize() > 0) {
 						UUID uid = UUID.randomUUID();
 						String saveName = uid.toString() + "_" + part.getSubmittedFileName();
-							File parentFile = (File) request.getServletContext().getAttribute("parentFile");
+							
+						File parentFile = (File) request.getServletContext().getAttribute("parentFile");
 						String savePath = parentFile.getAbsolutePath() + File.separator + saveName;
 						
 						part.write(savePath);
@@ -53,35 +54,25 @@ public class AdoptionWriteService implements CommandProcess{
 						System.out.println("파일이 업로드 되지 않음");
 					}
 				} else {
+					String paramName = part.getName();
+					String paramValue = request.getParameter(paramName);
+					
+					if(paramName.equals("title")) {
+						dto.setTitle(paramValue);
+					} else if(paramName.equals("writer")) {
+						dto.setUserId(paramValue);
+					} else if(paramName.equals("content")) {
+						dto.setContent(paramValue);					
+					}
+					
+				}
 			}
+		} else {
+			System.out.println("전송된 데이터가 multipart/form-data 가 아닙니다.");
 		}
-		
-		//파라미터 수신
-		String userId = request.getParameter("userId");
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		String type = request.getParameter("type");
-		String region = request.getParameter("region");
-		String animalTypeMain = request.getParameter("animalTypeMain");
-		String animalTypeDetail = request.getParameter("animalTypeDetail");
-		String imagePath = request.getParameter("imagePath");
-		
-		//DTO 생성
-		AdoptionWriteDto dto = new AdoptionWriteDto();
-		dto.setUserId(userId);
-		dto.setTitle(title);
-		dto.setContent(content);
-		dto.setType(type);
-		dto.setRegion(region);
-		dto.setAnimalTypeMain(animalTypeMain);
-		dto.setAnimalTypeDetail(animalTypeDetail);
-		dto.setImagePath(imagePath);
-		dto.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-		dto.setViews(0);
-		
-		//Dao 호출
 		AdoptionDao01 dao = new AdoptionDao01();
 		dao.insertAdoptionPost(dto);
+		
 		
 		return "redirect:/adoptionList.mvc";
 		
