@@ -378,7 +378,7 @@ public class MemberDao {
 			 **/
 			if (rs.next()) {
 				// ResultSet에 데이터가 존재하면 ID에 대한 비밀번호를 읽어 온다.
-				password = rs.getString("pass");
+				password = rs.getString("password");
 			} else {
 				return result;
 			}

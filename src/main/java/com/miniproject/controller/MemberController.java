@@ -64,7 +64,6 @@ public class MemberController extends HttpServlet {
 		// 어떤 서비스 클래스가 실행될지 결정
 		if(command.equals("/member/*") 
 				|| command.equals("/member/loginForm")) {
-			// 게시 글 리스트 요청을 처리하는 BoardListService 클래스 실행
 			service = new LoginFormService();
 			viewPage = service.requestProcess(request, response);
 			
