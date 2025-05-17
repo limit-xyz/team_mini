@@ -1,6 +1,7 @@
 package com.miniproject.adoption.service;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.miniproject.dao.AdoptionDao01;
@@ -68,6 +69,7 @@ public class AdoptionListService implements CommandProcess {
 //				|| (adoptionType != null || !adoptionType.equals("")) 
 //				|| (animalTypeMain != null || !animalTypeMain.equals(""));
 //		
+		try {
 		if(!searchOption) { // 일반 게시 글 리스트			
 			blist = dao.boardList(startRow, endRow);
 			listCount = dao.getBoardCount();
@@ -77,6 +79,11 @@ public class AdoptionListService implements CommandProcess {
 			listCount = dao.getSearchBoardCount(searchColumn, keyword, adoptionType, animalTypeMain);
 		
 		}
+	} catch (SQLException e){
+		e.printStackTrace();
+		request.setAttribute("errorMessage", "데이터베이스 오류가 발생했습니다.");
+		return "error/errorPage";
+	}
 			
 		    int pageCount = (listCount + PAGE_SIZE - 1) / PAGE_SIZE;
 		

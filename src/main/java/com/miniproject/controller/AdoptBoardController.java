@@ -71,29 +71,32 @@ public class AdoptBoardController extends HttpServlet{
 		if(command.equals("/AdoptionList.mvc") || command.equals("/*.mvc")) {
 			service = new AdoptionListService();					
 			viewPage = service.requestProcess(request, response);
+	
 		} else if (command.equals("/AdoptionWriteForm.mvc")) {
 			service = new AdoptionWriteFormService();						 
 			viewPage = service.requestProcess(request, response);
+	
 		} else if (command.equals("/AdoptionWrite.mvc")) {
 			service = new AdoptionWriteService();						 
 			viewPage = service.requestProcess(request, response);
+		
 		}	else if (command.equals("/AdoptionDetail.mvc")) {
 			service = new AdoptionDetailService();						 
 			viewPage = service.requestProcess(request, response);
+	
 		}	else if (command.equals("/AdoptionView.mvc")) {
 			service = new AdoptionViewService();						 
 			viewPage = service.requestProcess(request, response);
-		}	else if (command.equals("/AdoptionView.mvc")) {
-			service = new AdoptionViewService();						 
-			viewPage = service.requestProcess(request, response);
+	
 		}	else if (command.equals("/AdoptionDelete.mvc")) {
 			service = new AdoptionDeleteService();						 
 			viewPage = service.requestProcess(request, response);
+	
 		}	else if (command.equals("/AdoptionupdateForm.mvc")) {
 			service = new AdoptionUpdateFormService();						 
 			viewPage = service.requestProcess(request, response);
+		
 		}	
-			
 		
 		RequestDispatcher rd = null;
 		

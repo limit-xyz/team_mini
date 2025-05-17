@@ -2,6 +2,7 @@ package com.miniproject.adoption.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.UUID;
@@ -17,6 +18,9 @@ import jakarta.servlet.http.Part;
 
 public class AdoptionWriteService implements CommandProcess{
 
+	private static final String UPLOAD_DIR_PARAM = "uploadDir";
+	private static final String ALLOWED_IMAGE_TYPES = "image/jpeg, image/png, image/gif";
+	
 	@Override
 	public String requestProcess(
 			HttpServletRequest request, HttpServletResponse response)
@@ -47,16 +51,21 @@ public class AdoptionWriteService implements CommandProcess{
 			for(Part part : parts) {
 				String PartHeader = part.getHeader("Content-Disposition");
 				String paramName = part.getName();
+				
 				System.out.println(PartHeader);
 				System.out.printf("파라미터 : %s, contentType : %s, size : %dByte, \n",
-						part.getName(), part.getContentType(), part.getSize());
+				part.getName(), part.getContentType(), part.getSize());
+				
 				if(PartHeader.contains("image_path=")) {
 					if(part.getSize() > 0) {
+						String mimeType = part.getContentType();
+						if (mimeType != null && ALLOWED_IMAGE_TYPES.contains(mimeType.toLowerCase())) { // 추가: 파일 형식 검증
+						
 						UUID uid = UUID.randomUUID();
 						String saveName = uid.toString() + "_" + part.getSubmittedFileName();
 							
 						File parentFile = (File) request.getServletContext().getAttribute("parentFile");
-						String uploadDir = request.getServletContext().getInitParameter("uploadDir");
+						String uploadDir = request.getServletContext().getInitParameter("UPLOAD_DIR_PARAM");
 						String savePath = parentFile.getAbsolutePath() + File.separator + saveName;
 						
 						try {
@@ -86,9 +95,8 @@ public class AdoptionWriteService implements CommandProcess{
 						dto.setAnimalTypeMain(paramValue);
 					} else if(paramName.equals("animalTypeDetail")) {
 						dto.setAnimalTypeDetail(paramValue);
-					}					
+					}	
 				}
-			}
 		} else {
 			System.out.println("전송된 데이터가 multipart/form-data 가 아닙니다.");
 			response.setContentType("text/html; charset=utf-8");
@@ -103,7 +111,16 @@ public class AdoptionWriteService implements CommandProcess{
 			return null;
 		}
 		AdoptionDao01 dao = new AdoptionDao01();
-		int result = dao.insertAdoptionPost(dto);
+		int result = 0;
+		
+		try {
+				result = dao.insertAdoptionPost(dto);
+		} catch(SQLException e) {
+			e.printStackTrace();
+			response.setContentType("text/html; charest=utf-8");
+			response.getWriter().println("<script>alert('데이터베이스 오류로 게시글 작성에 실패하였습니다.'); history.back(); </script>");
+			return null;
+		}
 		
 		if(result > 0) {
 			return "redirect:/adoptionList.mvc";
@@ -112,7 +129,5 @@ public class AdoptionWriteService implements CommandProcess{
 			response.getWriter().println("<script> alert('게시글 작성에 실패하였습니다.); history.back(); </script>");
 			return null;
 		}
-		
 	}
-
 }

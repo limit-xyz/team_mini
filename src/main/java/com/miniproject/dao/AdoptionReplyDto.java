@@ -70,6 +70,13 @@ public class AdoptionReplyDto {
 	public void setIsSecret(boolean isSecret) {
 		this.isSecret = isSecret;
 	}
+	public String getReplyWriter() {
+		return replyWriter;
+	}
+	public void setReplyWriter(String replyWriter) {
+		this.replyWriter = replyWriter;
+	}
+
 	
 	
 	

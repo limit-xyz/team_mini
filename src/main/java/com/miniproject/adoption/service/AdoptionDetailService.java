@@ -24,6 +24,7 @@ public class AdoptionDetailService implements CommandProcess{
 		boolean isLogin = session.getAttribute("isLogin") != null 
 				&& (Boolean) session.getAttribute("isLogin");
 		
+		
 		if(! isLogin) {//로그인이 아닐경우
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
@@ -79,7 +80,7 @@ public class AdoptionDetailService implements CommandProcess{
 		
 		request.setAttribute("AdoptionWriteDto", adoptionDetail);
 		request.setAttribute("replyList", replyList);
-		requset.setAttribute("replyCount", replyCount);
+		request.setAttribute("replyCount", replyCount);	
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("searchOption", searchOption);
 		
