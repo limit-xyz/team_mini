@@ -14,6 +14,12 @@ import jakarta.servlet.http.Part;
 
 public class AdoptionUpdateService implements CommandProcess{
 
+	private static final String UPLOAD_DIR_PARAM = "uploadDir";
+    private static final String ALLOWED_IMAGE_TYPES = "image/jpeg,image/png,image/gif";
+
+    private String uploadDir; // 멤버 변수로 선언
+
+	
 	@Override
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -26,6 +32,16 @@ public class AdoptionUpdateService implements CommandProcess{
 		int postId = Integer.parseInt(request.getParameter("postId"));
 		
 		AdoptionDao01 adoptionDao = new AdoptionDao01();
+		
+		   // uploadDir 초기화 (request 객체를 통해 ServletContext에 접근해야 함)
+        if (uploadDir == null) {
+            uploadDir = request.getServletContext().getInitParameter(UPLOAD_DIR_PARAM);
+            if (uploadDir == null) {
+                System.err.println("UPLOAD_DIR 파라미터가 web.xml에 설정되지 않았습니다.");
+                request.setAttribute("errorMessage", "서버 설정 오류가 발생했습니다.");
+                return "error/errorPage";
+            }
+        }
 		
 		// 수정 권한 확인
 		if(!adoptionDao.isUserIdCheck(postId, userId)) {
@@ -64,10 +80,10 @@ public class AdoptionUpdateService implements CommandProcess{
 							 response.setContentType("text/html; charset=utf-8");
 	                         response.getWriter().println("<script>alert('파일 업로드에 실패했습니다.'); history.back();</script>");
 	                         return null;
-						}
+							}
 						} else {
 							// 기존 이미지 유지
-							AdoptionWriteDto existingPost = adoptionDao.getAdopTionById(postId);
+							AdoptionWriteDto existingPost = adoptionDao.getAdoptionById(postId);
 							if(existingPost != null) {
 								dto.setImagePath(existingPost.getImagePath());
 							}
@@ -88,13 +104,18 @@ public class AdoptionUpdateService implements CommandProcess{
 						dto.setAnimalTypeDetail(paramValue);
 					}
 				}
-			}			
-		} else {
-			System.out.println("전송된 데이터가 multipart/form-data 가 아닙니다.");
-            response.setContentType("text/html; charset=utf-8");
-            response.getWriter().println("<script>alert('잘못된 형식의 요청입니다.'); history.back(); </script>");
-            return null;
+			}
 		}
+			else {
+	            // multipart/form-data가 아닌 경우 처리
+	            dto.setTitle(request.getParameter("title"));
+	            dto.setContent(request.getParameter("content"));
+	            dto.setAdoptionType(request.getParameter("adoptionType"));
+	            dto.setRegion(request.getParameter("region"));
+	            dto.setAnimalTypeMain(request.getParameter("animalTypeMain"));
+	            dto.setAnimalTypeDetail(request.getParameter("animalTypeDetail"));
+	        		
+		} 
 		// 데이터 유효성 검사
         if (dto.getTitle() == null || dto.getTitle().trim().isEmpty() || dto.getContent() == null
                 || dto.getContent().trim().isEmpty()) {

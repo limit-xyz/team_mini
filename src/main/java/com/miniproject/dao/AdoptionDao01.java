@@ -341,7 +341,7 @@ public class AdoptionDao01 {
 		
 		//---------------------------------------------------------
 		// 게시글 전체 조회
-		public ArrayList<AdoptionWriteDto> getAdopTionList(){
+		public ArrayList<AdoptionWriteDto> getAdoptionList(){
 			String sql = "Select * From adoption_post Order by Post_Id Desc";
 			ArrayList<AdoptionWriteDto> blist = new ArrayList<>();
 			
@@ -380,7 +380,7 @@ public class AdoptionDao01 {
 		} //getAdopTionList
 		
 		// 게시글 상세 조회
-		public AdoptionWriteDto getAdopTion(int postId, boolean state){
+		public AdoptionWriteDto getAdoption(int postId, boolean state) throws SQLException{
 			
 			String sqlAdoptionList = "Select * From adoption_post WHERE Post_Id=?";
 			String countSql = "UPDATE adoption_post SET views_count = views_count + 1 WHERE post_id=?";
@@ -468,7 +468,7 @@ public class AdoptionDao01 {
 		}
 		
 		// post_id로 게시글 하나 조회
-		public AdoptionWriteDto getAdopTionById(int postId){
+		public AdoptionWriteDto getAdoptionById(int postId){
 			AdoptionWriteDto dto = null;
 			String sql = "SELECT * FROM adoption_post WHERE post_id = ?";
 		

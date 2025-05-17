@@ -25,9 +25,11 @@ public class AdoptionDeleteService implements CommandProcess{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("	alert('잘못된 접근...')");
+			out.println("	alert('잘못된 접근 입니다.')");
 			out.println("	location.href='adoptionList.mvc'");
 			out.println("</script>");
+			out.close();
+			return null;
 		}			
 		
 		HttpSession session = request.getSession();
@@ -40,6 +42,7 @@ public class AdoptionDeleteService implements CommandProcess{
 			out.println("	alert('로그인 후 삭제할 수 있습니다.')");
 			out.println("	history.back();");
 			out.println("</script>");
+			out.close();
 			return null;
 		}
 		
@@ -51,7 +54,7 @@ public class AdoptionDeleteService implements CommandProcess{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("	alert('해당글 작성자가 아니라서 권한이 없습니다.')");
+			out.println("	alert('해당 글의 작성자만 삭제할 수 있습니다.')");
 			out.println("	history.back();");
 			out.println("</script>");
 			out.close();
@@ -66,7 +69,7 @@ public class AdoptionDeleteService implements CommandProcess{
 		boolean searchOption = (type != null || !type.equals("")
 				|| keyword != null || !keyword.equals("")); 
 		
-		String url = "AdoptionList?pageNum=" + pageNum;
+		String url = "AdoptionList.mvc?pageNum=" + pageNum;
 		
 		if(searchOption) {
 			keyword = URLEncoder.encode(keyword, "UTF-8");
