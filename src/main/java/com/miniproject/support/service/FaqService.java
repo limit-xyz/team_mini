@@ -78,9 +78,10 @@ public class FaqService implements CommandProcess{
 		faqList = dao.getFaq();
 		
 		
+		
+		
 		request.setAttribute("faqList", faqList);
 		
-		System.out.println(faqList);
 		return "support/faq";
 	}
 

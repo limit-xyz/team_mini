@@ -1,16 +1,16 @@
 package com.miniproject.vo;
 
 public class Faq {
-	String faqNo;
+	int faqNo;
 	String faqTitle;
 	String faqContent;
 	String faqAuthor;
 	
 	
-	public String getFaqNo() {
+	public int getFaqNo() {
 		return faqNo;
 	}
-	public void setFaqNo(String faqNo) {
+	public void setFaqNo(int faqNo) {
 		this.faqNo = faqNo;
 	}
 	public String getFaqTitle() {
