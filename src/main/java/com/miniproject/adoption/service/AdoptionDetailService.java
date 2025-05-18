@@ -13,6 +13,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
 
 public class AdoptionDetailService implements CommandProcess{
 
@@ -32,7 +33,7 @@ public class AdoptionDetailService implements CommandProcess{
 			out.println("	alert('로그인 전용 서비스 입니다.')");
 			out.println("	location.href='loginForm.member'"); //--로그인 메뉴창 생성시 연동 필요
 			out.println("</script>");
-			
+			out.close();
 			return null;
 			
 		}
@@ -51,7 +52,7 @@ public class AdoptionDetailService implements CommandProcess{
 			out.println("	alert('잘못된 접근 입니다.')");
 			out.println("	location.href='adoptionList.mvc'"); 
 			out.println("</script>");
-		
+			out.close();
 			return null;
 		}
 		int postId = Integer.parseInt(postIdParam);
@@ -73,7 +74,22 @@ public class AdoptionDetailService implements CommandProcess{
 		
 		AdoptionDao01 dao = new AdoptionDao01();
 		
-		AdoptionWriteDto adoptionDetail = dao.getAdopTion(postId, true);
+		AdoptionWriteDto adoptionDetail;
+		
+		try {
+			adoptionDetail = dao.getAdoption(postId, true);
+		} catch (SQLException e) {
+			
+			e.printStackTrace(); // 오류를 로그에 기록합니다.
+            response.setContentType("text/html; charset=utf-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>");
+            out.println("	alert('데이터베이스 오류가 발생했습니다. 잠시 후 다시 시도해주세요.')");
+            out.println("	history.back();"); // 또는 오류 페이지로 리디렉션합니다.
+            out.println("</script>");
+            out.close();
+            return null;
+		}
 		
 		List<AdoptionReplyDto> replyList = dao.getReplyList(postId);
 		int replyCount = dao.getReplyCount(postId); // 댓글수 조회

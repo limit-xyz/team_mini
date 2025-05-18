@@ -25,7 +25,7 @@ public class AdoptionReplyDeleteService implements CommandProcess{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("	alert('로그인 후 댓글을 삭제할수 있습니다.')");
+			out.println("	alert('로그인 후 댓글을 삭제할수 있습니다.');");
 			out.println("	history.back();");
 			out.println("</script>");
 			return null;
@@ -39,7 +39,7 @@ public class AdoptionReplyDeleteService implements CommandProcess{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("	alert('댓글 ID 또는 게시글 ID 가 없습니다.')");
+			out.println("	alert('댓글 ID 또는 게시글 ID 가 없습니다.');");
 			out.println("	history.back();");
 			out.println("</script>");
 			return null;
@@ -58,7 +58,7 @@ public class AdoptionReplyDeleteService implements CommandProcess{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("	alert('댓글 삭제 권한이 없거나 작성자가 아닙니다..')");
+			out.println("	alert('댓글 삭제 권한이 없거나 작성자가 아닙니다..');");
 			out.println("	history.back();");
 			out.println("</script>");
 			return null;
@@ -73,7 +73,7 @@ public class AdoptionReplyDeleteService implements CommandProcess{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("	alert('댓글 삭제에 실패하였습니다.')");
+			out.println("	alert('댓글 삭제에 실패하였습니다.');");
 			out.println("	history.back();");
 			out.println("</script>");
 			return null;

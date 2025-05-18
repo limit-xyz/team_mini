@@ -24,10 +24,10 @@ public class AdoptionReplyWriteService implements CommandProcess {
 			response.setContentType("text/html; cherset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("	alert('로그인 전용 서비스 입니다.')");
+			out.println("	alert('로그인 전용 서비스 입니다.');");
 			out.println("	history.back();"); 
 			out.println("</script>");
-			
+			out.close();
 			return null;
 		}
 
@@ -43,9 +43,10 @@ public class AdoptionReplyWriteService implements CommandProcess {
 				response.setContentType("text/html; cherset=utf-8");
 				PrintWriter out = response.getWriter();
 				out.println("<script>");
-				out.println("	alert('게시글 id 와 댓글 내용을 입력해주세요.')");
+				out.println("	alert('게시글 id 와 댓글 내용을 입력해주세요.');");
 				out.println("	history.back();"); 
-				out.println("</script>");				
+				out.println("</script>");	
+				out.close();
 				return null;
 			}
 		 
@@ -67,9 +68,10 @@ public class AdoptionReplyWriteService implements CommandProcess {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("	alert('댓글 작성에 실패하였습니다.')");
+			out.println("	alert('댓글 작성에 실패하였습니다.');");
 			out.println("	history.back();"); 
 			out.println("</script>");				
+			out.close();
 			return null;
 		}
 	}

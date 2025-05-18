@@ -66,7 +66,7 @@
     		detail.innerHTML ="";
     		
     		if(main && detailOption[main.value]){
-    			detailOptions[main.value].forEach(function(option)
+    			detailOptions[main.value].forEach(function(option){
     				const opt = document.createElement("option");
     				opt.value = option;
     				opt.text = option;

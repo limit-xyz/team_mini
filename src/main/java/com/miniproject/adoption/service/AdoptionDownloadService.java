@@ -17,14 +17,22 @@ public class AdoptionDownloadService implements CommandProcess{
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ServletContext sc = request.getServletContext();
-		String downDir = (String) sc. getAttribute("uploadDir");
+		String uploadDir = (String) sc. getAttribute("uploadDir");
 		
 		String fileName = request.getParameter("fileName");
-		String downPath = sc.getRealPath(downDir + "\\" + fileName);
+		if (fileName == null || fileName.trim().isEmpty()) { // 파일 이름 유효성 검사 추가
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid file name.");
+            return null;
+        }
+		String downPath = sc.getRealPath(uploadDir + File.separator + fileName);
 		File file = new File(downPath);
 		System.out.println("downPath : " + downPath);
 		System.out.println("filePath : " + file.getPath() + ", " + file.getName());
 		
+		if (!file.exists()) { // 파일 존재 여부 확인 추가
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "File not found.");
+            return null;
+        }
 		
 		String mimeType = sc.getMimeType(downPath);
 		System.out.println("mimeType : " + mimeType);
@@ -35,12 +43,14 @@ public class AdoptionDownloadService implements CommandProcess{
 		}
 		
 		response.setContentType(mimeType);
-		String fileNameEncoding = URLEncoder.encode(file.getName(),"utf-8");
-		fileName = fileNameEncoding.replaceAll("\\+", "%20");
-		response.setHeader("content-Disposition",  "attachment; filename=" + fileName);
+		String fileNameEncoding = URLEncoder.encode(file.getName(),"utf-8").replaceAll("\\+", "%20");;
+		response.setHeader("content-Disposition",  "attachment; filename=" + fileNameEncoding);
+		response.setContentLengthLong(file.length()); // 파일 크기 설정
 		
+		
+		try (
 		FileInputStream in = new FileInputStream(file);
-		ServletOutputStream downStream = response.getOutputStream();
+		ServletOutputStream downStream = response.getOutputStream()){
 		byte[] b = new byte[1*1024*1024];
 		int readByte=0;
 		while((readByte = in.read(b,0,b.length)) !=-1) {
@@ -52,5 +62,5 @@ public class AdoptionDownloadService implements CommandProcess{
 		
 		return null;
 	}
-
+	}
 }
