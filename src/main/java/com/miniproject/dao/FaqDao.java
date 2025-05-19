@@ -165,7 +165,7 @@ public class FaqDao {
 	public int getFaqCount(String keyword) {
 		// title, writer, content
 		String faqSql = "SELECT COUNT(*) FROM faq "
-				+ " WHERE LIKE ?";
+				+ " WHERE faq_title LIKE ?";
 		int count = 0;
 		
 		try {
@@ -239,7 +239,7 @@ public class FaqDao {
 			
 			
 			String faqSql = "SELECT * FROM (SELECT ROWNUM num, sub.* "
-					+ "    FROM (SELECT * FROM faq WHERE LIKE ? ORDER BY faq_no DESC) sub) "
+					+ "    FROM (SELECT * FROM faq WHERE faq_title LIKE ? ORDER BY faq_no DESC) sub) "
 					+ " WHERE num >= ? AND num <= ?";
 			
 			ArrayList<Faq> faqList = null;

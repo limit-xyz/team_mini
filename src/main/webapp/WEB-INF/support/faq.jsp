@@ -16,9 +16,13 @@
         </div>
       </div>
       <div class="row">
-        <div class="col serch_input_wrap">
-          <input id="serch_input" type="text" placeholder=" 검색어를 입력해주세요" />
-        </div>
+        
+					<form action="#">
+					<div class="input-group mb-3">
+						<input name="keyword" type="text" class="form-control" placeholder="입력해주세요">
+						<input class="btn btn-outline-secondary" type="submit" id="button-addon2" value="검색">
+					</div>
+					</form>
       </div>
       <div class="row">
         <div class="col">
