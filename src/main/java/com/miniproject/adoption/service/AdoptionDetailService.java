@@ -16,48 +16,45 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 
-public class AdoptionDetailService implements CommandProcess{
+public class AdoptionDetailService implements CommandProcess {
 
 	@Override
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession();
-		boolean isLogin = session.getAttribute("isLogin") != null 
-				&& (Boolean) session.getAttribute("isLogin");
-		
-		
-		if(! isLogin) {//로그인이 아닐경우
+		boolean isLogin = session.getAttribute("isLogin") != null && (Boolean) session.getAttribute("isLogin");
+
+		if (!isLogin) {// 로그인이 아닐경우
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("	alert('로그인 전용 서비스 입니다.')");
-			out.println("	location.href='loginForm.member'"); //--로그인 메뉴창 생성시 연동 필요
+			out.println("	location.href='loginForm.member'"); // --로그인 메뉴창 생성시 연동 필요
 			out.println("</script>");
 			out.close();
 			return null;
-			
+
 		}
-		
+
 		String postIdParam = request.getParameter("postId");
 		String pageNum = request.getParameter("pageNum");
 		String searchColumn = request.getParameter("searchColumn");
 		String adoptionType = request.getParameter("adoptionType");
 		String animalTypeMain = request.getParameter("animalTypeMain");
 		String keyword = request.getParameter("keyword");
-	
-		if(postIdParam == null || postIdParam.equals("") || pageNum == null || pageNum.equals("")) {
+
+		if (postIdParam == null || postIdParam.equals("") || pageNum == null || pageNum.equals("")) {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("	alert('잘못된 접근 입니다.')");
-			out.println("	location.href='adoptionList.mvc'"); 
+			out.println("	location.href='adoptionList.mvc'");
 			out.println("</script>");
 			out.close();
 			return null;
 		}
 		int postId = Integer.parseInt(postIdParam);
-		
 
 		boolean searchOption = false;
 		if (searchColumn != null && !searchColumn.isEmpty()) {
@@ -72,43 +69,43 @@ public class AdoptionDetailService implements CommandProcess{
 		if (animalTypeMain != null && !animalTypeMain.isEmpty()) {
 			searchOption = true;
 		}
-		
+
 		AdoptionDao01 dao = new AdoptionDao01();
-		
+
 		AdoptionWriteDto adoptionDetail;
-		
+
 		try {
 			adoptionDetail = dao.getAdoption(postId, true);
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace(); // 오류를 로그에 기록합니다.
-            response.setContentType("text/html; charset=utf-8");
-            PrintWriter out = response.getWriter();
-            out.println("<script>");
-            out.println("	alert('데이터베이스 오류가 발생했습니다. 잠시 후 다시 시도해주세요.')");
-            out.println("	history.back();"); // 또는 오류 페이지로 리디렉션합니다.
-            out.println("</script>");
-            out.close();
-            return null;
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("	alert('데이터베이스 오류가 발생했습니다. 잠시 후 다시 시도해주세요.')");
+			out.println("	history.back();"); // 또는 오류 페이지로 리디렉션합니다.
+			out.println("</script>");
+			out.close();
+			return null;
 		}
-		
+
 		List<AdoptionReplyDto> replyList = dao.getReplyList(postId);
 		int replyCount = dao.getReplyCount(postId); // 댓글수 조회
-		
-		request.setAttribute("AdoptionWriteDto", adoptionDetail);
-		request.setAttribute("replyList", replyList);
-		request.setAttribute("replyCount", replyCount);	
+
+		request.setAttribute("adopboard", adoptionDetail);
+		request.setAttribute("adopreplyList", replyList);
+		request.setAttribute("replyCount", replyCount);
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("searchOption", searchOption);
-		
-		if(searchOption) {
-			request.setAttribute("searchColumn", searchColumn);
-			request.setAttribute("adoptionType", adoptionType);			
-			request.setAttribute("animalTypeMain", animalTypeMain);			
-			request.setAttribute("keyword", keyword);			
-		}		
 
-		return "forward:./adoption/adoptionDetail.jsp";
+		if (searchOption) {
+			request.setAttribute("searchColumn", searchColumn);
+			request.setAttribute("adoptionType", adoptionType);
+			request.setAttribute("animalTypeMain", animalTypeMain);
+			request.setAttribute("keyword", keyword);
+		}
+
+		return "adoption-board/adoptionDetail";
 	}
 
 }

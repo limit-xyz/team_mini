@@ -192,5 +192,5 @@ VALUES (adoption_reply_seq.NEXTVAL, 7, 'find_mydog', '믹스견 종류가 어떻
 COMMIT;
 
 SELECT * FROM adoption_reply;
-commit;
-SELECT * FROM reply;
+
+

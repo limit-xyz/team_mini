@@ -22,7 +22,7 @@ public class AdoptionReplyWriteService implements CommandProcess {
 		String userId = (String) session.getAttribute("userId");
 		
 		if(userId == null ) {
-			response.setContentType("text/html; cherset=utf-8");
+			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("	alert('로그인 전용 서비스 입니다.');");
@@ -41,7 +41,7 @@ public class AdoptionReplyWriteService implements CommandProcess {
 		 
 		 if(postIdParam == null || postIdParam.equals("") 
 				 || content == null || content.equals("")){ 
-				response.setContentType("text/html; cherset=utf-8");
+				response.setContentType("text/html; charset=utf-8");
 				PrintWriter out = response.getWriter();
 				out.println("<script>");
 				out.println("	alert('게시글 id 와 댓글 내용을 입력해주세요.');");
@@ -64,7 +64,7 @@ public class AdoptionReplyWriteService implements CommandProcess {
 		
 		if(result > 0) {
 			// 댓글 작성 성공시 해당 게시글 상세 페이지로 리다이렉트
-			return "redirect:adoptionDetail.mvc?postId=" + postId + "&increaseViewCount=false";
+			return "redirect:/AdoptionDetail.mvc?postId=" + postId + "&increaseViewCount=false";
 		} else {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();

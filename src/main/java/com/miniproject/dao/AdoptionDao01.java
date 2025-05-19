@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +19,7 @@ public class AdoptionDao01 {
 		
 	
 	public AdoptionWriteDto getPostById(int postId){
+
 		
 		String sql = "Select * From adoption_post WHERE Post_Id = ?";
 		AdoptionWriteDto dto = null;
@@ -90,7 +92,12 @@ public class AdoptionDao01 {
 					b.setViewsCount(rs.getInt("views_count"));
 					b.setApprovalStatus(rs.getString("approval_status"));
 					b.setImagePath(rs.getString("image_path"));
-				
+					b.setContent(rs.getString("content"));
+					b.setAdoptionType(rs.getString("adoption_type"));
+					b.setRegion(rs.getString("region"));
+					b.setAnimalTypeMain(rs.getString("animal_type_main"));
+					b.setAnimalTypeDetail(rs.getString("animal_type_detail"));
+					b.setImagePath(rs.getString("image_path"));
 					
 					blist.add(b);
 				}
@@ -286,7 +293,7 @@ public class AdoptionDao01 {
 				reply.setNo(rs.getInt("no"));
 				reply.setBbsNo(rs.getInt("bbs_no"));				
 				reply.setReplyContent(rs.getString("reply_content"));
-				reply.setReplyWriter(rs.getString("reply_writer"));
+				reply.setReplyWriter(rs.getString("user_id"));
 				reply.setRegDate(rs.getTimestamp("reg_date"));
 				replyList.add(reply);
 			}
@@ -336,48 +343,6 @@ public class AdoptionDao01 {
 		} // end isPassCheck()	
 		
 		
-		
-		
-		//---------------------------------------------------------
-		// 게시글 전체 조회
-		public ArrayList<AdoptionWriteDto> getAdoptionList(){
-			String sql = "Select * From adoption_post Order by Post_Id Desc";
-			ArrayList<AdoptionWriteDto> blist = new ArrayList<>();
-			
-			
-			
-			try {
-				conn = DBManager.getConnection();
-				pstmt = conn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
-				
-				while (rs.next()) {
-					AdoptionWriteDto dto = new AdoptionWriteDto(
-						rs.getInt("post_id"),
-						rs.getString("user_id"),
-						rs.getString("title"),
-						rs.getString("content"),
-						rs.getString("adoption_type"),
-						rs.getString("region"),
-						rs.getString("animal_type_main"),
-						rs.getString("animal_type_detail"),
-						rs.getString("image_path"),
-						rs.getTimestamp("created_at"),
-						rs.getInt("views_count"),
-						rs.getString("approval_status")
-					);
-					blist.add(dto);
-				}
-				
-			}	 catch (Exception e) {
-				e.printStackTrace();
-			}finally {
-				DBManager.close(conn, pstmt,rs);
-			}
-			
-			return blist;
-		} //getAdopTionList
-		
 		// 게시글 상세 조회
 		public AdoptionWriteDto getAdoption(int postId, boolean state) throws SQLException{
 			
@@ -388,6 +353,7 @@ public class AdoptionDao01 {
 			PreparedStatement selectStmt = null;
 			ResultSet rs = null;
 			Connection conn=null;
+		
 			
 			try{
 				conn = DBManager.getConnection();
@@ -616,9 +582,9 @@ public class AdoptionDao01 {
 		// 특정 게시글의 댓글 목록 조회
 		public List<AdoptionReplyDto> getReplyList(int postId) {
 		    List<AdoptionReplyDto> replyList = new ArrayList<>();
-		    String sql = "SELECT reply_id, post_id, user_id, content, reply_wirter "
-		    		+ "created_at, is_secret FROM adoption_reply"
-		    		+ "WHERE post_id = ? ";
+		    String sql = "SELECT reply_id, post_id, user_id, content, user_id, "
+		    		+ " created_at, is_secret FROM adoption_reply"
+		    		+ " WHERE post_id = ? ";
 
 		    try {
 		        conn = DBManager.getConnection();
@@ -632,7 +598,7 @@ public class AdoptionDao01 {
 		    	 reply.setPostId(rs.getInt("post_id"));
 		    	 reply.setUserId(rs.getString("user_id"));
 		    	 reply.setContent(rs.getString("content"));
-		    	 reply.setReplyWriter(rs.getString("reply_writer"));
+		    	 reply.setReplyWriter(rs.getString("user_id"));
 		    	 reply.setCreatedAt(rs.getTimestamp("created_at"));
 		    	 reply.setIsSecret(rs.getBoolean("is_secret"));
 		    	 replyList.add(reply);

@@ -7,8 +7,8 @@
 <div class="row my-5" id="global-content">
 	<div class="col">
 		<form name ="checkForm" id="checkForm">
-			<input type="hidden" name="postId" value="${adopboard.PostId}" id="postId">
-			<input type="hidden" name="userId" value="${adopboard.UserId}" id="userId">
+			<input type="hidden" name="postId" value="${adopboard.postId}" id="postId">
+			<input type="hidden" name="userId" value="${adopboard.userId}" id="userId">
 			<input type="hidden" name="pageNum" value="${pageNum}">
 			<c:if test="${searchOption}">
 				<input type="hidden" name="searchColumn" value="${searchColumn}">
@@ -88,15 +88,35 @@
 										<span class="me-3">
 										<fmt:formatDate value="${adopreply.regDate }" pattern="yyyy-MM-dd : HH:mm:ss" />
 										</span>
-										<button class="modifyReply btn btn-outline-success btn-sm" data-no='${adopreply.no }'><i class="bi bi-file-text"> 수정</i></button>
-										<button class="deleteReply btn btn-outline-warning btn-sm" data-no='${adopreply.no }'><i class="bi bi-trash-fill"> 삭제</i></button>
+										<button class="modifyReply btn btn-outline-success btn-sm" data-no='${reply.replyId }'><i class="bi bi-file-text"> 수정</i></button>
+										<button class="deleteReply btn btn-outline-warning btn-sm" data-no='${adopreply.replyId }'><i class="bi bi-trash-fill"> 삭제</i></button>
 										<button class="btn btn-outline-danger btn-sm"
-											onclick ="reportReply('${adopreply.no}')"><i class="bi bi-exclamation-triangle-fill"> 신고</i></button>
+											onclick ="reportReply('${adopreply.replyId}')"><i class="bi bi-exclamation-triangle-fill"> 신고</i></button>
 										</div>
 									</div>
 									<div class ="row">
 										<div class ="col p-3">
 											<pre>${adopreply.replyContent }</pre>
+											<div>
+											<c:choose>
+												<!-- 비밀 댓글일 경우 -->
+												<c:when test="${reply.isSecret}">
+													<c:if test="{sessionScope.id == reply.replyWriter 
+																		|| sessionScope.id == adopboard.userId
+																		|| sessionScope.id == admin">
+																		${reply.replyContent }
+												</c:if>
+												<c:if test = "{sessionScope.id != reply.replyWriter 
+																		|| sessionScope.id != adopboard.userId
+																		|| sessionScope.id != admin">
+																	🔒	비밀 댓글 입니다.
+												</c:if>
+											</c:when>
+											<c:otherwise>
+												${reply.replyContent }
+												</c:otherwise>
+												</c:choose>
+												</div>
 										</div>
 									</div>
 								</div>
@@ -119,8 +139,8 @@
 				<!--  댓글 쓰기 폼 -->
 				<div class="row my-5 d-none" id="replyForm">
 					<div class ="col">
-						 <form name ="replyWriteForm" id ="replyWriteForm">
-						 	<input type="hidden" name = "bbsNo" value="${adopboard.no }">
+						 <form name ="replyWriteForm" id ="replyWriteForm" action="AdoptionReplyWrite.mvc" method="post">
+						 	<input type="hidden" name = "postId" value="${adopboard.postId}">
 						 	<input type="hidden" name = "replyWriter" value="${sessionScope.id }">
 						 	<div class="row bg-light border my-3 p-3">
 						 		<div class="col">
@@ -131,11 +151,33 @@
 									</div>
 						 		<div class="row my-3">
 								 	<div class="col-10">
-								 	<textarea name="replyContent" id="replyContent" class="form-control" rows="4"></textarea>
+								 	<c:choose>
+								 	<c:when test="${not empty sessionScope.id}">
+								 		<!-- 로그인된 사용자 -->
+								 	<textarea name="replyContent" id="replyContent" class="form-control" rows="4"
+								 	placeholder="댓글을 입력하세요"></textarea>
+								 	<div class="form-check mt -2">
+								 		<input class="form-check-input" type="checkbox" name=isSecret" id="isSecret" value="true">
+								 		<label class="form-check-label" for="isSecret">비밀 댓글</label>
+								 	</div>
+								 	</c:when>
+								 	<c:otherwise>
+								 		<!--  비 로그인 사용자 -->
+								 		<textarea clss="form-control" rows="4" placeholder="로그인 후 댓글 작성 가능" id="guestReply"
+								 		readnoly style="background-color: #f9f9f9; cursor:pointer;"></textarea>
+								 		</c:otherwise>
+								 		</c:choose>
 									</div>
 								 	<div class="col-2">
+								 	<c:if test="${not empty sessionScope.id}">
 								 	<input type="submit" value="댓글쓰기" 
 								 		class="btn btn-primary w-100 h-100" id="replyWriterButton">
+								 		</c:if>
+								 		<c:if test="${empty sessionScope.id }">
+								 		<button type="button" class="btn btn-outline-secondary w-100 h-100" 
+								 		onclick="location.href=member/loginForm">로그인</button>
+								 		</c:if>
+								 		
 									</div>
 						 		</div>
 						 	</div>
@@ -147,4 +189,28 @@
 		</div>
 </div>
 
+<script>
+document.getElementById("detailupdate").addEventListener("click", function(){
+	const postId = document.getElementById("postId").value;
+	loction.href = "AdoptionUpdate.mvc?postId=" + postId;
+});
+
+document.getElementById("detailDelete").addEventListener("click", function(){
+	const postId = document.getElementById("postId").value;
+	if(confirm("정말 게시글을 삭제하시겠습니까?")){
+		location.href = "AdoptionDelete.mvc?postId=" + postId;
+	}
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+	const guestReply = document.getElementById("guestReply");
+	if (guestReply) {
+		guestReply.addEventListener("click", function () {
+			alert("댓글을 작성하려면 로그인해주세요.");
+			window.location.href = "member/loginForm"; // 로그인 페이지로 이동
+		});
+	}
+});
+
+</script>
 
