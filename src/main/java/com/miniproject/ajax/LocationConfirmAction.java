@@ -6,11 +6,11 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.miniproject.dao.BoardDao;
-import com.miniproject.vo.AnimalHospital;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import com.mimproject.vo.*;
 
 public class LocationConfirmAction implements AjaxProcess{
 

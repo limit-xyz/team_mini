@@ -10,7 +10,8 @@ $(function() {
 	const listEl = document.getElementById('placesList');
 	const paginationEl = document.getElementById('pagination');
 	const pageNum = document.getElementById('pageNum');
-	const kakaoApiKey = "f2e0d03c4537669dacbf2261b5ffd1e8";
+	const params = new URLSearchParams(window.location.search);
+	const kakaoApiKey = params.get("restKey");
 
 	// 카카오 맵 생성 관련
 	const mapContainer = document.getElementById('map');

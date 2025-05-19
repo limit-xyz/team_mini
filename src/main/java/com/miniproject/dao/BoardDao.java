@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.miniproject.vo.AnimalHospital;
+import com.mimproject.vo.AnimalHospital;
 
 import jakarta.servlet.http.HttpServlet;
 
@@ -25,7 +25,7 @@ public class BoardDao extends HttpServlet {
 		} else if (dataSelect.equals("beauty")) {
 			getAnimalBuildingLocationSql = "select * from animal_beauty";
 		}
-		ArrayList<AnimalHospital> animalHospitalList = null;
+		ArrayList<com.mimproject.vo.AnimalHospital> animalHospitalList = null;
 		
 		try {
 			conn = DBManager.getConnection();
