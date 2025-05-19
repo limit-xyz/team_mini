@@ -13,8 +13,7 @@ public class FaqUpdateResultService implements CommandProcess{
 	@Override
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO 자동 생성된 메소드 스텁
-		return null;
+		return "r:/team_mini/support/faq"; 
 	}
 
 }
