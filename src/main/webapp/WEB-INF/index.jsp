@@ -19,11 +19,11 @@
 	</style>
 </head>
 <body>
+	<%@ include file="pages/header.jsp"%>
 	<div class="container">
-		<%@ include file="pages/header.jsp"%>
 		<jsp:include page="${ param.body }" />
-		<%@ include file="pages/footer.jsp"%>
 	</div>
-	 <script src="${pageContext.request.contextPath}/bootstrap/bootstrap.bundle.min.js"></script>
+	<%@ include file="pages/footer.jsp"%>	
+	<script src="${pageContext.request.contextPath}/bootstrap/bootstrap.bundle.min.js"></script>
 	</body>
 </html>
