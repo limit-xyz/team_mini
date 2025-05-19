@@ -92,12 +92,6 @@ public class AdminContoller extends HttpServlet {
 			viewPage = service.requestProcess(request, response);
 		}
 
-		// 임시 로그인
-		else if (command.equals("/admin/tempLogin")) {
-			service = new TempLoginService();
-			viewPage = service.requestProcess(request, response);
-		}
-
 		if (viewPage != null) {
 			String view = viewPage.split(":")[0];
 

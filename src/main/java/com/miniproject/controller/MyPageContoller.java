@@ -2,9 +2,11 @@ package com.miniproject.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import com.miniproject.mypage.service.*;
 import com.miniproject.common.service.CommandProcess;
+import com.miniproject.dao.MemberDao;
 import com.miniproject.mypage.ajax.MyPageAjaxController;
 
 import jakarta.servlet.RequestDispatcher;
@@ -60,6 +62,12 @@ public class MyPageContoller extends HttpServlet {
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		ServletContext app = request.getServletContext();
+		if (app.getAttribute("PAGE_SIZE") == null) {
+			request.getServletContext().setAttribute("PAGE_SIZE", 10);
+			request.getServletContext().setAttribute("PAGE_GROUP", 10);
+		}
+
 		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
 
@@ -68,14 +76,18 @@ public class MyPageContoller extends HttpServlet {
 
 		CommandProcess service;
 
-//		// 로그인 여부 검증
-//		String requestId = (String) request.getSession().getAttribute("id");
-//		MemberDao dao = new MemberDao();
-//		boolean isLogin = dao.isLogin(requestId);
-//		if (!isAdmin) {
-//			System.out.println("콰과광");
-//			return;
-//		}
+		// 로그인 여부 검증
+		String sessionId = (String) request.getSession().getAttribute("id");
+		if (sessionId == null) {
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("	alert('로그인이 필요합니다.');");
+			out.println("	location.href='" + request.getContextPath() + "/member/loginForm';");
+			out.println("</script>");
+
+			return;
+		}
 
 		// ajax 요청 처리
 		String[] splitTest1 = command.split("/");

@@ -108,7 +108,7 @@ public class AdoptionDetailService implements CommandProcess{
 			request.setAttribute("keyword", keyword);			
 		}		
 
-		return "forward:./adoption/adoptionDetail.jsp";
+		return "forward:/adoption-board/adoptionDetail.jsp";
 	}
 
 }
