@@ -80,7 +80,7 @@ public class AdoptionWriteService implements CommandProcess{
 						} else {
 							System.out.println("파일이 업로드 되지 않음");
 						}
-					} else {
+					} }else {
 						String paramValue = request.getParameter(paramName);
 						
 						if(paramName.equals("title")) {
@@ -115,7 +115,7 @@ public class AdoptionWriteService implements CommandProcess{
 			int result = 0;
 			  try {
 		            result = dao.insertAdoptionPost(dto);
-		        } catch (SQLException e) {
+		        } catch (Exception e) {
 		            e.printStackTrace();
 		            response.setContentType("text/html; charest=utf-8");
 		            response.getWriter()

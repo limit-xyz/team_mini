@@ -46,7 +46,7 @@ public class AdoptionDao {
 					dto.setTitle(rs.getString(2));
 					dto.setUserId(rs.getString("user_id"));
 					dto.setCreatedAt(rs.getTimestamp("reg_date"));
-					dto.setViews(rs.getInt("read_count"));
+					dto.setViewsCount(rs.getInt("read_count"));
 					
 				
 			
