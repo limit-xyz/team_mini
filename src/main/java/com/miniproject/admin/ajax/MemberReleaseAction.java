@@ -3,6 +3,7 @@ package com.miniproject.admin.ajax;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import com.miniproject.common.service.AjaxProcess;
 import com.miniproject.dao.MemberDao;
 
 import jakarta.servlet.ServletException;

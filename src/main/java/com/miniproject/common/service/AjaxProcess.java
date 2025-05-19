@@ -1,4 +1,4 @@
-package com.miniproject.admin.ajax;
+package com.miniproject.common.service;
 
 import java.io.IOException;
 

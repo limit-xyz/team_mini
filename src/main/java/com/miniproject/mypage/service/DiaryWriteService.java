@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.UUID;
 
+import com.miniproject.common.service.CommandProcess;
 import com.miniproject.dao.DiaryDao;
 import com.miniproject.vo.Diary;
 

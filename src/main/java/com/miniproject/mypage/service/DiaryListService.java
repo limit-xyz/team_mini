@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import com.miniproject.common.service.CommandProcess;
 import com.miniproject.dao.DiaryDao;
 import com.miniproject.vo.Diary;
 

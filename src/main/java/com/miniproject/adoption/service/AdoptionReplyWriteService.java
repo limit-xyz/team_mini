@@ -3,6 +3,7 @@ package com.miniproject.adoption.service;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import com.miniproject.common.service.CommandProcess;
 import com.miniproject.dao.AdoptionDao01;
 import com.miniproject.dao.AdoptionReplyDto;
 

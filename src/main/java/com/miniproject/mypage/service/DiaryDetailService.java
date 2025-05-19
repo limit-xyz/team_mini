@@ -2,6 +2,7 @@ package com.miniproject.mypage.service;
 
 import java.io.IOException;
 
+import com.miniproject.common.service.CommandProcess;
 import com.miniproject.dao.DiaryDao;
 import com.miniproject.vo.Diary;
 

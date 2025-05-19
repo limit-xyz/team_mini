@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
+import com.miniproject.common.service.AjaxProcess;
 import com.miniproject.dao.MemberDao;
 import com.miniproject.vo.Member;
 

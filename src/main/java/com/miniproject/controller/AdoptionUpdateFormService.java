@@ -3,7 +3,7 @@ package com.miniproject.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import com.miniproject.adoption.service.CommandProcess;
+import com.miniproject.common.service.CommandProcess;
 import com.miniproject.dao.AdoptionDao01;
 import com.miniproject.dao.AdoptionWriteDto;
 

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import com.miniproject.mypage.service.*;
+import com.miniproject.common.service.CommandProcess;
 import com.miniproject.mypage.ajax.MyPageAjaxController;
 
 import jakarta.servlet.RequestDispatcher;

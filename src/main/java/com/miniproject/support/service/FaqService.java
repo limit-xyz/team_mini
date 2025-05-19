@@ -25,7 +25,7 @@ public class FaqService implements CommandProcess{
 	@Override
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		/*
 		String pageNum = request.getParameter("pageNum");
 		String keyword = request.getParameter("keyword");
 		
@@ -81,7 +81,7 @@ public class FaqService implements CommandProcess{
 		
 		
 		request.setAttribute("faqList", faqList);
-		
+		*/
 		return "support/faq";
 	}
 

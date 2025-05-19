@@ -3,6 +3,7 @@ package com.miniproject.admin.service;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.miniproject.common.service.CommandProcess;
 import com.miniproject.dao.MemberDao;
 import com.miniproject.vo.Member;
 
