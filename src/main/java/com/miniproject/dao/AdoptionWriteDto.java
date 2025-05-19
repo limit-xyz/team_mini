@@ -8,31 +8,33 @@ public class AdoptionWriteDto {
 	private String userId;
 	private String title;
 	private String content;
-	private String type;
+	private String adoptionType; // 입양, 분양 중 선택
 	private String region;
-	private String animalTypeMain;
-	private String animalTypeDetail;
+	private String animalTypeMain; // 강아지 고양이 등 대분류
+	private String animalTypeDetail; // 소형견 대형견 장묘종 단묘종 등 소분류
 	private String imagePath;
 	private Timestamp createdAt;
-	private int views;
+	private int viewsCount;
+	private String approvalStatus; // 입양 진행중 진행 완료 대기중 등 상태 표시용
 	
 	
 	public AdoptionWriteDto() {};
 	
-	public AdoptionWriteDto(int postId, String userId, String title, String content, String type,
+	public AdoptionWriteDto(int postId, String userId, String title, String content, String adoptionType,
             String region, String animalTypeMain, String animalTypeDetail, String imagePath, 
-            Timestamp createdAt, int views) {
+            Timestamp createdAt, int viewsCount, String approvalStatus) {
 		this.postId = postId;
 		this.userId = userId;
 		this.title = title;
 		this.content = content;
-		this.type = type;
+		this.adoptionType = adoptionType;
 		this.region = region;
 		this.animalTypeMain = animalTypeMain;
 		this.animalTypeDetail = animalTypeDetail;
 		this.imagePath = imagePath;
 		this.createdAt = createdAt;
-		this.views = views;
+		this.viewsCount = viewsCount;
+		this.approvalStatus = approvalStatus;
 	}
 
 	public int getPostId() {
@@ -67,12 +69,12 @@ public class AdoptionWriteDto {
 		this.content = content;
 	}
 
-	public String getType() {
-		return type;
+	public String getAdoptionType() {
+		return adoptionType;
 	}
-
-	public void setType(String type) {
-		this.type = type;
+	
+	public void setAdoptionType(String adoptionType) {
+		this.adoptionType = adoptionType;
 	}
 
 	public String getRegion() {
@@ -115,13 +117,22 @@ public class AdoptionWriteDto {
 		this.createdAt = createdAt;
 	}
 
-	public int getViews() {
-		return views;
+	public int getViewsCount() {
+		return viewsCount;
 	}
 
-	public void setViews(int views) {
-		this.views = views;
+	public void setViewsCount(int viewsCount) {
+		this.viewsCount = viewsCount;
 	}
+
+	public String getApprovalStatus() {
+		return approvalStatus;
+	}
+
+	public void setApprovalStatus(String approvalStatus) {
+		this.approvalStatus = approvalStatus;
+	}
+
 
 	
 	
