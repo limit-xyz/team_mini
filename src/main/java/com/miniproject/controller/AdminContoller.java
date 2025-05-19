@@ -1,6 +1,5 @@
 package com.miniproject.controller;
 
-import java.io.File;
 import java.io.IOException;
 
 import com.miniproject.admin.ajax.AdminAjaxController;
