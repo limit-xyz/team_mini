@@ -46,7 +46,7 @@
 				<div class="row">
 					<div class="col">
 						<nav aria-label="Page navigation example">
-						  <ul class="pagination justify-content-center">
+						  <ul class="pagination justify-content-center my-5">
 						    <c:if test="${startPage > pageGroup}">
 						    <li class="page-item">
 						    	<a class="page-link" 
@@ -83,7 +83,7 @@
 				<div class="row">
 					<div class="col">
 						<nav aria-label="Page navigation example">
-						  <ul class="pagination justify-content-center">
+						  <ul class="pagination justify-content-center my-5">
 						    <c:if test="${startPage > pageGroup}">
 						    <li class="page-item">
 						    	<a class="page-link" 

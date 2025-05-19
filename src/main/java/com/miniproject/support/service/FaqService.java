@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class FaqService implements CommandProcess{
 	
 	// 한 페이지에 보여줄 게시 글 수 
-		private static final int PAGE_SIZE = 10;
+		private static final int PAGE_SIZE = 5;
 		
 		
 		// 한 페이지에 보여줄 페이지 그룹의 수
