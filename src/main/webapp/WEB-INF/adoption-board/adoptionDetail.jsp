@@ -33,14 +33,20 @@
 					<tr>
 						<th>작성자</th>
 						<td>${adopboard.userId }</td>
-						<th>작성일</th>
-						<td><fmt:formatDate value="${adopboard.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 					</tr>
 					<tr>
+						<th>상태</th>
+						<td>${adopboard.approvalStatus }</td>
+						<th>종류</th>
+						<td>${adopboard.animalTypeMain} -> ${adopboard.animalTypeDetail }</td>
+					</tr>
+					<tr>
+						<th>작성일</th>
+						<td><fmt:formatDate value="${adopboard.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 						<th>조회수</th> 
 						<td>${adopboard.viewsCount }</td>
 					</tr>
-					<tr>
+	
 					<th>파 일</th>
 					<td colspan="3">
 					<c:if test="${empty adopboard.imagePath }">
@@ -190,9 +196,9 @@
 </div>
 
 <script>
-document.getElementById("detailupdate").addEventListener("click", function(){
+document.getElementById("detailUpdate").addEventListener("click", function(){
 	const postId = document.getElementById("postId").value;
-	loction.href = "AdoptionUpdate.mvc?postId=" + postId;
+	location.href = "AdoptionupdateForm.mvc?postId=" + postId;
 });
 
 document.getElementById("detailDelete").addEventListener("click", function(){

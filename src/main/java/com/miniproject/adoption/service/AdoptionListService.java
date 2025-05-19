@@ -24,13 +24,13 @@ public class AdoptionListService implements CommandProcess {
 			throws ServletException, IOException {
 	
 		String pageNumParam = request.getParameter("pageNum");
-		String searchColumn = request.getParameter("searchColumn");
+		String type = request.getParameter("type");
 		String keyword = request.getParameter("keyword");		
 		String adoptionType = request.getParameter("adoptionType");
 		String animalTypeMain = request.getParameter("animalTypeMain");
 		
 		boolean searchOption = false;
-		if(searchColumn !=null && !searchColumn.isEmpty()) {
+		if(type !=null && !type.isEmpty()) {
 			searchOption = true;
 		}
 		
@@ -63,21 +63,22 @@ public class AdoptionListService implements CommandProcess {
 		AdoptionDao01 dao = new AdoptionDao01();
 		ArrayList<AdoptionWriteDto> blist;
 		int listCount = 0;
-		
+
+		// 상위에 있는 코드로 주석처리
 //		// 검색 게시 글 리스트 - type, keyword 동시에 있으면
-//		boolean searchOption = (searchColumn != null || !searchColumn.equals("")) 
+//		boolean searchOption = (type != null || !type.equals("")) 
 //				|| (keyword != null || !keyword.equals("")) 				
 //				|| (adoptionType != null || !adoptionType.equals("")) 
 //				|| (animalTypeMain != null || !animalTypeMain.equals(""));
-//		
+		
 		try {
 		if(!searchOption) { // 일반 게시 글 리스트			
 			blist = dao.boardList(startRow, endRow);
 			listCount = dao.getBoardCount();
 		
 		} else {
-			blist = dao.searchList(searchColumn, keyword, adoptionType, animalTypeMain, startRow, endRow);
-			listCount = dao.getSearchBoardCount(searchColumn, keyword, adoptionType, animalTypeMain);
+			blist = dao.searchList(type, keyword, adoptionType, animalTypeMain, startRow, endRow);
+			listCount = dao.getSearchBoardCount(type, keyword, adoptionType, animalTypeMain);
 		
 		}
 	} catch (SQLException e){
@@ -107,7 +108,7 @@ public class AdoptionListService implements CommandProcess {
 		request.setAttribute("searchOption", searchOption);
 		
 		if(searchOption) {
-			request.setAttribute("searchColumn", searchColumn);
+			request.setAttribute("type", type);
 			request.setAttribute("keyword", keyword);
 			request.setAttribute("adoptionType", adoptionType);
 			request.setAttribute("animalTypeMain", animalTypeMain);

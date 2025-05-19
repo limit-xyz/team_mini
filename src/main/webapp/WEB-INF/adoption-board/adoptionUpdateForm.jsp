@@ -8,7 +8,7 @@
 내용 : <textarea type="text" name="content">${post.content } </textarea><br/>
 지역 : <input type="text" name ="region" value="${post.region}"/><br/>
 <input type ="submit" value="수정 완료"/>
-searchColumn
+type
 </form>
 
 <!-- content -->			
@@ -52,7 +52,7 @@ searchColumn
 						<!-- 검색 리스트에서 넘어온 경우 다시 검색 리스트로 보내야 함 -->						
 						<c:if test="${searchOption}">
 							<input type="button" class="btn btn-warning" value="목록보기"
-								onclick="location.href='adopboardList.mvc?pageNum=${pageNum}&type=${searchColumn}&keyword=${keyword}'">
+								onclick="location.href='adopboardList.mvc?pageNum=${pageNum}&type=${type}&keyword=${keyword}'">
 						</c:if>	
 						<!-- 일반 리스트에서 넘어온 경우 다시 일반 리스트로 보내야함 -->
 						<c:if test="${not searchOption}">

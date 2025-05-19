@@ -135,7 +135,7 @@ CREATE TABLE adoption_reply (
     user_id VARCHAR2(50 CHAR) NOT NULL,
     content VARCHAR2(500 CHAR) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    is_secret CHAR(1) DEFAULT 'N', -- 비밀 댓글 여부 ('Y' 또는 'N')
+    is_secret VARCHAR2(1) DEFAULT 'N', -- 비밀 댓글 여부 ('Y' 또는 'N')
     FOREIGN KEY (post_id) REFERENCES adoption_post(post_id) ON DELETE CASCADE
 );
 

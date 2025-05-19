@@ -117,11 +117,11 @@ public class AdoptionDao01 {
 	
 	//----------------------------------------------------------
 	// 전체 게시글 수를 읽어오는 메서드 - paging 처리에 사용
-		public int getSearchBoardCount(String searchColumn,
+		public int getSearchBoardCount(String type,
 				String keyword, String adoptionType, 
 				String animalTypeMain) throws SQLException{
 			String sql = "SELECT COUNT(*) FROM adoption_post"
-					+ " WHERE " + searchColumn + "LIKE ? "
+					+ " WHERE " + type + " LIKE ? "
 					+ " And adoption_type = ? " + " AND animal_type_main = ?";
 			int count = 0;
 			
@@ -150,17 +150,18 @@ public class AdoptionDao01 {
 	//------------------------------------------------------------------
 	// 제목, 작성자, 내용에 검색어가 포함된 게시 글 리스트를 읽어와 반환하는 메서드
 		public ArrayList<AdoptionWriteDto> searchList ( //String approval_status
-				String searchColumn,String keyword, String adoptiontype, String animalTypeMain, int startRow, int endRow) throws SQLException{
+				String type,String keyword, String adoptiontype, String animalTypeMain, int startRow, int endRow) throws SQLException{
 			
-			List<String> allowedTypes = Arrays.asList("title", "user_id", "region");
-			if(searchColumn == null || !allowedTypes.contains(searchColumn)) {
-				throw new IllegalArgumentException("허용되지 않은 검색 컬럼 입니다." + searchColumn);
+			List<String> allowedTypes = Arrays.asList("title", "user_id", "region", "content");
+			if(type == null || !allowedTypes.contains(type)) {
+				
+				throw new IllegalArgumentException("허용되지 않은 검색 컬럼 입니다." + type);
 			}
 			
 			String sql = "SELECT * FROM ( "
 					+ "    SELECT ROWNUM num, sub.* FROM "
 					+ "        (SELECT * FROM adoption_post "
-					+ " WHERE " + searchColumn + " LIKE ?"
+					+ " WHERE " + type + " LIKE ? "
 					+ " and adoption_type=? and animal_type_main =? "
 					+ " ORDER BY post_id DESC) sub) "
 					+ " WHERE num >= ? AND num <= ?";
@@ -175,7 +176,7 @@ public class AdoptionDao01 {
 				// 3. DB에 SQL 쿼리를 발행하는 객체를 활성화된 커넥션으로부터 구한다.
 				// PreparedStatement
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, "%" + keyword + "%");			//여기 주석처리 했음 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+				pstmt.setString(1, "%" + keyword + "%");
 				pstmt.setString(2, adoptiontype);
 				pstmt.setString(3, animalTypeMain);
 				pstmt.setInt(4, startRow);

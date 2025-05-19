@@ -221,6 +221,13 @@ body {
                 imagePreview.innerHTML = ''; // 파일 선택 취소 시 미리보기 영역 초기화
             }
         });
+        
+        document.getElementById("cancel_button").addEventListener("click", function(){
+        if(confirm("게시글 등록을 취소하시겠습니까?")){
+        		location.href = "AdoptionList.mvc" ;
+        	}
+        });
+        
    </script>
    </body>
   </html>

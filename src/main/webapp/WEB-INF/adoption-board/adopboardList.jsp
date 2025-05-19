@@ -11,7 +11,7 @@
 				<h2 class="fs-3 fw-bold">입양 게시판</h2>
 			</div>
 		</div>
-		<form name="searchForm" id="searchForm" action="adoptionList.mvc"
+		<form name="searchForm" id="searchForm" action="AdoptionList.mvc"
 			class="row mb-3 text-center justify-content-center">
 			<div class="col-auto">
 				<select name="type" class="form-select">
@@ -33,14 +33,16 @@
 		</form>
 		<div class="row mb-3">
 			<div class="col text-end">
-			<c:choose>
+						<a href="AdoptionWriteForm.mvc" class="btn btn-success btn-sm">글쓰기</a>
+						
+					<!--<c:choose>
 						<c:when test="${sessionScope.userId !=null }">
 						<a href="AdoptionWriteForm.mvc" class="btn btn-success btn-sm">글쓰기</a>
 					</c:when>
 					<c:otherwise>
 						<a href="#" class="btn btn-secondarybtn-sm" onclick="alertLogin()">글쓰기</a>
 					</c:otherwise>
-				</c:choose>
+				</c:choose>  -->
 			</div>
 		</div>
 
@@ -104,7 +106,7 @@
 									<li class = "page-item">
 									 <a class = "page-link"
 									 	href = "AdoptionList.mvc?pageNum=${startPage - pageGroup}
-									 	&type=${searchColumn}&keyword=${keyword}"> 이전</a>
+									 	&type=${type}&keyword=${keyword}"> 이전</a>
 										</li>
 								</c:if>
 								<c:forEach var='i' begin="${startPage}" end="${endPage }">
