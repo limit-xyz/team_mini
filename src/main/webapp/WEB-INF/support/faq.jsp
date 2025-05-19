@@ -15,7 +15,8 @@
           </div>
         </div>
       </div>
-      <div class="row">
+
+      <div class="row mt-5">
         
 					<form action="#">
 					<div class="input-group mb-3">
@@ -24,6 +25,7 @@
 					</div>
 					</form>
       </div>
+
       <div class="row">
         <div class="col">
           <div class="accordion" id="accordionExample">
@@ -45,6 +47,13 @@
           </div>
         </div>
       </div>
+      <c:if test="${isAdmin == true }">
+      <div class="row mt-2">
+      	<div class="col text-end">
+						<a href="${pageContext.request.contextPath}/support/faqWriteForm" class="btn btn-outline-success">글쓰기</a>
+					</div>
+      </div>
+      </c:if>
       <!-- 검색 요청이면서 검색된 리스트가 존재할 경우 페이지네이션 -->
 				<c:if test="${ searchOption and not empty faqList }">
 				<div class="row">
@@ -118,4 +127,5 @@
 					</div>
 				</div>
 				</c:if>
+
     </div>

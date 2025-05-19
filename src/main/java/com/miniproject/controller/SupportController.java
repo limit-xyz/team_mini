@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import com.miniproject.common.service.CommandProcess;
 import com.miniproject.support.service.FaqService;
+import com.miniproject.support.service.FaqWriteFormService;
+import com.miniproject.support.service.FaqWriteResultService;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -59,6 +61,14 @@ import jakarta.servlet.http.HttpServletResponse;
 				service = new FaqService();
 				viewPage = service.requestProcess(request, response);
 				System.out.println(viewPage);
+			}else if (command.equals("/support/faqWriteForm")) {
+				service = new FaqWriteFormService();
+				viewPage = service.requestProcess(request, response);
+				System.out.println(viewPage);
+			}else if (command.equals("/support/faqWriteResult")) {
+				service = new FaqWriteResultService();
+				viewPage = service.requestProcess(request, response);
+				System.out.println(viewPage);
 			}
 			
 			if(viewPage != null) {
@@ -73,7 +83,6 @@ import jakarta.servlet.http.HttpServletResponse;
 					RequestDispatcher rd = 
 							request.getRequestDispatcher(viewPage.split(":")[1]);
 						rd.forward(request, response);
-					
 				} else {
 					// "/WEB-INF/index.jsp?body=" + "board/boardList" + ".jsp"
 					RequestDispatcher rd = 
