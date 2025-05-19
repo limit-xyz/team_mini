@@ -3,7 +3,10 @@ package com.miniproject.controller;
 import java.io.IOException;
 
 import com.miniproject.common.service.CommandProcess;
+import com.miniproject.support.service.FaqDeleteService;
 import com.miniproject.support.service.FaqService;
+import com.miniproject.support.service.FaqUpdateFormService;
+import com.miniproject.support.service.FaqUpdateResultService;
 import com.miniproject.support.service.FaqWriteFormService;
 import com.miniproject.support.service.FaqWriteResultService;
 
@@ -67,6 +70,18 @@ import jakarta.servlet.http.HttpServletResponse;
 				System.out.println(viewPage);
 			}else if (command.equals("/support/faqWriteResult")) {
 				service = new FaqWriteResultService();
+				viewPage = service.requestProcess(request, response);
+				System.out.println(viewPage);
+			}else if (command.equals("/support/faqUpdateForm")) {
+				service = new FaqUpdateFormService();
+				viewPage = service.requestProcess(request, response);
+				System.out.println(viewPage);
+			}else if (command.equals("/support/faqUpdateResult")) {
+				service = new FaqUpdateResultService();
+				viewPage = service.requestProcess(request, response);
+				System.out.println(viewPage);
+			}else if (command.equals("/support/faqDelete")) {
+				service = new FaqDeleteService();
 				viewPage = service.requestProcess(request, response);
 				System.out.println(viewPage);
 			}

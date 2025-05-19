@@ -26,27 +26,39 @@
 					</form>
       </div>
 
-      <div class="row">
-        <div class="col">
-          <div class="accordion" id="accordionExample">
-          	<c:forEach var="faq" items="${faqList }">
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
-                      data-bs-target="#collapse${faq.faqNo}" aria-expanded="false" 
-                      aria-controls="collapse${faq.faqNo}">${faq.faqTitle }</button>
-              </h2>
-              <div id="collapse${faq.faqNo}" class="accordion-collapse collapse" 
-                 aria-labelledby="heading${faq.faqNo}" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  ${faq.faqContent }
-                </div>
-              </div>
+<div class="row">
+  <div class="col">
+    <div class="accordion" id="accordionExample">
+      <c:forEach var="faq" items="${faqList }">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading${faq.faqNo}">
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#collapse${faq.faqNo}" aria-expanded="false"
+        aria-controls="collapse${faq.faqNo}">
+
+  <span>${faq.faqTitle }</span>
+  <span class="flex-grow-1"></span>
+  <c:if test="${isAdmin == true }">
+    <%-- <a> 태그를 <span>으로 변경하고, data-href 속성에 URL 저장 --%>
+    <span data-href="${pageContext.request.contextPath}/support/faqUpdateForm?no=${faq.faqNo}"
+          class="btn btn-sm btn-outline-secondary me-2 edit-faq-action z-3" role="button" tabindex="0">수정</span>
+    <span data-href="${pageContext.request.contextPath}/support/faqDelete?no=${faq.faqNo}"
+          class="btn btn-sm btn-outline-danger me-2 delete-faq-action z-3" role="button" tabindex="0">삭제</span>
+  </c:if>
+</button>
+          </h2>
+          <div id="collapse${faq.faqNo}" class="accordion-collapse collapse"
+            aria-labelledby="heading${faq.faqNo}" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              ${faq.faqContent }
             </div>
-            </c:forEach>
           </div>
         </div>
-      </div>
+      </c:forEach>
+    </div>
+  </div>
+</div>
+      
       <c:if test="${isAdmin == true }">
       <div class="row mt-2">
       	<div class="col text-end">
@@ -129,3 +141,64 @@
 				</c:if>
 
     </div>
+    
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    	  // 모든 수정 버튼(span)에 이벤트 리스너 추가
+    	  document.querySelectorAll('.edit-faq-action').forEach(function(spanElement) {
+    	    spanElement.addEventListener('click', function(event) {
+    	      // 1. 이벤트 버블링 중단 (매우 중요!)
+    	      event.stopPropagation();
+
+    	      const url = this.dataset.href; // data-href 속성에서 URL 가져오기
+    	      if (url) {
+    	        // alert('수정: ' + url); // 테스트용 얼럿
+    	        console.log('수정 span 클릭됨 - URL로 이동 예정: ' + url);
+    	        window.location.href = url; // JavaScript로 페이지 이동
+    	      } else {
+    	        console.error('수정 URL을 찾을 수 없습니다.');
+    	      }
+    	    });
+    	    // Enter 키로도 버튼이 동작하도록 설정 (접근성 향상)
+    	    spanElement.addEventListener('keypress', function(event) {
+    	        if (event.key === 'Enter') {
+    	            event.preventDefault(); // 기본 동작 방지
+    	            event.stopPropagation();
+    	            this.click(); // 클릭 이벤트 강제 실행
+    	        }
+    	    });
+    	  });
+
+    	  // 모든 삭제 버튼(span)에 이벤트 리스너 추가
+    	  document.querySelectorAll('.delete-faq-action').forEach(function(spanElement) {
+    	    spanElement.addEventListener('click', function(event) {
+    	      // 1. 이벤트 버블링 중단 (매우 중요!)
+    	      event.stopPropagation();
+
+    	      const url = this.dataset.href; // data-href 속성에서 URL 가져오기
+    	      if (confirm('정말로 이 항목을 삭제하시겠습니까?')) {
+    	        if (url) {
+    	          // alert('삭제: ' + url); // 테스트용 얼럿
+    	          console.log('삭제 확인됨 - URL로 이동 예정: ' + url);
+    	          window.location.href = url; // JavaScript로 페이지 이동
+    	        } else {
+    	          console.error('삭제 URL을 찾을 수 없습니다.');
+    	        }
+    	      } else {
+    	        console.log('삭제가 취소되었습니다.');
+    	        // span이므로 event.preventDefault()는 필요하지 않습니다.
+    	      }
+    	    });
+    	    // Enter 키로도 버튼이 동작하도록 설정 (접근성 향상)
+    	    spanElement.addEventListener('keypress', function(event) {
+    	        if (event.key === 'Enter') {
+    	            event.preventDefault();
+    	            event.stopPropagation();
+    	            this.click();
+    	        }
+    	    });
+    	  });
+    	});
+    </script>
+    
