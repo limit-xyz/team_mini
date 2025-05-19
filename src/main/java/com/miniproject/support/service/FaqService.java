@@ -43,19 +43,18 @@ public class FaqService implements CommandProcess{
 		
 		FaqDao dao = new FaqDao();
 		ArrayList<Faq> faqList = null;
-		
 		int listCount = 0;
 		
 		boolean searchOption = keyword == null? false : true;
 		
 		//검색인지 아닌지 판단하는 if문 
 		if(!searchOption) { // 일반 게시 글 리스트			
-			bList = dao.boardList(startRow, endRow);
-			listCount = dao.getBoardCount();
+			faqList = dao.getFaqList(startRow, endRow);
+			listCount = dao.getFaqCount();
 			
 		} else { // 검색 게시 글 리스트
-			bList = dao.searchList(type, keyword, startRow, endRow);
-			listCount = dao.getBoardCount(type, keyword);
+			faqList = dao.getFaqList( keyword, startRow, endRow);
+			listCount = dao.getFaqCount(keyword);
 		}
 		
 		int pageCount = listCount / PAGE_SIZE 
@@ -75,12 +74,21 @@ public class FaqService implements CommandProcess{
 		
 		
 		
-		faqList = dao.getFaq();
 		
 		
 		
 		
 		request.setAttribute("faqList", faqList);
+		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("pageGroup", PAGE_GROUP);		
+		request.setAttribute("pageCount", pageCount);
+		request.setAttribute("startPage", startPage);
+		request.setAttribute("endPage", endPage);		
+		request.setAttribute("searchOption", searchOption);
+		
+		if(searchOption) {
+			request.setAttribute("keyword", keyword);			
+		}
 		
 		return "support/faq";
 	}

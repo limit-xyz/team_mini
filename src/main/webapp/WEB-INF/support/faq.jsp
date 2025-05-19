@@ -41,19 +41,77 @@
           </div>
         </div>
       </div>
-      <div class="row my-5">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-              <a class="page-link">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#">Next</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+      <!-- 검색 요청이면서 검색된 리스트가 존재할 경우 페이지네이션 -->
+				<c:if test="${ searchOption and not empty faqList }">
+				<div class="row">
+					<div class="col">
+						<nav aria-label="Page navigation example">
+						  <ul class="pagination justify-content-center">
+						    <c:if test="${startPage > pageGroup}">
+						    <li class="page-item">
+						    	<a class="page-link" 
+						    		href="${pageContext.request.contextPath}/support/faq?pageNum=${startPage - pageGroup}&keyword=${keyword}">Pre</a>
+						    </li>
+						    </c:if>
+						    <c:forEach var="i" begin="${startPage}" end="${endPage}">
+						    	<%-- 현재 페이지 - 링크x active --%>
+						    	<c:if test="${i == currentPage}">
+						    	<li class="page-item">
+						    		<span class="page-link active">${i}</span>
+						    	</li>
+						    	</c:if>
+						    	<c:if test="${i != currentPage}">
+						    	<li class="page-item">
+						    		<a class="page-link" href="${pageContext.request.contextPath}/support/faq?pageNum=${i}&type=${type}&keyword=${keyword}">${i}</a>
+						    	</li>
+						    	</c:if>
+						    </c:forEach>
+						    <c:if test="${endPage < pageCount}">						    
+						    <li class="page-item">
+						    	<a class="page-link" 
+						    		href="${pageContext.request.contextPath}/support/faq?pageNum=${startPage + pageGroup}&type=${type}&keyword=${keyword}">Next</a>
+						    </li>
+						    </c:if>
+						  </ul>
+						</nav>
+					</div>
+				</div>
+				</c:if>
+				
+				<!-- 일반 요청이면서 검색된 리스트가 존재할 경우 페이지네이션 -->
+				<c:if test="${ not searchOption and not empty faqList }">
+				<div class="row">
+					<div class="col">
+						<nav aria-label="Page navigation example">
+						  <ul class="pagination justify-content-center">
+						    <c:if test="${startPage > pageGroup}">
+						    <li class="page-item">
+						    	<a class="page-link" 
+						    		href="${pageContext.request.contextPath}/support/faq?pageNum=${startPage - pageGroup}">Pre</a>
+						    </li>
+						    </c:if>
+						    <c:forEach var="i" begin="${startPage}" end="${endPage}">
+						    	<%-- 현재 페이지 - 링크x active --%>
+						    	<c:if test="${i == currentPage}">
+						    	<li class="page-item">
+						    		<span class="page-link active">${i}</span>
+						    	</li>
+						    	</c:if>
+						    	<c:if test="${i != currentPage}">
+						    	<li class="page-item">
+						    		<a class="page-link" href="${pageContext.request.contextPath}/support/faq?pageNum=${i}">${i}</a>
+						    	</li>
+						    	</c:if>
+						    </c:forEach>
+						    <c:if test="${endPage < pageCount}">						    
+						    <li class="page-item">
+						    	<a class="page-link" 
+						    		href="${pageContext.request.contextPath}/support/faq?pageNum=${startPage + pageGroup}">Next</a>
+						    </li>
+						    </c:if>
+						  </ul>
+						</nav>
+					</div>
+				</div>
+				</c:if>
     </div>
