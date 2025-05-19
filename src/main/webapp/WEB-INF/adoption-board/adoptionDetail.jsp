@@ -28,7 +28,7 @@
 				<tbody>
 					<tr>
 						<th class="table-secondary"> 제 목</th>
-						<td colspan = "3">${adopboard.title }</td>
+						<td class="mb-0 fw-bold" colspan = "3" >${adopboard.title }</td>
 					</tr>
 					<tr>
 						<th>작성자</th>
@@ -52,7 +52,7 @@
 					<c:if test="${empty adopboard.imagePath }">
 					첨부파일 없음
 					</c:if>
-					<c:if test"${not empty imagePath}">
+					<c:if test="${not empty adopboard.imagePath}">
 					<a href="imagePathDownload.mvc?fileName=${adopboard.imagePath}">파일 다운로드</a>
 					</c:if>
 				</td>
@@ -92,29 +92,29 @@
 										</div>
 										<div class="col-8 text-end p=2">
 										<span class="me-3">
-										<fmt:formatDate value="${adopreply.regDate }" pattern="yyyy-MM-dd : HH:mm:ss" />
+										<fmt:formatDate value="${reply.regDate }" pattern="yyyy-MM-dd : HH:mm:ss" />
 										</span>
 										<button class="modifyReply btn btn-outline-success btn-sm" data-no='${reply.replyId }'><i class="bi bi-file-text"> 수정</i></button>
-										<button class="deleteReply btn btn-outline-warning btn-sm" data-no='${adopreply.replyId }'><i class="bi bi-trash-fill"> 삭제</i></button>
+										<button class="deleteReply btn btn-outline-warning btn-sm" data-no='${reply.replyId }'><i class="bi bi-trash-fill"> 삭제</i></button>
 										<button class="btn btn-outline-danger btn-sm"
-											onclick ="reportReply('${adopreply.replyId}')"><i class="bi bi-exclamation-triangle-fill"> 신고</i></button>
+											onclick ="reportReply('${reply.replyId}')"><i class="bi bi-exclamation-triangle-fill"> 신고</i></button>
 										</div>
 									</div>
 									<div class ="row">
 										<div class ="col p-3">
-											<pre>${adopreply.replyContent }</pre>
+											<pre>${reply.replyContent }</pre>
 											<div>
 											<c:choose>
 												<!-- 비밀 댓글일 경우 -->
 												<c:when test="${reply.isSecret}">
-													<c:if test="{sessionScope.id == reply.replyWriter 
+													<c:if test="${sessionScope.id == reply.replyWriter 
 																		|| sessionScope.id == adopboard.userId
-																		|| sessionScope.id == admin">
+																		|| sessionScope.id == 'admin'}">
 																		${reply.replyContent }
 												</c:if>
-												<c:if test = "{sessionScope.id != reply.replyWriter 
+												<c:if test = "${sessionScope.id != reply.replyWriter 
 																		|| sessionScope.id != adopboard.userId
-																		|| sessionScope.id != admin">
+																		|| sessionScope.id != 'admin'}">
 																	🔒	비밀 댓글 입니다.
 												</c:if>
 											</c:when>
@@ -163,14 +163,14 @@
 								 	<textarea name="replyContent" id="replyContent" class="form-control" rows="4"
 								 	placeholder="댓글을 입력하세요"></textarea>
 								 	<div class="form-check mt -2">
-								 		<input class="form-check-input" type="checkbox" name=isSecret" id="isSecret" value="true">
+								 		<input class="form-check-input" type="checkbox" name="isSecret" id="isSecret" value="true">
 								 		<label class="form-check-label" for="isSecret">비밀 댓글</label>
 								 	</div>
 								 	</c:when>
 								 	<c:otherwise>
 								 		<!--  비 로그인 사용자 -->
-								 		<textarea clss="form-control" rows="4" placeholder="로그인 후 댓글 작성 가능" id="guestReply"
-								 		readnoly style="background-color: #f9f9f9; cursor:pointer;"></textarea>
+								 		<textarea class="form-control" rows="4" placeholder="로그인 후 댓글 작성 가능" id="guestReply"
+								 		readonly style="background-color: #f9f9f9; cursor:pointer;"></textarea>
 								 		</c:otherwise>
 								 		</c:choose>
 									</div>
