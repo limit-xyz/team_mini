@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.miniproject.dao.DBManager;
 import com.miniproject.vo.Faq;
 
 
