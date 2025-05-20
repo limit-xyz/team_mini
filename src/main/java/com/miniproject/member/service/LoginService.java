@@ -68,7 +68,7 @@ public class LoginService implements CommandProcess{
 				
 				session.setAttribute("id", id);
 				session.setAttribute("isLogin", true);
-				return "r:/team_mini/main/main";
+				return "r:" + request.getContextPath() +"/main/main";
 	}
 
 }
