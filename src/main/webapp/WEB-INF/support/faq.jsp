@@ -9,9 +9,9 @@
       <div class="row">
         <div id="tab-container">
           <div class="pill-button-group">
-            <button class="pill-button active">FAQ</button>
-            <button class="pill-button">1대1 문의</button>
-            <button class="pill-button">신고 게시판</button>
+            <button class="pill-button active"><a href="${pageContext.request.contextPath}/support/faq">FAQ</a></button>
+            <button class="pill-button"><a href="${pageContext.request.contextPath}/support/faq">1대1 문의</a></button>
+            <button class="pill-button"><a href="${pageContext.request.contextPath}/support/faq">신고 게시판</a></button>
           </div>
         </div>
       </div>

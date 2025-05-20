@@ -8,7 +8,7 @@
 						<h2 class="fs-3 fw-bold">FAQ 글수정</h2> 
 					</div>
 				</div>
-				<form action="${pageContext.request.contextPath}/support/faqUpdateProcess.qna" name="UpdateForm" id="UpdateForm"
+				<form action="${pageContext.request.contextPath}/support/faqUpdateResult" name="UpdateForm" id="UpdateForm"
 					class="row border-primary g-3" method="post">
 					<input type="hidden" name="faqNo" value="${faq.faqNo}"> 
 
@@ -24,7 +24,7 @@
 					<div class="col-8 offset-2 text-center mt-5">
 						<input type="submit" class="btn btn-primary mx-2" value="수정하기"> 
 						<input type="button" class="btn btn-primary mx-2" value="목록보기"
-							onclick="location.href='${pageContext.request.contextPath}/support/faqList.qna'">
+							onclick="location.href='${pageContext.request.contextPath}/support/faq'">
 					</div>
 				</form>
 			</div>
