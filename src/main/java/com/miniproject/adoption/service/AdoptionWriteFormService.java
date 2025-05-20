@@ -32,7 +32,7 @@ public class AdoptionWriteFormService implements CommandProcess{
 			
 		}
 		
-		return "/WEB-INF/adoptionBoard/adoptionWrite";
+		return "/WEB-INF/adoptionboard/adoptionWrite";
 	}
 
 }

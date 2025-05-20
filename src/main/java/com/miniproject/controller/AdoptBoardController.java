@@ -58,7 +58,8 @@ public class AdoptBoardController extends HttpServlet{
 		request.setCharacterEncoding("utf-8");
 		doProcess(request, response);		
 	}
-		
+	
+	
 	protected void doProcess(
 			HttpServletRequest request, HttpServletResponse response) 
 					throws ServletException, IOException {
@@ -90,7 +91,7 @@ public class AdoptBoardController extends HttpServlet{
 		CommandProcess service = null;
 	
 		
-		if(command.equals("/adoption/AdoptionList") || command.equals("/adoption/*")) {
+		if(command.equals("/adoption/AdoptionList") || command.equals("/adoption(/*)?")) {
 			service = new AdoptionListService();					
 			viewPage = service.requestProcess(request, response);
 	
@@ -143,12 +144,13 @@ public class AdoptBoardController extends HttpServlet{
 				rd =request.getRequestDispatcher(viewPage.split(":")[1]);
 				
 			} else {
-				rd = request.getRequestDispatcher("/WEB-INF/index.jsp?body=" + view + SUFFIX);
+				rd = request.getRequestDispatcher( PREFIX + view + SUFFIX);
 			} 	
 				if(rd != null) {
 					rd.forward(request, response);
+					
 				}
-			}
+			}System.out.println("viewPage = " + viewPage);
 		}
 	}
 	

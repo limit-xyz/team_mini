@@ -27,7 +27,7 @@ public class AdoptionDeleteService implements CommandProcess{
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("	alert('잘못된 접근 입니다.')");
-			out.println("	location.href='${pageContext.request.contextPath}/adoptionBoard/AdoptionList'");
+			out.println("	location.href='${pageContext.request.contextPath}/adoptionboard/AdoptionList'");
 			out.println("</script>");
 			out.close();
 			return null;
@@ -70,7 +70,7 @@ public class AdoptionDeleteService implements CommandProcess{
 		boolean searchOption = (type != null || !type.equals("")
 				|| keyword != null || !keyword.equals("")); 
 		
-		String url = "${pageContext.request.contextPath}/adoptionBoard/AdoptionList?pageNum=" + pageNum;
+		String url = "${pageContext.request.contextPath}/adoptionboard/AdoptionList?pageNum=" + pageNum;
 		
 		if(searchOption) {
 			keyword = URLEncoder.encode(keyword, "UTF-8");
