@@ -73,7 +73,7 @@
 				</table>
 				</div>
 			</div>
-		<div class="roe my-3"> 
+		<div class="row my-3"> 
 			<div class="col text-center">
 				<input type="button" class="btn btn-primary" id="detailUpdate" value="수정하기">
 				<input type="button" class="btn btn-danger ms-2 me-2" id="detailDelete" value="삭제하기">
@@ -97,7 +97,7 @@
 										<div class="col-4">
 										<span>${reply.replyWriter}</span>
 										</div>
-										<div class="col-8 text-end p=2">
+										<div class="col-8 text-end p-2">
 										<span class="me-3">
 										<fmt:formatDate value="${reply.regDate }" pattern="yyyy-MM-dd : HH:mm:ss" />
 										</span>
@@ -109,27 +109,24 @@
 									</div>
 									<div class ="row">
 										<div class ="col p-3">
-											<pre>${reply.replyContent }</pre>
-											<div>
+										<c:choose>
+											<c:when test="${reply.isSecret }">
 											<c:choose>
-												<%-- 비밀 댓글일 경우 --%>
-												<c:when test="${reply.isSecret}">
-													<c:if test="${sessionScope.id == reply.replyWriter 
+												<c:when test="${sessionScope.id == reply.replyWriter 
 																		|| sessionScope.id == adopboard.userId
 																		|| sessionScope.id == 'admin'}">
-																		${reply.replyContent }
-												</c:if>
-												<c:if test = "${!(sessionScope.id == reply.replyWriter 
-																		|| sessionScope.id == adopboard.userId
-																		|| sessionScope.id == 'admin')}">
-																	🔒	비밀 댓글 입니다.
-												</c:if>
+																	
+																	<div>	${reply.replyContent } </div>
 											</c:when>
 											<c:otherwise>
-												${reply.replyContent }
+											   <pre title="비밀댓글 입니다.">🔒 비밀 댓글 입니다.</pre>
+                    </c:otherwise>
+                </c:choose>
+                   </c:when>
+            <c:otherwise>
+												<pre>${reply.replyContent }</pre>
 												</c:otherwise>
 												</c:choose>
-												</div>
 										</div>
 									</div>
 								</div>
@@ -154,7 +151,6 @@
 					<div class ="col">
 						 <form name ="replyWriteForm" id ="replyWriteForm" action="AdoptionReplyWrite.mvc" method="post">
 						 	<input type="hidden" name = "postId" value="${adopboard.postId}">
-						 	<input type="hidden" name = "replyWriter" value="${sessionScope.id }">
 						 	<div class="row bg-light border my-3 p-3">
 						 		<div class="col">
 								 	<div class="row">
@@ -188,7 +184,7 @@
 								 		</c:if>
 								 		<c:if test="${empty sessionScope.id }">
 								 		<button type="button" class="btn btn-outline-secondary w-100 h-100" 
-								 		onclick="location.href=member/loginForm">로그인</button>
+								 		onclick="location.href='/team_mini/member/loginForm">로그인</button>
 								 		</c:if>
 								 		
 									</div>

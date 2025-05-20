@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpSession;
 @MultipartConfig(fileSizeThreshold = 10 * 1024,
 			maxFileSize = 1024 * 1024 * 10,
 			maxRequestSize = 1024 * 1024 * 100)
-@WebServlet(name="adoptionController", urlPatterns="*.mvc")
+@WebServlet(name="adoptionController", urlPatterns="/adoption/*")
 public class AdoptBoardController extends HttpServlet{
 
 	private final String PREFIX = "/WEB-INF/index.jsp?body=";
@@ -68,17 +68,21 @@ public class AdoptBoardController extends HttpServlet{
 		
 		System.out.println("command : " + command);
 		
-		 if (command.equals("/AdoptionWriteForm.mvc") ||
-			        command.equals("/AdoptionWrite.mvc") ||
-			        command.equals("/AdoptionReplyWrite.mvc") ||
-			        command.equals("/AdoptionReplyDelete.mvc") ||
-			        command.equals("/AdoptionDelete.mvc") ||
-			        command.equals("/AdoptionupdateForm.mvc")) {
-		HttpSession session = request.getSession(false);
-		if(session == null || session.getAttribute("loginUser") == null) {
-			String message = URLEncoder.encode("로그인이 필요한 서비스 입니다.", "UTF-8");
-			response.sendRedirect("member/loginForm?message=" + message);
-			return;
+		 if (command.equals("/AdoptionWriteForm") ||
+			        command.equals("/AdoptionWrite") ||
+			        command.equals("/AdoptionReplyWrite") ||
+			        command.equals("/AdoptionReplyDelete") ||
+			        command.equals("/AdoptionDelete") ||
+			        command.equals("/AdoptionupdateForm")) {
+			 
+		
+			 HttpSession session = request.getSession();
+		
+			 if(session.getAttribute("loginUser") == null) {
+			
+				 String message = URLEncoder.encode("로그인이 필요한 서비스 입니다.", "UTF-8");
+				 response.sendRedirect("member/loginForm?message=" + message);
+				 return;
 			}
 		}
 			 
@@ -86,43 +90,43 @@ public class AdoptBoardController extends HttpServlet{
 		CommandProcess service = null;
 	
 		
-		if(command.equals("/AdoptionList.mvc") || command.equals("/*.mvc")) {
+		if(command.equals("adoption/AdoptionList") || command.equals("/adoption/*")) {
 			service = new AdoptionListService();					
 			viewPage = service.requestProcess(request, response);
 	
-		} else if (command.equals("/AdoptionWriteForm.mvc")) {
+		} else if (command.equals("adoption/AdoptionWriteForm")) {
 			service = new AdoptionWriteFormService();						 
 			viewPage = service.requestProcess(request, response);
 	
-		} else if (command.equals("/AdoptionWrite.mvc")) {
+		} else if (command.equals("adoption/AdoptionWrite")) {
 			service = new AdoptionWriteService();						 
 			viewPage = service.requestProcess(request, response);
 		
-		}	else if (command.equals("/AdoptionDetail.mvc")) {
+		}	else if (command.equals("adoption/AdoptionDetail")) {
 			service = new AdoptionDetailService();						 
 			viewPage = service.requestProcess(request, response);
 	
-		}	else if (command.equals("/AdoptionView.mvc")) {
+		}	else if (command.equals("adoption/AdoptionView")) {
 			service = new AdoptionViewService();						 
 			viewPage = service.requestProcess(request, response);
 	
-		}	else if (command.equals("/AdoptionDelete.mvc")) {
+		}	else if (command.equals("adoption/AdoptionDelete")) {
 			service = new AdoptionDeleteService();						 
 			viewPage = service.requestProcess(request, response);
 	
-		}	else if (command.equals("/AdoptionupdateForm.mvc")) {
+		}	else if (command.equals("adoption/AdoptionupdateForm")) {
 			service = new AdoptionUpdateFormService();						 
 			viewPage = service.requestProcess(request, response);
 		
-		} else if (command.equals("/AdoptionDownload.mvc")) { 
+		} else if (command.equals("adoption/AdoptionDownload")) { 
             service = new AdoptionDownloadService();
             viewPage = service.requestProcess(request, response);
 
-        } else if (command.equals("/AdoptionReplyWrite.mvc")) { 
+        } else if (command.equals("adoption/AdoptionReplyWrite")) { 
             service = new AdoptionReplyWriteService();
             viewPage = service.requestProcess(request, response);
 
-        } else if (command.equals("/AdoptionReplyDelete.mvc")) { 
+        } else if (command.equals("adoption/AdoptionReplyDelete")) { 
             service = new AdoptionReplyDeleteService();
             viewPage = service.requestProcess(request, response);
 

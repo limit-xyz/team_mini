@@ -8,7 +8,7 @@
 	<div class="col">
 		<div class="row text-center mb-4">
 			<div class="col">
-				<h2 class="fs-3 fw-bold">입양 게시판</h2>
+				<h2 class="fs-3 fw-bold">입양 / 분양 게시판</h2>
 			</div>
 		</div>
 		<form name="searchForm" id="searchForm" action="AdoptionList.mvc"
