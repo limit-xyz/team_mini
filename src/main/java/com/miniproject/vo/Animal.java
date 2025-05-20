@@ -1,6 +1,7 @@
 package com.miniproject.vo;
 
 public abstract class Animal {
+	int id;
 	String nameKor;
 	String nameEng;
 	String origin;
@@ -17,32 +18,16 @@ public abstract class Animal {
 	String beginnerFriendly;
 	String grooming;
 	String healthIssues;
-
-	public Animal(String nameKor, String nameEng, String origin, String history, String lifespan, String personality,
-			String weight, String height, String coat, String color, String intelligence, String image,
-			String environment, String beginnerFriendly, String grooming, String healthIssues) {
-		this.nameKor = nameKor;
-		this.nameEng = nameEng;
-		this.origin = origin;
-		this.history = history;
-		this.lifespan = lifespan;
-		this.personality = personality;
-		this.weight = weight;
-		this.height = height;
-		this.coat = coat;
-		this.color = color;
-		this.intelligence = intelligence;
-		this.image = image;
-		this.environment = environment;
-		this.beginnerFriendly = beginnerFriendly;
-		this.grooming = grooming;
-		this.healthIssues = healthIssues;
-	}
+	String type;
 
 	public Animal() {
 
-	};
+	}
 
+	public int getId() {
+		return id;
+	}
+	
 	public String getNameKor() {
 		return nameKor;
 	}
@@ -105,6 +90,14 @@ public abstract class Animal {
 
 	public String getHealthIssues() {
 		return healthIssues;
+	}
+
+	public String getType() {
+		return type;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setNameKor(String nameKor) {
@@ -170,5 +163,9 @@ public abstract class Animal {
 	public void setHealthIssues(String healthIssues) {
 		this.healthIssues = healthIssues;
 	}
+
+	public void setType(String type) {
+		this.type = type;
+	};
 
 }

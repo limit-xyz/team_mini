@@ -19,13 +19,13 @@ public class DiaryDao {
 	// 다이어리 갯수 가져오기
 	public int getDiaryCount(String id, String type, String keyword) {
 
-		String getMemberCountSql = "";
+		String getDiaryCountSql = "";
 		boolean isSearch = false;
 
 		if (type == null || keyword == null || type.equals("") || keyword.equals("") ) {
-			getMemberCountSql = "SELECT count(*) count FROM diary WHERE member_id=?";
+			getDiaryCountSql = "SELECT count(*) count FROM diary WHERE member_id=?";
 		} else {
-			getMemberCountSql = "SELECT count(*) count FROM diary WHERE member_id=? AND " + type + " LIKE ?";
+			getDiaryCountSql = "SELECT count(*) count FROM diary WHERE member_id=? AND " + type + " LIKE ?";
 			isSearch = true;
 		}
 
@@ -33,7 +33,7 @@ public class DiaryDao {
 
 		try {
 			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(getMemberCountSql);
+			pstmt = conn.prepareStatement(getDiaryCountSql);
 			if (isSearch) {
 				pstmt.setString(1, id);
 				pstmt.setString(2, "%" + keyword + "%");

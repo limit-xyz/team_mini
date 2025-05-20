@@ -229,7 +229,7 @@ INSERT INTO cat VALUES (
 
 -- 재패니즈 밥테일
 INSERT INTO cat VALUES (
-    cat_seq.NEXTVAL, '꼬리 짧은 일본 고양이', 'Japanese Bobtail', '일본',
+    cat_seq.NEXTVAL, '재패니즈 밥테일', 'Japanese Bobtail', '일본',
     '수백 년 전부터 일본에서 길러진 짧은 꼬리 고양이.',
     '11~15년', '밝고 명랑함', '2.5~4kg', '20~25cm',
     '짧거나 중간 털 (단/장모 모두 있음)', '삼색, 흰색, 검정 등',

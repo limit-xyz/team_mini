@@ -6,18 +6,6 @@ public class Dog extends Animal {
 	String trainingDifficulty;
 	String exercise;
 
-	public Dog(String nameKor, String nameEng, String origin, String history, String lifespan, String personality,
-			String weight, String height, String coat, String color, String intelligence, String image,
-			String environment, String beginnerFriendly, String grooming, String healthIssues, String dogSize,
-			String barkingLevel, String trainingDifficulty, String exercise) {
-		super(nameKor, nameEng, origin, history, lifespan, personality, weight, height, coat, color, intelligence,
-				image, environment, beginnerFriendly, grooming, healthIssues);
-		this.dogSize = dogSize;
-		this.barkingLevel = barkingLevel;
-		this.trainingDifficulty = trainingDifficulty;
-		this.exercise = exercise;
-	}
-	
 	public Dog() {
 		super();
 	}
