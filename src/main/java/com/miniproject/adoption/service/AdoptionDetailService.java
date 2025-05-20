@@ -25,18 +25,7 @@ public class AdoptionDetailService implements CommandProcess {
 		HttpSession session = request.getSession();
 		boolean isLogin = session.getAttribute("isLogin") != null && (Boolean) session.getAttribute("isLogin");
 
-		if (!isLogin) {// 로그인이 아닐경우
-			response.setContentType("text/html; charset=utf-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>");
-			out.println("	alert('로그인 전용 서비스 입니다.')");
-			out.println("	location.href='loginForm.member'"); // --로그인 메뉴창 생성시 연동 필요
-			out.println("</script>");
-			out.close();
-			return null;
-
-		}
-
+		
 		String postIdParam = request.getParameter("postId");
 		String pageNum = request.getParameter("pageNum");
 		String searchColumn = request.getParameter("searchColumn");

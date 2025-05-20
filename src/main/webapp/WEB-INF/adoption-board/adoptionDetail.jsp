@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.miniproject.dao.AdoptionWriteDto" %>
 <jsp:useBean id="post" class="com.miniproject.dao.AdoptionWriteDto" scope="request"/>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-
-<!-- content -->
+<%-- content --%>
 <div class="row my-5" id="global-content">
 	<div class="col">
 		<form name ="checkForm" id="checkForm">
@@ -33,6 +35,8 @@
 					<tr>
 						<th>작성자</th>
 						<td>${adopboard.userId }</td>
+						<th>상태</th>
+						<td>${adopboard.adoptionType}</td>
 					</tr>
 					<tr>
 						<th>상태</th>
@@ -49,12 +53,15 @@
 	
 					<th>파 일</th>
 					<td colspan="3">
-					<c:if test="${empty adopboard.imagePath }">
-					첨부파일 없음
-					</c:if>
-					<c:if test="${not empty adopboard.imagePath}">
+					<c:choose>
+					<c:when test="${not empty adopboard.imagePath and fn:length(adopboard.imagePath) > 0}">
 					<a href="imagePathDownload.mvc?fileName=${adopboard.imagePath}">파일 다운로드</a>
-					</c:if>
+					</c:when>
+					<c:otherwise>
+					 첨부파일 없음
+					</c:otherwise>
+					</c:choose>
+					
 				</td>
 				</tr>
 				<tr>
@@ -70,7 +77,7 @@
 			<div class="col text-center">
 				<input type="button" class="btn btn-primary" id="detailUpdate" value="수정하기">
 				<input type="button" class="btn btn-danger ms-2 me-2" id="detailDelete" value="삭제하기">
-				<!--  검색 리스트에서 넘어온 경우 다시 보내기 -->
+				<%--  검색 리스트에서 넘어온 경우 다시 보내기 --%>
 				<c:if test="${searchOption }">
 				<input type="button" class="btn btn-warning" value="목록보기"
 				onclick="location.href='AdoptionList.mvc?pageNum=${pageNum }'">
@@ -78,8 +85,8 @@
 				</div>
 			</div>
 			
-		<!--  댓글 리스트 영역  -->
- 				<!--  댓글이 존재 하는 경우  -->
+		<%--  댓글 리스트 영역  --%>
+ 				<%--  댓글이 존재 하는 경우  --%>
  				<c:if test="${ not empty adopreplyList }">
 				<div class="row">
 					<div class ="col" id="replyList">
@@ -105,16 +112,16 @@
 											<pre>${reply.replyContent }</pre>
 											<div>
 											<c:choose>
-												<!-- 비밀 댓글일 경우 -->
+												<%-- 비밀 댓글일 경우 --%>
 												<c:when test="${reply.isSecret}">
 													<c:if test="${sessionScope.id == reply.replyWriter 
 																		|| sessionScope.id == adopboard.userId
 																		|| sessionScope.id == 'admin'}">
 																		${reply.replyContent }
 												</c:if>
-												<c:if test = "${sessionScope.id != reply.replyWriter 
-																		|| sessionScope.id != adopboard.userId
-																		|| sessionScope.id != 'admin'}">
+												<c:if test = "${!(sessionScope.id == reply.replyWriter 
+																		|| sessionScope.id == adopboard.userId
+																		|| sessionScope.id == 'admin')}">
 																	🔒	비밀 댓글 입니다.
 												</c:if>
 											</c:when>
@@ -132,7 +139,7 @@
 					</div>
 				</div>
 				</c:if>
-				<!--  댓글이 존재 하지 않을 경우   -->
+				<%--  댓글이 존재 하지 않을 경우 --%>
 				<c:if test="${ empty adopreplyList }">
 				<div class="row my-5">
 					<div class ="col border p-5 text-center">
@@ -142,8 +149,8 @@
 				</c:if>
 										
 										
-				<!--  댓글 쓰기 폼 -->
-				<div class="row my-5 d-none" id="replyForm">
+				<%--  댓글 쓰기 폼 --%>
+				<div class="row my-5" id="replyForm">
 					<div class ="col">
 						 <form name ="replyWriteForm" id ="replyWriteForm" action="AdoptionReplyWrite.mvc" method="post">
 						 	<input type="hidden" name = "postId" value="${adopboard.postId}">
@@ -159,7 +166,7 @@
 								 	<div class="col-10">
 								 	<c:choose>
 								 	<c:when test="${not empty sessionScope.id}">
-								 		<!-- 로그인된 사용자 -->
+								 		<%-- 로그인된 사용자 --%>
 								 	<textarea name="replyContent" id="replyContent" class="form-control" rows="4"
 								 	placeholder="댓글을 입력하세요"></textarea>
 								 	<div class="form-check mt -2">
@@ -168,7 +175,7 @@
 								 	</div>
 								 	</c:when>
 								 	<c:otherwise>
-								 		<!--  비 로그인 사용자 -->
+								 		<%--  비 로그인 사용자 --%>
 								 		<textarea class="form-control" rows="4" placeholder="로그인 후 댓글 작성 가능" id="guestReply"
 								 		readonly style="background-color: #f9f9f9; cursor:pointer;"></textarea>
 								 		</c:otherwise>

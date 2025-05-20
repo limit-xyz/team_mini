@@ -2,6 +2,7 @@ package com.miniproject.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import com.miniproject.adoption.service.*;
 import com.miniproject.common.service.CommandProcess;
@@ -15,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @MultipartConfig(fileSizeThreshold = 10 * 1024,
 			maxFileSize = 1024 * 1024 * 10,
@@ -45,6 +47,7 @@ public class AdoptBoardController extends HttpServlet{
 	protected void doGet(
 			HttpServletRequest request, HttpServletResponse response) 
 					throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		doProcess(request, response);		
 	}
 			
@@ -59,15 +62,30 @@ public class AdoptBoardController extends HttpServlet{
 	protected void doProcess(
 			HttpServletRequest request, HttpServletResponse response) 
 					throws ServletException, IOException {
-		String reuqestURI = request.getRequestURI();
+		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
-		String command = reuqestURI.substring(contextPath.length());
+		String command = requestURI.substring(contextPath.length());
 		
 		System.out.println("command : " + command);
 		
+		 if (command.equals("/AdoptionWriteForm.mvc") ||
+			        command.equals("/AdoptionWrite.mvc") ||
+			        command.equals("/AdoptionReplyWrite.mvc") ||
+			        command.equals("/AdoptionReplyDelete.mvc") ||
+			        command.equals("/AdoptionDelete.mvc") ||
+			        command.equals("/AdoptionupdateForm.mvc")) {
+		HttpSession session = request.getSession(false);
+		if(session == null || session.getAttribute("loginUser") == null) {
+			String message = URLEncoder.encode("로그인이 필요한 서비스 입니다.", "UTF-8");
+			response.sendRedirect("member/loginForm?message=" + message);
+			return;
+			}
+		}
+			 
 		String viewPage = null;
 		CommandProcess service = null;
 	
+		
 		if(command.equals("/AdoptionList.mvc") || command.equals("/*.mvc")) {
 			service = new AdoptionListService();					
 			viewPage = service.requestProcess(request, response);

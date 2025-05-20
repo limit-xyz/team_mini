@@ -35,9 +35,10 @@ public class AdoptionReplyWriteService implements CommandProcess {
 		 request.setCharacterEncoding("utf-8");
 		 
 		 String postIdParam = request.getParameter("postId");
-		 String content = request.getParameter("content");
+		 String content = request.getParameter("replyContent");
 		 String isSecretParam = request.getParameter("isSecret");
 		 boolean isSecret = "true".equalsIgnoreCase(isSecretParam);
+		 
 		 
 		 if(postIdParam == null || postIdParam.equals("") 
 				 || content == null || content.equals("")){ 

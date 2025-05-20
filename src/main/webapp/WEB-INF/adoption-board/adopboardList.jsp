@@ -16,9 +16,11 @@
 			<div class="col-auto">
 				<select name="type" class="form-select">
 					<option value="title" ${type == 'title' ? 'selected' : '' }>제목</option>
-					<option value="adoption_type" ${type == 'adoption_type' ? 'selected' : '' }>상태</option>
-					<option value="writer" ${type == 'writer' ? 'selected' : '' }>작성자</option>
+					<option value="approval_status" ${type == 'approval_status' ? 'selected' : '' }>상태</option>					
+					<option value="user_id" ${type == 'user_id' ? 'selected' : '' }>작성자</option>
 					<option value="content" ${type == 'content' ? 'selected' : '' }>내용</option>
+					<option value="adoption_type" ${type == 'adoption_type' ? 'selected' : '' }>입양/분양</option>
+					
 				</select>
 			</div>
 			
@@ -34,15 +36,19 @@
 		<div class="row mb-3">
 			<div class="col text-end">
 						<a href="AdoptionWriteForm.mvc" class="btn btn-success btn-sm">글쓰기</a>
-						
-					<!--<c:choose>
+					
+					
+					<%--
+					<c:choose>
 						<c:when test="${sessionScope.userId !=null }">
 						<a href="AdoptionWriteForm.mvc" class="btn btn-success btn-sm">글쓰기</a>
 					</c:when>
 					<c:otherwise>
 						<a href="#" class="btn btn-secondarybtn-sm" onclick="alertLogin()">글쓰기</a>
 					</c:otherwise>
-				</c:choose>  -->
+				</c:choose>  --%>
+				
+				
 			</div>
 		</div>
 
