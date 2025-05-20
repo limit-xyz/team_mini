@@ -1,65 +1,191 @@
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f9fbfd;
+}
+
+:root {
+    --main-theme-color: #C5E1D4;
+    --main-theme-darker-text: #2c5c49;
+    --main-theme-border-color: #b0d1c0;
+    --pill-button-text-color: #198754; /* 탭 버튼 기본 텍스트 색상 */
+}
+
 #title {
   font-size: 2rem;
   font-weight: bold;
   text-align: center;
+  color: var(--main-theme-darker-text);
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem; 
 }
 
-.serch_input_wrap {
-  width: 100%;
-  height: 40px;
-  border: 1px solid #e3e3e3;
-  border-radius: 20px;
-  padding: 5px 20px;
-  margin:50px;
-  margin-bottom: 20px;
-}
-#serch_input {
-  border: none;
-  width: 100%;
-}
+/* 검색창 관련 CSS (.serch_input_wrap, #serch_input)는 HTML에서 제거되었으므로 여기서도 삭제 */
 
-/* 탭 컨테이너 기본 스타일 */
-
+/* #tab-container .container-title 은 현재 HTML 구조에 없으므로 주석 처리 또는 삭제 */
+/*
 #tab-container .container-title {
-  font-size: 1.25rem; /* Tailwind text-xl */
-  font-weight: 600; /* Tailwind font-semibold */
-  color: #374151; /* Tailwind text-gray-700 */
-  margin-bottom: 1rem; /* Tailwind mb-4 */
+  font-size: 1.25rem; 
+  font-weight: 600; 
+  color: #374151; 
+  margin-bottom: 1rem; 
 }
+*/
 
 /* --- 알약 형태 탭 버튼 그룹 스타일 시작 --- */
 #tab-container .pill-button-group {
-  display: flex; /* 버튼들을 가로로 배열 */
-  justify-content: center; /* 버튼들을 가운데 정렬 */
-  gap: 0.5rem; /* 버튼 사이 간격 (Tailwind space-x-2) */
-  padding: 0.5rem; /* Tailwind p-2 */
-
-  border-radius: 9999px; /* Tailwind rounded-full */
-  /* 추가적인 커스텀 스타일이 필요하면 여기에 작성 */
+  display: flex; 
+  justify-content: center; 
+  gap: 0.5rem; 
+  padding: 0.5rem; 
+  /* border-radius: 9999px; /* 개별 버튼에 적용하므로 그룹에서는 불필요 */
+  margin-bottom: 2.5rem; /* 탭 아래 콘텐츠와의 간격 */
 }
 
 #tab-container .pill-button {
-	width:120px;
-  padding: 0.5rem 1.25rem; /* Tailwind py-2 px-5 */
-  font-size: 0.875rem; /* Tailwind text-sm */
-  font-weight: 500; /* Tailwind font-medium */
-  color: #198754; /* Tailwind text-purple-700 (보라색 계열로 변경) */
-  background-color: transparent; /* 기본 배경은 투명 또는 그룹 배경색 */
-  border: none; /* 테두리 없음 */
-  border-radius: 9999px; /* Tailwind rounded-full */
+  width:120px;
+  padding: 0.5rem 0; /* 내부 a태그에 패딩을 줄 것이므로 버튼 자체 패딩은 수직만 주거나 최소화 */
+  font-size: 0.875rem; 
+  font-weight: 500; 
+  color: var(--pill-button-text-color); 
+  background-color: transparent; 
+  border: 1px solid var(--main-theme-border-color); /* 테두리 추가하여 구분 */
+  border-radius: 9999px; 
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  outline: none; /* 포커스 시 외곽선 제거 */
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+  outline: none; 
+  text-align: center; /* 내부 a태그 컨텐츠 중앙 정렬 */
+}
+
+/* pill-button 내부의 a 태그에 스타일 적용 */
+#tab-container .pill-button a {
+    color: inherit; /* 부모(.pill-button)의 색상을 상속 */
+    text-decoration: none; /* 밑줄 제거 */
+    display: block; /* 버튼 전체를 클릭 영역으로 만듦 */
+    padding: 0.5rem 1.25rem; /* 실제 클릭 영역의 패딩 */
 }
 
 #tab-container .pill-button:hover {
-  background-color: #C5E1D4; /* Tailwind hover:bg-purple-50 (보라색 계열로 변경) */
+  background-color: var(--main-theme-color);
+  color: var(--main-theme-darker-text); /* 호버 시 텍스트 색상도 변경 */
+  border-color: var(--main-theme-color); /* 호버 시 테두리 색상도 변경 */
 }
 
-/* 활성 버튼 스타일 (예시 - JavaScript가 없으므로 기본 스타일 중 하나에 적용하거나, 필요시 수동으로 클래스 추가) */
 #tab-container .pill-button.active {
-  background-color: #C5E1D4; /* Tailwind bg-white */
-  color: #198754; /* Tailwind text-purple-800 (보라색 계열로 변경) */
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* Tailwind shadow-lg */
+  background-color: var(--main-theme-color);
+  color: var(--main-theme-darker-text); /* 활성 탭 텍스트 색상 */
+  border-color: var(--main-theme-color); /* 활성 탭 테두리 색상 */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); 
 }
 /* --- 알약 형태 탭 버튼 그룹 스타일 끝 --- */
+
+
+/* Q&A 리스트 및 기타 요소 스타일 - .qna-content-area 로 구체성 높임 */
+.qna-content-area .btn-custom-theme {
+    background-color: var(--main-theme-color);
+    border-color: var(--main-theme-border-color);
+    color: var(--main-theme-darker-text);
+    font-weight: 500;
+}
+.qna-content-area .btn-custom-theme:hover, 
+.qna-content-area .btn-custom-theme:focus {
+    background-color: #b3d6c6;
+    border-color: #a0c3b3;
+    color: var(--main-theme-darker-text);
+}
+
+.qna-content-area .table {
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 1.5rem; 
+}
+
+.qna-content-area .table thead th {
+    background-color: #eef3f1;
+    color: var(--main-theme-darker-text);
+    font-weight: 500;
+    border-bottom-width: 1px;
+    border-top: none;
+}
+
+.qna-content-area .table tbody tr:hover {
+    background-color: #f0f5f3;
+}
+
+.qna-content-area .table td, 
+.qna-content-area .table th {
+    vertical-align: middle;
+}
+
+.qna-content-area .table a.qna-title-link {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+.qna-content-area .table a.qna-title-link:hover {
+    color: var(--main-theme-darker-text);
+    text-decoration: underline;
+}
+
+.qna-content-area .status-badge { /* .badge 클래스와 함께 사용될 때를 고려 */
+    padding: 0.4em 0.7em;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+/* 부트스트랩 .badge 기본 스타일을 덮어쓰도록 .badge 와 함께 선택자 사용 */
+.qna-content-area .badge.status-answered {
+    background-color: var(--main-theme-color) !important;
+    color: var(--main-theme-darker-text) !important;
+}
+.qna-content-area .badge.status-waiting {
+    background-color: #ffc107 !important;
+    color: #333 !important;
+}
+
+.qna-content-area .pagination .page-item.active .page-link {
+    background-color: var(--main-theme-color);
+    border-color: var(--main-theme-border-color);
+    color: var(--main-theme-darker-text);
+    z-index:1;
+}
+.qna-content-area .pagination .page-link {
+    color: var(--main-theme-darker-text);
+}
+.qna-content-area .pagination .page-link:hover {
+     background-color: #e0f0e8;
+}
+
+
+/* =============================================== */
+/* 페이지네이션 스타일 (FAQ 및 QNA 공통 적용 가능) */
+/* =============================================== */
+
+/* 활성화된 페이지 링크 (현재 페이지) */
+/* JSTL에서 <span class="page-link active"> 와 같이 생성하므로, .page-link.active 선택자 사용 */
+.pagination .page-link.active {
+    background-color: var(--main-theme-color);     /* 예: #C5E1D4 */
+    border-color: var(--main-theme-border-color);  /* 예: #b0d1c0 */
+    color: var(--main-theme-darker-text);          /* 예: #2c5c49 */
+    z-index: 1; /* 다른 요소 위에 오도록 설정 (그림자 등이 있을 경우 대비) */
+}
+
+/* 일반 페이지 링크 (활성화되지 않은 상태) */
+.pagination .page-link {
+    color: var(--main-theme-darker-text);          /* 예: #2c5c49 */
+    /* 기본 테두리 색상을 사용하거나, 테마에 맞게 설정할 수 있습니다. */
+    /* border-color: #dee2e6; (부트스트랩 기본값) */
+    /* border-color: var(--main-theme-border-color); (테마 일관성) */
+}
+
+/* 페이지 링크에 마우스 호버 시 */
+.pagination .page-link:hover {
+     background-color: #e0f0e8; /* 메인 테마보다 약간 연한 색상 */
+     /* color: var(--main-theme-darker-text); (기본 텍스트 색상 유지 또는 변경) */
+}
+
+/* 비활성화된 페이지 링크 (예: 이전/다음 페이지가 없을 때) */
+/* 사용자님의 JSTL은 비활성화 시 링크를 아예 표시하지 않지만, 만약 표시한다면 이 스타일이 적용됩니다. */
+.pagination .page-item.disabled .page-link {
+    color: #868e96; /* 부트스트랩 기본 비활성 텍스트 색상 */
+    background-color: transparent; /* 배경 없음 또는 아주 연한 회색 */
+    border-color: #dee2e6; /* 부트스트랩 기본 테두리 색상 */
+}
