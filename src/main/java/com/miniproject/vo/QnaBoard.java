@@ -2,7 +2,7 @@ package com.miniproject.vo;
 
 import java.util.Date;
 
-public class Qna_board {
+public class QnaBoard {
 	 private int no;          // 글번호
 	    private String status;   // 상태
 	    private String writer;   // 작성자

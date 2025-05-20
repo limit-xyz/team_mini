@@ -9,6 +9,13 @@ import com.miniproject.support.service.FaqUpdateFormService;
 import com.miniproject.support.service.FaqUpdateResultService;
 import com.miniproject.support.service.FaqWriteFormService;
 import com.miniproject.support.service.FaqWriteResultService;
+import com.miniproject.support.service.QnaDeleteService;
+import com.miniproject.support.service.QnaDetailService;
+import com.miniproject.support.service.QnaListService;
+import com.miniproject.support.service.QnaUpdateFormService;
+import com.miniproject.support.service.QnaUpdateResultService;
+import com.miniproject.support.service.QnaWriteFormService;
+import com.miniproject.support.service.QnaWriteResultService;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -84,7 +91,36 @@ import jakarta.servlet.http.HttpServletResponse;
 				service = new FaqDeleteService();
 				viewPage = service.requestProcess(request, response);
 				System.out.println(viewPage);
+			}else if (command.equals("/support/qnaList")) {
+				service = new QnaListService();
+				viewPage = service.requestProcess(request, response);
+				System.out.println(viewPage);
+			}else if (command.equals("/support/qnaWriteForm")) {
+				service = new QnaWriteFormService();
+				viewPage = service.requestProcess(request, response);
+				System.out.println(viewPage);
+			}else if (command.equals("/support/qnaWriteResult")) {
+				service = new QnaWriteResultService();
+				viewPage = service.requestProcess(request, response);
+				System.out.println(viewPage);
+			}else if (command.equals("/support/qnaDetail")) {
+				service = new QnaDetailService();
+				viewPage = service.requestProcess(request, response);
+				System.out.println(viewPage);
+			}else if (command.equals("/support/qnaUpdateForm")) {
+				service = new QnaUpdateFormService();
+				viewPage = service.requestProcess(request, response);
+				System.out.println(viewPage);
+			}else if (command.equals("/support/qnaUpdateResult")) {
+				service = new QnaUpdateResultService();
+				viewPage = service.requestProcess(request, response);
+				System.out.println(viewPage);
+			}else if (command.equals("/support/qnaDelete")) {
+				service = new QnaDeleteService();
+				viewPage = service.requestProcess(request, response);
+				System.out.println(viewPage);
 			}
+			
 			
 			if(viewPage != null) {
 				// "boardList", "r:boardList.mvc", "redirect:boardList.mvc"
