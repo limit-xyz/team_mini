@@ -65,7 +65,7 @@ public class AdoptionReplyWriteService implements CommandProcess {
 		
 		if(result > 0) {
 			// 댓글 작성 성공시 해당 게시글 상세 페이지로 리다이렉트
-			return "redirect:/AdoptionDetail.mvc?postId=" + postId + "&increaseViewCount=false";
+			return "r:team_mini/adoption/AdoptionDetail.mvc?postId=" + postId + "&increaseViewCount=false";
 		} else {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();

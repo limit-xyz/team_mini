@@ -80,7 +80,7 @@
 				<%--  검색 리스트에서 넘어온 경우 다시 보내기 --%>
 				<c:if test="${searchOption }">
 				<input type="button" class="btn btn-warning" value="목록보기"
-				onclick="location.href='AdoptionList.mvc?pageNum=${pageNum }'">
+				onclick="location.href='${pageContext.request.contextPath}/adoption/AdoptionList?pageNum=${pageNum }'">
 				</c:if>
 				</div>
 			</div>
@@ -149,7 +149,7 @@
 				<%--  댓글 쓰기 폼 --%>
 				<div class="row my-5" id="replyForm">
 					<div class ="col">
-						 <form name ="replyWriteForm" id ="replyWriteForm" action="AdoptionReplyWrite.mvc" method="post">
+						 <form name ="replyWriteForm" id ="replyWriteForm" action="${pageContext.request.contextPath}/adoption/AdoptionReplyWrite" method="post">
 						 	<input type="hidden" name = "postId" value="${adopboard.postId}">
 						 	<div class="row bg-light border my-3 p-3">
 						 		<div class="col">
@@ -184,7 +184,7 @@
 								 		</c:if>
 								 		<c:if test="${empty sessionScope.id }">
 								 		<button type="button" class="btn btn-outline-secondary w-100 h-100" 
-								 		onclick="location.href='/team_mini/member/loginForm">로그인</button>
+								 		onclick="location.href='/member/loginForm">로그인</button>
 								 		</c:if>
 								 		
 									</div>
@@ -201,13 +201,13 @@
 <script>
 document.getElementById("detailUpdate").addEventListener("click", function(){
 	const postId = document.getElementById("postId").value;
-	location.href = "AdoptionupdateForm.mvc?postId=" + postId;
+	location.href = "${pageContext.request.contextPath}/adoption/AdoptionUpdateForm?postId=" + postId;
 });
 
 document.getElementById("detailDelete").addEventListener("click", function(){
 	const postId = document.getElementById("postId").value;
 	if(confirm("정말 게시글을 삭제하시겠습니까?")){
-		location.href = "AdoptionDelete.mvc?postId=" + postId;
+		location.href = "${pageContext.request.contextPath}/adoption/AdoptionDelete?postId=" + postId;
 	}
 });
 

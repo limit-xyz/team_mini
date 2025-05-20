@@ -114,7 +114,7 @@ public class AdoptionListService implements CommandProcess {
 			request.setAttribute("animalTypeMain", animalTypeMain);
 		}
 		
-		return "adoption-board/adopboardList";
+		return "adoptionBoard/adopboardList";
 	}
 
 }

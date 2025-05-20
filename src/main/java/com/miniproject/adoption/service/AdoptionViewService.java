@@ -20,7 +20,7 @@ public class AdoptionViewService implements CommandProcess{
 		AdoptionWriteDto post = dao.getPostById(postId);
 		
 		request.setAttribute("post", post);
-		return "forward:/adoption/adoptionView.jsp";
+		return "f:${pageContext.request.contextPath}/adoption/AdoptionView";
 	}
 
 }

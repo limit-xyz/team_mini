@@ -38,7 +38,7 @@ public class AdoptionDetailService implements CommandProcess {
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("	alert('잘못된 접근 입니다.')");
-			out.println("	location.href='adoptionList.mvc'");
+			out.println("	location.href='${pageContext.request.contextPath}/adoption/AdoptionList.mvc'");
 			out.println("</script>");
 			out.close();
 			return null;
@@ -94,7 +94,7 @@ public class AdoptionDetailService implements CommandProcess {
 			request.setAttribute("keyword", keyword);
 		}
 
-		return "adoption-board/adoptionDetail";
+		return "adoptionboard/adoptionDetail";
 	}
 
 }

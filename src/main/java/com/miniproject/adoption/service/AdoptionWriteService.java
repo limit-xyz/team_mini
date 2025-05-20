@@ -125,7 +125,7 @@ public class AdoptionWriteService implements CommandProcess{
 		        }
 			  
 			if(result > 0) {				
-				return "redirect:/AdoptionList.mvc";
+				return "redirect:/adoption/AdoptionList";
 			} else {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<script> alert('게시글 작성에 실패하였습니다.); history.back(); </script>");

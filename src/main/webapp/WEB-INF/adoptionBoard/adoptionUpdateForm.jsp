@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <jsp:useBean id="post" class="com.miniproject.dao.AdoptionWriteDto" scope="request" />
 
-<form action="AdoptionUpdateService.mvc" method="post">
+<form action="${pageContext.request.contextPath}/adoption/AdoptionUpdateService" method="post">
 <input type = "hidden" name="postId" value="${post.postId}" />
 제목 : <input type="text" name="title" value="${post.title }" />
 내용 : <textarea type="text" name="content">${post.content } </textarea><br/>
@@ -19,7 +19,7 @@ type
 						<h2 class="fs-3 fw-bold">게시 글 수정하기</h2>
 					</div>
 				</div>
-				<form action="AdoptionUpdateService.mvc" name="adopUpdateForm" id="adopUpdateForm"
+				<form action="${pageContext.request.contextPath}/adoption/AdoptionUpdateService" name="adopUpdateForm" id="adopUpdateForm"
 					class="row border-primary g-3" method="post"
 					enctype="multipart/form-data">		
 					<input type = "hidden" name="postId" value="${post.postId}" />
@@ -52,12 +52,12 @@ type
 						<!-- 검색 리스트에서 넘어온 경우 다시 검색 리스트로 보내야 함 -->						
 						<c:if test="${searchOption}">
 							<input type="button" class="btn btn-warning" value="목록보기"
-								onclick="location.href='adopboardList.mvc?pageNum=${pageNum}&type=${type}&keyword=${keyword}'">
+								onclick="location.href='${pageContext.request.contextPath}/adoption/AdopboardList?pageNum=${pageNum}&type=${type}&keyword=${keyword}'">
 						</c:if>	
 						<!-- 일반 리스트에서 넘어온 경우 다시 일반 리스트로 보내야함 -->
 						<c:if test="${not searchOption}">
 							<input type="button" class="btn btn-warning" value="목록보기"
-								onclick="location.href='adopboardList.mvc?pageNum=${pageNum}'">
+								onclick="location.href='${pageContext.request.contextPath}/adoption/AdopboardList?pageNum=${pageNum}'">
 						</c:if>	
 					</div>
 				</form>

@@ -21,16 +21,18 @@ public class AdoptionWriteFormService implements CommandProcess{
 				(Boolean) session.getAttribute("isLogin") : false;
 		
 		if(! isLogin) {
-			response.setContentType("text/html; Charser=utf-8);");
+			response.setContentType("text/html; Charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("	alert('로그인 전용 게시글 입니다.')");
 			out.println("	location.href='loginForm.member'");  //-- 로그인 메뉴창 생성시 연동 필요
 			out.println("</script>");
+			out.close();
+			return null;
 			
 		}
 		
-		return "adoption-board/adoptionWrite";
+		return "/WEB-INF/adoptionBoard/adoptionWrite";
 	}
 
 }

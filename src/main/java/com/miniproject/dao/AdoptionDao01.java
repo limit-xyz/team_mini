@@ -91,7 +91,6 @@ public class AdoptionDao01 {
 					b.setCreatedAt(rs.getTimestamp("created_at"));
 					b.setViewsCount(rs.getInt("views_count"));
 					b.setApprovalStatus(rs.getString("approval_status"));
-					b.setImagePath(rs.getString("image_path"));
 					b.setContent(rs.getString("content"));
 					b.setAdoptionType(rs.getString("adoption_type"));
 					b.setRegion(rs.getString("region"));

@@ -11,7 +11,7 @@
 				<h2 class="fs-3 fw-bold">입양 / 분양 게시판</h2>
 			</div>
 		</div>
-		<form name="searchForm" id="searchForm" action="AdoptionList.mvc"
+		<form name="searchForm" id="searchForm" action="${pageContext.request.contextPath}/adoption/AdoptionList"
 			class="row mb-3 text-center justify-content-center">
 			<div class="col-auto">
 				<select name="type" class="form-select">
@@ -35,13 +35,13 @@
 		</form>
 		<div class="row mb-3">
 			<div class="col text-end">
-						<a href="AdoptionWriteForm.mvc" class="btn btn-success btn-sm">글쓰기</a>
+						<a href="${pageContext.request.contextPath}/adoption/AdoptionWriteForm" class="btn btn-success btn-sm">글쓰기</a>
 					
 					
 					<%--
 					<c:choose>
 						<c:when test="${sessionScope.userId !=null }">
-						<a href="AdoptionWriteForm.mvc" class="btn btn-success btn-sm">글쓰기</a>
+						<a href="${pageContext.request.contextPath}/adoption/AdoptionWriteForm" class="btn btn-success btn-sm">글쓰기</a>
 					</c:when>
 					<c:otherwise>
 						<a href="#" class="btn btn-secondarybtn-sm" onclick="alertLogin()">글쓰기</a>
@@ -76,7 +76,7 @@
 									<td class="text-center">${adopboard.postId}</td>
 									<td class="text-center">${adopboard.approvalStatus}</td>
 									<td class="text-secondary">
-									<a href="AdoptionDetail.mvc?postId=${adopboard.postId}
+									<a href="${pageContext.request.contextPath}/adoption/AdoptionDetail?postId=${adopboard.postId}
 							&pageNum=${currentPage}&type=${type}&keyword=${keyword}"
 										class="text-secondary text-decoration-none">${adopboard.title}</a>
 									</td>
@@ -111,20 +111,20 @@
 								<c:if test="${startPage > pageGroup }">
 									<li class = "page-item">
 									 <a class = "page-link"
-									 	href = "AdoptionList.mvc?pageNum=${startPage - pageGroup}
+									 	href = "${pageContext.request.contextPath}/adoption/AdoptionList?pageNum=${startPage - pageGroup}
 									 	&type=${type}&keyword=${keyword}"> 이전</a>
 										</li>
 								</c:if>
 								<c:forEach var='i' begin="${startPage}" end="${endPage }">
 									<li class ="page-item ${i == currentPage ? 'active' : '' }">
 										<a class ="page-link"
-									href ="AdoptionList.mvc?pageNum=${i}&type=${type }&keyword=${keyword }">${i}</a>
+									href ="${pageContext.request.contextPath}/adoption/AdoptionList?pageNum=${i}&type=${type }&keyword=${keyword }">${i}</a>
 									</li>
 									</c:forEach>
 								<c:if test="${endPage < pageCount}">
 									<li class="page-item">
 										<a class="page-link"
-								   		href="AdoptionList.mvc?pageNum=${startPage + pageGroup}&type=${type}&keyword=${keyword}">다음</a>
+								   		href="${pageContext.request.contextPath}/adoption/AdoptionList?pageNum=${startPage + pageGroup}&type=${type}&keyword=${keyword}">다음</a>
 									</li>
 									</c:if>
 							</ul>

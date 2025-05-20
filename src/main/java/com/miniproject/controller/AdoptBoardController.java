@@ -68,12 +68,12 @@ public class AdoptBoardController extends HttpServlet{
 		
 		System.out.println("command : " + command);
 		
-		 if (command.equals("/AdoptionWriteForm") ||
-			        command.equals("/AdoptionWrite") ||
-			        command.equals("/AdoptionReplyWrite") ||
-			        command.equals("/AdoptionReplyDelete") ||
-			        command.equals("/AdoptionDelete") ||
-			        command.equals("/AdoptionupdateForm")) {
+		 if (command.equals("/adoption/AdoptionWriteForm") ||
+			        command.equals("/adoption/AdoptionWrite") ||
+			        command.equals("/adoption/AdoptionReplyWrite") ||
+			        command.equals("/adoption/AdoptionReplyDelete") ||
+			        command.equals("/adoption/AdoptionDelete") ||
+			        command.equals("/adoption/AdoptionupdateForm")) {
 			 
 		
 			 HttpSession session = request.getSession();
@@ -90,43 +90,43 @@ public class AdoptBoardController extends HttpServlet{
 		CommandProcess service = null;
 	
 		
-		if(command.equals("adoption/AdoptionList") || command.equals("/adoption/*")) {
+		if(command.equals("/adoption/AdoptionList") || command.equals("/adoption/*")) {
 			service = new AdoptionListService();					
 			viewPage = service.requestProcess(request, response);
 	
-		} else if (command.equals("adoption/AdoptionWriteForm")) {
+		} else if (command.equals("/adoption/AdoptionWriteForm")) {
 			service = new AdoptionWriteFormService();						 
 			viewPage = service.requestProcess(request, response);
 	
-		} else if (command.equals("adoption/AdoptionWrite")) {
+		} else if (command.equals("/adoption/AdoptionWrite")) {
 			service = new AdoptionWriteService();						 
 			viewPage = service.requestProcess(request, response);
 		
-		}	else if (command.equals("adoption/AdoptionDetail")) {
+		}	else if (command.equals("/adoption/AdoptionDetail")) {
 			service = new AdoptionDetailService();						 
 			viewPage = service.requestProcess(request, response);
 	
-		}	else if (command.equals("adoption/AdoptionView")) {
+		}	else if (command.equals("/adoption/AdoptionView")) {
 			service = new AdoptionViewService();						 
 			viewPage = service.requestProcess(request, response);
 	
-		}	else if (command.equals("adoption/AdoptionDelete")) {
+		}	else if (command.equals("/adoption/AdoptionDelete")) {
 			service = new AdoptionDeleteService();						 
 			viewPage = service.requestProcess(request, response);
 	
-		}	else if (command.equals("adoption/AdoptionupdateForm")) {
+		}	else if (command.equals("/adoption/AdoptionUpdateForm")) {
 			service = new AdoptionUpdateFormService();						 
 			viewPage = service.requestProcess(request, response);
 		
-		} else if (command.equals("adoption/AdoptionDownload")) { 
+		} else if (command.equals("/adoption/AdoptionDownload")) { 
             service = new AdoptionDownloadService();
             viewPage = service.requestProcess(request, response);
 
-        } else if (command.equals("adoption/AdoptionReplyWrite")) { 
+        } else if (command.equals("/adoption/AdoptionReplyWrite")) { 
             service = new AdoptionReplyWriteService();
             viewPage = service.requestProcess(request, response);
 
-        } else if (command.equals("adoption/AdoptionReplyDelete")) { 
+        } else if (command.equals("/adoption/AdoptionReplyDelete")) { 
             service = new AdoptionReplyDeleteService();
             viewPage = service.requestProcess(request, response);
 
@@ -143,7 +143,7 @@ public class AdoptBoardController extends HttpServlet{
 				rd =request.getRequestDispatcher(viewPage.split(":")[1]);
 				
 			} else {
-				rd = request.getRequestDispatcher(PREFIX + view + SUFFIX);
+				rd = request.getRequestDispatcher("/WEB-INF/index.jsp?body=" + view + SUFFIX);
 			} 	
 				if(rd != null) {
 					rd.forward(request, response);

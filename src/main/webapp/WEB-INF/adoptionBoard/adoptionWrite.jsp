@@ -105,7 +105,7 @@ body {
     
     <!-- 폼 데이터를 전송 -->
     <h3> 입양 / 분양 게시글 쓰기</h3>
-    <form action="${pageContext.request.contextPath}/AdoptionWrite.mvc" method="post" enctype="multipart/form-data">
+    <form action="${pageContext.request.contextPath}/adoption/AdoptionWrite" method="post" enctype="multipart/form-data">
     <div>
      <label for="userId">작성자 ID : <input type="text" name="userId" id="userId" value="${sessionScope.id}" readonly></label><br/>
     </div>
@@ -195,7 +195,7 @@ body {
     	
     	 document.getElementById("cancel-button").addEventListener("click", function(){
     	        if(confirm("게시글 등록을 취소하시겠습니까?")){
-    	        		location.href = "${pageContext.request.contextPath}/AdoptionList.mvc" ;
+    	        		location.href = "${pageContext.request.contextPath}/adoption/AdoptionList" ;
     	        	}
     	        });
     	
