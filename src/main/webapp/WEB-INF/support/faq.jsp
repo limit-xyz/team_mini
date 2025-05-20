@@ -27,7 +27,7 @@
 		</div>
 	</div>
 
-	<div class="row mt-5">
+	<div class="row">
 
 		<form action="#">
 			<div class="input-group mb-3">

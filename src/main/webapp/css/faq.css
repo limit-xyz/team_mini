@@ -1,98 +1,102 @@
-body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background-color: #f9fbfd;
-}
-
+/* =============================================== */
+/* 0. 루트 변수 정의                             */
+/* =============================================== */
 :root {
     --main-theme-color: #C5E1D4;
     --main-theme-darker-text: #2c5c49;
     --main-theme-border-color: #b0d1c0;
     --pill-button-text-color: #198754; /* 탭 버튼 기본 텍스트 색상 */
+    --main-theme-light-bg: #eef3f1;    /* 테마색의 아주 연한 버전 (배경용) */
+    --text-muted-custom: #5a6670;       /* 부가 정보용 텍스트 색상 */
 }
 
+/* =============================================== */
+/* 1. 기본 & 공통 스타일                         */
+/* =============================================== */
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f9fbfd;
+}
+
+/* 탭 페이지 상단 공통 제목 (예: Q&A 게시판, FAQ 자체 페이지의 #title 등) */
 #title {
-  font-size: 2rem;
+  font-size: 1.5rem; /* 사용자님 지정 크기 */
   font-weight: bold;
-  text-align: center;
   color: var(--main-theme-darker-text);
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem; 
+  margin-top:1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
-/* 검색창 관련 CSS (.serch_input_wrap, #serch_input)는 HTML에서 제거되었으므로 여기서도 삭제 */
-
-/* #tab-container .container-title 은 현재 HTML 구조에 없으므로 주석 처리 또는 삭제 */
-/*
-#tab-container .container-title {
-  font-size: 1.25rem; 
-  font-weight: 600; 
-  color: #374151; 
-  margin-bottom: 1rem; 
-}
-*/
-
-/* --- 알약 형태 탭 버튼 그룹 스타일 시작 --- */
-#tab-container .pill-button-group {
-  display: flex; 
-  justify-content: center; 
-  gap: 0.5rem; 
-  padding: 0.5rem; 
-  /* border-radius: 9999px; /* 개별 버튼에 적용하므로 그룹에서는 불필요 */
-  margin-bottom: 2.5rem; /* 탭 아래 콘텐츠와의 간격 */
-}
-
-#tab-container .pill-button {
-  width:120px;
-  padding: 0.5rem 0; /* 내부 a태그에 패딩을 줄 것이므로 버튼 자체 패딩은 수직만 주거나 최소화 */
-  font-size: 0.875rem; 
-  font-weight: 500; 
-  color: var(--pill-button-text-color); 
-  background-color: transparent; 
-  border: 1px solid var(--main-theme-border-color); /* 테두리 추가하여 구분 */
-  border-radius: 9999px; 
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
-  outline: none; 
-  text-align: center; /* 내부 a태그 컨텐츠 중앙 정렬 */
-}
-
-/* pill-button 내부의 a 태그에 스타일 적용 */
-#tab-container .pill-button a {
-    color: inherit; /* 부모(.pill-button)의 색상을 상속 */
-    text-decoration: none; /* 밑줄 제거 */
-    display: block; /* 버튼 전체를 클릭 영역으로 만듦 */
-    padding: 0.5rem 1.25rem; /* 실제 클릭 영역의 패딩 */
-}
-
-#tab-container .pill-button:hover {
-  background-color: var(--main-theme-color);
-  color: var(--main-theme-darker-text); /* 호버 시 텍스트 색상도 변경 */
-  border-color: var(--main-theme-color); /* 호버 시 테두리 색상도 변경 */
-}
-
-#tab-container .pill-button.active {
-  background-color: var(--main-theme-color);
-  color: var(--main-theme-darker-text); /* 활성 탭 텍스트 색상 */
-  border-color: var(--main-theme-color); /* 활성 탭 테두리 색상 */
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); 
-}
-/* --- 알약 형태 탭 버튼 그룹 스타일 끝 --- */
-
-
-/* Q&A 리스트 및 기타 요소 스타일 - .qna-content-area 로 구체성 높임 */
-.qna-content-area .btn-custom-theme {
+/* 공통 테마 버튼 스타일 (전역 적용) */
+.btn-custom-theme {
     background-color: var(--main-theme-color);
     border-color: var(--main-theme-border-color);
     color: var(--main-theme-darker-text);
     font-weight: 500;
 }
-.qna-content-area .btn-custom-theme:hover, 
-.qna-content-area .btn-custom-theme:focus {
+.btn-custom-theme:hover, 
+.btn-custom-theme:focus {
     background-color: #b3d6c6;
     border-color: #a0c3b3;
     color: var(--main-theme-darker-text);
 }
 
+/* 버튼 내 아이콘 공통 정렬 */
+.btn .bi {
+    vertical-align: text-bottom;
+    margin-bottom: 0.05em;
+}
+
+/* =============================================== */
+/* 2. 탭 네비게이션 스타일 (#tab-container)        */
+/* =============================================== */
+#tab-container .pill-button-group {
+  display: flex; 
+  justify-content: center; 
+  gap: 0.5rem; 
+  padding: 0.5rem; 
+  margin-bottom: 2.5rem; 
+}
+
+#tab-container .pill-button {
+  width:120px;
+  padding: 0; 
+  font-size: 0.875rem; 
+  font-weight: 500; 
+  color: var(--pill-button-text-color); 
+  background-color: transparent; 
+  border: 1px solid var(--main-theme-border-color); 
+  border-radius: 9999px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+  outline: none; 
+  text-align: center; 
+}
+
+#tab-container .pill-button a {
+    color: inherit; 
+    text-decoration: none; 
+    display: block; 
+    padding: 0.5rem 1.25rem; 
+}
+
+#tab-container .pill-button:hover {
+  background-color: var(--main-theme-color);
+  color: var(--main-theme-darker-text); 
+  border-color: var(--main-theme-color); 
+}
+
+#tab-container .pill-button.active {
+  background-color: var(--main-theme-color);
+  color: var(--main-theme-darker-text); 
+  border-color: var(--main-theme-color); 
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); 
+}
+
+/* =============================================== */
+/* 3. Q&A 컨텐츠 영역 스타일 (.qna-content-area)  */
+/* =============================================== */
 .qna-content-area .table {
     border-collapse: separate;
     border-spacing: 0;
@@ -100,7 +104,7 @@ body {
 }
 
 .qna-content-area .table thead th {
-    background-color: #eef3f1;
+    background-color: var(--main-theme-light-bg); 
     color: var(--main-theme-darker-text);
     font-weight: 500;
     border-bottom-width: 1px;
@@ -108,7 +112,7 @@ body {
 }
 
 .qna-content-area .table tbody tr:hover {
-    background-color: #f0f5f3;
+    background-color: #f0f5f3; 
 }
 
 .qna-content-area .table td, 
@@ -118,7 +122,7 @@ body {
 
 .qna-content-area .table a.qna-title-link {
     text-decoration: none;
-    color: #333;
+    color: #333; 
     font-weight: 500;
 }
 .qna-content-area .table a.qna-title-link:hover {
@@ -126,66 +130,88 @@ body {
     text-decoration: underline;
 }
 
-.qna-content-area .status-badge { /* .badge 클래스와 함께 사용될 때를 고려 */
+.qna-content-area .status-badge { 
     padding: 0.4em 0.7em;
     font-size: 0.85em;
     font-weight: 500;
 }
-/* 부트스트랩 .badge 기본 스타일을 덮어쓰도록 .badge 와 함께 선택자 사용 */
-.qna-content-area .badge.status-answered {
+.qna-content-area .badge.status-answered { 
     background-color: var(--main-theme-color) !important;
     color: var(--main-theme-darker-text) !important;
 }
-.qna-content-area .badge.status-waiting {
-    background-color: #ffc107 !important;
+.qna-content-area .badge.status-waiting { 
+    background-color: #ffc107 !important; 
     color: #333 !important;
 }
 
-.qna-content-area .pagination .page-item.active .page-link {
+/* =============================================== */
+/* 4. 범용 카드형 컨텐츠 박스 스타일 (.content-card) */
+/* (QNA 상세, 답변폼, FAQ글쓰기폼 등에서 사용)    */
+/* =============================================== */
+.content-card { 
+    background-color: #fff;
+    border: 1px solid #dee2e6; /* 부트스트랩 기본 카드 테두리 */
+    box-shadow: 0 0.125rem 0.375rem rgba(0,0,0,0.06); /* 은은한 그림자 */
+    border-radius: 0.375rem; /* 부트스트랩 기본 .card 와 동일한 둥근 모서리 */
+	margin-bottom:6rem;
+}
+.content-card .card-body { /* .content-card 내부에서 card-body 사용 시 적용될 패딩 */
+    padding: 1.5rem; /* 기본값. HTML에서 p-4, p-md-5 등으로 필요시 더 크게 사용 */
+}
+.content-card .card-header { /* .content-card 내부에서 card-header 사용 시 */
+    background-color: #f8f9fa; /* 부트스트랩 기본 카드 헤더 배경색 */
+    color: var(--main-theme-darker-text);
+    font-weight: 600;
+    border-bottom: 1px solid #e9ecef;
+    padding: 0.75rem 1.25rem; /* 부트스트랩 .card-header 기본 패딩과 유사하게 */
+}
+
+/* =============================================== */
+/* 5. 폼 페이지 제목 및 폼 내부 레이블 스타일      */
+/* =============================================== */
+.form-page-title { /* 예: "FAQ 글쓰기" 등 폼 페이지의 주 제목 */
+    font-size: 1.2rem; /* 너무 크지 않게 조정 (기존 1.8rem -> 1.5rem) */
+    font-weight: 600;  /* 기존 유지 */
+    color: var(--main-theme-darker-text);
+}
+
+.short-hr { /* form-page-title 아래 짧은 구분선 */
+    width: 60px;
+    border-top: 2px solid var(--main-theme-color);
+    opacity: 0.75;
+    margin-top: 0.5rem; 
+    margin-left: auto; 
+    margin-right: auto; 
+    margin-bottom: 2.5rem; 
+}
+
+/* 폼 내부 레이블 스타일 (HTML에서 .form-label.fw-medium 클래스와 함께 사용) */
+.form-label.fw-medium { 
+    font-weight: 500 !important; 
+    margin-bottom: 0.5rem;
+    color: #495057; 
+}
+
+/* =============================================== */
+/* 6. 페이지네이션 스타일 (공통 적용)             */
+/* =============================================== */
+.pagination .page-link.active {
     background-color: var(--main-theme-color);
     border-color: var(--main-theme-border-color);
     color: var(--main-theme-darker-text);
-    z-index:1;
+    z-index: 1;
 }
-.qna-content-area .pagination .page-link {
+
+.pagination .page-link {
     color: var(--main-theme-darker-text);
 }
-.qna-content-area .pagination .page-link:hover {
-     background-color: #e0f0e8;
-}
 
-
-/* =============================================== */
-/* 페이지네이션 스타일 (FAQ 및 QNA 공통 적용 가능) */
-/* =============================================== */
-
-/* 활성화된 페이지 링크 (현재 페이지) */
-/* JSTL에서 <span class="page-link active"> 와 같이 생성하므로, .page-link.active 선택자 사용 */
-.pagination .page-link.active {
-    background-color: var(--main-theme-color);     /* 예: #C5E1D4 */
-    border-color: var(--main-theme-border-color);  /* 예: #b0d1c0 */
-    color: var(--main-theme-darker-text);          /* 예: #2c5c49 */
-    z-index: 1; /* 다른 요소 위에 오도록 설정 (그림자 등이 있을 경우 대비) */
-}
-
-/* 일반 페이지 링크 (활성화되지 않은 상태) */
-.pagination .page-link {
-    color: var(--main-theme-darker-text);          /* 예: #2c5c49 */
-    /* 기본 테두리 색상을 사용하거나, 테마에 맞게 설정할 수 있습니다. */
-    /* border-color: #dee2e6; (부트스트랩 기본값) */
-    /* border-color: var(--main-theme-border-color); (테마 일관성) */
-}
-
-/* 페이지 링크에 마우스 호버 시 */
 .pagination .page-link:hover {
-     background-color: #e0f0e8; /* 메인 테마보다 약간 연한 색상 */
-     /* color: var(--main-theme-darker-text); (기본 텍스트 색상 유지 또는 변경) */
+     background-color: #e0f0e8; 
 }
 
-/* 비활성화된 페이지 링크 (예: 이전/다음 페이지가 없을 때) */
-/* 사용자님의 JSTL은 비활성화 시 링크를 아예 표시하지 않지만, 만약 표시한다면 이 스타일이 적용됩니다. */
 .pagination .page-item.disabled .page-link {
-    color: #868e96; /* 부트스트랩 기본 비활성 텍스트 색상 */
-    background-color: transparent; /* 배경 없음 또는 아주 연한 회색 */
-    border-color: #dee2e6; /* 부트스트랩 기본 테두리 색상 */
+    color: #868e96; 
+    background-color: transparent; 
+    border-color: #dee2e6; 
 }
