@@ -28,7 +28,7 @@ public class DictionaryListService implements CommandProcess {
 			isSearch = true;
 
 		String pageNum = request.getParameter("pageNum");
-		if (pageNum == null) {
+		if (pageNum == null || pageNum.equals("")) {
 			pageNum = "1";
 		}
 		int currentPage = Integer.parseInt(pageNum);

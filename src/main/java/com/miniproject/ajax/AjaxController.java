@@ -2,6 +2,8 @@ package com.miniproject.ajax;
 
 import java.io.IOException;
 
+import com.miniproject.common.service.AjaxProcess;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

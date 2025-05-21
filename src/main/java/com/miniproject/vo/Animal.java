@@ -1,6 +1,6 @@
 package com.miniproject.vo;
 
-public abstract class Animal {
+public class Animal {
 	int id;
 	String nameKor;
 	String nameEng;

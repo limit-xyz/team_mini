@@ -14,6 +14,7 @@ $(function() {
 
 	// 검색창 유효성 검사
 	$("#searchDictionaryForm").on("submit", function() {
+		
 		var searchKeyword = $("#searchDictionaryKeyword").val();
 
 		if (searchKeyword.length < 1) {
@@ -23,48 +24,28 @@ $(function() {
 		}
 	});
 
-	// 다이어리 쓰기 폼 유효성 검사
-	$("#dictionaryWriteForm").on("submit", function() {
-		if ($("#title").val().length < 1) {
-			alert("제목을 입력해주세요.");
-			$("#title").focus();
-			return false;
-		}
-
-		if ($("#petName").val().length < 1) {
-			alert("작성하려는 다이어리의 반려동물 이름을 입력해주세요.");
-			$("#petName").focus();
-			return false;
-		}
-
-		if ($("#content").val().length < 1) {
-			alert("다이어리 내용을 입력해주세요.");
-			$("#content").focus();
-			return false;
-		}
-	});
-
 	// 다이어리 수정 폼 요청
 	$(document).on("click", "#dictionaryUpdate", function() {
-
-		var no = $(this).data("dictionaryNo");
+		var animalId = $(this).data("animalId");
+		var type = $(this).data("animalType");
 		var pageNum = $("#pageNum").text();
 		var searchDictionaryType = $("#searchDictionaryTypePara").text();
 		var searchDictionaryKeyword = $("#searchDictionaryKeywordPara").text();
 
-		location.href = "dictionaryUpdateForm?no=" + no + "&pageNum=" + pageNum +
+		location.href = "dictionaryUpdateForm?animalId=" + animalId + "&type=" + type + "&pageNum=" + pageNum +
 			"&searchDictionaryType=" + searchDictionaryType + "&searchDictionaryKeyword=" + searchDictionaryKeyword;
 	});
 
 
 	// 다이어리 삭제
 	$(document).on("click", "#dictionaryDelete", function() {
-		var no = $(this).data("dictionaryNo");
+		var animalId = $(this).data("animalId");
+		var type = $(this).data("animalType");
 		var pageNum = $("#pageNum").text();
 		var searchDictionaryType = $("#searchDictionaryTypePara").text();
 		var searchDictionaryKeyword = $("#searchDictionaryKeywordPara").text();
 
-		location.href = "dictionaryDelete?no=" + no + "&pageNum=" + pageNum +
+		location.href = "dictionaryDelete?animalId=" + animalId + "&type=" + type + "&pageNum=" + pageNum +
 			"&searchDictionaryType=" + searchDictionaryType + "&searchDictionaryKeyword=" + searchDictionaryKeyword;
 	});
 });

@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public interface AjaxProcess {
-	public void ajaxProcess(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException;
+
+	public void ajaxProcess(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException ;
+	
 }

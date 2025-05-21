@@ -33,7 +33,7 @@ public class DiaryListService implements CommandProcess {
 			StringBuilder sb = new StringBuilder();
 			sb.append("<script>");
 			sb.append("	alert('로그인이 필요합니다.');");
-			sb.append("	location.href='" + request.getContextPath() + "/admin/main'");
+			sb.append("	location.href='" + request.getContextPath() + "/member/loginForm");
 			sb.append("</script>");
 
 			response.setContentType("text/html; charset=utf-8");

@@ -106,6 +106,30 @@ public class DictionaryController extends HttpServlet {
 			viewPage = service.requestProcess(request, response);
 		}
 
+		// 펫과사전 쓰기
+		else if (command.equals("/dictionary/dictionaryWriteProcess")) {
+			service = new DictionaryWriteService();
+			viewPage = service.requestProcess(request, response);
+		}
+
+		// 펫과사전 수정폼 요청
+		else if (command.equals("/dictionary/dictionaryUpdateForm")) {
+			service = new DictionaryUpdateFormService();
+			viewPage = service.requestProcess(request, response);
+		}
+
+		// 펫과사전 수정
+		else if (command.equals("/dictionary/dictionaryUpdateProcess")) {
+			service = new DictionaryUpdateService();
+			viewPage = service.requestProcess(request, response);
+		}
+
+		// 펫과사전 삭제
+		else if (command.equals("/dictionary/dictionaryDelete")) {
+			service = new DictionaryDeleteService();
+			viewPage = service.requestProcess(request, response);
+		}
+
 		if (viewPage != null) {
 			String view = viewPage.split(":")[0];
 

@@ -53,12 +53,15 @@ public class MainController extends HttpServlet {
 		
 		// 명령을 처리 - Service 클래스 이용 - dao이용
 		// 어떤 서비스 클래스가 실행될지 결정
-		if(command.equals("/main/*") 
-				|| command.equals("/main/main")) {
+		if(command.equals("/main")) {
 			// 게시 글 리스트 요청을 처리하는 BoardListService 클래스 실행
 			service = new MainService();
 			viewPage = service.requestProcess(request, response);
 			System.out.println(viewPage);
+		}
+		
+		else {
+			viewPage = "r:" + request.getContextPath() + "/main";
 		}
 		
 		if(viewPage != null) {

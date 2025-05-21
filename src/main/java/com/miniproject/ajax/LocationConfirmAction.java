@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.miniproject.common.service.AjaxProcess;
 import com.miniproject.dao.BoardDao;
 
 import jakarta.servlet.ServletException;
