@@ -6,11 +6,9 @@ import java.util.Collection;
 import java.util.UUID;
 
 import com.miniproject.common.service.CommandProcess;
-import com.miniproject.dao.DiaryDao;
 import com.miniproject.dao.DictionaryDao;
 import com.miniproject.vo.Animal;
 import com.miniproject.vo.Cat;
-import com.miniproject.vo.Diary;
 import com.miniproject.vo.Dog;
 
 import jakarta.servlet.ServletException;

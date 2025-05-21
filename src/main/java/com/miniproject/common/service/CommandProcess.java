@@ -1,4 +1,4 @@
-package com.miniproject.main.service;
+package com.miniproject.common.service;
 
 import java.io.IOException;
 
