@@ -40,7 +40,7 @@
                   <a class="nav-link" href="#">병원 예약</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">펫과사전</a>
+                  <a class="nav-link" href="${pageContext.request.contextPath}/dictionary/dictionaryList">펫과사전</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">상품 정보</a>
