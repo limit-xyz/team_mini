@@ -51,7 +51,22 @@ public class AdoptionDetailService implements CommandProcess {
 		System.out.println("AdoptionDetailService - postIdParam: " + postIdParam);
 		System.out.println("AdoptionDetailService - postId: " + postId);
 
+			@SuppressWarnings("unchecked")
+	    java.util.Set<Integer> viewedPostIds = (java.util.Set<Integer>) session.getAttribute("viewedPostIds");
+	    if (viewedPostIds == null) {
+	        viewedPostIds = new java.util.HashSet<>();
+	    }
+	    boolean increaseViewCount = false;
+		
+	    if(!viewedPostIds.contains(postId)) {
+	    	increaseViewCount = true;
+	    	viewedPostIds.add(postId);
+	        session.setAttribute("viewedPostIds", viewedPostIds);
+	    }
+	    
+	    
 		boolean searchOption = false;
+		
 		if (searchColumn != null && !searchColumn.isEmpty()) {
 			searchOption = true;
 		}
@@ -70,7 +85,7 @@ public class AdoptionDetailService implements CommandProcess {
 		AdoptionWriteDto adoptionDetail;
 
 		try {
-			adoptionDetail = dao.getAdoption(postId, true);
+			adoptionDetail = dao.getAdoption(postId, increaseViewCount);
 			 System.out.println("AdoptionDetailService - 게시글 조회 결과: " + (adoptionDetail == null ? "null" : "not null"));
 		} catch (SQLException e) {
 
