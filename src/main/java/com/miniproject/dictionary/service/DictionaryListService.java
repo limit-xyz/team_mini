@@ -62,7 +62,11 @@ public class DictionaryListService implements CommandProcess {
 		else {
 			dictionaryList = dao.getDictionaryList(startRow, endRow);
 		}
+
+		boolean isExpert = dao.isExpert((String) request.getSession().getAttribute("id"));
+
 		request.setAttribute("dictionaryList", dictionaryList);
+		request.setAttribute("isExpert", isExpert);
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("pageCount", pageCount);
 		request.setAttribute("startPage", startPage);

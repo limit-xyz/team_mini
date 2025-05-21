@@ -9,78 +9,69 @@
 	
 		<div style="visibility: hidden;">
 			<p id="pageNum">${pageNum}</p>
-			<p id="searchDiaryTypePara">${searchDiaryType}</p>
-			<p id="searchDiaryKeywordPara">${searchDiaryKeyword}</p>
+			<p id="searchDictionaryTypePara">${searchDictionaryType}</p>
+			<p id="searchDictionaryKeyword">${searchDictionaryKeyword}</p>
 		</div>
 	
 		<div class="row text-center">
 			<div class="col">
-				<h2 class="fs-3 fw-bold">나의 다이어리 리스트</h2>
+				<h2 class="fs-3 fw-bold">펫과사전</h2>
 			</div>
 		</div>  
 		
-		<div class="row my-3">
-			<div class="col text-end">
-				<a class="btn btn-outline-success"
-				href="diaryWriteForm?pageNum=${pageNum}&searchDiaryType=${searchDiaryType}&searchDiaryKeyword=${searchDiaryKeyword}">글쓰기</a>
+		<c:if test="${isExpert}">
+			<div class="row my-3">
+				<div class="col text-end">
+					<a class="btn btn-outline-success"
+					href="dictionaryWriteForm?pageNum=${pageNum}&searchDictionaryType=${searchDictionaryType}&searchDictionaryKeyword=${searchDictionaryKeyword}">글쓰기</a>
+				</div>
 			</div>
-		</div>
+		</c:if>
 	
 		<table class="table table-bordered table-hover my-3">
 		
 			<thead>
 				<tr class="table-dark text-center">
 					<th>번호</th>
-					<th>작성자</th>
-					<th>반려동물명</th>
-					<th>제목</th>
-					<th>작성일</th>
+					<th>종류</th>
+					<th>이름</th>
+					<th>영문명</th>
+					<th>출신지</th>
+					<th>키</th>
+					<th>무게</th>
 				</tr>		
 			</thead>
 			
 			
 			<tbody class="text-secondary" id="tableBody">
-				<c:if test="${ not empty diaryList }">
-					<c:forEach var="diary" items="${diaryList}" varStatus="status">
-						<tr class="diaryDetail" data-diary-no="${diary.no}" style="cursor: pointer;">
-							<td class="text-center">${ ((pageNum-1)*10) + status.index + 1 }</td>
-							
-							<td class="text-center">${ diary.memberId }</td>
-							
-							<td class="text-center">${ diary.petName }</td>
-							
-							<td>${ diary.title }</td>
-							
-							<td class="text-end">
-								<fmt:formatDate value="${diary.regDate}" pattern="yyyy/MM/dd HH:mm:ss" />
-							</td>
-							
+				<c:if test="${ not empty dictionaryList }">
+					<c:forEach var="dictionary" items="${dictionaryList}" varStatus="status">
+						<tr class="dictionaryDetail text-center" style="cursor: pointer;"
+						 data-animal-type="${dictionary.type}"  data-animal-id="${dictionary.id}">
+							<td>${ ((pageNum-1)*10) + status.index + 1 }</td>
+							<td>${ dictionary.type }</td>
+							<td>${ dictionary.nameKor }</td>
+							<td>${ dictionary.nameEng }</td>
+							<td>${ dictionary.origin }</td>
+							<td>${ dictionary.height }</td>
+							<td>${ dictionary.weight }</td>		
 						</tr>
 					</c:forEach>
 				</c:if>							
 
-				<c:if test="${ empty diaryList }">
+				<c:if test="${ empty dictionaryList }">
 					<tr>
-						<c:if test="${searchDiaryOption == '1'}">
+						<c:if test="${searchDictionaryOption == '1'}">
 							<td colspan="12" class="text-center">검색 결과가 존재하지 않음</td>
 						</c:if>
 						
-						<c:if test="${not searchDiaryOption == '1'}">
+						<c:if test="${not searchDictionaryOption == '1'}">
 							<td colspan="12" class="text-center">다이어리가 존재하지 않음</td>
 						</c:if>
 					</tr>
 				</c:if>
-				
 			</tbody>
-			
-		</table>
-		
-		<div class="row">
-			<div class="col text-center">
-				<a href="${pageContext.request.contextPath}/admin/main">돌아가기</a>
-			</div>
-		</div>
-		
+		</table>		
 	</div>
 </div>
 
@@ -93,7 +84,7 @@
 		  	<c:if test="${ startPage > PAGE_GROUP }">
 			    <li class="page-item">
 			      <a class="page-link"
-			      href="diaryList?pageNum=${ startPage - PAGE_GROUP }&searchDiaryType=${searchDiaryType}&searchDiaryKeyword=${searchDiaryKeyword}">Prev</a>
+			      href="dictionaryList?pageNum=${ startPage - PAGE_GROUP }&searchDiaryType=${searchDiaryType}&searchDiaryKeyword=${searchDiaryKeyword}">Prev</a>
 			    </li>
 		    </c:if>
 		   	
@@ -106,7 +97,8 @@
 		    	
 		    	<c:if test="${i != pageNum }">
 			    	<li class="page-item">
-			    		<a class="page-link" href="diaryList?pageNum=${i}&searchDiaryType=${searchDiaryType}&searchDiaryKeyword=${searchDiaryKeyword}">${i}</a>
+			    		<a class="page-link"
+			    		href="dictionaryList?pageNum=${i}&searchDictionaryType=${searchDictionaryType}&searchDictionaryKeyword=${searchDictionaryKeyword}">${i}</a>
 			    	</li>
 			    </c:if>					    
 		    </c:forEach>							    
@@ -114,7 +106,7 @@
 			<c:if test="${ endPage < pageCount }">
 			    <li class="page-item">
 			      <a class="page-link"
-			      href="diaryList?pageNum=${startPage + PAGE_GROUP}&searchDiaryType=${searchDiaryType}&searchDiaryKeyword=${searchDiaryKeyword}">Next</a>
+			      href="dictionaryList?pageNum=${startPage + PAGE_GROUP}&searchDictionaryType=${searchDictionaryType}&searchDictionaryKeyword=${searchDictionaryKeyword}">Next</a>
 			    </li>
 		  	</c:if>
 		  </ul>
@@ -124,17 +116,17 @@
 
 <div class="row my-1">
 	<div class="col">
-		<form name="searchDiaryForm" id="searchDiaryForm"  action="diaryList"
+		<form name="searchDirectoryForm" id="searchDirectoryForm"  action="dictionaryList"
 			class="row justify-content-center my-2 ">
 			<div class="col-auto">
-				<select name="searchDiaryType" class="form-select">
-					<option value="title" ${searchDiaryType == 'title' ? "selected" : ""}>제목</option>
-					<option value="content" ${searchDiaryType == 'content' ? "selected" : ""}>내용</option>
-					<option value="pet_name" ${searchDiaryType == 'pet_name' ? "selected" : ""}>반려동물명</option>
+				<select name="searchDictionaryType" class="form-select">
+					<option value="name_ko" ${searchDictionaryType == 'name_ko' ? "selected" : ""}>이름</option>
+					<option value="name_en" ${searchDictionaryType == 'name_en' ? "selected" : ""}>영문명</option>
+					<option value="type" ${searchDictionaryType == 'type' ? "selected" : ""}>종류</option>
 				</select>
 			</div>
 			<div class="col-4">
-				<input type="text" name="searchDiaryKeyword" class="form-control" id="searchDiaryKeyword" value="${searchDiaryKeyword}"/>
+				<input type="text" name="searchDictionaryKeyword" class="form-control" id="searchDictionaryKeyword" value="${searchDictionaryKeyword}"/>
 			</div>
 			<div class="col-auto">
 				<input type="submit" value="검 색" class="btn btn-primary"/>
@@ -144,44 +136,5 @@
 </div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
-	data-bs-keyboard="false" tabindex="-1"
-	aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-
-			<div class="modal-header bg-primary bg-gradient text-white">
-				<h1 class="modal-title fs-5 fw-bold" id="modalLabel">회원 차단</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"
-					aria-label="Close"></button>
-			</div>
-
-			<form id="banMemberForm">
-				<div class="modal-body">
-					<div class="mb-3">
-						<h5><span id="banUserId"></span> 를 차단합니다.</h5>
-						<label for="banDate" class="form-label">얼마나 차단하시겠습니까?</label>
-						<div class="input-group" style="width: 120px;">
-							<input type="number" class="form-control" id="banDate" name="banDate">
-							<span class="input-group-text">일</span>				
-						</div>
-						
-						<label for="banReason" class="form-label">차단 사유</label>
-						<textarea class="form-control" name="banReason" id="banReason" rows="3"></textarea>						
-					</div>
-				</div>
-
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary ">확인</button>
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">취소</button>
-				</div>
-			</form>
-			
-		</div>
-	</div>
-</div>
-
-<script src="${pageContext.request.contextPath}/js/diary.js"></script>
+<script src="${pageContext.request.contextPath}/js/dictionary.js"></script>
 <!-- Content End -->

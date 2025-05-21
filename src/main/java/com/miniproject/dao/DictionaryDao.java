@@ -126,7 +126,7 @@ public class DictionaryDao {
 	// 사전 상세 가져오기 - 고양이
 	public Cat getCatDictionary(int id) {
 
-		String DictionaryDetailSql = "SELECT * FROM dog WHERE id=?";
+		String DictionaryDetailSql = "SELECT * FROM cat WHERE id=?";
 
 		Cat cat = null;
 
@@ -180,8 +180,8 @@ public class DictionaryDao {
 	public ArrayList<Animal> getDictionaryList(int startRow, int endRow) {
 
 		String DictionaryListSql = "SELECT * FROM ( " + "SELECT ROWNUM num, sub.* FROM( "
-				+ "SELECT name_ko, name_en, origin, height, weight, 'dog' \"type\" FROM dog "
-				+ "UNION SELECT name_ko, name_en, origin, height, weight, 'cat' \"type\" FROM cat ORDER BY name_ko) sub) "
+				+ "SELECT id, name_ko, name_en, origin, height, weight, 'dog' \"type\" FROM dog "
+				+ "UNION SELECT id, name_ko, name_en, origin, height, weight, 'cat' \"type\" FROM cat ORDER BY name_ko) sub) "
 				+ "WHERE num BETWEEN ? AND ?";
 
 		ArrayList<Animal> DictionaryList = null;
@@ -199,6 +199,7 @@ public class DictionaryDao {
 
 				do {
 					Animal animal = new Dog();
+					animal.setId(rs.getInt("id"));
 					animal.setNameKor(rs.getString("name_ko"));
 					animal.setNameEng(rs.getString("name_en"));
 					animal.setOrigin(rs.getString("origin"));
@@ -221,19 +222,47 @@ public class DictionaryDao {
 	// 검색한 다이어리 목록 가져오기
 	public ArrayList<Animal> searchDictionaryList(String type, String keyword, int startRow, int endRow) {
 
-		String DictionaryListSql = "SELECT * FROM ( " + "SELECT ROWNUM num, sub.* FROM( "
-				+ "SELECT name_ko, name_en, origin, height, weight, 'dog' \"type\" FROM dog "
-				+ "UNION SELECT name_ko, name_en, origin, height, weight, 'cat' \"type\" FROM cat "
-				+ "ORDER BY name_ko) sub WHERE " + type + "LIKE ?) WHERE num BETWEEN ? AND ?";
+		String DictionaryListSql = "";
+		boolean isType = false;
+
+		if (type.equals("type")) {
+			isType = true;
+			if (keyword.equals("dog") || keyword.equals("강아지")) {
+				DictionaryListSql = "SELECT * FROM ( SELECT ROWNUM num, sub.* FROM ( "
+						+ "SELECT name_ko, name_en, origin, height, weight, 'dog' \"type\" FROM dog) "
+						+ "sub) WHERE num BETWEEN ? AND ?";
+			}
+
+			else if (keyword.equals("cat") || keyword.equals("고양이")) {
+				DictionaryListSql = "SELECT * FROM ( SELECT ROWNUM num, sub.* FROM ( "
+						+ "SELECT name_ko, name_en, origin, height, weight, 'cat' \"type\" FROM cat) "
+						+ "sub) WHERE num BETWEEN ? AND ?";
+			}
+		}
+
+		else {
+			DictionaryListSql = "SELECT * FROM ( SELECT ROWNUM num, sub.* FROM ( "
+					+ "SELECT name_ko, name_en, origin, height, weight, 'dog' \"type\" FROM dog "
+					+ "UNION SELECT name_ko, name_en, origin, height, weight, 'cat' \"type\" FROM cat "
+					+ "ORDER BY name_ko) sub WHERE " + type + " LIKE ?) WHERE num BETWEEN ? AND ?";
+		}
 
 		ArrayList<Animal> DictionaryList = null;
 
 		try {
 			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(DictionaryListSql);
-			pstmt.setString(1, "%" + keyword + "%");
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
+
+			if (isType) {
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+			}
+
+			else {
+				pstmt.setString(1, "%" + keyword + "%");
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+			}
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -261,21 +290,86 @@ public class DictionaryDao {
 		return DictionaryList;
 	}
 
-	/*
-	// 다이어리 쓰기
-	public void insertDictionary(Dictionary Dictionary) {
-		String insertDictionarylSql = "INSERT INTO Dictionary (Dictionary_no, member_id, pet_name, title, content, photo) "
-				+ "VALUES (Dictionary_seq.NEXTVAL, ?, ?, ?, ?, ?)";
+//	// 다이어리 쓰기
+//	public void insertDictionary(Dictionary Dictionary) {
+//		String insertDictionarylSql = "INSERT INTO Dictionary (Dictionary_no, member_id, pet_name, title, content, photo) "
+//				+ "VALUES (Dictionary_seq.NEXTVAL, ?, ?, ?, ?, ?)";
+//
+//		try {
+//			conn = DBManager.getConnection();
+//			pstmt = conn.prepareStatement(insertDictionarylSql);
+//			pstmt.setString(1, Dictionary.getMemberId());
+//			pstmt.setString(2, Dictionary.getPetName());
+//			pstmt.setString(3, Dictionary.getTitle());
+//			pstmt.setString(4, Dictionary.getContent());
+//			pstmt.setString(5, Dictionary.getPhoto());
+//			pstmt.executeUpdate();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//
+//		} finally {
+//			DBManager.close(conn, pstmt, rs);
+//		}
+//	}
+//
+//	// 다이어리 수정
+//	public void updateDictionary(Dictionary Dictionary, int no) {
+//		String updateDictionarylSql = "UPDATE Dictionary SET pet_name=?, title=?, content=?, photo=? WHERE Dictionary_no=?";
+//
+//		try {
+//			conn = DBManager.getConnection();
+//			pstmt = conn.prepareStatement(updateDictionarylSql);
+//			pstmt.setString(1, Dictionary.getPetName());
+//			pstmt.setString(2, Dictionary.getTitle());
+//			pstmt.setString(3, Dictionary.getContent());
+//			pstmt.setString(4, Dictionary.getPhoto());
+//			pstmt.setInt(5, Dictionary.getNo());
+//			pstmt.executeUpdate();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//
+//		} finally {
+//			DBManager.close(conn, pstmt, rs);
+//		}
+//	}
+//
+//	// 다이어리 삭제
+//	public void deleteDictionary(int no) {
+//
+//		String deleteDictionarylSql = "DELETE FROM Dictionary WHERE Dictionary_no=?";
+//
+//		try {
+//			conn = DBManager.getConnection();
+//			pstmt = conn.prepareStatement(deleteDictionarylSql);
+//			pstmt.setInt(1, no);
+//			pstmt.executeUpdate();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//
+//		} finally {
+//			DBManager.close(conn, pstmt, rs);
+//		}
+//	}
+
+	// 전문가 혹은 어드민 계정인지 체크하는 메소드
+	public boolean isExpert(String id) {
+		String checkExpertSql = "SELECT role FROM member WHERE id=?";
+		String role = "";
+
+		if (id == null) {
+			return false;
+		}
 
 		try {
 			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(insertDictionarylSql);
-			pstmt.setString(1, Dictionary.getMemberId());
-			pstmt.setString(2, Dictionary.getPetName());
-			pstmt.setString(3, Dictionary.getTitle());
-			pstmt.setString(4, Dictionary.getContent());
-			pstmt.setString(5, Dictionary.getPhoto());
-			pstmt.executeUpdate();
+			pstmt = conn.prepareStatement(checkExpertSql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next())
+				role = rs.getString("role");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -283,46 +377,6 @@ public class DictionaryDao {
 		} finally {
 			DBManager.close(conn, pstmt, rs);
 		}
+		return (role.equals("expert") || role.equals("admin"));
 	}
-
-	// 다이어리 수정
-	public void updateDictionary(Dictionary Dictionary, int no) {
-		String updateDictionarylSql = "UPDATE Dictionary SET pet_name=?, title=?, content=?, photo=? WHERE Dictionary_no=?";
-
-		try {
-			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(updateDictionarylSql);
-			pstmt.setString(1, Dictionary.getPetName());
-			pstmt.setString(2, Dictionary.getTitle());
-			pstmt.setString(3, Dictionary.getContent());
-			pstmt.setString(4, Dictionary.getPhoto());
-			pstmt.setInt(5, Dictionary.getNo());
-			pstmt.executeUpdate();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		} finally {
-			DBManager.close(conn, pstmt, rs);
-		}
-	}
-
-	// 다이어리 삭제
-	public void deleteDictionary(int no) {
-
-		String deleteDictionarylSql = "DELETE FROM Dictionary WHERE Dictionary_no=?";
-
-		try {
-			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(deleteDictionarylSql);
-			pstmt.setInt(1, no);
-			pstmt.executeUpdate();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		} finally {
-			DBManager.close(conn, pstmt, rs);
-		}
-	}*/
 }

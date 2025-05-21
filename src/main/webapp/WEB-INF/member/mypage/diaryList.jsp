@@ -143,45 +143,5 @@
 	</div>
 </div>
 
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
-	data-bs-keyboard="false" tabindex="-1"
-	aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-
-			<div class="modal-header bg-primary bg-gradient text-white">
-				<h1 class="modal-title fs-5 fw-bold" id="modalLabel">회원 차단</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"
-					aria-label="Close"></button>
-			</div>
-
-			<form id="banMemberForm">
-				<div class="modal-body">
-					<div class="mb-3">
-						<h5><span id="banUserId"></span> 를 차단합니다.</h5>
-						<label for="banDate" class="form-label">얼마나 차단하시겠습니까?</label>
-						<div class="input-group" style="width: 120px;">
-							<input type="number" class="form-control" id="banDate" name="banDate">
-							<span class="input-group-text">일</span>				
-						</div>
-						
-						<label for="banReason" class="form-label">차단 사유</label>
-						<textarea class="form-control" name="banReason" id="banReason" rows="3"></textarea>						
-					</div>
-				</div>
-
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary ">확인</button>
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">취소</button>
-				</div>
-			</form>
-			
-		</div>
-	</div>
-</div>
-
 <script src="${pageContext.request.contextPath}/js/diary.js"></script>
 <!-- Content End -->

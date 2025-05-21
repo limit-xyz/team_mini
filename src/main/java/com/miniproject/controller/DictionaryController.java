@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import com.miniproject.common.service.CommandProcess;
 import com.miniproject.dictionary.service.*;
+import com.miniproject.dictionary.ajax.DictionaryAjaxController;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -69,20 +70,40 @@ public class DictionaryController extends HttpServlet {
 		String contextPath = request.getContextPath();
 
 		String command = requestURI.substring(contextPath.length());
+
+		// ajax 요청 처리
+		String[] splitTest1 = command.split("/");
+		if (splitTest1.length > 0) {
+			String str = splitTest1[splitTest1.length - 1];
+			String[] splitTest2 = str.split("\\.");
+
+			if (splitTest2.length > 1 && splitTest2[1].equals("ajax")) {
+				DictionaryAjaxController ajax = new DictionaryAjaxController();
+				ajax.doAjax(request, response, str);
+				return;
+			}
+		}
+
 		String viewPage = null;
 
 		CommandProcess service;
 
-		// 반려동물 다이어리 리스트
+		// 펫과사전 리스트
 		if (command.equals("/dictionary/*") || command.equals("/dictionary/dictionaryList")) {
 			service = new DictionaryListService();
 			viewPage = service.requestProcess(request, response);
 		}
 
-		// 반려동물 다이어리 상세
-		else if (command.equals("/dictionary/dictionayDetail")) {
-//			service = new DiaryDetailService();
-//			viewPage = service.requestProcess(request, response);
+		// 펫과사전 상세
+		else if (command.equals("/dictionary/dictionaryDetail")) {
+			service = new DictionaryDetailService();
+			viewPage = service.requestProcess(request, response);
+		}
+
+		// 펫과사전 쓰기폼 요청
+		else if (command.equals("/dictionary/dictionaryWriteForm")) {
+			service = new DictionaryWriteFormService();
+			viewPage = service.requestProcess(request, response);
 		}
 
 		if (viewPage != null) {
