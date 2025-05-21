@@ -9,6 +9,8 @@ import com.miniproject.support.service.FaqUpdateFormService;
 import com.miniproject.support.service.FaqUpdateResultService;
 import com.miniproject.support.service.FaqWriteFormService;
 import com.miniproject.support.service.FaqWriteResultService;
+import com.miniproject.support.service.QnaAnswerDeleteService;
+import com.miniproject.support.service.QnaAnswerWriteResultService;
 import com.miniproject.support.service.QnaDeleteService;
 import com.miniproject.support.service.QnaDetailService;
 import com.miniproject.support.service.QnaListService;
@@ -119,7 +121,18 @@ import jakarta.servlet.http.HttpServletResponse;
 				service = new QnaDeleteService();
 				viewPage = service.requestProcess(request, response);
 				System.out.println(viewPage);
+			}else if (command.equals("/support/qnaAnswerWriteResult")) {
+				service = new QnaAnswerWriteResultService();
+				viewPage = service.requestProcess(request, response);
+				System.out.println(viewPage);
+			}else if (command.equals("/support/qnaAnswerDelete")) {
+				service = new QnaAnswerDeleteService();
+				viewPage = service.requestProcess(request, response);
+				System.out.println(viewPage);
 			}
+			
+			
+			
 			
 			
 			if(viewPage != null) {

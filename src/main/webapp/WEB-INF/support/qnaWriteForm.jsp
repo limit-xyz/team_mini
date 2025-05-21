@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-		<!-- content -->			
 <link rel="stylesheet"href="${pageContext.request.contextPath}/css/faq.css" />
 
 <div class="container" id="faq-write-page-container"> 
     
     <div class="row mb-4">
         <div class="col text-center">
-            <h2 id="title">FAQ 글쓰기</h2>
+            <h2 id="title">문의하기</h2>
         </div>
     </div>
 
@@ -15,7 +14,7 @@
         <div class="col-md-10 col-lg-10"> 
             <div class="content-card"> 
                 <div class="card-body p-4 p-md-5"> 
-                    <form action="${pageContext.request.contextPath}/support/faqWriteResult" name="writeForm" id="writeForm" method="post">
+                    <form action="${pageContext.request.contextPath}/support/qnaWriteResult" name="writeForm" id="writeForm" method="post">
                         
                         <div class="mb-4">
                             <label for="title" class="form-label fw-medium">제 목</label>
@@ -32,7 +31,7 @@
                                 <i class="bi bi-check-lg me-1"></i>등록하기
                             </button>
                             <button type="button" class="btn btn-outline-secondary px-4"
-                                onclick="location.href='${pageContext.request.contextPath}/support/faq'">
+                                onclick="location.href='${pageContext.request.contextPath}/support/qnaList'">
                                 <i class="bi bi-list-ul me-1"></i>목록보기
                             </button>
                         </div>

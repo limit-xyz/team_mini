@@ -17,10 +17,7 @@
 						<a href="${pageContext.request.contextPath}/support/qnaList">문의
 							게시판</a>
 					</button>
-					<button class="pill-button">
-						<a href="${pageContext.request.contextPath}/support/reportList">신고
-							게시판</a>
-					</button>
+					
 				</div>
 			</div>
 		</div>
@@ -54,7 +51,7 @@
 												<span class="badge rounded-pill status-badge status-waiting">답변대기</span>
 											</c:when>
 										</c:choose></td>
-									<td class="text-start"><a href="${pageContext.request.contextPath}/support/qnaDetail" class="qna-title-link">${qna.title }</a></td>
+									<td class="text-start"><a href="${pageContext.request.contextPath}/support/qnaDetail?no=${qna.no}" class="qna-title-link">${qna.title }</a></td>
 									<td>${qna.writer }</td>
 									<td>${qna.regDate }</td>
 
@@ -68,7 +65,7 @@
 
 		<div class="row mt-2">
 			<div class="col text-end">
-				<a href="${pageContext.request.contextPath}/support/faqWriteForm"
+				<a href="${pageContext.request.contextPath}/support/qnaWriteForm"
 					class="btn btn-outline-success">문의하기</a>
 			</div>
 		</div>
@@ -78,7 +75,7 @@
 			<div class="row">
 				<div class="col">
 					<nav aria-label="Page navigation example">
-						<ul class="pagination justify-content-center my-3">
+						<ul class="pagination justify-content-center my-5">
 							<c:if test="${startPage > pageGroup}">
 								<li class="page-item"><a class="page-link"
 									href="${pageContext.request.contextPath}/support/qnaList?pageNum=${startPage - pageGroup}">Pre</a>

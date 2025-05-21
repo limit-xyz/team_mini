@@ -11,6 +11,7 @@ import com.miniproject.vo.Faq;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class FaqService implements CommandProcess{
 	
@@ -25,6 +26,25 @@ public class FaqService implements CommandProcess{
 	@Override
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		HttpSession session = request.getSession(false); // 현재 세션을 가져옵니다. 없으면 null 반환.
+
+		if (session != null) {
+		    System.out.println("=== 현재 세션 속성 값 확인 ===");
+		    java.util.Enumeration<String> attributeNames = session.getAttributeNames();
+		    if (!attributeNames.hasMoreElements()) {
+		        System.out.println("세션에 저장된 속성이 없습니다.");
+		    }
+		    while (attributeNames.hasMoreElements()) {
+		        String name = attributeNames.nextElement();
+		        Object value = session.getAttribute(name);
+		        System.out.println("키(Key): " + name + ", 값(Value): " + value + " (타입: " + (value != null ? value.getClass().getName() : "null") + ")");
+		    }
+		    System.out.println("==============================");
+		} else {
+		    System.out.println("현재 활성화된 세션이 없습니다.");
+		}
+		
 		
 		String pageNum = request.getParameter("pageNum");
 		String keyword = request.getParameter("keyword");

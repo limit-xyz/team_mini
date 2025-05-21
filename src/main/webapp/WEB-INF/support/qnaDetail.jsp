@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style>
 body {
 	font-family: 'Noto Sans KR', sans-serif;
@@ -135,71 +137,110 @@ body {
 
 	<div class="container mt-5 mb-5">
 
-		<div class="qna-header-block p-4 mb-4 rounded">
-			<h1 class="qna-detail-title mb-3">서비스 이용 중 오류 발생 문의 (답변 대기 상태
-				예시)</h1>
-			<div class="qna-meta-info">
-				<span class="me-3"><i class="bi bi-person"></i> 작성자: <strong>user02</strong></span>
-				<span class="me-3"><i class="bi bi-calendar3"></i> 작성일:
-					2025-05-20</span> <span><i class="bi bi-hourglass-split"></i> 상태: <span
-					class="badge rounded-pill status-badge status-waiting">답변대기</span></span>
-			</div>
-		</div>
+    <c:if test="${not empty qnaBoard}">
+        <div class="qna-header-block p-4 mb-4 rounded">
+            <h1 class="qna-detail-title mb-3">${qnaBoard.title}</h1>
+            <div class="qna-meta-info">
+                <span class="me-3"><i class="bi bi-person"></i> 작성자: <strong>${qnaBoard.writer}</strong></span>
+                <span class="me-3"><i class="bi bi-calendar3"></i> 작성일:
+                    <fmt:formatDate value="${qnaBoard.regDate}" pattern="yyyy-MM-dd HH:mm"/>
+                </span>
+                <span><i class="bi bi-hourglass-split"></i> 상태: 
+                    <c:choose>
+                        <c:when test="${qnaBoard.status == '답변완료'}">
+                            <span class="badge rounded-pill status-badge status-answered">답변완료</span>
+                        </c:when>
+                        <c:when test="${qnaBoard.status == '답변대기'}">
+                            <span class="badge rounded-pill status-badge status-waiting">답변대기</span>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="badge rounded-pill status-badge">${qnaBoard.status}</span>
+                        </c:otherwise>
+                    </c:choose>
+                </span>
+            </div>
+        </div>
 
-		<div class="card content-card mb-4">
-			<div class="card-header">
-				<i class="bi bi-patch-question-fill me-1"
-					style="color: var(--main-theme-darker-text);"></i> <strong>질문
-					내용</strong>
-			</div>
-			<div class="card-body">
-				<p>
-					안녕하세요. 금일 오전 10시경부터 OOO 서비스의 특정 기능 사용 시 간헐적으로 '요청 처리 실패' 메시지가
-					나타납니다. <br> 몇 번 재시도하면 성공하기도 하는데, 원인 파악 및 조치 부탁드립니다. <br>
-					감사합니다.
-				</p>
-			</div>
-		</div>
+        <div class="card content-card mb-4">
+            <div class="card-header">
+                <i class="bi bi-patch-question-fill me-1" style="color: var(--main-theme-darker-text);"></i> 
+                <strong>질문 내용</strong>
+            </div>
+            <div class="card-body">
+                <p>${qnaBoard.content}</p>
+            </div>
+        </div>
 
-		<div class="card content-card answer-form-card mb-4">
-			<div class="card-header">
-				<h5>
-					<i class="bi bi-pencil-fill me-2"
-						style="color: var(--main-theme-darker-text);"></i>답변 작성하기
-				</h5>
-			</div>
-			<div class="card-body">
-				<form action="실제_답변_처리_URL" method="post">
-					<div class="mb-3">
-						<label for="answerText" class="form-label"><strong>답변
-								내용:</strong></label>
-						<textarea class="form-control" id="answerText"
-							name="answerContent" rows="10"
-							placeholder="문의에 대한 답변을 상세히 입력해주세요." required></textarea>
-					</div>
-					<div class="text-end">
-						<button type="submit" class="btn btn-custom-theme px-4">
-							<i class="bi bi-check2-circle"></i> 답변 등록
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
+        <%-- 답변이 이미 있는 경우, 답변 내용을 표시 --%>
+        <c:if test="${not empty qnaAnswer}">
+            <div class="card content-card answer-card mb-4">
+                <div class="card-header">
+                    <i class="bi bi-chat-left-dots-fill me-1" style="color: var(--main-theme-darker-text);"></i>
+                    <strong>답변 내용</strong>
+                </div>
+                <div class="card-body">
+                    <div class="answer-meta-info mb-3 text-end">
+                        <span class="me-3"><i class="bi bi-person-check"></i> 답변자: <strong>${qnaAnswer.answerWriter}</strong></span>
+                        <span><i class="bi bi-calendar-check"></i> 답변일: 
+                            <fmt:formatDate value="${qnaAnswer.answerRegDate}" pattern="yyyy-MM-dd HH:mm"/>
+                        </span>
+                    </div>
+                    <p>${qnaAnswer.answerContent}</p>
+                </div>
+            </div>
+        </c:if>
 
-		<div class="row mt-5 pt-4 border-top">
-			<div class="col-md-auto me-auto action-buttons mb-2 mb-md-0">
-				<button type="button" class="btn btn-outline-secondary btn-sm">
-					<i class="bi bi-pencil-square"></i> 질문 수정
-				</button>
-				<button type="button" class="btn btn-outline-danger btn-sm">
-					<i class="bi bi-trash3"></i> 질문 삭제
-				</button>
+        <c:if test="${empty qnaAnswer && isAdmin == true}">
+            <div class="card content-card answer-form-card mb-4">
+                <div class="card-header">
+                    <h5>
+                        <i class="bi bi-pencil-fill me-2" style="color: var(--main-theme-darker-text);"></i>답변 작성하기
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form action="${pageContext.request.contextPath}/support/qnaAnswerWriteResult" method="post">
+                        <input type="hidden" name="qnaNo" value="${qnaBoard.no}">
+                        <input type="hidden" name="answerWriter" value="${sessionScope.id}"> <%-- 또는 sessionScope.adminId 등 실제 관리자 ID 세션 속성명 --%>
+                        
+                        <div class="mb-3">
+                            <label for="answerText" class="form-label fw-medium"><strong>답변 내용:</strong></label>
+                            <textarea class="form-control form-control-lg" id="answerText" name="answerContent" rows="10" placeholder="문의에 대한 답변을 상세히 입력해주세요." required></textarea>
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-custom-theme px-4">
+                                <i class="bi bi-check2-circle"></i> 답변 등록
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </c:if>
 
-			</div>
-			<div class="col-md-auto action-buttons">
-				<a href="#" class="btn btn-custom-theme"><i
-					class="bi bi-list-task"></i> 목록으로</a>
-			</div>
-		</div>
+        <div class="row mt-5 pt-4 border-top">
+            <div class="col-md-auto me-auto action-buttons mb-2 mb-md-0">
+                <c:if test="${sessionScope.id == qnaBoard.writer || isAdmin == false}">
+                    <a href="${pageContext.request.contextPath}/support/qnaUpdateForm?no=${qnaBoard.no}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-pencil-square"></i> 질문 수정
+                    </a>
+                    <a href="${pageContext.request.contextPath}/support/qnaDelete?no=${qnaBoard.no}" class="btn btn-outline-danger btn-sm" onclick="return confirm('정말로 이 문의글을 삭제하시겠습니까?');">
+                        <i class="bi bi-trash3"></i> 질문 삭제
+                    </a>
+                </c:if>
+                
+                <c:if test="${isAdmin == true}">
+                    
+                    <a href="${pageContext.request.contextPath}/support/qnaAnswerDelete?answerNo=${qnaAnswer.answerNo}&qnaNo=${qnaBoard.no}" class="btn btn-outline-warning btn-sm" onclick="return confirm('정말로 이 답변을 삭제하시겠습니까?');">
+                        <i class="bi bi-reply-all"></i> 답변 삭제
+                    </a>
+                </c:if>
+            </div>
+            <div class="col-md-auto action-buttons">
+                <a href="${pageContext.request.contextPath}/support/qnaList" class="btn btn-custom-theme">
+                    <i class="bi bi-list-task"></i> 목록으로
+                </a>
+            </div>
+        </div>
+    </c:if>
 
-	</div>
+   
+</div>

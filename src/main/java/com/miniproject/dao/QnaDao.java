@@ -155,6 +155,33 @@ public class QnaDao {
 		}
 		return qb; // QnaBoard 객체 또는 null 반환
 	}
+	
+	
+	 public QnaAnswer getAnswerByQnaNo(int qnaNo) {
+	        String sql = "SELECT ANSWER_NO, NO, ANSWER_CONTENT, ANSWER_WRITER, ANSWER_REG_DATE FROM QNA_ANSWER WHERE NO = ?";
+	        QnaAnswer qnaAnswer = null;
+
+	        try {
+	            conn = DBManager.getConnection();
+	            pstmt = conn.prepareStatement(sql);
+	            pstmt.setInt(1, qnaNo);
+	            rs = pstmt.executeQuery();
+
+	            if (rs.next()) {
+	                qnaAnswer = new QnaAnswer();
+	                qnaAnswer.setAnswerNo(rs.getInt("ANSWER_NO"));
+	                qnaAnswer.setNo(rs.getInt("NO"));
+	                qnaAnswer.setAnswerContent(rs.getString("ANSWER_CONTENT"));
+	                qnaAnswer.setAnswerWriter(rs.getString("ANSWER_WRITER"));
+	                qnaAnswer.setAnswerRegDate(rs.getDate("ANSWER_REG_DATE"));
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } finally {
+	            DBManager.close(conn, pstmt, rs);
+	        }
+	        return qnaAnswer;
+	    }
 
 	// QNA의 리스트 전체 수를 가져오는 기능 - 페이지네이션에 사용
 
@@ -289,24 +316,42 @@ public class QnaDao {
 	 * @param answerNo 삭제할 답변의 고유 번호 (QNA_ANSWER 테이블의 ANSWER_NO)
 	 * @return 삭제 성공 시 1, 실패 또는 대상 없음 시 0, 오류 시 음수 또는 예외 발생 가능
 	 */
-	public int deleteQnaAnswer(int answerNo) {
-		String sql = "DELETE FROM QNA_ANSWER WHERE ANSWER_NO = ?";
-		int result = 0; // 삭제된 행의 수를 담을 변수
-
-		try {
-			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setInt(1, answerNo);
-
-			result = pstmt.executeUpdate(); // DELETE 실행
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBManager.close(conn, pstmt);
-		}
-		return result;
-	}
+    public int deleteQnaAnswer(int answerNo) {
+        String sql = "DELETE FROM QNA_ANSWER WHERE ANSWER_NO = ?";
+        int result = 0;
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, answerNo);
+            result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt);
+        }
+        return result;
+    }
+	
+	
+	
+	
+	//답변 상태 관련 
+	
+    public int updateQnaBoardStatus(int qnaNo, String newStatus) {
+        String sql = "UPDATE QNA_BOARD SET STATUS = ? WHERE NO = ?";
+        int result = 0;
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, newStatus);
+            pstmt.setInt(2, qnaNo);
+            result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt);
+        }
+        return result;
+    }
 
 }

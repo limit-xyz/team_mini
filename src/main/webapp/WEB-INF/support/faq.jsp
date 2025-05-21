@@ -5,8 +5,7 @@
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/faq.css" />
+<link rel="stylesheet"href="${pageContext.request.contextPath}/css/faq.css" />
 <div class="container">
 	<div id="title">FAQ</div>
 	<div class="row">
@@ -19,10 +18,7 @@
 					<a href="${pageContext.request.contextPath}/support/qnaList">문의
 						게시판</a>
 				</button>
-				<button class="pill-button">
-					<a href="${pageContext.request.contextPath}/support/reportList">신고
-						게시판</a>
-				</button>
+				
 			</div>
 		</div>
 	</div>
@@ -121,7 +117,7 @@
 		<div class="row">
 			<div class="col">
 				<nav aria-label="Page navigation example">
-					<ul class="pagination justify-content-center my-3">
+					<ul class="pagination justify-content-center my-5">
 						<c:if test="${startPage > pageGroup}">
 							<li class="page-item"><a class="page-link"
 								href="${pageContext.request.contextPath}/support/faq?pageNum=${startPage - pageGroup}">Pre</a>
