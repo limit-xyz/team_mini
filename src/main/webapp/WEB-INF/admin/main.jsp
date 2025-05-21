@@ -1,41 +1,59 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link href="${pageContext.request.contextPath}/css/admin.css" rel="stylesheet" />
 
-<div class="row my-5">
-	<div class="col">
-		<h2 class="mb-5">관리자 페이지</h2>
-		<c:if test="${isAdmin}">
-			<p>어드민 계정 On</p>
-		</c:if>
-		
-		<div class="row">
-			<div class="col">
-				<a href="member" class="p-3" style="border: 1px solid black; background-color:#EEE;">멤버 관리</a>
-			</div>
+<div class="container admin-main-container"> 
+    <div class="row my-5 admin-page-section">
+        <div class="col">
+            <h2 class="admin-section-title">관리자 페이지</h2>
+            <c:if test="${isAdmin == true}">
+                <p class="admin-dashboard-info">어드민 계정으로 접속 중입니다.</p>
+            </c:if>
+            
+            <div class="row g-4"> 
+                <div class="col-md-6 col-lg-4">
+                    <a href="member" class="admin-dashboard-card-link"> 
+                        <div class="card-icon"><i class="bi bi-people-fill"></i></div>
+                        <h5 class="card-link-title">멤버 관리</h5>
+                    </a>
+                </div>
 
-			<div class="col">
-				<a href="inquiry"  class="p-3" style="border: 1px solid black; background-color:#EEE;">문의 관리</a>
-			</div>
-		</div>
-	</div>
-</div>	
+                <div class="col-md-6 col-lg-4">
+                    <a href="inquiry" class="admin-dashboard-card-link"> 
+                        <div class="card-icon"><i class="bi bi-chat-left-text-fill"></i></div>
+                        <h5 class="card-link-title">문의 관리</h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>    
 
-<div class="row my-5">
-	<div class="col">
-		<h2 class="mb-5">사용자 페이지</h2>
-		<p>현재 세션 ID : ${sessionScope.id}</p>
+    <div class="row my-5 admin-page-section">
+        <div class="col">
+            <h2 class="admin-section-title">사용자 페이지</h2>
+            <p class="admin-dashboard-info">현재 세션 ID : ${sessionScope.id}</p>
 
-		<div class="row">
-			<div class="col">
-				<a href="${pageContext.request.contextPath}/member/mypage/reservation"  class="p-3" style="border: 1px solid black; background-color:#EEE;">예약 내역 보기</a>
-			</div>
-				<div class="col">
-				<a href="${pageContext.request.contextPath}/member/mypage/diaryList"  class="p-3" style="border: 1px solid black; background-color:#EEE;">다이어리 보기</a>
-			</div>
-				<div class="col">
-				<a href="${pageContext.request.contextPath}/member/mypage/boards"  class="p-3" style="border: 1px solid black; background-color:#EEE;">작성 게시글 보기</a>
-			</div>
-		</div>
-	</div>
+            <div class="row g-4"> 
+                <div class="col-md-6 col-lg-4">
+                    <a href="${pageContext.request.contextPath}/member/mypage/reservation" class="admin-dashboard-card-link">
+                        <div class="card-icon"><i class="bi bi-calendar-check-fill"></i></div>
+                        <h5 class="card-link-title">예약 내역 보기</h5>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <a href="${pageContext.request.contextPath}/member/mypage/diaryList" class="admin-dashboard-card-link">
+                        <div class="card-icon"><i class="bi bi-journal-richtext"></i></div>
+                        <h5 class="card-link-title">다이어리 보기</h5>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <a href="${pageContext.request.contextPath}/member/mypage/boards" class="admin-dashboard-card-link">
+                        <div class="card-icon"><i class="bi bi-card-list"></i></div>
+                        <h5 class="card-link-title">작성 게시글 보기</h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
