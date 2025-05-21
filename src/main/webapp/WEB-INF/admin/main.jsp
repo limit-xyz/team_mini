@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="row my-5">
 	<div class="col">
 		<h2 class="mb-5">관리자 페이지</h2>
+		<c:if test="${isAdmin}">
+			<p>어드민 계정 On</p>
+		</c:if>
 		
 		<div class="row">
 			<div class="col">
@@ -21,11 +25,6 @@
 	<div class="col">
 		<h2 class="mb-5">사용자 페이지</h2>
 		<p>현재 세션 ID : ${sessionScope.id}</p>
-		<form class="form-control" action="tempLogin" method="post">
-			<input type="text" name="tempId">
-		 	<button type="submit" class="btn btn-primary">로그인</button>
-		 </form>
-		<br><br><br>
 
 		<div class="row">
 			<div class="col">

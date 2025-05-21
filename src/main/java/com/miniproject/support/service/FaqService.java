@@ -11,11 +11,12 @@ import com.miniproject.vo.Faq;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class FaqService implements CommandProcess{
 	
 	// 한 페이지에 보여줄 게시 글 수 
-		private static final int PAGE_SIZE = 10;
+		private static final int PAGE_SIZE = 5;
 		
 		
 		// 한 페이지에 보여줄 페이지 그룹의 수
@@ -25,7 +26,26 @@ public class FaqService implements CommandProcess{
 	@Override
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/*
+		
+		HttpSession session = request.getSession(false); // 현재 세션을 가져옵니다. 없으면 null 반환.
+
+		if (session != null) {
+		    System.out.println("=== 현재 세션 속성 값 확인 ===");
+		    java.util.Enumeration<String> attributeNames = session.getAttributeNames();
+		    if (!attributeNames.hasMoreElements()) {
+		        System.out.println("세션에 저장된 속성이 없습니다.");
+		    }
+		    while (attributeNames.hasMoreElements()) {
+		        String name = attributeNames.nextElement();
+		        Object value = session.getAttribute(name);
+		        System.out.println("키(Key): " + name + ", 값(Value): " + value + " (타입: " + (value != null ? value.getClass().getName() : "null") + ")");
+		    }
+		    System.out.println("==============================");
+		} else {
+		    System.out.println("현재 활성화된 세션이 없습니다.");
+		}
+		
+		
 		String pageNum = request.getParameter("pageNum");
 		String keyword = request.getParameter("keyword");
 		
@@ -43,19 +63,18 @@ public class FaqService implements CommandProcess{
 		
 		FaqDao dao = new FaqDao();
 		ArrayList<Faq> faqList = null;
-		
 		int listCount = 0;
 		
 		boolean searchOption = keyword == null? false : true;
 		
 		//검색인지 아닌지 판단하는 if문 
 		if(!searchOption) { // 일반 게시 글 리스트			
-			bList = dao.boardList(startRow, endRow);
-			listCount = dao.getBoardCount();
+			faqList = dao.getFaqList(startRow, endRow);
+			listCount = dao.getFaqCount();
 			
 		} else { // 검색 게시 글 리스트
-			bList = dao.searchList(type, keyword, startRow, endRow);
-			listCount = dao.getBoardCount(type, keyword);
+			faqList = dao.getFaqList( keyword, startRow, endRow);
+			listCount = dao.getFaqCount(keyword);
 		}
 		
 		int pageCount = listCount / PAGE_SIZE 
@@ -75,13 +94,22 @@ public class FaqService implements CommandProcess{
 		
 		
 		
-		faqList = dao.getFaq();
 		
 		
 		
 		
 		request.setAttribute("faqList", faqList);
-		*/
+		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("pageGroup", PAGE_GROUP);		
+		request.setAttribute("pageCount", pageCount);
+		request.setAttribute("startPage", startPage);
+		request.setAttribute("endPage", endPage);		
+		request.setAttribute("searchOption", searchOption);
+		
+		if(searchOption) {
+			request.setAttribute("keyword", keyword);			
+		}
+		
 		return "support/faq";
 	}
 

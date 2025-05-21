@@ -1,4 +1,4 @@
-package com.miniproject.controller;
+package com.miniproject.adoption.service;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -46,7 +46,7 @@ public class AdoptionUpdateFormService implements CommandProcess {
 		request.setAttribute("type", type);
 		request.setAttribute("keyword", keyword);
 		
-		return"adoption-board/adoptionUpdate";
+		return"${pageContext.request.contextPath}/adoption/AdoptionUpdate";
 		
 	} catch(SQLException e){
 		e.printStackTrace();

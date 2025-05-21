@@ -2,8 +2,6 @@ package com.miniproject.adoption.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -29,7 +27,7 @@ public class AdoptionWriteService implements CommandProcess{
 			request.setCharacterEncoding("utf-8");
 			
 			HttpSession session = request.getSession();
-			String userId = (String) session.getAttribute("userId");
+			String userId = (String) session.getAttribute("id");
 			
 			if(userId == null) { //로그인 확인
 			  response.setContentType("text/html; charset=utf-8");
@@ -44,8 +42,8 @@ public class AdoptionWriteService implements CommandProcess{
 			
 			String contentType = request.getContentType();
 			
-			if(contentType != null
-					&& contentType.toLowerCase().startsWith("multiplart/")) {
+			if(contentType != null && 
+					contentType.toLowerCase().startsWith("multipart/")) {
 				
 				Collection<Part> parts = request.getParts();
 				
@@ -57,7 +55,7 @@ public class AdoptionWriteService implements CommandProcess{
 					System.out.printf("파라미터 : %s, contentType : %s, size : %dByte, \n",
 					part.getName(), part.getContentType(), part.getSize());
 					
-					if(PartHeader.contains("image_path=")) {
+					if("image_path".equals(paramName)) {
 						if(part.getSize() > 0) {
 							String mimeType = part.getContentType();
 							if (mimeType != null && ALLOWED_IMAGE_TYPES.contains(mimeType.toLowerCase())) { // 추가: 파일 형식 검증
@@ -66,7 +64,7 @@ public class AdoptionWriteService implements CommandProcess{
 							String saveName = uid.toString() + "_" + part.getSubmittedFileName();
 								
 							File parentFile = (File) request.getServletContext().getAttribute("parentFile");
-							String uploadDir = request.getServletContext().getInitParameter("UPLOAD_DIR_PARAM");
+							String uploadDir = request.getServletContext().getInitParameter(UPLOAD_DIR_PARAM);
 							String savePath = parentFile.getAbsolutePath() + File.separator + saveName;
 							
 							try {
@@ -124,8 +122,8 @@ public class AdoptionWriteService implements CommandProcess{
 		            return null;
 		        }
 			  
-			if(result > 0) {
-				return "redirect:/adoptionList.mvc";
+			if(result > 0) {				
+				return "redirect:adoptionboard/adopboardList";
 			} else {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<script> alert('게시글 작성에 실패하였습니다.); history.back(); </script>");

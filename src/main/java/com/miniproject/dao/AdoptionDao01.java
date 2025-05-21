@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +19,7 @@ public class AdoptionDao01 {
 		
 	
 	public AdoptionWriteDto getPostById(int postId){
+
 		
 		String sql = "Select * From adoption_post WHERE Post_Id = ?";
 		AdoptionWriteDto dto = null;
@@ -89,8 +91,12 @@ public class AdoptionDao01 {
 					b.setCreatedAt(rs.getTimestamp("created_at"));
 					b.setViewsCount(rs.getInt("views_count"));
 					b.setApprovalStatus(rs.getString("approval_status"));
+					b.setContent(rs.getString("content"));
+					b.setAdoptionType(rs.getString("adoption_type"));
+					b.setRegion(rs.getString("region"));
+					b.setAnimalTypeMain(rs.getString("animal_type_main"));
+					b.setAnimalTypeDetail(rs.getString("animal_type_detail"));
 					b.setImagePath(rs.getString("image_path"));
-				
 					
 					blist.add(b);
 				}
@@ -110,11 +116,11 @@ public class AdoptionDao01 {
 	
 	//----------------------------------------------------------
 	// 전체 게시글 수를 읽어오는 메서드 - paging 처리에 사용
-		public int getSearchBoardCount(String searchColumn,
+		public int getSearchBoardCount(String type,
 				String keyword, String adoptionType, 
 				String animalTypeMain) throws SQLException{
 			String sql = "SELECT COUNT(*) FROM adoption_post"
-					+ " WHERE " + searchColumn + "LIKE ? "
+					+ " WHERE " + type + " LIKE ? "
 					+ " And adoption_type = ? " + " AND animal_type_main = ?";
 			int count = 0;
 			
@@ -143,20 +149,39 @@ public class AdoptionDao01 {
 	//------------------------------------------------------------------
 	// 제목, 작성자, 내용에 검색어가 포함된 게시 글 리스트를 읽어와 반환하는 메서드
 		public ArrayList<AdoptionWriteDto> searchList ( //String approval_status
-				String searchColumn,String keyword, String adoptiontype, String animalTypeMain, int startRow, int endRow) throws SQLException{
+				String type, String keyword, String adoptionType, String animalTypeMain,  int startRow, int endRow) throws SQLException{
 			
-			List<String> allowedTypes = Arrays.asList("title", "user_id", "region");
-			if(searchColumn == null || !allowedTypes.contains(searchColumn)) {
-				throw new IllegalArgumentException("허용되지 않은 검색 컬럼 입니다." + searchColumn);
+			List<String> allowedTypes = Arrays.asList("title", "user_id", "content", "adoption_type","approval_status");
+			if(type == null || !allowedTypes.contains(type)) {				
+				throw new IllegalArgumentException("허용되지 않은 검색 컬럼 입니다." + type);
+			}
+			String column = type;
+			if("approvalStatus".equals(type)) {
+				column = "approval_status";
 			}
 			
-			String sql = "SELECT * FROM ( "
-					+ "    SELECT ROWNUM num, sub.* FROM "
-					+ "        (SELECT * FROM adoption_post "
-					+ " WHERE " + searchColumn + " LIKE ?"
-					+ " and adoption_type=? and animal_type_main =? "
-					+ " ORDER BY post_id DESC) sub) "
-					+ " WHERE num >= ? AND num <= ?";
+			StringBuilder sql = new StringBuilder();
+			sql.append("SELECT * FROM( ");
+			sql.append(" SELECT ROWNUM num, sub.* FROM( ");
+			sql.append("  SELECT * FROM adoption_post WHERE " + column + " LIKE ? ");
+			if(adoptionType != null && !adoptionType.isEmpty()) {
+				sql.append("AND adoption_type =? ");
+			}
+			if(animalTypeMain != null && !animalTypeMain.isEmpty()) {
+				sql.append("AND animal_type_main = ? ");
+			}
+			sql.append(" ORDER BY post_id DESC ");
+			sql.append(" ) sub ");
+			sql.append(" ) WHERE num >= ? AND num <= ? ");
+			
+			
+//			String sql = "SELECT * FROM ( "
+//					+ "    SELECT ROWNUM num, sub.* FROM "
+//					+ "        (SELECT * FROM adoption_post "
+//					+ " WHERE " + type + " LIKE ? "
+//					+ " and adoption_type=? and animal_type_main =? "
+//					+ " ORDER BY post_id DESC) sub) "
+//					+ " WHERE num >= ? AND num <= ?";
 			
 			ArrayList<AdoptionWriteDto> blist = new ArrayList<>();
 			
@@ -167,17 +192,27 @@ public class AdoptionDao01 {
 				
 				// 3. DB에 SQL 쿼리를 발행하는 객체를 활성화된 커넥션으로부터 구한다.
 				// PreparedStatement
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, "%" + keyword + "%");			//여기 주석처리 했음 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-				pstmt.setString(2, adoptiontype);
-				pstmt.setString(3, animalTypeMain);
-				pstmt.setInt(4, startRow);
-				pstmt.setInt(5, endRow);
+				pstmt = conn.prepareStatement(sql.toString());
+				
+				int idx = 1;
+				pstmt.setString(idx++,  "%" + keyword + "%");
+				if(adoptionType != null && !adoptionType.isEmpty()) {
+					pstmt.setString(idx++,  adoptionType);
+				}
+				if(animalTypeMain != null && !animalTypeMain.isEmpty()) {
+					pstmt.setString(idx++,  animalTypeMain);
+				}
+				pstmt.setInt(idx++, startRow);
+				pstmt.setInt(idx, endRow);
+				
+//				pstmt.setString(1, "%" + keyword + "%");
+//				pstmt.setString(2, adoptiontype);
+//				pstmt.setString(3, animalTypeMain);
+//				pstmt.setInt(4, startRow);
+//				pstmt.setInt(5, endRow);
 				
 				// 4. 쿼리를 발행하여 SELECT한 결과를 ResultSet 객체로 받는다.
 				rs = pstmt.executeQuery();
-				
-				
 				
 				// 5. 쿼리를 실행 결과를 while 반복하면서 Board 객체에 담고 List 담는다.
 				while(rs.next()) {
@@ -257,50 +292,9 @@ public class AdoptionDao01 {
 		
 		
 		
-//---------------------------------------------------------------------
-	/*// 게시 글 번호에 해당하는 댓글 리스트를 DB 테이블에서 읽어와 반환하는 메서드
-	public ArrayList<Reply> getReplyList(int bbsNo) {
-		
-		String replyListSql = "SELECT * FROM reply WHERE bbs_no=? "
-							+ " ORDER BY no DESC";		
-		ArrayList<Reply> replyList = null;
+
 		
 		
-		try {			
-			// 2. DB에 연결
-			conn = DBManager.getConnection();
-			
-			// 3. DB에 SQL 쿼리를 발행하는 객체를 활성화된 커넥션으로부터 구한다.
-			// PreparedStatement
-			pstmt = conn.prepareStatement(replyListSql);
-			pstmt.setInt(1, bbsNo);			
-			
-			// 4. 쿼리를 발행하여 SELECT한 결과를 ResultSet 객체로 받는다.
-			rs = pstmt.executeQuery();
-			
-			replyList = new ArrayList<>();
-			
-			// 5. 쿼리를 실행 결과를 while 반복하면서 Board 객체에 담고 List 담는다.
-			while(rs.next()) {
-				Reply reply = new Reply();
-				reply.setNo(rs.getInt("no"));
-				reply.setBbsNo(rs.getInt("bbs_no"));				
-				reply.setReplyContent(rs.getString("reply_content"));
-				reply.setReplyWriter(rs.getString("reply_writer"));
-				reply.setRegDate(rs.getTimestamp("reg_date"));
-				replyList.add(reply);
-			}
-			
-		} catch(SQLException e) {
-			DBManager.rollback(conn);
-			e.printStackTrace();
-			
-		} finally {
-			// 6. DB 작업에 사용한 객체는 처음 가져온 역순으로 닫다.
-			DBManager.close(conn, pstmt, rs);
-		}
-		
-		*/
 		// 게시 글 수정, 삭제시 게시 글 비밀번호가 맞는지 체크하는 메서드
 		public boolean isUserIdCheck(int postId, String userId) {
 			
@@ -336,48 +330,6 @@ public class AdoptionDao01 {
 		} // end isPassCheck()	
 		
 		
-		
-		
-		//---------------------------------------------------------
-		// 게시글 전체 조회
-		public ArrayList<AdoptionWriteDto> getAdoptionList(){
-			String sql = "Select * From adoption_post Order by Post_Id Desc";
-			ArrayList<AdoptionWriteDto> blist = new ArrayList<>();
-			
-			
-			
-			try {
-				conn = DBManager.getConnection();
-				pstmt = conn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
-				
-				while (rs.next()) {
-					AdoptionWriteDto dto = new AdoptionWriteDto(
-						rs.getInt("post_id"),
-						rs.getString("user_id"),
-						rs.getString("title"),
-						rs.getString("content"),
-						rs.getString("adoption_type"),
-						rs.getString("region"),
-						rs.getString("animal_type_main"),
-						rs.getString("animal_type_detail"),
-						rs.getString("image_path"),
-						rs.getTimestamp("created_at"),
-						rs.getInt("views_count"),
-						rs.getString("approval_status")
-					);
-					blist.add(dto);
-				}
-				
-			}	 catch (Exception e) {
-				e.printStackTrace();
-			}finally {
-				DBManager.close(conn, pstmt,rs);
-			}
-			
-			return blist;
-		} //getAdopTionList
-		
 		// 게시글 상세 조회
 		public AdoptionWriteDto getAdoption(int postId, boolean state) throws SQLException{
 			
@@ -388,6 +340,7 @@ public class AdoptionDao01 {
 			PreparedStatement selectStmt = null;
 			ResultSet rs = null;
 			Connection conn=null;
+		
 			
 			try{
 				conn = DBManager.getConnection();
@@ -437,7 +390,7 @@ public class AdoptionDao01 {
 		public int insertAdoptionPost(AdoptionWriteDto dto){
 			int result = 0;
 			String sql = "INSERT INTO adoption_post (post_id, user_id, title, content, adoption_type, region, animal_type_main, animal_type_detail, image_path, created_at, views_count) "
-					   + "VALUES (adoption_post_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSTIMESTAMP, 0)";
+					   + "VALUES (adoption_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSTIMESTAMP, 0)";
 					
 			try{
 			 conn = DBManager.getConnection();
@@ -616,9 +569,9 @@ public class AdoptionDao01 {
 		// 특정 게시글의 댓글 목록 조회
 		public List<AdoptionReplyDto> getReplyList(int postId) {
 		    List<AdoptionReplyDto> replyList = new ArrayList<>();
-		    String sql = "SELECT reply_id, post_id, user_id, content, reply_wirter "
-		    		+ "created_at, is_secret FROM adoption_reply"
-		    		+ "WHERE post_id = ? ";
+		    String sql = "SELECT reply_id, post_id, user_id, content, "
+		    		+ " created_at, is_secret FROM adoption_reply"
+		    		+ " WHERE post_id = ? ";
 
 		    try {
 		        conn = DBManager.getConnection();
@@ -632,9 +585,12 @@ public class AdoptionDao01 {
 		    	 reply.setPostId(rs.getInt("post_id"));
 		    	 reply.setUserId(rs.getString("user_id"));
 		    	 reply.setContent(rs.getString("content"));
-		    	 reply.setReplyWriter(rs.getString("reply_writer"));
+		    	 reply.setReplyWriter(rs.getString("user_id"));
 		    	 reply.setCreatedAt(rs.getTimestamp("created_at"));
-		    	 reply.setIsSecret(rs.getBoolean("is_secret"));
+		    	
+		    	 String isSecretStr = rs.getString("is_secret");
+		    	 reply.setIsSecret("Y".equalsIgnoreCase(isSecretStr));
+		    	 
 		    	 replyList.add(reply);
 		     }
 

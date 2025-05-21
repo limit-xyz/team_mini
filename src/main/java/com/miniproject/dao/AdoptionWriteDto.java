@@ -1,6 +1,7 @@
 package com.miniproject.dao;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class AdoptionWriteDto {
 
@@ -16,6 +17,7 @@ public class AdoptionWriteDto {
 	private Timestamp createdAt;
 	private int viewsCount;
 	private String approvalStatus; // 입양 진행중 진행 완료 대기중 등 상태 표시용
+	private String formattedCreatedAt;
 	
 	
 	public AdoptionWriteDto() {};
@@ -35,6 +37,7 @@ public class AdoptionWriteDto {
 		this.createdAt = createdAt;
 		this.viewsCount = viewsCount;
 		this.approvalStatus = approvalStatus;
+		this.formattedCreatedAt = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(createdAt);		
 	}
 
 	public int getPostId() {
@@ -115,6 +118,7 @@ public class AdoptionWriteDto {
 
 	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
+		this.formattedCreatedAt = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(createdAt);
 	}
 
 	public int getViewsCount() {
@@ -131,6 +135,14 @@ public class AdoptionWriteDto {
 
 	public void setApprovalStatus(String approvalStatus) {
 		this.approvalStatus = approvalStatus;
+	}
+	
+	public String getFormattedCreatedAt() {
+		return formattedCreatedAt;
+	}
+		
+	public void setFormattedCreatedAt(String formattedCreatedAt) {
+		this.formattedCreatedAt = formattedCreatedAt;
 	}
 
 

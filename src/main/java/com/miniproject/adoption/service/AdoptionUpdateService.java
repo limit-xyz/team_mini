@@ -2,6 +2,8 @@ package com.miniproject.adoption.service;
 
 import java.io.*;
 import java.util.*;
+import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 
 import com.miniproject.common.service.CommandProcess;
 import com.miniproject.dao.AdoptionDao01;
@@ -91,18 +93,12 @@ public class AdoptionUpdateService implements CommandProcess{
 						}
 					} else {
 						String paramValue = request.getParameter(paramName);
-						if(paramName.equals("title")) {
-							dto.setTitle(paramValue);
-						} else if(paramName.equals("content")) {
-							dto.setContent(paramValue);
-						} else if(paramName.equals("adoptionType")) {
-							dto.setAdoptionType(paramValue);
-						} else if(paramName.equals("region")) {
-							dto.setRegion(paramValue);
-						} else if(paramName.equals("animalTypeMain")) {
-							dto.setAnimalTypeMain(paramValue);
-						} else if(paramName.equals("animalTypeDetail")) {
-						dto.setAnimalTypeDetail(paramValue);
+						if(paramName.equals("title")) {	dto.setTitle(paramValue);
+						} else if(paramName.equals("content")) { dto.setContent(paramValue);
+						} else if(paramName.equals("adoptionType")) { dto.setAdoptionType(paramValue);
+						} else if(paramName.equals("region")) { dto.setRegion(paramValue);
+						} else if(paramName.equals("animalTypeMain")) { dto.setAnimalTypeMain(paramValue);
+						} else if(paramName.equals("animalTypeDetail")) { dto.setAnimalTypeDetail(paramValue);
 					}
 				}
 			}
@@ -125,11 +121,12 @@ public class AdoptionUpdateService implements CommandProcess{
             return null;
         }
         
-        
+        //date 관련 수정
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         int result = adoptionDao.updateAdoption(dto);
 		
         if(result > 0) {
-        	return "redirect:adoptionDetail.mvc?postId=" + postId + "&increaseViewCount=false";
+        	return "r:team_mini/adoption/AdoptionDetailpostId=" + postId + "&increaseViewCount=false";
         	//수정된 게시글 상세 페이지로 리다이렉트
         } else {
         	response.setContentType("text/html; charset=utf-8");

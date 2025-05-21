@@ -2,12 +2,12 @@ package com.miniproject.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import com.miniproject.adoption.service.*;
 import com.miniproject.common.service.CommandProcess;
 
 import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -15,11 +15,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @MultipartConfig(fileSizeThreshold = 10 * 1024,
 			maxFileSize = 1024 * 1024 * 10,
 			maxRequestSize = 1024 * 1024 * 100)
-@WebServlet(name="adoptionController", urlPatterns="*.mvc")
+@WebServlet(name="adoptionController", urlPatterns="/adoption/*")
 public class AdoptBoardController extends HttpServlet{
 
 	private final String PREFIX = "/WEB-INF/index.jsp?body=";
@@ -45,6 +46,7 @@ public class AdoptBoardController extends HttpServlet{
 	protected void doGet(
 			HttpServletRequest request, HttpServletResponse response) 
 					throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		doProcess(request, response);		
 	}
 			
@@ -55,56 +57,75 @@ public class AdoptBoardController extends HttpServlet{
 		request.setCharacterEncoding("utf-8");
 		doProcess(request, response);		
 	}
-		
+	
+	
 	protected void doProcess(
 			HttpServletRequest request, HttpServletResponse response) 
 					throws ServletException, IOException {
-		String reuqestURI = request.getRequestURI();
+		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
-		String command = reuqestURI.substring(contextPath.length());
+		String command = requestURI.substring(contextPath.length());
 		
 		System.out.println("command : " + command);
 		
+		 if (command.equals("/adoption/AdoptionWriteForm") ||
+			        command.equals("/adoption/AdoptionWrite") ||
+			        command.equals("/adoption/AdoptionReplyWrite") ||
+			        command.equals("/adoption/AdoptionReplyDelete") ||
+			        command.equals("/adoption/AdoptionDelete") ||
+			        command.equals("/adoption/AdoptionupdateForm")) {
+			 
+		
+			 HttpSession session = request.getSession();
+		
+			 if(session.getAttribute("id") == null) {
+			
+				 String message = URLEncoder.encode("로그인이 필요한 서비스 입니다.", "UTF-8");
+				 response.sendRedirect(request.getContextPath() + "/member/loginForm?message=" + message);
+				 return;
+			}
+		}
+			 
 		String viewPage = null;
 		CommandProcess service = null;
-	
-		if(command.equals("/AdoptionList.mvc") || command.equals("/*.mvc")) {
+		
+		if(command.equals("/adoption/AdoptionList") || command.equals("/adoption/*")) {
 			service = new AdoptionListService();					
 			viewPage = service.requestProcess(request, response);
 	
-		} else if (command.equals("/AdoptionWriteForm.mvc")) {
+		} else if (command.equals("/adoption/AdoptionWriteForm")) {
 			service = new AdoptionWriteFormService();						 
 			viewPage = service.requestProcess(request, response);
 	
-		} else if (command.equals("/AdoptionWrite.mvc")) {
+		} else if (command.equals("/adoption/AdoptionWrite")) {
 			service = new AdoptionWriteService();						 
 			viewPage = service.requestProcess(request, response);
 		
-		}	else if (command.equals("/AdoptionDetail.mvc")) {
+		}	else if (command.equals("/adoption/AdoptionDetail")) {
 			service = new AdoptionDetailService();						 
 			viewPage = service.requestProcess(request, response);
 	
-		}	else if (command.equals("/AdoptionView.mvc")) {
+		}	else if (command.equals("/adoption/AdoptionView")) {
 			service = new AdoptionViewService();						 
 			viewPage = service.requestProcess(request, response);
 	
-		}	else if (command.equals("/AdoptionDelete.mvc")) {
+		}	else if (command.equals("/adoption/AdoptionDelete")) {
 			service = new AdoptionDeleteService();						 
 			viewPage = service.requestProcess(request, response);
 	
-		}	else if (command.equals("/AdoptionupdateForm.mvc")) {
+		}	else if (command.equals("/adoption/AdoptionUpdateForm")) {
 			service = new AdoptionUpdateFormService();						 
 			viewPage = service.requestProcess(request, response);
 		
-		} else if (command.equals("/AdoptionDownload.mvc")) { 
+		} else if (command.equals("/adoption/AdoptionDownload")) { 
             service = new AdoptionDownloadService();
             viewPage = service.requestProcess(request, response);
 
-        } else if (command.equals("/AdoptionReplyWrite.mvc")) { 
+        } else if (command.equals("/adoption/AdoptionReplyWrite")) { 
             service = new AdoptionReplyWriteService();
             viewPage = service.requestProcess(request, response);
 
-        } else if (command.equals("/AdoptionReplyDelete.mvc")) { 
+        } else if (command.equals("/adoption/AdoptionReplyDelete")) { 
             service = new AdoptionReplyDeleteService();
             viewPage = service.requestProcess(request, response);
 
@@ -121,12 +142,13 @@ public class AdoptBoardController extends HttpServlet{
 				rd =request.getRequestDispatcher(viewPage.split(":")[1]);
 				
 			} else {
-				rd = request.getRequestDispatcher(PREFIX + view + SUFFIX);
+				rd = request.getRequestDispatcher( PREFIX + view + SUFFIX);
 			} 	
 				if(rd != null) {
 					rd.forward(request, response);
+					
 				}
-			}
+			}System.out.println("viewPage = " + viewPage);
 		}
 	}
 	

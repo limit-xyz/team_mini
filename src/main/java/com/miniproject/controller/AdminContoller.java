@@ -1,6 +1,5 @@
 package com.miniproject.controller;
 
-import java.io.File;
 import java.io.IOException;
 
 import com.miniproject.admin.ajax.AdminAjaxController;
@@ -90,12 +89,6 @@ public class AdminContoller extends HttpServlet {
 		// 문의내역 관리
 		else if (command.equals("/admin/inquiry")) {
 			service = new InquiryListService();
-			viewPage = service.requestProcess(request, response);
-		}
-
-		// 임시 로그인
-		else if (command.equals("/admin/tempLogin")) {
-			service = new TempLoginService();
 			viewPage = service.requestProcess(request, response);
 		}
 

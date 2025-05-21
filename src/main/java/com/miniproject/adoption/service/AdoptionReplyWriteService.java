@@ -19,29 +19,23 @@ public class AdoptionReplyWriteService implements CommandProcess {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		
-		if(userId == null ) {
-			response.setContentType("text/html; cherset=utf-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>");
-			out.println("	alert('로그인 전용 서비스 입니다.');");
-			out.println("	history.back();"); 
-			out.println("</script>");
-			out.close();
-			return null;
+		String userId = (String) session.getAttribute("id");
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum == null || pageNum.isEmpty()) {
+			pageNum = "1";
 		}
-
+		
 		 request.setCharacterEncoding("utf-8");
 		 
 		 String postIdParam = request.getParameter("postId");
-		 String content = request.getParameter("content");
+		 String content = request.getParameter("replyContent");
 		 String isSecretParam = request.getParameter("isSecret");
 		 boolean isSecret = "true".equalsIgnoreCase(isSecretParam);
 		 
+		 
 		 if(postIdParam == null || postIdParam.equals("") 
 				 || content == null || content.equals("")){ 
-				response.setContentType("text/html; cherset=utf-8");
+				response.setContentType("text/html; charset=utf-8");
 				PrintWriter out = response.getWriter();
 				out.println("<script>");
 				out.println("	alert('게시글 id 와 댓글 내용을 입력해주세요.');");
@@ -64,7 +58,7 @@ public class AdoptionReplyWriteService implements CommandProcess {
 		
 		if(result > 0) {
 			// 댓글 작성 성공시 해당 게시글 상세 페이지로 리다이렉트
-			return "redirect:adoptionDetail.mvc?postId=" + postId + "&increaseViewCount=false";
+			return "r:" + request.getContextPath() + "/adoption/AdoptionDetail?postId=" + postId + "&pageNum=" + pageNum + "&increaseViewCount=false";
 		} else {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
