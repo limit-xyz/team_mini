@@ -59,11 +59,9 @@ public class QnaDeleteService implements CommandProcess{
 
         if (deleteResult <= 0) {
             System.err.println("QnaDeleteService: 문의글 삭제 실패 - qnaNo: " + qnaNo);
-            // 실패 시에도 목록으로 이동하거나, 특정 에러 처리를 할 수 있습니다.
-            // 여기서는 성공/실패 여부와 관계없이 목록으로 갑니다.
         }
         
         return qnaListRedirect;
-	}
+    }
 
 }
