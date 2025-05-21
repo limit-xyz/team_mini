@@ -290,69 +290,188 @@ public class DictionaryDao {
 		return DictionaryList;
 	}
 
-//	// 다이어리 쓰기
-//	public void insertDictionary(Dictionary Dictionary) {
-//		String insertDictionarylSql = "INSERT INTO Dictionary (Dictionary_no, member_id, pet_name, title, content, photo) "
-//				+ "VALUES (Dictionary_seq.NEXTVAL, ?, ?, ?, ?, ?)";
-//
-//		try {
-//			conn = DBManager.getConnection();
-//			pstmt = conn.prepareStatement(insertDictionarylSql);
-//			pstmt.setString(1, Dictionary.getMemberId());
-//			pstmt.setString(2, Dictionary.getPetName());
-//			pstmt.setString(3, Dictionary.getTitle());
-//			pstmt.setString(4, Dictionary.getContent());
-//			pstmt.setString(5, Dictionary.getPhoto());
-//			pstmt.executeUpdate();
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//
-//		} finally {
-//			DBManager.close(conn, pstmt, rs);
-//		}
-//	}
-//
-//	// 다이어리 수정
-//	public void updateDictionary(Dictionary Dictionary, int no) {
-//		String updateDictionarylSql = "UPDATE Dictionary SET pet_name=?, title=?, content=?, photo=? WHERE Dictionary_no=?";
-//
-//		try {
-//			conn = DBManager.getConnection();
-//			pstmt = conn.prepareStatement(updateDictionarylSql);
-//			pstmt.setString(1, Dictionary.getPetName());
-//			pstmt.setString(2, Dictionary.getTitle());
-//			pstmt.setString(3, Dictionary.getContent());
-//			pstmt.setString(4, Dictionary.getPhoto());
-//			pstmt.setInt(5, Dictionary.getNo());
-//			pstmt.executeUpdate();
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//
-//		} finally {
-//			DBManager.close(conn, pstmt, rs);
-//		}
-//	}
-//
-//	// 다이어리 삭제
-//	public void deleteDictionary(int no) {
-//
-//		String deleteDictionarylSql = "DELETE FROM Dictionary WHERE Dictionary_no=?";
-//
-//		try {
-//			conn = DBManager.getConnection();
-//			pstmt = conn.prepareStatement(deleteDictionarylSql);
-//			pstmt.setInt(1, no);
-//			pstmt.executeUpdate();
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//
-//		} finally {
-//			DBManager.close(conn, pstmt, rs);
-//		}
-//	}
+	// 강아지 사전 쓰기
+	public void insertDictionaryDog(Dog dog) {
+		String insertDictionaryDogSql = "INSERT INTO dog VALUES (dog_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(insertDictionaryDogSql);
+			pstmt.setString(1, checkValue(dog.getNameKor()));
+			pstmt.setString(2, checkValue(dog.getNameEng()));
+			pstmt.setString(3, checkValue(dog.getDogSize()));
+			pstmt.setString(4, checkValue(dog.getOrigin()));
+			pstmt.setString(5, checkValue(dog.getHistory()));
+			pstmt.setString(6, checkValue(dog.getLifespan()));
+			pstmt.setString(7, checkValue(dog.getPersonality()));
+			pstmt.setString(8, checkValue(dog.getWeight()));
+			pstmt.setString(9, checkValue(dog.getHeight()));
+			pstmt.setString(10, checkValue(dog.getCoat()));
+			pstmt.setString(11, checkValue(dog.getColor()));
+			pstmt.setString(12, checkValue(dog.getBarkingLevel()));
+			pstmt.setString(13, checkValue(dog.getIntelligence()));
+			pstmt.setString(14, checkValue(dog.getTrainingDifficulty()));
+			pstmt.setString(15, checkValue(dog.getExercise()));
+			pstmt.setString(16, checkValue(dog.getHealthIssues()));
+			pstmt.setString(17, checkValue(dog.getGrooming()));
+			pstmt.setString(18, checkValue(dog.getBeginnerFriendly()));
+			pstmt.setString(19, checkValue(dog.getEnvironment()));
+			pstmt.setString(20, checkValue(dog.getImage()));
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+	}
+
+	// 고양이 사전 쓰기
+	public void insertDictionaryCat(Cat cat) {
+		String insertDictionaryCatSql = "INSERT INTO cat VALUES (cat_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(insertDictionaryCatSql);
+			pstmt.setString(1, checkValue(cat.getNameKor()));
+			pstmt.setString(2, checkValue(cat.getNameEng()));
+			pstmt.setString(3, checkValue(cat.getOrigin()));
+			pstmt.setString(4, checkValue(cat.getHistory()));
+			pstmt.setString(5, checkValue(cat.getLifespan()));
+			pstmt.setString(6, checkValue(cat.getPersonality()));
+			pstmt.setString(7, checkValue(cat.getWeight()));
+			pstmt.setString(8, checkValue(cat.getHeight()));
+			pstmt.setString(9, checkValue(cat.getCoat()));
+			pstmt.setString(10, checkValue(cat.getColor()));
+			pstmt.setString(11, checkValue(cat.getVocality()));
+			pstmt.setString(12, checkValue(cat.getIntelligence()));
+			pstmt.setString(13, checkValue(cat.getAffectionLevel()));
+			pstmt.setString(14, checkValue(cat.getIndependence()));
+			pstmt.setString(15, checkValue(cat.getActivityLevel()));
+			pstmt.setString(16, checkValue(cat.getGrooming()));
+			pstmt.setString(17, checkValue(cat.getHealthIssues()));
+			pstmt.setString(18, checkValue(cat.getSheddingLevel()));
+			pstmt.setString(19, checkValue(cat.getHypoallergenic()));
+			pstmt.setString(20, checkValue(cat.getCompatibilityWithKids()));
+			pstmt.setString(21, checkValue(cat.getBeginnerFriendly()));
+			pstmt.setString(22, checkValue(cat.getEnvironment()));
+			pstmt.setString(23, checkValue(cat.getBreedType()));
+			pstmt.setString(24, checkValue(cat.getImage()));
+			pstmt.setInt(25, cat.getId());
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+	}
+
+	// 강아지 사전 수정
+	public void updateDictionaryDog(Dog dog) {
+		String updateDictionaryDogSql = "UPDATE dog SET name_ko=?, name_en=?, dog_size=?, origin=?, history=?, lifespan=?, personality=?, weight=?, "
+				+ "height=?, coat=?, color=?, barking_level=?, intelligence=?, training_difficulty=?, exercise=?, health_issues=?, "
+				+ "grooming=?, beginner_friendly=?, environment=?, image=? WHERE id=?";
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(updateDictionaryDogSql);
+			pstmt.setString(1, checkValue(dog.getNameKor()));
+			pstmt.setString(2, checkValue(dog.getNameEng()));
+			pstmt.setString(3, checkValue(dog.getDogSize()));
+			pstmt.setString(4, checkValue(dog.getOrigin()));
+			pstmt.setString(5, checkValue(dog.getHistory()));
+			pstmt.setString(6, checkValue(dog.getLifespan()));
+			pstmt.setString(7, checkValue(dog.getPersonality()));
+			pstmt.setString(8, checkValue(dog.getWeight()));
+			pstmt.setString(9, checkValue(dog.getHeight()));
+			pstmt.setString(10, checkValue(dog.getCoat()));
+			pstmt.setString(11, checkValue(dog.getColor()));
+			pstmt.setString(12, checkValue(dog.getBarkingLevel()));
+			pstmt.setString(13, checkValue(dog.getIntelligence()));
+			pstmt.setString(14, checkValue(dog.getTrainingDifficulty()));
+			pstmt.setString(15, checkValue(dog.getExercise()));
+			pstmt.setString(16, checkValue(dog.getHealthIssues()));
+			pstmt.setString(17, checkValue(dog.getGrooming()));
+			pstmt.setString(18, checkValue(dog.getBeginnerFriendly()));
+			pstmt.setString(19, checkValue(dog.getEnvironment()));
+			pstmt.setString(20, checkValue(dog.getImage()));
+			pstmt.setInt(21, dog.getId());
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+	}
+
+	// 고양이 사전 수정
+	public void updateDictionaryCat(Cat cat) {
+		String updateDictionaryCatSql = "UPDATE cat SET name_ko=?, name_en=?, origin=?, history=?, lifespan=?, personality=?, weight=?, "
+				+ "height=?, coat=?, color=?, vocality=?, intelligence=?, affection_level=?, independence=?, activity_level=?, "
+				+ "grooming=?, health_issues=?, shedding_level=?, hypoallergenic=?, compatibility_with_kids=?, "
+				+ "beginner_friendly=?, environment=?, breed_type=?, image=? WHERE id=?";
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(updateDictionaryCatSql);
+			pstmt.setString(1, checkValue(cat.getNameKor()));
+			pstmt.setString(2, checkValue(cat.getNameEng()));
+			pstmt.setString(3, checkValue(cat.getOrigin()));
+			pstmt.setString(4, checkValue(cat.getHistory()));
+			pstmt.setString(5, checkValue(cat.getLifespan()));
+			pstmt.setString(6, checkValue(cat.getPersonality()));
+			pstmt.setString(7, checkValue(cat.getWeight()));
+			pstmt.setString(8, checkValue(cat.getHeight()));
+			pstmt.setString(9, checkValue(cat.getCoat()));
+			pstmt.setString(10, checkValue(cat.getColor()));
+			pstmt.setString(11, checkValue(cat.getVocality()));
+			pstmt.setString(12, checkValue(cat.getIntelligence()));
+			pstmt.setString(13, checkValue(cat.getAffectionLevel()));
+			pstmt.setString(14, checkValue(cat.getIndependence()));
+			pstmt.setString(15, checkValue(cat.getActivityLevel()));
+			pstmt.setString(16, checkValue(cat.getGrooming()));
+			pstmt.setString(17, checkValue(cat.getHealthIssues()));
+			pstmt.setString(18, checkValue(cat.getSheddingLevel()));
+			pstmt.setString(19, checkValue(cat.getHypoallergenic()));
+			pstmt.setString(20, checkValue(cat.getCompatibilityWithKids()));
+			pstmt.setString(21, checkValue(cat.getBeginnerFriendly()));
+			pstmt.setString(22, checkValue(cat.getEnvironment()));
+			pstmt.setString(23, checkValue(cat.getBreedType()));
+			pstmt.setString(24, checkValue(cat.getImage()));
+			pstmt.setInt(25, cat.getId());
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+	}
+
+	// 다이어리 삭제
+	public void deleteDictionary(int id, String type) {
+
+		String deleteDictionarySql = "DELETE FROM " + type + " WHERE id=?";
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(deleteDictionarySql);
+			pstmt.setInt(1, id);
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+	}
 
 	// 전문가 혹은 어드민 계정인지 체크하는 메소드
 	public boolean isExpert(String id) {
@@ -378,5 +497,12 @@ public class DictionaryDao {
 			DBManager.close(conn, pstmt, rs);
 		}
 		return (role.equals("expert") || role.equals("admin"));
+	}
+
+	String checkValue(String str) {
+		if (str == null || str.equals("")) {
+			return "작성중";
+		} else
+			return str;
 	}
 }

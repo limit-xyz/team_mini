@@ -4,18 +4,23 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import com.miniproject.common.service.CommandProcess;
+import com.miniproject.dao.DiaryDao;
+import com.miniproject.dao.DictionaryDao;
+import com.miniproject.vo.Cat;
+import com.miniproject.vo.Diary;
+import com.miniproject.vo.Dog;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class DictionaryWriteFormService implements CommandProcess {
+public class DictionaryUpdateFormService implements CommandProcess {
 
 	@Override
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String id = (String) request.getSession().getAttribute("id");
+		int animalId = Integer.parseInt(request.getParameter("animalId"));
 		String type = request.getParameter("type");
 		String searchType = request.getParameter("searchDiaryType");
 		String searchKeyword = request.getParameter("searchDiaryKeyword");
@@ -24,35 +29,25 @@ public class DictionaryWriteFormService implements CommandProcess {
 		if (searchType != null && searchKeyword != null && !searchType.equals("") && !searchKeyword.equals(""))
 			isSearch = true;
 
-		if (id == null) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("<script>");
-			sb.append("	alert('세션이 만료되었습니다.\n다시 로그인해주세요.');");
-			sb.append("	location.href='" + request.getContextPath() + "/member/loginForm'");
-			sb.append("</script>");
-
-			response.setContentType("text/html; charset=utf-8");
-			PrintWriter out = response.getWriter();
-			out.println(sb.toString());
-			return null;
-		}
-
+		DictionaryDao dao = new DictionaryDao();
 		if (isSearch) {
 			request.setAttribute("searchDiaryOption", "1");
 			request.setAttribute("searchDiaryType", searchType);
 			request.setAttribute("searchDiaryKeyword", searchKeyword);
 		}
 
-		request.setAttribute("pageNum", request.getParameter("pageNum"));
-
 		if (type.equals("dog")) {
-			return "dictionary/dictionaryDogWriteForm";
+			Dog dog = dao.getDogDictionary(animalId);
+			request.setAttribute("dog", dog);
+			return "dictionary/dictionaryDogUpdateForm";
 		}
-
+		
 		else if (type.equals("cat")) {
-			return "dictionary/dictionaryCatWriteForm";
+			Cat cat = dao.getCatDictionary(animalId);
+			request.setAttribute("cat", cat);
+			return "dictionary/dictionaryCatUpdateForm";	
 		}
-
+		
 		else {
 			StringBuilder sb = new StringBuilder();
 			sb.append("<script>");

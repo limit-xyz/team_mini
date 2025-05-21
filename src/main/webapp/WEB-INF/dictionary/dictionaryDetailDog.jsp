@@ -27,9 +27,9 @@
 						<tr>
 							<td colspan="12">
 							  <div style="width: 100%; max-width: 500px; aspect-ratio: 1 / 1;" class="mx-auto">
-							    <img src="filePath.ajax?fileName=${dog.image}" 
-							         class="img-fluid rounded d-block mx-auto"
-							         style="width: 100%; height: 100%; object-fit: cover;">
+								<img src="filePath.ajax?fileName=${dog.image}" 
+							       class="img-fluid rounded d-block mx-auto"
+							       style="width: 100%; height: 100%; object-fit: cover;">
 							  </div>
 							</td>		
 						</tr>
@@ -125,8 +125,10 @@
 		<div class="row my-3">
 			<div class="col text-center">
 				<c:if test="${isExpert}">				
-					<input class="btn btn-warning" type="button" id="dictionaryUpdate" value="수정하기" data-dictionary-no="${dictionary.no}" />
-					<input class="btn btn-danger"  type="button" id="dictionaryDelete" value="삭제하기" data-dictionary-no="${dictionary.no}" />				
+					<input class="btn btn-warning" type="button" id="dictionaryUpdate" value="수정하기"
+						data-animal-id="${dog.id}" data-animal-type="dog" />
+					<input class="btn btn-danger"  type="button" id="dictionaryDelete" value="삭제하기"
+						data-animal-id="${dog.id}" data-animal-type="dog"/>				
 				</c:if>
 				
 				<input class="btn btn-primary" type="button" value="목록보기" 

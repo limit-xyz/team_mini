@@ -1,6 +1,7 @@
 package com.miniproject.dictionary.service;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import com.miniproject.common.service.CommandProcess;
 import com.miniproject.dao.DictionaryDao;
@@ -58,6 +59,15 @@ public class DictionaryDetailService implements CommandProcess {
 		}
 
 		else {
+			StringBuilder sb = new StringBuilder();
+			sb.append("<script>");
+			sb.append("	alert('잘못된 요청입니다.');");
+			sb.append("	history.back()");
+			sb.append("</script>");
+
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println(sb.toString());
 			return null;
 		}
 	}

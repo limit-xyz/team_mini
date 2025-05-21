@@ -200,7 +200,7 @@ public class DiaryDao {
 		}
 	}
 
-	// 다이어리 쓰기
+	// 다이어리 수정
 	public void updateDiary(Diary diary, int no) {
 		String updateDiarylSql = "UPDATE diary SET pet_name=?, title=?, content=?, photo=? WHERE diary_no=?";
 
@@ -222,7 +222,7 @@ public class DiaryDao {
 		}
 	}
 
-	// 다이어리 삭제하기
+	// 다이어리 삭제
 	public void deleteDiary(int no) {
 
 		String deleteDiarylSql = "DELETE FROM diary WHERE diary_no=?";

@@ -22,8 +22,16 @@
 		<c:if test="${isExpert}">
 			<div class="row my-3">
 				<div class="col text-end">
-					<a class="btn btn-outline-success"
-					href="dictionaryWriteForm?pageNum=${pageNum}&searchDictionaryType=${searchDictionaryType}&searchDictionaryKeyword=${searchDictionaryKeyword}">글쓰기</a>
+					<form action="dictionaryWriteForm">
+						<input type="hidden" name="pageNum" value="${pageNum}">
+						<input type="hidden" name="searchDictionaryType" value="${searchDictionaryType}">
+						<input type="hidden" name="searchDictionaryKeyword" value="${searchDictionaryKeyword}">
+						<select name="type">
+							<option value="dog" selected>강아지</option>
+							<option value="cat">고양이</option>
+						</select>
+						<button type="submit" class="btn btn-outline-success">글쓰기</button>
+					</form>
 				</div>
 			</div>
 		</c:if>
@@ -116,7 +124,7 @@
 
 <div class="row my-1">
 	<div class="col">
-		<form name="searchDirectoryForm" id="searchDirectoryForm"  action="dictionaryList"
+		<form name="searchDictionaryForm" id="searchDictionaryForm"  action="dictionaryList"
 			class="row justify-content-center my-2 ">
 			<div class="col-auto">
 				<select name="searchDictionaryType" class="form-select">

@@ -140,8 +140,13 @@
 		<!-- 상세보기 버튼 영역 -->
 		<div class="row my-3">
 			<div class="col text-center">				
-				<input class="btn btn-warning" type="button" id="dictionaryUpdate" value="수정하기" data-dictionary-no="${dictionary.no}" />
-				<input class="btn btn-danger"  type="button" id="dictionaryDelete" value="삭제하기" data-dictionary-no="${dictionary.no}" />				
+				<c:if test="${isExpert}">				
+					<input class="btn btn-warning" type="button" id="dictionaryUpdate" value="수정하기"
+						data-animal-id="${cat.id}" data-animal-type="cat" />
+					<input class="btn btn-danger"  type="button" id="dictionaryDelete" value="삭제하기"
+						data-animal-id="${cat.id}" data-animal-type="cat"/>				
+				</c:if>
+							
 				<input class="btn btn-primary" type="button" value="목록보기" 
 				onclick="location.href='dictionaryList?pageNum=${pageNum}&searchDictionaryType=${searchDictionaryType}&searchDictionaryKeyword=${searchDictionaryKeyword}'"/>
 			</div>		
