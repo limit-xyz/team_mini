@@ -1,14 +1,11 @@
 package com.miniproject.dictionary.service;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import com.miniproject.common.service.CommandProcess;
-import com.miniproject.dao.DiaryDao;
 import com.miniproject.dao.DictionaryDao;
 import com.miniproject.vo.Animal;
-import com.miniproject.vo.Diary;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

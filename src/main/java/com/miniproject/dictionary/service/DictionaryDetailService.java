@@ -3,9 +3,7 @@ package com.miniproject.dictionary.service;
 import java.io.IOException;
 
 import com.miniproject.common.service.CommandProcess;
-import com.miniproject.dao.DiaryDao;
 import com.miniproject.dao.DictionaryDao;
-import com.miniproject.vo.Diary;
 import com.miniproject.vo.Dog;
 import com.miniproject.vo.Cat;
 
