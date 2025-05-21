@@ -70,7 +70,7 @@ public class AdoptionDeleteService implements CommandProcess{
 		boolean searchOption = (type != null || !type.equals("")
 				|| keyword != null || !keyword.equals("")); 
 		
-		String url = request.getContextPath() +"/adoptionboard/adoptionList?pageNum=" + pageNum;
+		String url = request.getContextPath() +"/adoption/AdoptionList?pageNum=" + pageNum;
 		
 		if(searchOption) {
 			keyword = URLEncoder.encode(keyword, "UTF-8");

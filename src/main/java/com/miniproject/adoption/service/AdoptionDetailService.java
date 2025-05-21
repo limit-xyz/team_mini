@@ -33,7 +33,7 @@ public class AdoptionDetailService implements CommandProcess {
 		String animalTypeMain = request.getParameter("animalTypeMain");
 		String keyword = request.getParameter("keyword");
 
-		if (postIdParam == null || postIdParam.equals("") || pageNum == null || pageNum.equals("")) {
+		if (postIdParam == null || postIdParam.equals("")) {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
@@ -41,9 +41,15 @@ public class AdoptionDetailService implements CommandProcess {
 			out.println("	location.href='/team_mini/adoption/AdoptionList'");
 			out.println("</script>");
 			out.close();
+		
 			return null;
 		}
+		if(pageNum == null || pageNum.equals("")) {
+			pageNum ="1";
+		}
 		int postId = Integer.parseInt(postIdParam);
+		System.out.println("AdoptionDetailService - postIdParam: " + postIdParam);
+		System.out.println("AdoptionDetailService - postId: " + postId);
 
 		boolean searchOption = false;
 		if (searchColumn != null && !searchColumn.isEmpty()) {
@@ -65,6 +71,7 @@ public class AdoptionDetailService implements CommandProcess {
 
 		try {
 			adoptionDetail = dao.getAdoption(postId, true);
+			 System.out.println("AdoptionDetailService - 게시글 조회 결과: " + (adoptionDetail == null ? "null" : "not null"));
 		} catch (SQLException e) {
 
 			e.printStackTrace(); // 오류를 로그에 기록합니다.

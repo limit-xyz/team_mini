@@ -79,7 +79,7 @@
 			</div>
 		<div class="row my-3"> 
 			<div class="col text-center">			
-			<c:if test="${sessionScope.id == adopboard.userId || sessionScope.user_role == 'admin' }">
+			<c:if test="${sessionScope.id == adopboard.userId || sessionScope.role == 'admin' }">
 				<input type="button" class="btn btn-primary" id="detailUpdate" value="수정하기">
 				<input type="button" class="btn btn-danger ms-2 me-2" id="detailDelete" value="삭제하기">
 				</c:if>
@@ -108,7 +108,7 @@
 										<fmt:formatDate value="${reply.createdAt}" pattern="yyyy-MM-dd : HH:mm:ss" />
 										</span>
 										<%-- 댓글 작성자 또는 관리자에게만 보일 버튼 --%>
-										<c:if test="${sessionScope.id == reply.userId || sessionScope.user_role == 'admin' }">
+										<c:if test="${sessionScope.id == reply.userId || sessionScope.role == 'admin' }">
 										
 										<button class="modifyReply btn btn-outline-success btn-sm" data-no='${reply.replyId}'>
 										<i class="bi bi-file-text"> 수정</i></button>
@@ -219,8 +219,13 @@ document.getElementById("detailUpdate").addEventListener("click", function(){
 
 document.getElementById("detailDelete").addEventListener("click", function(){
 	const postId = document.getElementById("postId").value;
+	const pageNum = document.querySelector("input[name='pageNum']").value;
+	const type = document.querySelector("input[name='searchColumn']")?.value ||"";
+	const keyword = document.querySelector("input[name='keyword']")?.value || "";
+	
 	if(confirm("정말 게시글을 삭제하시겠습니까?")){
-		location.href = "${pageContext.request.contextPath}/adoption/AdoptionDelete?postId=" + postId;
+		location.href = "${pageContext.request.contextPath}/adoption/AdoptionDelete?postId=" + postId + "&pageNum="
+				+ pageNum + "&type=" + encodeURIComponent(type) + "&keyword=" + encodeURIComponent(keyword);
 	}
 });
 

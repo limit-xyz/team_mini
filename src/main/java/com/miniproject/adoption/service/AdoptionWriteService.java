@@ -125,7 +125,7 @@ public class AdoptionWriteService implements CommandProcess{
 		        }
 			  
 			if(postId > 0) {				
-				return "redirect:" + request.getContextPath() + "/adoptionboard/adoptionDetail?postId=" + postId;
+				return "redirect:" + request.getContextPath() + "/adoption/AdoptionDetail?postId=" + postId;
 			} else {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<script> alert('게시글 작성에 실패하였습니다.'); history.back(); </script>");
