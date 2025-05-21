@@ -49,7 +49,7 @@
                   <a class="nav-link" href="#">커뮤니티</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">입양/분양</a>
+                  <a class="nav-link" href="${pageContext.request.contextPath}/adoption/AdoptionList">입양/분양</a>
                 </li>
               </ul>
               <form class="d-flex " role="search">

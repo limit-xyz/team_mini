@@ -75,7 +75,7 @@
 					</div>
 				</div>
 			</a>
-			<a href="#" class="card-link">	
+			<a href="${pageContext.request.contextPath}/dictionary/dictionaryList" class="card-link">	
 				<div class="outer-container">
 					<div class="circle-image">
 						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKd6WgOp3mnB0Kaw8WdOS6-bNJjPqCbNW30Q&s">
