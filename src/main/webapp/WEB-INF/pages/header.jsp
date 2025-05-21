@@ -27,7 +27,7 @@
         </div>
         <nav class="navbar navbar-expand-lg ">
           <div class="container-fluid">
-            <a class="navbar-brand h-40" href="#"><img src="${pageContext.request.contextPath}/images/logo.png" alt=""></a>
+            <a class="navbar-brand h-40" href="${pageContext.request.contextPath}/main"><img src="${pageContext.request.contextPath}/images/logo.png" alt=""></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
