@@ -46,7 +46,7 @@
                   <a class="nav-link" href="#">상품 정보</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">커뮤니티</a>
+                  <a class="nav-link" href="${pageContext.request.contextPath}/free/boardList">커뮤니티</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">입양/분양</a>
