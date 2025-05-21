@@ -95,18 +95,35 @@ $(function() {
             bounds.extend(coords);
 
             const listItem = document.createElement('li');
-            listItem.innerHTML = `
-              <strong>${place.place_name}</strong><br>
-              ${place.address}<br>
-              ${place.phone}<br>
-							
-              <a href="${place.place_url}" target="_blank">
-								${dataSelect =="hospital" ? "동물병원 정보" : "미용실 정보"} 
-							</a><br><br>
-            `;
-						listEl.style.borderRadius = "8px";
-						listEl.style.border = "1px solid black";
-						listEl.style.padding = "15px";
+						const span1 = document.createElement('span');
+						span1.innerHTML = `<strong>${place.place_name}</strong><br>`
+						listItem.appendChild(span1);
+						
+						const span2 = document.createElement('span');
+						span2.innerHTML = `${place.address}<br>`
+						listItem.appendChild(span2);
+						
+						const span3 = document.createElement('span');
+						span3.innerHTML = `전화번호 : ${place.phone}<br>`
+						listItem.appendChild(span3);
+						
+						const span4 = document.createElement('span');
+						span4.innerHTML = `<a href="${place.place_url}" target="_blank">
+														${dataSelect =="hospital" ? "동물병원 정보" : "미용실 정보"}`
+						listItem.appendChild(span4);
+					
+            //listItem.innerHTML = `
+            //  <strong>${place.place_name}</strong><br>
+            //  ${place.address}<br>
+            //  ${place.phone}<br>
+            //  <a href="${place.place_url}" target="_blank">
+						//		${dataSelect =="hospital" ? "동물병원 정보" : "미용실 정보"} 
+						//	</a><br><br>
+            //`;
+						
+						//listEl.style.borderRadius = "8px";
+						//listEl.style.border = "1px solid black";
+						//listEl.style.padding = "15px";
             listEl.appendChild(listItem);
             listItem.onclick = () => map.panTo(coords);
 
