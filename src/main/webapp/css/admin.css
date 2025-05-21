@@ -1,74 +1,331 @@
 @charset "UTF-8";
 
-        /* 이 페이지 전용 CSS */
-        :root {
-            --main-theme-color: #C5E1D4;
-            --main-theme-darker-text: #2c5c49;
-            --main-theme-border-color: #b0d1c0;
-            --main-theme-light-bg: #eef3f1;
-            --text-muted-custom: #5a6670;
-            --card-hover-shadow: 0 0.5rem 1rem rgba(0,0,0,0.12);
-            --card-default-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
-        }
+/* =============================================== */
+/* 0. 관리자 페이지 테마 :root 변수 정의          */
+/* =============================================== */
+:root {
+	--admin-main-color: #C5E1D4; /* 기존 테마색 유지 */
+	--admin-darker-text: #2c5c49;
+	--admin-border-color: #b0d1c0;
+	--admin-light-bg: #eef3f1;
+	--admin-text-muted: #5a6670;
+	--admin-card-hover-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.12);
+	--admin-card-default-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+	--admin-white-bg: #fff;
+	--admin-body-bg: #f8f9fa;
+	--admin-table-hover-bg: #f0f5f3;
+	--admin-link-color: #333;
+	--admin-danger-color: #dc3545; /* 부트스트랩 danger */
+	--admin-warning-color: #ffc107; /* 부트스트랩 warning */
+	--admin-success-color: #198754; /* 부트스트랩 success */
+}
 
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: #f8f9fa; /* 페이지 전체 배경색 */
-        }
+/* =============================================== */
+/* 1. 관리자 페이지 기본 & 공통 스타일             */
+/* =============================================== */
+body.admin-page-scope { /* 관리자 페이지 body에 admin-page-scope 클래스 추가 가정 */
+	font-family: 'Noto Sans KR', sans-serif;
+	background-color: var(--admin-body-bg);
+}
 
-        .page-section {
-            /* 각 섹션(관리자, 사용자)에 대한 추가적인 스타일링이 필요하면 여기에 */
-        }
+/* 관리자 페이지의 대표 제목 (예: "멤버 리스트") */
+.admin-page-title {
+	font-size: 1.8rem;
+	font-weight: 700;
+	text-align: center;
+	color: var(--admin-darker-text);
+	margin-top: 1.5rem; /* HTML에서 my-4 등으로 조절 */
+	margin-bottom: 0.75rem;
+}
 
-        .section-title {
-            font-weight: 700;
-            color: var(--main-theme-darker-text);
-            margin-bottom: 1rem; /* h2의 기본 mb-5 대신 사용 */
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid var(--main-theme-color);
-            display: inline-block; /* border-bottom이 텍스트 길이에 맞게 적용되도록 */
-        }
+.admin-short-hr { /* 제목 아래 짧은 구분선 */
+	width: 60px;
+	border-top: 2px solid var(--admin-main-color);
+	opacity: 0.75;
+	margin-top: 0.5rem;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 2.5rem;
+}
 
-        .admin-info, .user-info {
-            font-size: 0.9rem;
-            color: var(--text-muted-custom);
-            margin-bottom: 2rem;
-        }
+/* 관리자 페이지 공통 테마 버튼 */
+.btn-admin-theme {
+	background-color: var(--admin-main-color);
+	border-color: var(--admin-border-color);
+	color: var(--admin-darker-text);
+	font-weight: 500;
+}
 
-        .dashboard-card-link {
-            display: block;
-            background-color: #fff;
-            border: 1px solid var(--main-theme-border-color);
-            border-radius: 0.5rem; /* 부트스트랩 기본보다 약간 더 둥글게 */
-            padding: 1.5rem;
-            text-align: center;
-            text-decoration: none;
-            color: var(--main-theme-darker-text);
-            transition: all 0.2s ease-in-out;
-            box-shadow: var(--card-default-shadow);
-            height: 100%; /* 같은 row에 있는 카드 높이 통일 */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+.btn-admin-theme:hover, .btn-admin-theme:focus {
+	background-color: #b3d6c6; /* var(--admin-main-color) 보다 약간 어둡게 */
+	border-color: #a0c3b3; /* var(--admin-border-color) 보다 약간 어둡게 */
+	color: var(--admin-darker-text);
+}
 
-        .dashboard-card-link:hover,
-        .dashboard-card-link:focus {
-            transform: translateY(-5px);
-            box-shadow: var(--card-hover-shadow);
-            border-color: var(--main-theme-color);
-            color: var(--main-theme-darker-text);
-        }
+.btn .bi { /* 버튼 내 아이콘 공통 정렬 */
+	vertical-align: text-bottom;
+	margin-bottom: 0.05em;
+}
 
-        .dashboard-card-link .card-icon {
-            font-size: 2.5rem; /* 아이콘 크기 */
-            margin-bottom: 0.75rem;
-            color: var(--main-theme-color);
-        }
+/* =============================================== */
+/* 2. 어드민 메인(대시보드) 페이지 스타일          */
+/* =============================================== */
+.admin-dashboard-section {
+	margin-top: 2rem; /* HTML my-5와 유사 */
+	margin-bottom: 2rem;
+}
 
-        .dashboard-card-link .card-link-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0;
-        }
+.admin-section-title { /* 대시보드 내 "관리자 페이지", "사용자 페이지"와 같은 섹션 제목 */
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: var(--admin-darker-text);
+	margin-bottom: 1rem;
+	padding-bottom: 0.75rem;
+	border-bottom: 2px solid var(--admin-main-color);
+	display: inline-block;
+}
+
+.admin-dashboard-info { /* 대시보드 내 부가 정보 (예: 어드민 계정 on) */
+	font-size: 0.9rem;
+	color: var(--admin-text-muted);
+	margin-bottom: 2rem;
+}
+
+.admin-dashboard-card-link { /* 대시보드 메뉴 카드 링크 */
+	display: block;
+	background-color: var(--admin-white-bg);
+	border: 1px solid var(--admin-border-color);
+	border-radius: 0.5rem;
+	padding: 1.5rem;
+	text-align: center;
+	text-decoration: none;
+	color: var(--admin-darker-text);
+	transition: all 0.2s ease-in-out;
+	box-shadow: var(--admin-card-default-shadow);
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.admin-dashboard-card-link:hover, .admin-dashboard-card-link:focus {
+	transform: translateY(-5px);
+	box-shadow: var(--admin-card-hover-shadow);
+	border-color: var(--admin-main-color);
+	color: var(--admin-darker-text);
+}
+
+.admin-dashboard-card-link .card-icon {
+	font-size: 2.5rem;
+	margin-bottom: 0.75rem;
+	color: var(--admin-main-color);
+}
+
+.admin-dashboard-card-link .card-link-title {
+	font-size: 1.1rem;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* =============================================== */
+/* 3. 멤버 리스트 테이블 스타일                    */
+/* =============================================== */
+.admin-member-list-table td.td-actions .btn-group .btn {
+    border-radius: 0; /* 버튼의 둥근 모서리 제거 */
+    width:90px;
+}
+
+
+.admin-member-list-table {
+	width: 100%;
+	word-break: break-word;
+	border-collapse: collapse;
+}
+
+.admin-member-list-table thead th {
+	background-color: var(--admin-light-bg);
+	color: var(--admin-darker-text);
+	font-weight: 500;
+	vertical-align: middle;
+	text-align: center;
+	white-space: nowrap;
+	padding: 0.65rem 0.5rem;
+	border: 1px solid #dee2e6; /* 부트스트랩 기본 테두리 */
+}
+
+.admin-member-list-table th.clickable-header {
+	cursor: pointer;
+}
+
+.admin-member-list-table th.clickable-header:hover {
+	background-color: #dde8e3;
+}
+
+.admin-member-list-table tbody td {
+	vertical-align: middle;
+	font-size: 0.875rem;
+	text-align: center;
+	padding: 0.5rem;
+	border: 1px solid #dee2e6;
+}
+
+.admin-member-list-table tbody tr:hover {
+	background-color: var(--admin-table-hover-bg);
+}
+
+.admin-member-list-table .form-select.form-select-sm {
+	font-size: 0.85rem;
+	padding: 0.25rem 0.5rem;
+	min-width: 110px;
+	max-width: 100%;
+	display: inline-block;
+	width: auto;
+}
+
+/* 컬럼별 너비 및 정렬 (멤버 리스트 테이블) */
+.admin-member-list-table .th-id, .admin-member-list-table .td-id {
+	width: 6%;
+	min-width: 60px;
+}
+
+.admin-member-list-table .th-name, .admin-member-list-table .td-name {
+	width: 8%;
+	min-width: 90px;
+}
+
+.admin-member-list-table .th-gender, .admin-member-list-table .td-gender
+	{
+	width: 5%;
+	min-width: 50px;
+}
+
+.admin-member-list-table .th-phone, .admin-member-list-table .td-phone {
+	width: 10%;
+	min-width: 110px;
+	white-space: nowrap;
+}
+
+.admin-member-list-table .th-zipcode, .admin-member-list-table .td-zipcode
+	{
+	width: 6%;
+	min-width: 60px;
+}
+
+.admin-member-list-table .th-address1, .admin-member-list-table .td-address1
+	{
+	width: 15%;
+	min-width: 180px;
+	text-align: left;
+}
+
+.admin-member-list-table .th-address2, .admin-member-list-table .td-address2
+	{
+	width: 11%;
+	min-width: 120px;
+	text-align: left;
+}
+
+.admin-member-list-table .th-regdate, .admin-member-list-table .td-regdate
+	{
+	width: 7%;
+	min-width: 85px;
+	white-space: nowrap;
+}
+
+.admin-member-list-table .th-birthdate, .admin-member-list-table .td-birthdate
+	{
+	width: 7%;
+	min-width: 85px;
+	white-space: nowrap;
+}
+
+.admin-member-list-table .th-bandate, .admin-member-list-table .td-bandate
+	{
+	width: 8%;
+	min-width: 100px;
+	white-space: nowrap;
+}
+
+.admin-member-list-table .th-role, .admin-member-list-table .td-role {
+	width: 8%;
+	min-width: 115px;
+}
+
+.admin-member-list-table .th-actions, .admin-member-list-table .td-actions
+	{
+	width: auto;
+	white-space: nowrap;
+}
+
+.admin-member-list-table td.td-actions .btn-group {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.admin-member-list-table td.td-actions .btn.btn-sm {
+	font-size: 0.78rem;
+	padding: 0.2rem 0.5rem;
+}
+
+/* =============================================== */
+/* 4. 검색 폼 스타일 (멤버 리스트 페이지)          */
+/* =============================================== */
+#adminSearchMemberForm .form-label {
+	/* HTML에서 id="adminSearchMemberForm" 사용 가정 */
+	font-size: 0.9rem;
+	font-weight: 500;
+	white-space: nowrap;
+	padding-top: 0.375rem;
+}
+
+#adminSearchMemberForm .btn {
+	font-weight: 500;
+}
+
+/* =============================================== */
+/* 5. 모달 스타일 (멤버 리스트 페이지 등 공용)      */
+/* =============================================== */
+.admin-modal .modal-header { /* 모달에 .admin-modal 클래스 추가 가정 */
+	background-color: var(--admin-main-color);
+	color: var(--admin-darker-text);
+	border-bottom: 1px solid var(--admin-border-color);
+}
+
+.admin-modal .modal-header .btn-close {
+	filter: invert(20%) sepia(12%) saturate(1000%) hue-rotate(100deg)
+		brightness(60%) contrast(100%);
+}
+
+.admin-modal .modal-title {
+	font-weight: 600;
+}
+/* 모달 내 strong 태그의 색상 (예: #banUserId) */
+.admin-modal #banUserId {
+	color: var(--admin-darker-text);
+}
+
+/* =============================================== */
+/* 6. 페이지네이션 스타일 (공통 적용)             */
+/* =============================================== */
+.pagination .page-link.active {
+	background-color: var(--admin-main-color);
+	border-color: var(--admin-border-color);
+	color: var(--admin-darker-text);
+	z-index: 1;
+}
+
+.pagination .page-link {
+	color: var(--admin-darker-text);
+}
+
+.pagination .page-link:hover {
+	background-color: #e0f0e8;
+}
+
+.pagination .page-item.disabled .page-link {
+	color: #868e96;
+	background-color: transparent;
+	border-color: #dee2e6;
+}
