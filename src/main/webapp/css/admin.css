@@ -1,0 +1,74 @@
+@charset "UTF-8";
+
+        /* 이 페이지 전용 CSS */
+        :root {
+            --main-theme-color: #C5E1D4;
+            --main-theme-darker-text: #2c5c49;
+            --main-theme-border-color: #b0d1c0;
+            --main-theme-light-bg: #eef3f1;
+            --text-muted-custom: #5a6670;
+            --card-hover-shadow: 0 0.5rem 1rem rgba(0,0,0,0.12);
+            --card-default-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8f9fa; /* 페이지 전체 배경색 */
+        }
+
+        .page-section {
+            /* 각 섹션(관리자, 사용자)에 대한 추가적인 스타일링이 필요하면 여기에 */
+        }
+
+        .section-title {
+            font-weight: 700;
+            color: var(--main-theme-darker-text);
+            margin-bottom: 1rem; /* h2의 기본 mb-5 대신 사용 */
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--main-theme-color);
+            display: inline-block; /* border-bottom이 텍스트 길이에 맞게 적용되도록 */
+        }
+
+        .admin-info, .user-info {
+            font-size: 0.9rem;
+            color: var(--text-muted-custom);
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card-link {
+            display: block;
+            background-color: #fff;
+            border: 1px solid var(--main-theme-border-color);
+            border-radius: 0.5rem; /* 부트스트랩 기본보다 약간 더 둥글게 */
+            padding: 1.5rem;
+            text-align: center;
+            text-decoration: none;
+            color: var(--main-theme-darker-text);
+            transition: all 0.2s ease-in-out;
+            box-shadow: var(--card-default-shadow);
+            height: 100%; /* 같은 row에 있는 카드 높이 통일 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dashboard-card-link:hover,
+        .dashboard-card-link:focus {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+            border-color: var(--main-theme-color);
+            color: var(--main-theme-darker-text);
+        }
+
+        .dashboard-card-link .card-icon {
+            font-size: 2.5rem; /* 아이콘 크기 */
+            margin-bottom: 0.75rem;
+            color: var(--main-theme-color);
+        }
+
+        .dashboard-card-link .card-link-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0;
+        }
