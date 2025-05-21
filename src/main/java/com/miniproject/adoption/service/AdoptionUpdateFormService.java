@@ -1,4 +1,4 @@
-package com.miniproject.controller;
+package com.miniproject.adoption.service;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,13 +18,12 @@ public class AdoptionUpdateFormService implements CommandProcess {
 			throws ServletException, IOException {
 		
 		String spostId = request.getParameter("postId");
-		String userIdParam = request.getParameter("userId");
-		String pageNum = request.getParameter("pageNum");
+		String userIdParam = (String) request.getSession().getAttribute("id");
 		String type = request.getParameter("type");
 		String keyword = request.getParameter("keyword");
 		
 		if(spostId == null || spostId.equals("") || userIdParam  == null || userIdParam.equals("")
-				|| pageNum == null || pageNum.equals("")) {
+				) {
 		response.setContentType("text/html; charset=utf-8");
 		response.getWriter().println("<script>alert('잘못된 접근입니다.'); history.back();</script>");
 		return null;
@@ -42,11 +41,10 @@ public class AdoptionUpdateFormService implements CommandProcess {
 			return null;
 		}
 		request.setAttribute("adoptionDto", adoptionDto);
-		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("type", type);
 		request.setAttribute("keyword", keyword);
 		
-		return"${pageContext.request.contextPath}/adoption/AdoptionUpdate";
+		return "adoptionboard/adoptionUpdateForm";
 		
 	} catch(SQLException e){
 		e.printStackTrace();

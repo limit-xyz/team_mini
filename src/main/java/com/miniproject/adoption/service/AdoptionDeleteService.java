@@ -34,7 +34,7 @@ public class AdoptionDeleteService implements CommandProcess{
 		}			
 		
 		HttpSession session = request.getSession();
-		String loggedInUserId = (String) session.getAttribute("userId");  // 세션에서 userId 가져오기
+		String loggedInUserId = (String) session.getAttribute("id");  // 세션에서 userId 가져오기
 
 		if(loggedInUserId == null) { //로그인 확인
 			response.setContentType("text/html; charset=utf-8");
@@ -70,7 +70,7 @@ public class AdoptionDeleteService implements CommandProcess{
 		boolean searchOption = (type != null || !type.equals("")
 				|| keyword != null || !keyword.equals("")); 
 		
-		String url = "${pageContext.request.contextPath}/adoptionboard/AdoptionList?pageNum=" + pageNum;
+		String url = request.getContextPath() +"/adoptionboard/adoptionList?pageNum=" + pageNum;
 		
 		if(searchOption) {
 			keyword = URLEncoder.encode(keyword, "UTF-8");
