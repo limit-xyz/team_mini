@@ -27,7 +27,7 @@ public class AdoptionDeleteService implements CommandProcess{
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("	alert('잘못된 접근 입니다.')");
-			out.println("	location.href='${pageContext.request.contextPath}/adoptionboard/AdoptionList'");
+			out.println("	location.href='/team_mini/adoption/AdoptionList'");
 			out.println("</script>");
 			out.close();
 			return null;

@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:useBean id="post" class="com.miniproject.dao.AdoptionWriteDto" scope="request" />
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page isELIgnored="false" %>
 
 <style>
-/* write 폼과 동일한 CSS 복사 */
+
 .lightform {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -84,6 +83,23 @@
     cursor: not-allowed;
     border: 1px solid #ddd;
 }
+.lightform input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 48%;
+            box-sizing: border-box; 
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+}
+  .lightform    input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+            
 </style>
 
 <div class="lightform">
@@ -95,8 +111,11 @@
 				<form action="${pageContext.request.contextPath}/adoption/AdoptionUpdateService" 
 				 method="post" enctype="multipart/form-data">		
 					
-					<input type = "hidden" name="postId" value="${post.postId}" />
-					<input type = "hidden" name="userId" value="${post.userId}" />
+					
+					<input type = "hidden" id="postId" name="postId" value="${post.postId}" />
+					<input type = "hidden" id="userId" name="userId" value="${post.userId}" />
+					<input type = "hidden" id="type" name="type" value="${type}" />
+					<input type = "hidden" id="keyword" name="keyword" value="${keyword}" />
 				<div>
 					<label for="userId">작성자 ID:</label>
 					<input type="text" id="userId" value="${post.userId}" readonly>
@@ -106,7 +125,7 @@
 					<label for="adoptionType">입양/분양 선택 : </label>
 					<select name="adoptionType" id="adoptionType" required>
 						<option value="입양" ${post.adoptionType == '입양' ? 'selected' : ''}> 입양</option>
-						<option value="분양" ${post.adoptionType == '분양' ? 'selected' : ''}> 입양</option>
+						<option value="분양" ${post.adoptionType == '분양' ? 'selected' : ''}> 분양</option>
 					</select>
 				</div>
 				
@@ -164,7 +183,7 @@
         </div>
 			
         <div class="button-container">
-            <input type="submit" value="수정 완료" />
+           <button type="submit" class="btn btn-primary">수정</button>
             <button type="button" id="cancel-button">취소</button>
         </div>
     </form>
@@ -204,11 +223,17 @@ function updateDetailOption() {
     }
 }
 
+
 window.onload = updateDetailOption;
 
 document.getElementById("cancel-button").addEventListener("click", function() {
     if (confirm("수정을 취소하시겠습니까?")) {
-        location.href = "${pageContext.request.contextPath}/adoption/AdoptionDetail?postId=${post.postId}";
+    	const postId = document.getElementById("postId").value;
+    	 const type = document.getElementById("type").value; 
+         const keyword = document.getElementById("keyword").value;
+         
+         const contextPath = "${pageContext.request.contextPath}";
+         location.href = `${contextPath}/adoption/AdoptionDetail?postId=${postId}&type=${type}&keyword=${keyword}`;
     }
 });
 </script>

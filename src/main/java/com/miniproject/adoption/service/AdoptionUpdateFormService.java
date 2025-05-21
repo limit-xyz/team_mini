@@ -40,7 +40,7 @@ public class AdoptionUpdateFormService implements CommandProcess {
 			response.getWriter().println("<script>alert('수정 권한이 없거나 해당 게시글이 존재하지 않습니다.'); history.back();</script>");
 			return null;
 		}
-		request.setAttribute("adoptionDto", adoptionDto);
+		request.setAttribute("post", adoptionDto);
 		request.setAttribute("type", type);
 		request.setAttribute("keyword", keyword);
 		

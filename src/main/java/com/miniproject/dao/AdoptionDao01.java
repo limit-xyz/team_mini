@@ -388,13 +388,14 @@ public class AdoptionDao01 {
 
 			// 게시글 작성
 		public int insertAdoptionPost(AdoptionWriteDto dto){
-			int result = 0;
+			int postId = 0;
 			String sql = "INSERT INTO adoption_post (post_id, user_id, title, content, adoption_type, region, animal_type_main, animal_type_detail, image_path, created_at, views_count) "
-					   + "VALUES (adoption_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSTIMESTAMP, 0)";
-					
+					   + "VALUES (adoption_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSTIMESTAMP, 0) ";
+			String selectSql = "SELECT MAX(post_id) FROM adoption_post WHERE user_id = ?";		
 			try{
 			 conn = DBManager.getConnection();
 			 DBManager.setAutoCommit(conn, false);
+			 
 				 pstmt = conn.prepareStatement(sql);
 				 pstmt.setString(1, dto.getUserId());
 				 pstmt.setString(2, dto.getTitle());
@@ -405,7 +406,18 @@ public class AdoptionDao01 {
 				 pstmt.setString(7, dto.getAnimalTypeDetail());
 				 pstmt.setString(8, dto.getImagePath());
 					
-				 result = pstmt.executeUpdate();
+				 int result = pstmt.executeUpdate();
+				 
+				 if(result >0) {
+					 pstmt.close();
+					 pstmt = conn.prepareStatement(selectSql);
+					 pstmt.setString(1, dto.getUserId());
+					 rs = pstmt.executeQuery();
+					 if(rs.next()) {
+						 postId = rs.getInt(1);
+					 }
+				 }
+				 
 				 DBManager.commit(conn);
 			} catch (Exception e) {
 				DBManager.rollback(conn);
@@ -415,7 +427,7 @@ public class AdoptionDao01 {
 				DBManager.close(conn, pstmt);
 			}
 		
-			return result;
+			return postId;
 		
 		}
 		

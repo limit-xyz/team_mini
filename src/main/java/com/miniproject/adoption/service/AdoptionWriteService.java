@@ -57,7 +57,7 @@ public class AdoptionWriteService implements CommandProcess{
 					System.out.printf("파라미터 : %s, contentType : %s, size : %dByte, \n",
 					part.getName(), part.getContentType(), part.getSize());
 					
-					if("image_path".equals(paramName)) {
+					if("imagepath".equals(paramName)) {
 						if(part.getSize() > 0) {
 							String mimeType = part.getContentType();
 							if (mimeType != null && ALLOWED_IMAGE_TYPES.contains(mimeType.toLowerCase())) { // 추가: 파일 형식 검증
@@ -113,9 +113,9 @@ public class AdoptionWriteService implements CommandProcess{
 				return null;
 			}
 			AdoptionDao01 dao = new AdoptionDao01();
-			int result = 0;
+			int postId = 0;
 			  try {
-		            result = dao.insertAdoptionPost(dto);
+		            postId = dao.insertAdoptionPost(dto);
 		        } catch (Exception e) {
 		            e.printStackTrace();
 		            response.setContentType("text/html; charest=utf-8");
@@ -124,12 +124,12 @@ public class AdoptionWriteService implements CommandProcess{
 		            return null;
 		        }
 			  
-			if(result > 0) {				
-				return "redirect:adoptionboard/adopboardList";
+			if(postId > 0) {				
+				return "redirect:" + request.getContextPath() + "/adoptionboard/adoptionDetail?postId=" + postId;
 			} else {
 				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<script> alert('게시글 작성에 실패하였습니다.); history.back(); </script>");
+				response.getWriter().println("<script> alert('게시글 작성에 실패하였습니다.'); history.back(); </script>");
 				return null;
 		}
 	}
-}
+}  
