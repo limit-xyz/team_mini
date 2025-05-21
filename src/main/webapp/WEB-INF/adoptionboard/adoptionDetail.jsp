@@ -4,6 +4,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page isELIgnored="false" %>
+<% String loginId = (String) session.getAttribute("user_id");
+	 String loginRole = (String) session.getAttribute("user_role");
+%>
 
 <%-- content --%>
 <div class="row my-5" id="global-content">
@@ -30,25 +34,25 @@
 				<tbody>
 					<tr>
 						<th class="table-secondary"> 제 목</th>
-						<td class="mb-0 fw-bold" colspan = "3" >${adopboard.title }</td>
+						<td class="mb-0 fw-bold" colspan = "3" >${adopboard.title}</td>
 					</tr>
 					<tr>
 						<th>작성자</th>
-						<td>${adopboard.userId }</td>
+						<td>${adopboard.userId}</td>
 						<th>상태</th>
 						<td>${adopboard.adoptionType}</td>
 					</tr>
 					<tr>
 						<th>상태</th>
-						<td>${adopboard.approvalStatus }</td>
+						<td>${adopboard.approvalStatus}</td>
 						<th>종류</th>
-						<td>${adopboard.animalTypeMain} -> ${adopboard.animalTypeDetail }</td>
+						<td>${adopboard.animalTypeMain} -> ${adopboard.animalTypeDetail}</td>
 					</tr>
 					<tr>
 						<th>작성일</th>
 						<td><fmt:formatDate value="${adopboard.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 						<th>조회수</th> 
-						<td>${adopboard.viewsCount }</td>
+						<td>${adopboard.viewsCount}</td>
 					</tr>
 	
 					<th>파 일</th>
@@ -74,20 +78,22 @@
 				</div>
 			</div>
 		<div class="row my-3"> 
-			<div class="col text-center">
+			<div class="col text-center">			
+			<c:if test="${sessionScope.id == adopboard.userId || sessionScope.user_role == 'admin' }">
 				<input type="button" class="btn btn-primary" id="detailUpdate" value="수정하기">
 				<input type="button" class="btn btn-danger ms-2 me-2" id="detailDelete" value="삭제하기">
+				</c:if>
 				<%--  검색 리스트에서 넘어온 경우 다시 보내기 --%>
-				<c:if test="${searchOption }">
+				<c:if test="${searchOption}">
 				<input type="button" class="btn btn-warning" value="목록보기"
-				onclick="location.href='${pageContext.request.contextPath}/adoption/AdoptionList?pageNum=${pageNum }'">
+				onclick="location.href='${pageContext.request.contextPath}/adoptionboard/adopboardList?pageNum=${pageNum}'">
 				</c:if>
 				</div>
 			</div>
 			
 		<%--  댓글 리스트 영역  --%>
  				<%--  댓글이 존재 하는 경우  --%>
- 				<c:if test="${ not empty adopreplyList }">
+ 				<c:if test="${ not empty adopreplyList}">
 				<div class="row">
 					<div class ="col" id="replyList">
 						<c:forEach var="reply" items="${adopreplyList}">
@@ -99,10 +105,15 @@
 										</div>
 										<div class="col-8 text-end p-2">
 										<span class="me-3">
-										<fmt:formatDate value="${reply.regDate }" pattern="yyyy-MM-dd : HH:mm:ss" />
+										<fmt:formatDate value="${reply.createdAt}" pattern="yyyy-MM-dd : HH:mm:ss" />
 										</span>
-										<button class="modifyReply btn btn-outline-success btn-sm" data-no='${reply.replyId }'><i class="bi bi-file-text"> 수정</i></button>
-										<button class="deleteReply btn btn-outline-warning btn-sm" data-no='${reply.replyId }'><i class="bi bi-trash-fill"> 삭제</i></button>
+										<%-- 댓글 작성자 또는 관리자에게만 보일 버튼 --%>
+										<c:if test="${sessionScope.id == reply.userId || sessionScope.user_role == 'admin' }">
+										<button class="modifyReply btn btn-outline-success btn-sm" data-no='${reply.replyId}'>
+										<i class="bi bi-file-text"> 수정</i></button>
+										<button class="deleteReply btn btn-outline-warning btn-sm" data-no='${reply.replyId}'>
+										<i class="bi bi-trash-fill"> 삭제</i></button>
+										</c:if>
 										<button class="btn btn-outline-danger btn-sm"
 											onclick ="reportReply('${reply.replyId}')"><i class="bi bi-exclamation-triangle-fill"> 신고</i></button>
 										</div>
@@ -110,13 +121,13 @@
 									<div class ="row">
 										<div class ="col p-3">
 										<c:choose>
-											<c:when test="${reply.isSecret }">
+											<c:when test="${reply.isSecret}">
 											<c:choose>
 												<c:when test="${sessionScope.id == reply.replyWriter 
 																		|| sessionScope.id == adopboard.userId
 																		|| sessionScope.id == 'admin'}">
 																	
-																	<div>	${reply.replyContent } </div>
+																	<div>[🔒 비밀 댓글 입니다.]<br>	${reply.content} </div>
 											</c:when>
 											<c:otherwise>
 											   <pre title="비밀댓글 입니다.">🔒 비밀 댓글 입니다.</pre>
@@ -124,7 +135,7 @@
                 </c:choose>
                    </c:when>
             <c:otherwise>
-												<pre>${reply.replyContent }</pre>
+												<pre>${reply.content}</pre>
 												</c:otherwise>
 												</c:choose>
 										</div>
@@ -137,7 +148,7 @@
 				</div>
 				</c:if>
 				<%--  댓글이 존재 하지 않을 경우 --%>
-				<c:if test="${ empty adopreplyList }">
+				<c:if test="${ empty adopreplyList}">
 				<div class="row my-5">
 					<div class ="col border p-5 text-center">
 						 이 게시글에 대한 댓글이 존재 하지 않음
@@ -182,9 +193,10 @@
 								 	<input type="submit" value="댓글쓰기" 
 								 		class="btn btn-primary w-100 h-100" id="replyWriterButton">
 								 		</c:if>
-								 		<c:if test="${empty sessionScope.id }">
+								 		<c:if test="${empty sessionScope.id}">
 								 		<button type="button" class="btn btn-outline-secondary w-100 h-100" 
-								 		onclick="location.href='/member/loginForm">로그인</button>
+								 		onclick="location.href='${pageContext.request.contextPath}/member/loginForm'">로그인</button>
+								 													 
 								 		</c:if>
 								 		
 									</div>
@@ -216,10 +228,34 @@ document.addEventListener("DOMContentLoaded", function () {
 	if (guestReply) {
 		guestReply.addEventListener("click", function () {
 			alert("댓글을 작성하려면 로그인해주세요.");
-			window.location.href = "member/loginForm"; // 로그인 페이지로 이동
+			window.location.href = "${pageContext.request.contextPath}/member/loginForm";
 		});
 	}
 });
+document.addEventListener("DOMContentLoaded",function(){
+	document.querySelectorAll(".modifyReply").forEach(function(button){
+		button.addEventListener("click", function(){
+			const replyId = this.getAttribute("data-no")
+			const postId = document.getElementById("postId").value;
+			location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyUpdateForm?replyId=' + replyId + '&postId=' + postId;
+		});
+});
+
+	document.querySelectorAll(".deleteReply").forEach(function(button){
+		button.addEventListener("click", function(){
+			const replyId = this.getAttribute("data-no");
+			const postId = document.getElementById("postId").value;
+			if(confirm("해당 댓글을 삭제 하시겠습니까?")){
+				location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyDelete?replyId=' + replyId + '&postId=' + postId;
+			}
+		})
+		});
+	});
+	function reportReply(replyId){
+		if(confirm("댓글을 신고하시겠습니까?")){
+			location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyReport?replyId=' + replyId;
+		}
+	}
 
 </script>
 

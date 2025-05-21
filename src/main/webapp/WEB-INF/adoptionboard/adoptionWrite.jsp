@@ -1,21 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
-<meta charset="UTF-8">
+
 <style>
-body {
+.lightform {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
         }
-        div {
+       .lightform div {
             margin-bottom: 15px;
         }
-        h2, h3 {
+      .lightform  h2, h3 {
             text-align: center;
         }
-        form {
+      .lightform  form {
             background-color: #fff;
             padding: 30px;
             margin: 20px auto;
@@ -24,12 +23,12 @@ body {
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        label {
+     .lightform   label {
             display: block;
             margin-bottom: 8px;
             font-weight: bold;
         }
-        input[type="text"], select, textarea {
+     .lightform   input[type="text"], select, textarea {
             width: calc(100% - 20px);
             padding: 10px;
             margin-bottom: 15px;
@@ -38,19 +37,19 @@ body {
             font-size: 1.1em;
             box-sizing: border-box;
         }
-        textarea {
+      .lightform  textarea {
             resize: vertical;
             min-height: 100px;
         }
-        input[type="file"] {
+     .lightform   input[type="file"] {
             margin-bottom: 15px;
         }
-        .button-container {
+      .button-container {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
         }
-        input[type="submit"], #cancel-button {
+       .lightform input[type="submit"], #cancel-button {
             background-color: #4caf50;
             color: white;
             padding: 12px 25px;
@@ -62,7 +61,7 @@ body {
             font-size: 1.1em;
             transition: background-color 0.3s ease;
         }
-        input[type="submit"]:hover {
+    .lightform    input[type="submit"]:hover {
             background-color: #45a049;
         }
         #cancel-button {
@@ -75,7 +74,7 @@ body {
             color: red;
             margin-bottom: 15px;
         }
-        small {
+     .lightform   small {
             display: block;
             font-size: 0.8em;
             color: #777;
@@ -97,7 +96,7 @@ body {
         
 </style>
 
-<body>
+<div class="lightform">
     <!-- content -->
     <div>
     <h2> 입양/분양 게시글 작성</h2>
@@ -111,11 +110,22 @@ body {
     </div>
     
     <div>
-		<label for="type">입양/분양 선택 : </label>
-	    <select name="type" required>
+		<label for="adoptionType">입양/분양 선택 : </label>
+	    <select name="adoptionType" required>
 	    	<option value="입양">입양</option>
 	    	<option value="분양">분양</option>
 	    </select>	    
+    </div>
+   
+    <div>
+    	<label for="approvalStatus">입양/분양 선택 : </label>
+	    <select name="approvalStatus" required>
+	    	<option value="대기중">대기중</option>
+	    	<option value="진행중">진행중</option>
+	    	<option value="분양 완료">분양 완료</option>
+	    	<option value="입양 완료">입양 완료</option>
+	    </select>	    
+    
     </div>
     
     <div>
@@ -160,7 +170,7 @@ body {
     	<button type="button" id="cancel-button"> 취소</button>
     </div>
     </form>
-    
+    </div>
     <script>
     const detailOption = {
             "강아지": ["대형견","중형견", "소형견"],
@@ -226,5 +236,4 @@ body {
        
         
    </script>
-   </body>
-  </html>
+   

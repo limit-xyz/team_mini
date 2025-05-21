@@ -79,19 +79,18 @@ public class AdoptBoardController extends HttpServlet{
 		
 			 HttpSession session = request.getSession();
 		
-			 if(session.getAttribute("loginUser") == null) {
+			 if(session.getAttribute("id") == null) {
 			
 				 String message = URLEncoder.encode("로그인이 필요한 서비스 입니다.", "UTF-8");
-				 response.sendRedirect("member/loginForm?message=" + message);
+				 response.sendRedirect(request.getContextPath() + "/member/loginForm?message=" + message);
 				 return;
 			}
 		}
 			 
 		String viewPage = null;
 		CommandProcess service = null;
-	
 		
-		if(command.equals("/adoption/AdoptionList") || command.equals("/adoption(/*)?")) {
+		if(command.equals("/adoption/AdoptionList") || command.equals("/adoption/*")) {
 			service = new AdoptionListService();					
 			viewPage = service.requestProcess(request, response);
 	

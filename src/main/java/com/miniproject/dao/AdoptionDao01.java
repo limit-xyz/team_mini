@@ -390,7 +390,7 @@ public class AdoptionDao01 {
 		public int insertAdoptionPost(AdoptionWriteDto dto){
 			int result = 0;
 			String sql = "INSERT INTO adoption_post (post_id, user_id, title, content, adoption_type, region, animal_type_main, animal_type_detail, image_path, created_at, views_count) "
-					   + "VALUES (adoption_post_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSTIMESTAMP, 0)";
+					   + "VALUES (adoption_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSTIMESTAMP, 0)";
 					
 			try{
 			 conn = DBManager.getConnection();
@@ -587,8 +587,7 @@ public class AdoptionDao01 {
 		    	 reply.setContent(rs.getString("content"));
 		    	 reply.setReplyWriter(rs.getString("user_id"));
 		    	 reply.setCreatedAt(rs.getTimestamp("created_at"));
-		    	 reply.setIsSecret(rs.getBoolean("is_secret"));
-		    	 
+		    	
 		    	 String isSecretStr = rs.getString("is_secret");
 		    	 reply.setIsSecret("Y".equalsIgnoreCase(isSecretStr));
 		    	 

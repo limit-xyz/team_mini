@@ -19,19 +19,12 @@ public class AdoptionReplyWriteService implements CommandProcess {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		
-		if(userId == null ) {
-			response.setContentType("text/html; charset=utf-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>");
-			out.println("	alert('로그인 전용 서비스 입니다.');");
-			out.println("	history.back();"); 
-			out.println("</script>");
-			out.close();
-			return null;
+		String userId = (String) session.getAttribute("id");
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum == null || pageNum.isEmpty()) {
+			pageNum = "1";
 		}
-
+		
 		 request.setCharacterEncoding("utf-8");
 		 
 		 String postIdParam = request.getParameter("postId");
@@ -65,7 +58,7 @@ public class AdoptionReplyWriteService implements CommandProcess {
 		
 		if(result > 0) {
 			// 댓글 작성 성공시 해당 게시글 상세 페이지로 리다이렉트
-			return "r:team_mini/adoption/AdoptionDetail?postId=" + postId + "&increaseViewCount=false";
+			return "r:" + request.getContextPath() + "/adoption/AdoptionDetail?postId=" + postId + "&pageNum=" + pageNum + "&increaseViewCount=false";
 		} else {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();

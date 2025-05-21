@@ -29,7 +29,7 @@ public class AdoptionWriteService implements CommandProcess{
 			request.setCharacterEncoding("utf-8");
 			
 			HttpSession session = request.getSession();
-			String userId = (String) session.getAttribute("userId");
+			String userId = (String) session.getAttribute("id");
 			
 			if(userId == null) { //로그인 확인
 			  response.setContentType("text/html; charset=utf-8");
@@ -125,7 +125,7 @@ public class AdoptionWriteService implements CommandProcess{
 		        }
 			  
 			if(result > 0) {				
-				return "redirect:/adoption/AdoptionList";
+				return "redirect:adoptionboard/adopboardList";
 			} else {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<script> alert('게시글 작성에 실패하였습니다.); history.back(); </script>");

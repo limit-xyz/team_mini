@@ -35,18 +35,17 @@
 		</form>
 		<div class="row mb-3">
 			<div class="col text-end">
-						<a href="${pageContext.request.contextPath}/adoption/AdoptionWriteForm" class="btn btn-success btn-sm">글쓰기</a>
 					
 					
-					<%--
+					
 					<c:choose>
-						<c:when test="${sessionScope.userId !=null }">
+						<c:when test="${sessionScope.id !=null }">
 						<a href="${pageContext.request.contextPath}/adoption/AdoptionWriteForm" class="btn btn-success btn-sm">글쓰기</a>
 					</c:when>
 					<c:otherwise>
-						<a href="#" class="btn btn-secondarybtn-sm" onclick="alertLogin()">글쓰기</a>
+						<a href="#" class="btn btn-secondary btn-sm" onclick="alertLogin()">글쓰기</a>
 					</c:otherwise>
-				</c:choose>  --%>
+				</c:choose>  
 				
 				
 			</div>
@@ -133,10 +132,10 @@
 		</div>
 	</c:if>
 </div>
-
+</div>
 <script>
 		function alertLogin(){
 			alert("로그인 후 글쓰기가 가능합니다.");
-			window.location.href="member/loginForm";
+			window.location.href="${pageContext.request.contextPath}/member/loginForm";
 		}
 </script>
