@@ -5,8 +5,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page isELIgnored="false" %>
-<% String loginId = (String) session.getAttribute("user_id");
-	 String loginRole = (String) session.getAttribute("user_role");
+<% String loginId = (String) session.getAttribute("id");
+	 String loginRole = (String) session.getAttribute("role");
 %>
 
 <%-- content --%>
@@ -59,7 +59,7 @@
 					<td colspan="3">
 					<c:choose>
 					<c:when test="${not empty adopboard.imagePath and fn:length(adopboard.imagePath) > 0}">
-					<a href="imagePathDownload.mvc?fileName=${adopboard.imagePath}">파일 다운로드</a>
+					<a href="AdoptionDownload?fileName=${adopboard.imagePath}">파일 다운로드</a>
 					</c:when>
 					<c:otherwise>
 					 첨부파일 없음
@@ -109,6 +109,7 @@
 										</span>
 										<%-- 댓글 작성자 또는 관리자에게만 보일 버튼 --%>
 										<c:if test="${sessionScope.id == reply.userId || sessionScope.user_role == 'admin' }">
+										
 										<button class="modifyReply btn btn-outline-success btn-sm" data-no='${reply.replyId}'>
 										<i class="bi bi-file-text"> 수정</i></button>
 										<button class="deleteReply btn btn-outline-warning btn-sm" data-no='${reply.replyId}'>

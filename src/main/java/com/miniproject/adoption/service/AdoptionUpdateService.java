@@ -30,7 +30,7 @@ public class AdoptionUpdateService implements CommandProcess{
 		request.setCharacterEncoding("utf-8");
 		
 		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
+		String id = (String) session.getAttribute("id");
 		
 		int postId = Integer.parseInt(request.getParameter("postId"));
 		
@@ -47,7 +47,7 @@ public class AdoptionUpdateService implements CommandProcess{
         }
 		
 		// 수정 권한 확인
-		if(!adoptionDao.isUserIdCheck(postId, userId)) {
+		if(!adoptionDao.isUserIdCheck(postId, id)) {
 			response.setContentType("text/html; charset=utf-8");
 			response.getWriter().println("<script>alert('수정 권한이 없습니다.'); history.back();</script>");
 			return null;
@@ -55,7 +55,7 @@ public class AdoptionUpdateService implements CommandProcess{
 		
 		AdoptionWriteDto dto = new AdoptionWriteDto();
 		dto.setPostId(postId);
-		dto.setUserId(userId); //수정시에도 userId 사용
+		dto.setUserId(id); //수정시에도 userId 사용
 		
 		String contentType = request.getContentType();
 		
