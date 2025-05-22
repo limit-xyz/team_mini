@@ -84,7 +84,7 @@
                                             </div>
                                         </c:if>
                                     </td>
-                                    <td class="banReason d-none">${member.banReason}</td>
+                                    <td class="banReason" style="visibility: hidden;">${member.banReason}</td>
                                 </tr>
                             </c:forEach>
                         </c:if>                            
@@ -126,6 +126,7 @@
         </div>
     </div>
 
+
     <div class="modal fade admin-modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"> {/* 클래스 추가 */}
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -134,7 +135,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="banMemberForm">
-                    
+                	<div class="modal-body">
+						<div class="mb-3">
+							<h5><span id="banUserId"></span> 를 차단합니다.</h5>
+							
+							<label for="banDate" class="form-label">얼마나 차단하시겠습니까?</label>
+							<div class="input-group" style="width: 120px;">
+								<input type="number" class="form-control" id="banDate" name="banDate">
+								<span class="input-group-text">일</span>				
+							</div>
+	
+							<label for="banReason" class="form-label">차단 사유</label>
+							<textarea class="form-control" name="banReason" id="banReason" rows="3"></textarea>						
+						</div>
+					</div>
+                
                      <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i class="bi bi-x-circle"></i> 취소</button>
                         <button type="submit" class="btn btn-admin-theme"><i class="bi bi-check-circle"></i> 확인</button> 
@@ -143,5 +158,5 @@
             </div>
         </div>
     </div>
-    </div>
-    <script src="${pageContext.request.contextPath}/js/member_admin.js"></script>
+</div>
+<script src="${pageContext.request.contextPath}/js/member_admin.js"></script>
