@@ -15,8 +15,6 @@ public class MainService implements CommandProcess {
 			HttpServletRequest request, HttpServletResponse response) 
 					throws ServletException, IOException {
 		
-		
-		
 		return "main/index";
 	}
 	

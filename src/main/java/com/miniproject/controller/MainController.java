@@ -3,6 +3,7 @@ package com.miniproject.controller;
 import java.io.IOException;
 
 import com.miniproject.common.service.CommandProcess;
+import com.miniproject.main.service.MainSearchService;
 import com.miniproject.main.service.MainService;
 
 import jakarta.servlet.RequestDispatcher;
@@ -57,7 +58,12 @@ public class MainController extends HttpServlet {
 			// 게시 글 리스트 요청을 처리하는 BoardListService 클래스 실행
 			service = new MainService();
 			viewPage = service.requestProcess(request, response);
-			System.out.println(viewPage);
+		}
+		
+		else if(command.equals("/main/search")) {
+			// 게시 글 리스트 요청을 처리하는 BoardListService 클래스 실행
+			service = new MainSearchService();
+			viewPage = service.requestProcess(request, response);
 		}
 		
 		else {
