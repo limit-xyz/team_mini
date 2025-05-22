@@ -202,8 +202,8 @@ $(function() {
 
 				// 현재 this 가 모달창이라, 위치 찾기
 				var $button = $("#tableBody").find(`button[data-user-id="${userId}"]`);
-				var $banDate = $button.parent().parent().find($(".banDate"));
-				var $banReason = $button.parent().parent().find($(".banReason"));
+				var $banDate = $button.parent().parent().parent().find($(".banDate"));
+				var $banReason = $button.parent().parent().parent().find($(".banReason"));
 
 				// 가져온 데이터로 새로고침
 				$banDate.empty();
@@ -230,7 +230,7 @@ $(function() {
 
 	// 멤버 차단해제 메소드
 	$(document).on("click", ".releaseMember", function() {
-		var $isBan = $(this).parent().parent().find($(".banDate"));
+		var $isBan = $(this).parent().parent().parent().find($(".banDate"));
 
 		if ($isBan.children().text() == "-") {
 			alert("차단되지 않은 사용자입니다.");
@@ -238,7 +238,7 @@ $(function() {
 		}
 
 		var userId = $(this).data('userId');
-		var banReason = $(this).parent().parent().find($(".banReason")).text();
+		var banReason = $(this).parent().parent().parent().find($(".banReason")).text();
 		var isRelease = confirm(userId + " 의 차단을 해제하시겠습니까?\n\n[차단 사유] \n" + banReason);
 
 		if (isRelease) {

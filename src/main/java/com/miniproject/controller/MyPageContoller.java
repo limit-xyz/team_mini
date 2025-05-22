@@ -118,6 +118,12 @@ public class MyPageContoller extends HttpServlet {
 			service = new MyBoardListService();
 			viewPage = service.requestProcess(request, response);
 		}
+		
+		// 자신의 게시글 목록
+		else if (command.equals("/member/mypage/myBoardDetail")) {
+			service = new MyBoardDetailService();
+			viewPage = service.requestProcess(request, response);
+		}
 
 		// 반려동물 다이어리 리스트
 		else if (command.equals("/member/mypage/diaryList")) {

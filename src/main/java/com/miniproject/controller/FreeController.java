@@ -92,7 +92,7 @@ public class FreeController extends HttpServlet {
 
 		// 서비스 클래스 실행
 		// 어떤 서비스 클래스가 실행될지 결정
-		if (command.equals("/free/*") || command.equals("/free/boardList")) {
+		if (command.equals("/free/*") || command.equals("/free/freeList")) {
 			// 자유게시판 요청 처리하는 service 클래스 실행
 			service = new ListService();
 			viewPage = service.requestProcess(request, response);

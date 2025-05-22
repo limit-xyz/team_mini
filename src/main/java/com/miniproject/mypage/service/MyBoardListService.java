@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import com.miniproject.common.service.CommandProcess;
 import com.miniproject.dao.MyPageDao;
-import com.miniproject.vo.Diary;
 import com.miniproject.vo.MyBoard;
 
 import jakarta.servlet.ServletException;
@@ -23,8 +22,8 @@ public class MyBoardListService implements CommandProcess {
 		MyPageDao dao = new MyPageDao();
 
 		String id = (String) request.getSession().getAttribute("id");
-		String searchType = request.getParameter("searchDiaryType");
-		String searchKeyword = request.getParameter("searchDiaryKeyword");
+		String searchType = request.getParameter("searchBoardType");
+		String searchKeyword = request.getParameter("searchBoardKeyword");
 
 		boolean isSearch = false;
 		if (searchType != null && searchKeyword != null && !searchType.equals("") && !searchKeyword.equals(""))
@@ -66,9 +65,9 @@ public class MyBoardListService implements CommandProcess {
 		}
 
 		if (isSearch) {
-			request.setAttribute("searchDiaryOption", "1");
-			request.setAttribute("searchDiaryType", searchType);
-			request.setAttribute("searchDiaryKeyword", searchKeyword);
+			request.setAttribute("searchBoardOption", "1");
+			request.setAttribute("searchBoardType", searchType);
+			request.setAttribute("searchBoardKeyword", searchKeyword);
 			myBoardList = dao.searchMyBoardList(id, searchType, searchKeyword, startRow, endRow);
 		}
 

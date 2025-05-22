@@ -77,7 +77,7 @@
 		
 		<div class="row">
 			<div class="col text-center">
-				<a href="${pageContext.request.contextPath}/admin/main">돌아가기</a>
+				<a href="${pageContext.request.contextPath}/member/mypage/main">돌아가기</a>
 			</div>
 		</div>
 		
