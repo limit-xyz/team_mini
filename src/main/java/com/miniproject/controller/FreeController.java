@@ -12,6 +12,8 @@ import com.miniproject.community.service.UpdateFormService;
 import com.miniproject.community.service.UpdateService;
 import com.miniproject.community.service.WriteFormService;
 import com.miniproject.community.service.WriteService;
+import com.miniproject.community.ajax.ComAjaxController;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -77,6 +79,19 @@ public class FreeController extends HttpServlet {
 		String contextPath = request.getContextPath();
 		String command = requestURI.substring(contextPath.length());
 
+		// ajax 요청 처리
+		String[] splitTest1 = command.split("/");
+		if (splitTest1.length > 0) {
+			String str = splitTest1[splitTest1.length - 1];
+			String[] splitTest2 = str.split("\\.");
+
+			if (splitTest2.length > 1 && splitTest2[1].equals("ajax")) {
+				ComAjaxController ajax = new ComAjaxController();
+				ajax.doAjax(request, response, str);
+				return;
+			}
+		}
+		
 		// 뷰 페이지 정보 저장 변수
 		String viewPage = null;
 		CommandProcess service = null;
@@ -123,9 +138,8 @@ public class FreeController extends HttpServlet {
 			service = new DeleteService();
 			viewPage = service.requestProcess(request, response);
 		}
-
+		
 		if (viewPage != null) {
-			// "boardList", "r:boardList.mvc", "redirect:boardList.mvc"
 			String view = viewPage.split(":")[0];
 			System.out.println("view : " + view);
 
@@ -136,7 +150,6 @@ public class FreeController extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher(viewPage.split(":")[1]);
 				rd.forward(request, response);
 			} else {
-				// "/WEB-INF/index.jsp?body=" + "board/boardList" + ".jsp"
 				RequestDispatcher rd = request.getRequestDispatcher(PREFIX + view + SUFFIX);
 				rd.forward(request, response);
 			}

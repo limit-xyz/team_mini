@@ -8,6 +8,7 @@
 	<div class="col">
 	
 		<div style="visibility: hidden;">
+			<p id="no">${board.no}</p>
 			<p id="pageNum">${pageNum}</p>
 			<p id="searchType">${type}</p>
 			<p id="searchKeyword">${keyword}</p>
@@ -99,13 +100,15 @@
 					</span>
 				</div>
 			</div>				
-		</div>				
+		</div>
+		
 		<!-- 댓글 헤더 영역 -->
 		<div class="row" id="replyTitle">
 			<div class="col p-2 text-center bg-dark text-white">
 				<h3 class="fs-4">이 글에 대한 댓글 리스트</h3>
 			</div>				
 		</div>
+		
 		<!-- 댓글 리스트 영역 -->
 		<!-- 댓글이 존재하는 경우 -->
 		<c:if test="${ not empty replyList }">
@@ -155,8 +158,8 @@
 		<!-- 댓글 쓰기 폼 -->
 		<div class="row my-3 d-none" id="replyForm">
 			<div class="col">						
-				<form name="replyWriteForm" id="replyWriteForm" action="#">
-					<input type="hidden" name="bbsNo" value="${board.no}" >
+				<form name="replyWriteForm" id="replyWriteForm">
+					<input type="hidden" name="boardNo" value="${board.no}" >
 					<input type="hidden" name="replyWriter" value="${sessionScope.id}" >
 					<div class="row bg-light border my-3 p-3">
 						<div class="col">
@@ -184,3 +187,4 @@
 	</div>
 </div>
 <script src="${pageContext.request.contextPath}/js/free.js"></script>
+<script src="${pageContext.request.contextPath}/js/free_reply.js"></script>

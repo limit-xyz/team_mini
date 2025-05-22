@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.miniproject.common.service.CommandProcess;
-import com.miniproject.adoption.service.AdoptionDetailService;
-import com.miniproject.community.service.DetailService;
 import com.miniproject.dao.AdoptionDao01;
 import com.miniproject.dao.AdoptionReplyDto;
 import com.miniproject.dao.AdoptionWriteDto;

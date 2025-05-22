@@ -2,7 +2,6 @@ package com.miniproject.community.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLEncoder;
 
 import com.miniproject.common.service.CommandProcess;
 import com.miniproject.dao.ComDao;

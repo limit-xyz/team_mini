@@ -18,11 +18,13 @@
 				<h2 class="fs-3 fw-bold">회원 정보 입력</h2>
 			</div>
 		</div>
+		
 		<form action="${pageContext.request.contextPath}/member/memberJoinResult" name="joinForm" method="post" id="joinForm">
 			<%-- 
 				회원 아이디 중복 검사를 했는지의 정보를 hidden 필드로 저장 
 			--%>
 			<input type="hidden" name="isIdCheck" id="isIdCheck" value="false"/>
+			
 			<!-- 이름 -->
 			<div class="row mt-5 mb-3">
 				<div class="col-8 offset-2">				
@@ -30,13 +32,14 @@
 					<input type="text" class="form-control" name="name" id="name">
 				</div>				
 			</div>
+			
 			<!-- 아이디 -->
 			<div class="row my-3">
 				<div class="col-8 offset-2">
-					<label for="id" class="form-label">* 아이디 : </label>
+					<label for="userId" class="form-label">* 아이디 : </label>
 					<div class="row">
 						<div class="col-6">
-							<input type="text" class="form-control" name="id" id="id">
+							<input type="text" class="form-control" name="userId" id="userId">
 						</div>
 						<div class="col-4">
 							<input type="button" class="btn btn-warning" id="btnOverlapId" value="중복확인">
@@ -44,6 +47,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<!-- 비밀번호 -->
 			<div class="row my-3">
 				<div class="col-8 offset-2">
@@ -51,12 +55,14 @@
 					<input type="password" class="form-control" name="password" id="password">					
 				</div>
 			</div>
+			
 			<div class="row my-3">
 				<div class="col-8 offset-2">
 					<label for="pass2" class="form-label">* 비밀번호 확인 : </label>
 					<input type="password" class="form-control" name="password" id="password">
 				</div>
 			</div>
+			
 			<!-- 생일 -->
 			<div class="row my-3">
 				<div class="col-8 offset-2">
@@ -64,6 +70,7 @@
 					<input type="date" class="form-control" name="birthDate" id="birthDate">
 				</div>
 			</div>
+			
 			<!-- 우편번호 -->
 			<div class="row my-3">
 				<div class="col-8 offset-2">
@@ -78,6 +85,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<!-- 주소 -->
 			<div class="row my-3">
 				<div class="col-8 offset-2">
@@ -91,6 +99,7 @@
 					<input type="text" class="form-control" name="address2" id="address2">
 				</div>
 			</div>
+			
 			<!-- 성별 -->
 			<div class="row my-3">
 				<div class="col-8 offset-2">
@@ -99,16 +108,17 @@
 						<label class="form-check-label" for="radioDefault1" >
 						  남성
 						</label>
-						</div>
-						<div class="form-check form-check-inline">
+					</div>
+					
+					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" name="gender" id="radioDefault2"  value="여">
 						<label class="form-check-label" for="radioDefault2">
 						  여성
 						</label>
-						</div>
 					</div>
 				</div>
 			</div>
+			
 			<!-- 이메일 -->
 			<div class="row my-3">
 				<div class="col-8 offset-2">
@@ -132,6 +142,7 @@
 					</div>
 				</div>	
 			</div>
+			
 			<!-- 휴대폰 -->
 			<div class="row my-3">
 				<div class="col-8 offset-2">
@@ -155,7 +166,8 @@
 						</div>
 					</div>
 				</div>
-			</div>			
+			</div>		
+				
 			<!-- 자기소개 -->
 			<div class="row my-3">
 				<div class="col-8 offset-2">
@@ -171,5 +183,5 @@
 			</div>
 		</form>
 	</div>
-
+</div>
 

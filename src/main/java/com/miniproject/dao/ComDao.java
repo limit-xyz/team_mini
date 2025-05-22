@@ -1,35 +1,5 @@
 package com.miniproject.dao;
 
-//DB 작업
-/*
-자바 프로그램 언어에서 접근 => DAO 클래스를 이용
-
-1. db 접속 : DBManager 클래스
-서버위치, 사용자, 비번, db(테이블) 스키마 hr
-
-2. 쿼리를 날려(발행) : 쿼리를 발행하는 객체 - PreparedStatement
- Connection 객체로 부터  PreparedStatement 객체를 구함
- 쿼리를 완성 - ???  setXXX()
-
-3.  쿼리가 완성되면 - 쿼리를 발행
-   - select : executeQuery() -> ResultSet 객체를 받음
-     select -> 자바 객체로 가져와서 화면에 출력
-     => ResultSet은 조회한 결과 데이터의 집합 - 조회한 가상의 테이블이 라고 생각하면 됨
-     => ResultSet을 이용해서 DB에서 읽어온 데이터를 추출해서 자바 객체로 변환하는 작업이 필요함
-         - 단일 객체면 = Board 객체로 만들면 되는데 = 여러개 면 Board를 List에 담기
-         - 자바에서 써야되니까> => if, while 문에서 작업
-
-   - update(insert, update, delete) : executeUpdate() - int => 테이블에서 수정(추가, 수정, 삭제)된 행의 갯수
-     => 별도로 처리가 x
-      update, delete, insert -> 자바 객체로 넣어서 -> DB 테이블에 저장
- 
-
-4. 작업이 끝나면 자원해제(disconnect) : DBManager 클래스
-
-5. 최종적으로 DB에서 가져온 데이터가 있으면 반환하면 끝
-
-*/
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -199,7 +169,6 @@ public class ComDao {
 
 	}
 
-
 	// no에 해당하는 게시글을 DB에서 삭제하는 메서드
 	public void deleteBoard(int no) {
 
@@ -282,7 +251,7 @@ public class ComDao {
 
 	public ArrayList<Reply> getReplyList(int bbsNo) {
 
-		String replyListSql = "SELECT * FROM reply WHERE bbs_no=? " + " ORDER BY no DESC ";
+		String replyListSql = "SELECT * FROM reply WHERE board_no=? " + " ORDER BY no DESC ";
 		ArrayList<Reply> replyList = null;
 
 		try {
@@ -294,7 +263,6 @@ public class ComDao {
 			pstmt = conn.prepareStatement(replyListSql);
 			pstmt.setInt(1, bbsNo);
 
-			// 쿼리를 발행하여 SELECT한 결과를 ResultSet 객체로 받는다.
 			rs = pstmt.executeQuery();
 
 			replyList = new ArrayList<>();
@@ -302,7 +270,7 @@ public class ComDao {
 			while (rs.next()) {
 				Reply reply = new Reply();
 				reply.setNo(rs.getInt("no"));
-				reply.setBbsNo(rs.getInt("bbs_no"));
+				reply.setBbsNo(rs.getInt("board_no"));
 				reply.setReplyContent(rs.getString("reply_content"));
 				reply.setReplyWriter(rs.getString("reply_writer"));
 				reply.setRegDate(rs.getTimestamp("reg_date"));
@@ -323,8 +291,8 @@ public class ComDao {
 	// 게시글 하나를 받아서 DB에 저장하는 메서드
 	public void insertBoard(Community b) {
 
-		String insertBoard = "INSERT INTO cm01(no, title, writer, content, " + "reg_date, read_count, pass, file1) "
-				+ "VALUES(cm01_seq.NEXTVAL, ?, ?, ?, SYSDATE, 0, ?, ?)";
+		String insertBoard = "INSERT INTO cm01(no, title, writer, content, reg_date, read_count, file1, recommend, thank) "
+				+ "VALUES(cm01_seq.NEXTVAL, ?, ?, ?, SYSDATE, 0, ?, 0, 0)";
 
 		try {
 
@@ -334,8 +302,7 @@ public class ComDao {
 			pstmt.setString(1, b.getTitle());
 			pstmt.setString(2, b.getWriter());
 			pstmt.setString(3, b.getContent());
-			pstmt.setString(4, b.getPass());
-			pstmt.setString(5, b.getFile1());
+			pstmt.setString(4, b.getFile1());
 
 			pstmt.executeUpdate();
 
@@ -355,7 +322,7 @@ public class ComDao {
 		String fileUpload = b.getFile1() != null ? ", file1=?" : "";
 
 		// 파일이 업로드 되지 않았을때 기존값을 유지 - 바꿀 필요가 없음
-		String updateBoard = " UPDATE cm01 SET title=?, content=?" + fileUpload	+ " WHERE no=? ";
+		String updateBoard = " UPDATE cm01 SET title=?, content=?" + fileUpload + " WHERE no=? ";
 
 		try {
 			conn = DBManager.getConnection();
@@ -436,28 +403,17 @@ public class ComDao {
 	}
 
 	// 댓글 하나의 데이터를 받아서 DB에 저장하는 메서드
-	public void addReply(Reply reply) {
+	public void insertReply(Reply reply) {
 
-		String insertReply = "INSERT INTO reply " + "VALUES(reply_seq.NEXTVAL, ?, ?, ?, SYSDATE)";
-
-		/*
-		 * NO NOT NULL NUMBER(7) BBS_NO NOT NULL NUMBER(7) REPLY_CONTENT VARCHAR2(500
-		 * CHAR) REPLY_WRITER NOT NULL VARCHAR2(20 CHAR) REG_DATE NOT NULL TIMESTAMP(6)
-		 */
+		String insertReply = "INSERT INTO reply VALUES(reply_seq.NEXTVAL, ?, ?, ?, SYSDATE)";
 
 		try {
-
 			conn = DBManager.getConnection();
 
 			pstmt = conn.prepareStatement(insertReply);
 			pstmt.setInt(1, reply.getBbsNo());
 			pstmt.setString(2, reply.getReplyContent());
 			pstmt.setString(3, reply.getReplyWriter());
-
-			System.out.println("getBbsno : " + reply.getBbsNo());
-			System.out.println("getReplyContent : " + reply.getReplyContent());
-			System.out.println("getReplyWriter : " + reply.getReplyWriter());
-
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -471,7 +427,7 @@ public class ComDao {
 	// 댓글 번호에 해당하는 댓글을 DB에서 수정하는 메서드
 	public void updateReply(Reply reply) {
 
-		String updateReply = "UPDATE reply " + " SET reply_content=?, reg_date=SYSDATE " + " WHERE no=?";
+		String updateReply = "UPDATE reply SET reply_content=? WHERE no=?";
 
 		try {
 
@@ -499,7 +455,6 @@ public class ComDao {
 		try {
 
 			conn = DBManager.getConnection();
-
 			pstmt = conn.prepareStatement(deleteReply);
 			pstmt.setInt(1, reply.getNo());
 
@@ -512,9 +467,9 @@ public class ComDao {
 			DBManager.close(conn, pstmt);
 		}
 	}
-	
+
 	public boolean isOwner(int no, String id) {
-		
+
 		String isOwnerSql = "SELECT writer FROM cm01 WHERE no=?";
 		String writer = "";
 
