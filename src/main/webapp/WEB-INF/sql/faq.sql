@@ -1,7 +1,7 @@
 CREATE TABLE FAQ (
     faq_no      NUMBER          CONSTRAINT PK_FAQ_NO PRIMARY KEY, -- 번호 (프라이머리 키)
     faq_title   VARCHAR2(300)   NOT NULL,                       -- 제목
-    faq_content CLOB            NOT NULL,                       -- 내용 (긴 텍스트를 위해 CLOB 사용)
+    faq_content CLOB  			NOT NULL,                       -- 내용 
     faq_author  VARCHAR2(100)   NULL                            -- 작성자 (NULL 허용 가능)
 );
 

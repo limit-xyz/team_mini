@@ -152,10 +152,10 @@
 											</c:when>
 											<c:otherwise>
 											   <pre title="비밀댓글 입니다.">🔒 비밀 댓글 입니다.</pre>
-                    </c:otherwise>
-                </c:choose>
-                   </c:when>
-            <c:otherwise>
+								                    </c:otherwise>
+								                </c:choose>
+								                   </c:when>
+								            <c:otherwise>
 												<pre>${reply.content}</pre>
 												</c:otherwise>
 												</c:choose>
