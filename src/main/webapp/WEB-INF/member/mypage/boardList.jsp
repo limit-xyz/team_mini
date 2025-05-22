@@ -35,7 +35,7 @@
 			<tbody class="text-secondary" id="tableBody">
 				<c:if test="${ not empty boardList }">
 					<c:forEach var="board" items="${boardList}" varStatus="status">
-						<tr class="mypageBoardDetail" data-board-no="${board.no}" style="cursor: pointer;">
+						<tr class="myBoardDetail" data-board-no="${board.no}" data-board-type="${board.type}" style="cursor: pointer;">
 							<td class="text-center">${ ((pageNum-1)*10) + status.index + 1 }</td>
 							
 							<td class="text-center">${ board.type }</td>

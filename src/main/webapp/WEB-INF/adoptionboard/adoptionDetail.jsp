@@ -83,10 +83,29 @@
 				<input type="button" class="btn btn-primary" id="detailUpdate" value="수정하기">
 				<input type="button" class="btn btn-danger ms-2 me-2" id="detailDelete" value="삭제하기">
 				</c:if>
+				<c:if test="${not searchOption}">
+					<c:if test="${not empty boardType}">
+						<input type="button" class="btn btn-warning" value="목록보기"
+							onclick="location.href='${pageContext.request.contextPath}/member/mypage/boardList?pageNum=${pageNum}&searchBoardType=${type}&searchBoardKeyword=${keyword}'">
+					</c:if>
+				
+					<c:if test="${empty boardType}">
+						<input type="button" class="btn btn-warning" value="목록보기"
+							onclick="location.href='${pageContext.request.contextPath}/adoptionboard/adopboardList">
+					</c:if>
+				</c:if>
+				
 				<%--  검색 리스트에서 넘어온 경우 다시 보내기 --%>
 				<c:if test="${searchOption}">
-				<input type="button" class="btn btn-warning" value="목록보기"
-				onclick="location.href='${pageContext.request.contextPath}/adoptionboard/adopboardList?pageNum=${pageNum}'">
+					<c:if test="${not empty boardType}">
+						<input type="button" class="btn btn-warning" value="목록보기"
+							onclick="location.href='${pageContext.request.contextPath}/member/mypage/boardList?pageNum=${pageNum}&searchBoardType=${type}&searchBoardKeyword=${keyword}'">
+					</c:if>
+				
+					<c:if test="${empty boardType}">
+						<input type="button" class="btn btn-warning" value="목록보기"
+							onclick="location.href='${pageContext.request.contextPath}/adoptionboard/adopboardList?pageNum=${pageNum}'">
+					</c:if>
 				</c:if>
 				</div>
 			</div>
