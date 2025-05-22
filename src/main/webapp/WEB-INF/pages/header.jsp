@@ -11,10 +11,12 @@
           	<c:if test="${ sessionScope.isLogin  && not sessionScope.isAdmin}">
           	<span>${id}님</span>
           	<a href="${pageContext.request.contextPath}/member/logout" class="ms-3" >로그아웃</a>
+          	<a href="${pageContext.request.contextPath}/member/mypage/main" class="ms-3">마이페이지</a>
           	</c:if>	
           	<c:if test="${ sessionScope.isLogin && sessionScope.isAdmin}">
           	<span>${id}님</span>
           	<a href="${pageContext.request.contextPath}/member/logout" class="ms-3" >로그아웃</a>
+          	<a href="${pageContext.request.contextPath}/member/mypage/main" class="ms-3">마이페이지</a>
             <a href="${pageContext.request.contextPath}/admin/main" class="ms-3">관리자페이지</a>
           	</c:if>	
           	<c:if test="${not sessionScope.isLogin  && not sessionScope.isAdmin}">

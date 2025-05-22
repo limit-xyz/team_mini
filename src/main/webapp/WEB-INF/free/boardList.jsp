@@ -120,7 +120,7 @@
 						    <c:if test="${startPage > pageGroup}">
 						    <li class="page-item">
 						    	<a class="page-link" 
-						    		href="${pageContext.request.contextPath}/free/freeList?pageNum=${startPage - pageGroup}&type=${type}&keyword=${keyword}">Pre</a>
+						    		href="${pageContext.request.contextPath}/free/boardList?pageNum=${startPage - pageGroup}&type=${type}&keyword=${keyword}">Pre</a>
 						    </li>
 						    </c:if>
 						    <c:forEach var="i" begin="${startPage}" end="${endPage}">
@@ -132,14 +132,14 @@
 						    	</c:if>
 						    	<c:if test="${i != currentPage}">
 						    	<li class="page-item">
-						    		<a class="page-link" href="${pageContext.request.contextPath}/free/freeList?pageNum=${i}&type=${type}&keyword=${keyword}">${i}</a>
+						    		<a class="page-link" href="${pageContext.request.contextPath}/free/boardList?pageNum=${i}&type=${type}&keyword=${keyword}">${i}</a>
 						    	</li>
 						    	</c:if>
 						    </c:forEach>
 						    <c:if test="${endPage < pageCount}">						    
 						    <li class="page-item">
 						    	<a class="page-link" 
-						    		href="${pageContext.request.contextPath}/free/freeList?pageNum=${startPage + pageGroup}&type=${type}&keyword=${keyword}">Next</a>
+						    		href="${pageContext.request.contextPath}/free/boardList?pageNum=${startPage + pageGroup}&type=${type}&keyword=${keyword}">Next</a>
 						    </li>
 						    </c:if>
 						  </ul>
@@ -157,7 +157,7 @@
 						    <c:if test="${startPage > pageGroup}">
 						    <li class="page-item">
 						    	<a class="page-link" 
-						    		href="${pageContext.request.contextPath}/free/freeList?pageNum=${startPage - pageGroup}">Pre</a>
+						    		href="${pageContext.request.contextPath}/free/boardList?pageNum=${startPage - pageGroup}">Pre</a>
 						    </li>
 						    </c:if>
 						    <c:forEach var="i" begin="${startPage}" end="${endPage}">
@@ -169,14 +169,14 @@
 						    	</c:if>
 						    	<c:if test="${i != currentPage}">
 						    	<li class="page-item">
-						    		<a class="page-link" href="${pageContext.request.contextPath}/free/freeList?pageNum=${i}">${i}</a>
+						    		<a class="page-link" href="${pageContext.request.contextPath}/free/boardList?pageNum=${i}">${i}</a>
 						    	</li>
 						    	</c:if>
 						    </c:forEach>
 						    <c:if test="${endPage < pageCount}">						    
 						    <li class="page-item">
 						    	<a class="page-link" 
-						    		href="${pageContext.request.contextPath}/free/freeList?pageNum=${startPage + pageGroup}">Next</a>
+						    		href="${pageContext.request.contextPath}/free/boardList?pageNum=${startPage + pageGroup}">Next</a>
 						    </li>
 						    </c:if>
 						  </ul>

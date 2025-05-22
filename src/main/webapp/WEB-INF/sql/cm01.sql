@@ -318,3 +318,20 @@ VALUES (99, '햄스터의 첫 탈출 #10', '김서연', '햄스터가 집을 탈
 
 INSERT INTO cm01(no, title, writer, content, reg_date, read_count, pass, file1, recommend, thank) 
 VALUES (100, '거북이 산책 후기 #10', '심유나', '거북이도 산책을 좋아한다는 걸 알게 됐어요. (10)', SYSDATE, 55, '1234', '', 0, 0);
+
+
+INSERT INTO cm01(no, title, writer, content, reg_date, read_count, pass, file1, recommend, thank) 
+VALUES (cm01_SEQ.NEXTVAL, '안녕하세요', 'user02', '거북이도 산책을 좋아한다는 걸 알게 됐어요. (10)', SYSDATE, 55, '1234', '', 0, 0);
+
+INSERT INTO cm01(no, title, writer, content, reg_date, read_count, pass, file1, recommend, thank) 
+VALUES (cm01_SEQ.NEXTVAL, '좋은 아침입니다', 'user02', '거북이도 산책을 좋아한다는 걸 알게 됐어요. (10)', SYSDATE, 55, '1234', '', 0, 0);
+
+INSERT INTO cm01(no, title, writer, content, reg_date, read_count, pass, file1, recommend, thank) 
+VALUES (cm01_SEQ.NEXTVAL, '당신들이 그러고도 사람인가요?', 'user02', '거북이도 산책을 좋아한다는 걸 알게 됐어요. (10)', SYSDATE, 55, '1234', '', 0, 0);
+
+INSERT INTO cm01(no, title, writer, content, reg_date, read_count, pass, file1, recommend, thank) 
+VALUES (cm01_SEQ.NEXTVAL, '죄송합니다 어제는 흥분했어요', 'user02', '거북이도 산책을 좋아한다는 걸 알게 됐어요. (10)', SYSDATE, 55, '1234', '', 0, 0);
+
+COMMIT;
+
+SELECT * FROM cm01;

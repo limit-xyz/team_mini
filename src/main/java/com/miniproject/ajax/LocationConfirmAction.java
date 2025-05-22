@@ -21,6 +21,7 @@ public class LocationConfirmAction implements AjaxProcess{
 		
 		String dataSelect = req.getParameter("dataSelect");
 		String searchOption = req.getParameter("searchOption");
+		System.out.println("LocationConfirmAction 실행됨");
 		
 		List<AnimalHospital> animalHospitalList = null;
 		BoardDao dao = new BoardDao();

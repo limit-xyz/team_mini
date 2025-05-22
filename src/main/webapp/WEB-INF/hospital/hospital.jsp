@@ -20,21 +20,13 @@
     request.setAttribute("jsKey", jsKey);
     request.setAttribute("restKey", restKey);
 %>
-
-<script src="js/jquery-3.7.1.min.js"></script>
-<script src="js/hospital.js"></script>
-<script src="js/config.js"></script>
+<script>
+	const restKey = "${restKey}";
+	const contextPath = "${pageContext.request.contextPath}";
+</script>
+<script src="${pageContext.request.contextPath}/js/hospital.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<link href="bootstrap/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css">
-<title></title>
-</head>
 <style>
 	.map_wrap, .map_wrap * {
 		margin: 0;
@@ -207,8 +199,7 @@
 			</div>
 		</div>
 	</div>
-</body>
-</html>
+
 
 <!-- 
 	https://yeon-ju-k.tistory.com/183  api 키 숨기기

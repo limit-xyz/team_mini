@@ -7,18 +7,19 @@ import java.util.ArrayList;
 import com.miniproject.common.service.CommandProcess;
 import com.miniproject.dao.MyPageDao;
 import com.miniproject.vo.Diary;
+import com.miniproject.vo.MyBoard;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class DiaryListService implements CommandProcess {
+public class MyBoardListService implements CommandProcess {
 
 	@Override
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		ArrayList<Diary> diaryList = new ArrayList<>();
+		ArrayList<MyBoard> myBoardList = new ArrayList<>();
 		MyPageDao dao = new MyPageDao();
 
 		String id = (String) request.getSession().getAttribute("id");
@@ -32,7 +33,7 @@ public class DiaryListService implements CommandProcess {
 		if (id == null) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("<script>");
-			sb.append("	alert('로그인이 필요합니다.');");
+			sb.append("	alert('세션이 만료되었습니다.\n다시 로그인해주세요.');");
 			sb.append("	location.href='" + request.getContextPath() + "/member/loginForm");
 			sb.append("</script>");
 
@@ -43,7 +44,7 @@ public class DiaryListService implements CommandProcess {
 		}
 
 		String pageNum = request.getParameter("pageNum");
-		if (pageNum == null) {
+		if (pageNum == null || pageNum.equals("")) {
 			pageNum = "1";
 		}
 		int currentPage = Integer.parseInt(pageNum);
@@ -54,7 +55,7 @@ public class DiaryListService implements CommandProcess {
 		int endRow = startRow + PAGE_SIZE - 1;
 		int listCount = 0;
 
-		listCount = dao.getDiaryCount(id, searchType, searchKeyword);
+		listCount = dao.getMyBoardCount(id, searchType, searchKeyword);
 
 		int pageCount = listCount / PAGE_SIZE + (listCount % PAGE_SIZE == 0 ? 0 : 1);
 
@@ -68,19 +69,19 @@ public class DiaryListService implements CommandProcess {
 			request.setAttribute("searchDiaryOption", "1");
 			request.setAttribute("searchDiaryType", searchType);
 			request.setAttribute("searchDiaryKeyword", searchKeyword);
-			diaryList = dao.searchDiaryList(id, searchType, searchKeyword, startRow, endRow);
+			myBoardList = dao.searchMyBoardList(id, searchType, searchKeyword, startRow, endRow);
 		}
 
 		else {
-			diaryList = dao.getDiaryList(id, startRow, endRow);
+			myBoardList = dao.getMyBoardList(id, startRow, endRow);
 		}
-		request.setAttribute("diaryList", diaryList);
+		request.setAttribute("boardList", myBoardList);
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("pageCount", pageCount);
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
 
-		return "member/mypage/diaryList";
+		return "member/mypage/boardList";
 	}
 
 }
