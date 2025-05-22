@@ -251,7 +251,7 @@ public class ComDao {
 
 	public ArrayList<Reply> getReplyList(int bbsNo) {
 
-		String replyListSql = "SELECT * FROM reply WHERE board_no=? " + " ORDER BY no DESC ";
+		String replyListSql = "SELECT * FROM cm01_reply WHERE board_no=? " + " ORDER BY no DESC ";
 		ArrayList<Reply> replyList = null;
 
 		try {
@@ -291,7 +291,7 @@ public class ComDao {
 	// 게시글 하나를 받아서 DB에 저장하는 메서드
 	public void insertBoard(Community b) {
 
-		String insertBoard = "INSERT INTO cm01(no, title, writer, content, reg_date, read_count, file1, recommend, thank) "
+		String insertBoard = "INSERT INTO cm01_reply(no, title, writer, content, reg_date, read_count, file1, recommend, thank) "
 				+ "VALUES(cm01_seq.NEXTVAL, ?, ?, ?, SYSDATE, 0, ?, 0, 0)";
 
 		try {
@@ -405,7 +405,7 @@ public class ComDao {
 	// 댓글 하나의 데이터를 받아서 DB에 저장하는 메서드
 	public void insertReply(Reply reply) {
 
-		String insertReply = "INSERT INTO reply VALUES(reply_seq.NEXTVAL, ?, ?, ?, SYSDATE)";
+		String insertReply = "INSERT INTO cm01_reply VALUES(reply_seq.NEXTVAL, ?, ?, ?, SYSDATE)";
 
 		try {
 			conn = DBManager.getConnection();
@@ -427,7 +427,7 @@ public class ComDao {
 	// 댓글 번호에 해당하는 댓글을 DB에서 수정하는 메서드
 	public void updateReply(Reply reply) {
 
-		String updateReply = "UPDATE reply SET reply_content=? WHERE no=?";
+		String updateReply = "UPDATE cm01_reply SET reply_content=? WHERE no=?";
 
 		try {
 
@@ -450,7 +450,7 @@ public class ComDao {
 	// 댓글 번호에 해당하는 댓글을 DB에서 삭제하는 메서드
 	public void deleteReply(Reply reply) {
 
-		String deleteReply = "DELETE FROM reply WHERE no=? ";
+		String deleteReply = "DELETE FROM cm01_reply WHERE no=? ";
 
 		try {
 

@@ -26,7 +26,7 @@
 					<tbody>
 						<tr>
 							<th class="table-secondary">제 목</th>
-							<td colspan="3">${board.title}</td>
+							<td id="freeTitle" colspan="3">${board.title}</td>
 						</tr>
 						<tr>
 							<th>작성자</th>
@@ -129,14 +129,13 @@
 									data-no="${reply.no}"><i class="bi bi-file-text"> 수정</i></button>									
 								<button class="deleteReply btn btn-outline-warning btn-sm"
 									data-no="${reply.no}"><i class="bi bi-trash"> 삭제</i></button>
-								<button class="btn btn-outline-danger btn-sm"
-									onclick="reportReply('${reply.no}')">
+								<button class="reportReply btn btn-outline-danger btn-sm" data-reply-no="${reply.no}">
 									<i class="bi bi-telephone-outbound"> 신고</i></button>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col p-3">
-								<pre>${reply.replyContent }</pre>
+							<div class="replyContent col p-3">
+								<pre data-reply-no="${reply.no}">${reply.replyContent}</pre>
 						</div>
 						</div>							
 					</div>

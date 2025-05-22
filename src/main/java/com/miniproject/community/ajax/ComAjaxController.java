@@ -34,5 +34,15 @@ public class ComAjaxController {
 			ajaxAction = new ReplyDeleteAction();
 			ajaxAction.ajaxProcess(request, response);
 		}
+		
+		else if (command.equals("replyDelete.ajax")) {
+			ajaxAction = new ReplyDeleteAction();
+			ajaxAction.ajaxProcess(request, response);
+		}
+		
+		else if (command.equals("replyReport.ajax")) {
+			ajaxAction = new ReplyReportAction();
+			ajaxAction.ajaxProcess(request, response);
+		}
 	}
 }

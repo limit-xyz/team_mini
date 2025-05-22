@@ -47,8 +47,8 @@ VALUES (cm01_seq.NEXTVAL, '거북이 산책 후기', '정예린', '거북이도 
 
 COMMIT;
 
-DROP TABLE reply;
-CREATE TABLE reply(
+DROP TABLE cm01_reply;
+CREATE TABLE cm01_reply(
 	no NUMBER PRIMARY KEY,
 	board_no NUMBER NOT NULL,
 	reply_content VARCHAR2(500 CHAR),
