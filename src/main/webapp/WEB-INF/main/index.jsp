@@ -79,7 +79,7 @@
 <div class="row">
 	<div class="col" id="topLine">
 		<div class="row-container">
-			<a href="http://localhost:8080/team_mini/hospital/*" class="card-link">
+			<a href="${pageContext.request.contextPath}/hospital/*" class="card-link">
 				<div class="outer-container">
 					<div class="circle-image">
 						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkuIadwwXvaQ3aaa6rnbRYCyg9_5nwQWksGQ&s" alt="동물병원 찾기">
@@ -89,7 +89,7 @@
 					</div>
 				</div>
 			</a>
-			<a href="http://localhost:8080/team_mini/hospital/*" class="card-link">
+			<a href="${pageContext.request.contextPath}/hospital/*" class="card-link">
 				<div class="outer-container">
 					<div class="circle-image">
 						<img src="https://cdn.mkhealth.co.kr/news/photo/202106/53700_55215_4051.jpg" alt="미용실 찾기">

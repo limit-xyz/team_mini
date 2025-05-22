@@ -19,18 +19,34 @@ public class LocationConfirmAction implements AjaxProcess{
 	public void ajaxProcess(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 		
-		String dataSelect = req.getParameter("dataSelect");
-		String searchOption = req.getParameter("searchOption");
+		String dataSelect = "";
+		String searchOption = "";
+		String nearby = "";
+		Double lat = Double.parseDouble(req.getParameter("lat"));
+		Double lng = Double.parseDouble(req.getParameter("lng"));
+		
+		dataSelect = req.getParameter("dataSelect");
+		searchOption = req.getParameter("searchOption");
+		nearby = req.getParameter("nearby");
+
 		System.out.println("LocationConfirmAction 실행됨");
 		
 		List<AnimalHospital> animalHospitalList = null;
 		BoardDao dao = new BoardDao();
 		
-		if(searchOption.equals("")||searchOption==null) {
+		if(nearby == "1" || nearby.equals("1") ) {
+			if(searchOption.equals("")||searchOption==null) {
+				 animalHospitalList = dao.locationConfirmNearby(dataSelect, lat, lng);
+			} else {
+				 animalHospitalList = dao.locationConfirmNearby(dataSelect, lat, lng, searchOption);
+			} 
+		}
+		
+		else if(searchOption.equals("")||searchOption==null) {
 			 animalHospitalList = dao.locationConfirm(dataSelect);
 		} else {
 			 animalHospitalList = dao.locationConfirm(dataSelect,searchOption);
-		}
+		} 
 		
 		Gson gson = new Gson();
 		String result = gson.toJson(animalHospitalList);
