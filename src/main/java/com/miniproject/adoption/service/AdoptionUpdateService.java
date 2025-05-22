@@ -126,7 +126,8 @@ public class AdoptionUpdateService implements CommandProcess{
         int result = adoptionDao.updateAdoption(dto);
 		
         if(result > 0) {
-        	return "r:/team_mini/adoption/AdoptionDetail?postId=" + postId + "&increaseViewCount=false";
+        	
+        	return "r:" + request.getContextPath() + "/adoption/AdoptionDetail?postId=" + postId + "&increaseViewCount=false";
         	//수정된 게시글 상세 페이지로 리다이렉트
         } else {
         	response.setContentType("text/html; charset=utf-8");

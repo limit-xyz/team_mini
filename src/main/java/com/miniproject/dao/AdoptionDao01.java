@@ -495,9 +495,9 @@ public class AdoptionDao01 {
 			// 게시글 수정
 			public int updateAdoption(AdoptionWriteDto dto){
 				int result = 0;
-				String sql = "Update adoption_post Set title = ?, content = ?, adoptionType = ?, region = ?, "
-						+ " animal_type_main = ?, animal_type_detail =?, image_path = ?, "
-						+ " WHere post_id = ?";
+				String sql = "Update adoption_post Set title = ?, content = ?, adoption_type = ?, region = ?, "
+						+ " animal_type_main = ?, animal_type_detail =?, image_path = ? "
+						+ "WHERE post_id = ?";
 						
 			    Connection conn = null;
 			    PreparedStatement pstmt = null;
@@ -517,7 +517,8 @@ public class AdoptionDao01 {
 					 
 					 
 					 result = pstmt.executeUpdate();
-								
+					
+					 
 				} catch (SQLException e) {
 							e.printStackTrace();
 							

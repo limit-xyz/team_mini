@@ -18,9 +18,10 @@ public class AdoptionReplyDeleteService implements CommandProcess{
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		String userRole = (String) session.getAttribute("userRole"); // 세션에서 사용자 권한 획득
+		String userId = (String) session.getAttribute("id");
+		String userRole = (String) session.getAttribute("idAdmin"); // 세션에서 사용자 권한 획득
 		
+		System.out.println("세션 ID: " + userId + " / 역할(ROLE): " + userRole);
 		
 		if(userId == null) { //로그인 확인
 			response.setContentType("text/html; charset=utf-8");

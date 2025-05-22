@@ -8,6 +8,7 @@
 <% String loginId = (String) session.getAttribute("id");
 	 String loginRole = (String) session.getAttribute("role");
 %>
+<%= session.getAttribute("id") %> / <%= session.getAttribute("isAdmin") %>
 
 <%-- content --%>
 <div class="row my-5" id="global-content">
@@ -79,7 +80,7 @@
 			</div>
 		<div class="row my-3"> 
 			<div class="col text-center">			
-			<c:if test="${sessionScope.id == adopboard.userId || sessionScope.role == 'admin' }">
+			<c:if test="${sessionScope.id == adopboard.userId || sessionScope.isAdmin}">
 				<input type="button" class="btn btn-primary" id="detailUpdate" value="수정하기">
 				<input type="button" class="btn btn-danger ms-2 me-2" id="detailDelete" value="삭제하기">
 				</c:if>
@@ -108,7 +109,7 @@
 										<fmt:formatDate value="${reply.createdAt}" pattern="yyyy-MM-dd : HH:mm:ss" />
 										</span>
 										<%-- 댓글 작성자 또는 관리자에게만 보일 버튼 --%>
-										<c:if test="${sessionScope.id == reply.userId || sessionScope.role == 'admin' }">
+										<c:if test="${sessionScope.id == reply.userId || sessionScope.isAdmin }">
 										
 										<button class="modifyReply btn btn-outline-success btn-sm" data-no='${reply.replyId}'>
 										<i class="bi bi-file-text"> 수정</i></button>
@@ -126,7 +127,7 @@
 											<c:choose>
 												<c:when test="${sessionScope.id == reply.replyWriter 
 																		|| sessionScope.id == adopboard.userId
-																		|| sessionScope.id == 'admin'}">
+																		|| sessionScope.id == 'isAdmin'}">
 																	
 																	<div>[🔒 비밀 댓글 입니다.]<br>	${reply.content} </div>
 											</c:when>
@@ -229,7 +230,7 @@ document.getElementById("detailDelete").addEventListener("click", function(){
 	}
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function (){
 	const guestReply = document.getElementById("guestReply");
 	if (guestReply) {
 		guestReply.addEventListener("click", function () {
@@ -238,7 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 });
-document.addEventListener("DOMContentLoaded",function(){
+
 	document.querySelectorAll(".modifyReply").forEach(function(button){
 		button.addEventListener("click", function(){
 			const replyId = this.getAttribute("data-no")
@@ -254,9 +255,9 @@ document.addEventListener("DOMContentLoaded",function(){
 			if(confirm("해당 댓글을 삭제 하시겠습니까?")){
 				location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyDelete?replyId=' + replyId + '&postId=' + postId;
 			}
-		})
 		});
-	});
+		});
+	
 	function reportReply(replyId){
 		if(confirm("댓글을 신고하시겠습니까?")){
 			location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyReport?replyId=' + replyId;

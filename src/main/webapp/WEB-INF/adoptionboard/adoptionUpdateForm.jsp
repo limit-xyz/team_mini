@@ -108,7 +108,7 @@
 						<h2>작성 게시글 수정</h2>
 					</div>
 				</div>
-				<form action="${pageContext.request.contextPath}/adoption/AdoptionUpdateService" 
+				<form action="/team_mini/adoption/AdoptionUpdate" 
 				 method="post" enctype="multipart/form-data">		
 					
 					
@@ -183,7 +183,7 @@
         </div>
 			
         <div class="button-container">
-           <button type="submit" class="btn btn-primary">수정</button>
+           <button type="submit" class="btn btn-primary">등록</button>
             <button type="button" id="cancel-button">취소</button>
         </div>
     </form>
