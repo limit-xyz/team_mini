@@ -27,6 +27,9 @@ $(function() {
       lat = data.latitude;
       lng = data.longitude;
       var ip = data.ip;
+			
+			var newCenter = new kakao.maps.LatLng(lat, lng);
+			map.setCenter(newCenter);
       
     }).fail(function() {
 			alert("위치 정보를 불러오지 못했습니다.")
@@ -57,8 +60,7 @@ $(function() {
 		          const result = res.documents[0];
 							console.log("result.x :", result.x, ", result.y : ", result.y)
 							lat = result.y, lng = result.x;
-		          $("#lng").val(lng);
-		          $("#lat").val(lat);
+
 		        } else {
 							alert("좌표를 찾을 수 없습니다.")
 		        }
@@ -70,6 +72,10 @@ $(function() {
 				});
 			}
 		}).open();
+		
+		var newCenter = new kakao.maps.LatLng(lat, lng);
+		map.setCenter(newCenter);
+		
   });
 	
 	// 지도에 마커 고정 및 위치 정보 출력창
@@ -189,13 +195,13 @@ $(function() {
     displayPlaces(data.slice(0, itemsPerPage));
 	}
 
-	// "검색" 버튼 클릭 시 DB에서 데이터 가져와서 ajax로 뿌리는 동작
+	// "지도에 위치 표시" 버튼 클릭 시 DB에서 데이터 가져와서 ajax로 뿌리는 동작
 	$("#locationConfirm").on("click", function() {
 	
 		let dataSelect = $("#dataSelect").val();
 		let searchOption = $("#searchOption").val();
 		let data = "lat=" + lat + "&lng=" + lng +"&dataSelect=" + dataSelect 
-			+"&searchOption=" + searchOption;
+			+"&searchOption=" + searchOption +"&nearby=0";
 		
 		// 지도 중심 좌표 변경
 		const newCenter = new kakao.maps.LatLng(lat, lng);
@@ -229,16 +235,16 @@ $(function() {
 	});
 	
 	
-	
+	// "가까운 곳만 지도에 위치표시" 버튼 클릭 시 DB에서 데이터 가져와서 ajax로 뿌리는 동작
 	$("#nearbyLocationConfirm").on("click", function() {
 
 		let dataSelect = $("#dataSelect").val();
 		let searchOption = $("#searchOption").val();
-		let data = "lat=" + lat + "&lng=" + lng +"&dataSelect=" + dataSelect 
-			+"&searchOption=nearby";
+		let data = "lat=" + lat + "&lng=" + lng +"&dataSelect=" + dataSelect +"&searchOption=" + searchOption
+			+"&nearby=1";
 
 		// 지도 중심 좌표 변경
-		const newCenter = new kakao.maps.LatLng(lat, lng);
+		var newCenter = new kakao.maps.LatLng(lat, lng);
 		map.setCenter(newCenter);
 		console.log(lat, lng);
 		console.log(data);
