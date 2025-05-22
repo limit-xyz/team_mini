@@ -2,8 +2,6 @@ package com.miniproject.adoption.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.UUID;
 

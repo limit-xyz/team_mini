@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import com.miniproject.common.service.CommandProcess;
-import com.miniproject.dao.DiaryDao;
+import com.miniproject.dao.MyPageDao;
 import com.miniproject.vo.Diary;
 
 import jakarta.servlet.ServletException;
@@ -26,7 +26,7 @@ public class DiaryUpdateFormService implements CommandProcess {
 		if (searchType != null && searchKeyword != null && !searchType.equals("") && !searchKeyword.equals(""))
 			isSearch = true;
 
-		DiaryDao dao = new DiaryDao();
+		MyPageDao dao = new MyPageDao();
 		boolean isDiaryOwner = dao.isDiaryOwner(id, no);
 		Diary diary = dao.getDiary(no);
 

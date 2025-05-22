@@ -160,14 +160,41 @@ public class FaqDao {
 	}		
 	
 	
+	// 검색어가 포함된 faq 게시글 수를 읽어오는 메서드 - 검색 paging 처리에 사용
+	public int getFaqCount(String keyword) {
+		// title, writer, content
+		String faqSql = "SELECT COUNT(*) FROM faq "
+				+ " WHERE faq_title LIKE ?";
+		int count = 0;
+		
+		try {
+			conn = DBManager.getConnection();		
+			pstmt = conn.prepareStatement(faqSql);
+			pstmt.setString(1, "%"+keyword+"%");
+			rs = pstmt.executeQuery();
+
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}			
+		} catch(SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return count;		
+	}	
 	
 	
 	
-	//L기능 faqlist 전체를 받아오는 기능 
-	public ArrayList<Faq> getFaqList() {
+	
+	//L기능 faqlist 전체를 받아오는 기능 페이징 데이터를 받음
+	public ArrayList<Faq> getFaqList(int startRow, int endRow) {
 		
 		
-		String faqSql = "SELECT * FROM FAQ";
+		String faqSql = "SELECT * FROM (SELECT ROWNUM num, sub.* "
+				+ "    FROM (SELECT * FROM faq ORDER BY faq_no DESC) sub) "
+				+ " WHERE num >= ? AND num <= ?";
 		
 		ArrayList<Faq> faqList = null;
 		
@@ -175,6 +202,8 @@ public class FaqDao {
 		try {
 			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(faqSql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
 
 
@@ -203,6 +232,51 @@ public class FaqDao {
 		
 	}
 	
+	
+	//L기능 검색된 faqlist 전체를 받아오는 기능 페이징 데이터를 받음
+		public ArrayList<Faq> getFaqList(String keyword,int startRow, int endRow) {
+			
+			
+			String faqSql = "SELECT * FROM (SELECT ROWNUM num, sub.* "
+					+ "    FROM (SELECT * FROM faq WHERE faq_title LIKE ? ORDER BY faq_no DESC) sub) "
+					+ " WHERE num >= ? AND num <= ?";
+			
+			ArrayList<Faq> faqList = null;
+			
+			
+			try {
+				conn = DBManager.getConnection();
+				pstmt = conn.prepareStatement(faqSql);
+				pstmt.setString(1, "%" + keyword + "%");
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+				rs = pstmt.executeQuery();
+
+
+					faqList = new ArrayList<Faq>();
+
+					// 5. 쿼리를 실행 결과를 while 반복하면서 Board 객체에 담고 List 담는다.
+					while(rs.next()) {
+						Faq f = new Faq();
+						f.setFaqNo(rs.getInt("faq_no"));
+						f.setFaqTitle(rs.getString("faq_title"));
+						f.setFaqContent(rs.getString("faq_content"));
+						f.setFaqAuthor(rs.getString("faq_author"));
+						
+						faqList.add(f);
+					}
+				} catch(SQLException e) {
+					e.printStackTrace();
+					
+				} finally {
+					// 6. DB 작업에 사용한 객체는 처음 가져온 역순으로 닫다.
+					DBManager.close(conn, pstmt, rs);
+				}
+				
+			return faqList;
+			
+			
+		}
 	
 	
 

@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import com.miniproject.common.service.CommandProcess;
-import com.miniproject.dao.DiaryDao;
+import com.miniproject.dao.MyPageDao;
 import com.miniproject.vo.Diary;
 
 import jakarta.servlet.ServletException;
@@ -19,7 +19,7 @@ public class DiaryListService implements CommandProcess {
 			throws ServletException, IOException {
 
 		ArrayList<Diary> diaryList = new ArrayList<>();
-		DiaryDao dao = new DiaryDao();
+		MyPageDao dao = new MyPageDao();
 
 		String id = (String) request.getSession().getAttribute("id");
 		String searchType = request.getParameter("searchDiaryType");
@@ -33,7 +33,7 @@ public class DiaryListService implements CommandProcess {
 			StringBuilder sb = new StringBuilder();
 			sb.append("<script>");
 			sb.append("	alert('로그인이 필요합니다.');");
-			sb.append("	location.href='" + request.getContextPath() + "/admin/main'");
+			sb.append("	location.href='" + request.getContextPath() + "/member/loginForm");
 			sb.append("</script>");
 
 			response.setContentType("text/html; charset=utf-8");

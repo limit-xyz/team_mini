@@ -3,7 +3,9 @@ package com.miniproject.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import com.miniproject.vo.Member;
@@ -491,6 +493,60 @@ public class MemberDao {
 		}
 		return result;
 	}
+	
+	
+	// 차단 상태인지 확인하는 메소드
+	public String isBan(String id) {
+		String CheckBanSql = "SELECT * FROM member WHERE id=?";
+		String banReason = null;
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(CheckBanSql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				LocalDate banDate = rs.getDate("ban_date").toLocalDate();
+				LocalDate nowDate = LocalDate.now();
+				
+				if(nowDate.isBefore(banDate)) {
+					banReason = rs.getString("ban_reason");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return banReason;
+	}
+	
+	
+	// 차단 날짜 가져오는 메소드
+	public String getBanDate(String id) {
+		String getBanDateSql = "SELECT ban_date FROM member WHERE id=?";
+		String formatted = "";
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(getBanDateSql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				LocalDateTime date = rs.getTimestamp("ban_date").toLocalDateTime();		
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				formatted = date.format(formatter);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return formatted;
+	}
+	
 
 	// admin 인지 체크하는 메소드, 아직 틀만 잡아놓고 사용은 안하는중
 	public boolean isAdmin(String id) {
@@ -513,4 +569,5 @@ public class MemberDao {
 		}
 		return role.equals("admin");
 	}
+		
 }

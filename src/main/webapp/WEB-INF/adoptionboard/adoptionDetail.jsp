@@ -82,10 +82,29 @@
 				<input type="button" class="btn btn-primary" id="detailUpdate" value="수정하기">
 				<input type="button" class="btn btn-danger ms-2 me-2" id="detailDelete" value="삭제하기">
 				</c:if>
+				<c:if test="${not searchOption}">
+					<c:if test="${not empty boardType}">
+						<input type="button" class="btn btn-warning" value="목록보기"
+							onclick="location.href='${pageContext.request.contextPath}/member/mypage/boardList?pageNum=${pageNum}&searchBoardType=${type}&searchBoardKeyword=${keyword}'">
+					</c:if>
+				
+					<c:if test="${empty boardType}">
+						<input type="button" class="btn btn-warning" value="목록보기"
+							onclick="location.href='${pageContext.request.contextPath}/adoptionboard/adopboardList'">
+					</c:if>
+				</c:if>
+				
 				<%--  검색 리스트에서 넘어온 경우 다시 보내기 --%>
 				<c:if test="${searchOption}">
-				<input type="button" class="btn btn-warning" value="목록보기"
-				onclick="location.href='${pageContext.request.contextPath}/adoptionboard/adopboardList?pageNum=${pageNum}'">
+					<c:if test="${not empty boardType}">
+						<input type="button" class="btn btn-warning" value="목록보기"
+							onclick="location.href='${pageContext.request.contextPath}/member/mypage/boardList?pageNum=${pageNum}&searchBoardType=${type}&searchBoardKeyword=${keyword}'">
+					</c:if>
+				
+					<c:if test="${empty boardType}">
+						<input type="button" class="btn btn-warning" value="목록보기"
+							onclick="location.href='${pageContext.request.contextPath}/adoptionboard/adopboardList?pageNum=${pageNum}'">
+					</c:if>
 				</c:if>
 				</div>
 			</div>
@@ -211,6 +230,7 @@
 </div>
 
 <script>
+<<<<<<< HEAD
 document.getElementById("detailUpdate").addEventListener("click", function(){
 	const postId = document.getElementById("postId").value;
 	location.href = "${pageContext.request.contextPath}/adoption/AdoptionUpdateForm?postId=" + postId;
@@ -225,9 +245,17 @@ document.getElementById("detailDelete").addEventListener("click", function(){
 	if(confirm("정말 게시글을 삭제하시겠습니까?")){
 		location.href = "${pageContext.request.contextPath}/adoption/AdoptionDelete?postId=" + postId + "&pageNum="
 				+ pageNum + "&type=" + encodeURIComponent(type) + "&keyword=" + encodeURIComponent(keyword);
+=======
+	const updateBtn = document.getElementById("detailUpdate");
+	if (updateBtn) {
+	    updateBtn.addEventListener("click", function(){
+	        const postId = document.getElementById("postId").value;
+	        location.href = "${pageContext.request.contextPath}/adoption/AdoptionUpdateForm?postId=" + postId;
+	    });
+>>>>>>> 997e27cc834828ab8a82c08f8dc377068f8d7fe3
 	}
-});
 
+<<<<<<< HEAD
 document.addEventListener("DOMContentLoaded", function (){
 	const guestReply = document.getElementById("guestReply");
 	if (guestReply) {
@@ -245,11 +273,43 @@ document.addEventListener("DOMContentLoaded", function (){
 			location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyUpdateForm?replyId=' + replyId + '&postId=' + postId;
 		});
 });
+=======
+	const deleteBtn = document.getElementById("detailDelete");
+	if (deleteBtn) {
+	    deleteBtn.addEventListener("click", function(){
+	        const postId = document.getElementById("postId").value;
+	        if(confirm("정말 게시글을 삭제하시겠습니까?")){
+	            location.href = "${pageContext.request.contextPath}/adoption/AdoptionDelete?postId=" + postId;
+	        }
+	    });
+	}
+
+	
+	document.addEventListener("DOMContentLoaded", function () {
+		const guestReply = document.getElementById("guestReply");
+		if (guestReply) {
+			guestReply.addEventListener("click", function () {
+				alert("댓글을 작성하려면 로그인해주세요.");
+				window.location.href = "${pageContext.request.contextPath}/member/loginForm";
+			});
+		}
+	});
+	document.addEventListener("DOMContentLoaded",function(){
+		document.querySelectorAll(".modifyReply").forEach(function(button){
+			button.addEventListener("click", function(){
+				const replyId = this.getAttribute("data-no")
+				const postId = document.getElementById("postId").value;
+				location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyUpdateForm?replyId=' + replyId + '&postId=' + postId;
+			});
+	});
+>>>>>>> 997e27cc834828ab8a82c08f8dc377068f8d7fe3
 
 	document.querySelectorAll(".deleteReply").forEach(function(button){
 		button.addEventListener("click", function(){
 			const replyId = this.getAttribute("data-no");
 			const postId = document.getElementById("postId").value;
+			console.log(replyId)
+			console.log(postId)
 			if(confirm("해당 댓글을 삭제 하시겠습니까?")){
 				location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyDelete?replyId=' + replyId + '&postId=' + postId;
 			}

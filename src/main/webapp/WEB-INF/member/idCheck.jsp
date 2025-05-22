@@ -34,7 +34,7 @@
 						다른 아이디를 선택해 주세요
 					</div>
 				</div>				
-				<form action="overlapIdCheck.mvc" name="idCheckForm" 
+				<form action="idCheck" name="idCheckForm" 
 						method="post" id="idCheckForm" class="row mt-5">			
 					<div class="col-10 offset-1">
 						<div class="input-group">

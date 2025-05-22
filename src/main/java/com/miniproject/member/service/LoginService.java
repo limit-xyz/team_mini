@@ -46,6 +46,17 @@ public class LoginService implements CommandProcess{
 					out.println("</script>");
 					return null;
 				} 
+				
+				
+				 if(dao.isBan(id) != null) { // 밴 당한 계정일 경우
+						response.setContentType("text/html; charset=utf-8");
+						PrintWriter out = response.getWriter();
+						out.println("<script>");
+						out.println("	alert('차단당한 계정입니다.\\n차단 해제 일자 : " + dao.getBanDate(id) + "\\n차단 사유 : " + dao.isBan(id) + "');");
+						out.println("	history.back();");			
+						out.println("</script>");
+						return null;
+					} 
 				HttpSession session = request.getSession();
 				
 				
@@ -57,7 +68,7 @@ public class LoginService implements CommandProcess{
 				
 				session.setAttribute("id", id);
 				session.setAttribute("isLogin", true);
-				return "r:/team_mini/main/main";
+				return "r:" + request.getContextPath() +"/main/main";
 	}
 
 }

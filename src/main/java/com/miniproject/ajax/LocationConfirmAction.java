@@ -5,12 +5,13 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.miniproject.common.service.AjaxProcess;
 import com.miniproject.dao.BoardDao;
-import com.miniproject.vo.AnimalHospital;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import com.mimproject.vo.*;
 
 public class LocationConfirmAction implements AjaxProcess{
 
@@ -18,11 +19,37 @@ public class LocationConfirmAction implements AjaxProcess{
 	public void ajaxProcess(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 		
-		String dataSelect = req.getParameter("dataSelect");
-		// System.out.println(dataSelect);
+		String dataSelect = "";
+		String searchOption = "";
+		String nearby = "";
+		Double lat = Double.parseDouble(req.getParameter("lat"));
+		Double lng = Double.parseDouble(req.getParameter("lng"));
 		
+		dataSelect = req.getParameter("dataSelect");
+		searchOption = req.getParameter("searchOption");
+		nearby = req.getParameter("nearby");
+
+		System.out.println("LocationConfirmAction 실행됨");
+		System.out.println(dataSelect);
+		System.out.println(searchOption);
+		System.out.println(nearby);
+		
+		List<AnimalHospital> animalHospitalList = null;
 		BoardDao dao = new BoardDao();
-		List<AnimalHospital> animalHospitalList = dao.locationConfirm(dataSelect);
+		
+		if(nearby == "1" || nearby.equals("1") ) {
+			if(searchOption.equals("")||searchOption==null) {
+				 animalHospitalList = dao.locationConfirmNearby(dataSelect, lat, lng);
+			} else {
+				 animalHospitalList = dao.locationConfirmNearby(dataSelect, lat, lng, searchOption);
+			} 
+		}
+		
+		else if(searchOption.equals("")||searchOption==null) {
+			 animalHospitalList = dao.locationConfirm(dataSelect);
+		} else {
+			 animalHospitalList = dao.locationConfirm(dataSelect,searchOption);
+		} 
 		
 		Gson gson = new Gson();
 		String result = gson.toJson(animalHospitalList);
@@ -31,6 +58,4 @@ public class LocationConfirmAction implements AjaxProcess{
 		PrintWriter out = resp.getWriter();
 		out.println(result);
 	}
-
-	
 }

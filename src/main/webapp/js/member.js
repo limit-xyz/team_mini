@@ -94,7 +94,7 @@ $(function() {
 	
 	$("#btnOverlapId").on("click", function() {
 		
-		let id = $("#id").val();
+		let id = $("#userId").val();
 		if(id.length < 5) {
 			alert("아이디를 5자 이상 입력해 주세요");
 			return false;

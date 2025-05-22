@@ -8,7 +8,6 @@ import com.miniproject.adoption.service.*;
 import com.miniproject.common.service.CommandProcess;
 
 import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -63,6 +62,7 @@ public class AdoptBoardController extends HttpServlet{
 	protected void doProcess(
 			HttpServletRequest request, HttpServletResponse response) 
 					throws ServletException, IOException {
+		
 		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String command = requestURI.substring(contextPath.length());
@@ -133,6 +133,14 @@ public class AdoptBoardController extends HttpServlet{
         } else if (command.equals("/adoption/AdoptionReplyDelete")) { 
             service = new AdoptionReplyDeleteService();
             viewPage = service.requestProcess(request, response);
+<<<<<<< HEAD
+=======
+
+        } else if (command.equals("/adoption/AdoptionReplyUpdateForm")) { 
+            service = new AdoptionReplyDeleteService();
+            viewPage = service.requestProcess(request, response);
+
+>>>>>>> 997e27cc834828ab8a82c08f8dc377068f8d7fe3
         }
 		
 		RequestDispatcher rd = null;

@@ -1,11 +1,12 @@
 package com.miniproject.controller;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import com.miniproject.admin.ajax.AdminAjaxController;
 import com.miniproject.admin.service.*;
 import com.miniproject.common.service.CommandProcess;
+import com.miniproject.dao.MemberDao;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -53,14 +54,22 @@ public class AdminContoller extends HttpServlet {
 
 		CommandProcess service;
 
-//		// admin 검증
-//		String requestId = (String) request.getSession().getAttribute("id");
-//		MemberDao dao = new MemberDao();
-//		boolean isAdmin = dao.isAdmin(requestId);
-//		if (!isAdmin) {
-//			System.out.println("콰과광");
-//			return;
-//		}
+		// admin 검증
+		String requestId = (String) request.getSession().getAttribute("id");
+		MemberDao dao = new MemberDao();
+		boolean isAdmin = dao.isAdmin(requestId);
+		if (!isAdmin) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("<script>");
+			sb.append("	alert('관리자만 접근 가능합니다.');");
+			sb.append("	location.href='"+ request.getContextPath() + "/main'");
+			sb.append("</script>");
+
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println(sb.toString());
+			return;
+		}
 
 		// ajax 요청 처리
 		String[] splitTest1 = command.split("/");
@@ -90,12 +99,6 @@ public class AdminContoller extends HttpServlet {
 		// 문의내역 관리
 		else if (command.equals("/admin/inquiry")) {
 			service = new InquiryListService();
-			viewPage = service.requestProcess(request, response);
-		}
-
-		// 임시 로그인
-		else if (command.equals("/admin/tempLogin")) {
-			service = new TempLoginService();
 			viewPage = service.requestProcess(request, response);
 		}
 

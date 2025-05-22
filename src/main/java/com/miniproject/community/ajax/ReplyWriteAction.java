@@ -1,0 +1,44 @@
+package com.miniproject.community.ajax;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
+import com.google.gson.Gson;
+import com.miniproject.common.service.AjaxProcess;
+import com.miniproject.dao.ComDao;
+import com.miniproject.vo.Reply;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+public class ReplyWriteAction implements AjaxProcess {
+
+	@Override
+	public void ajaxProcess(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		if (request.getSession().getAttribute("id") == null) {
+			return;
+		}
+
+		String boardNo = request.getParameter("boardNo");
+		String content = request.getParameter("replyContent");
+		String writer = request.getParameter("replyWriter");
+
+		Reply reply = new Reply(Integer.parseInt(boardNo), content, writer);
+
+		ComDao dao = new ComDao();
+		dao.insertReply(reply);
+
+		ArrayList<Reply> replyList = dao.getReplyList(Integer.parseInt(boardNo));
+
+		Gson gson = new Gson();
+		String result = gson.toJson(replyList);
+
+		response.setContentType("application/json; charset:utf-8");
+		PrintWriter out = response.getWriter();
+		out.print(result);
+	}
+}

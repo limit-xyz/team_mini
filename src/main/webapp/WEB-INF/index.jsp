@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>테스트</title>
+	<title>올인원 반려동물</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css">
   	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/global.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css">
