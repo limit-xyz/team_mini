@@ -7,18 +7,19 @@ $(function() {
 	var lat = 37.566826;
 	var lng = 126.9786567;
 	let markers = [];
+	let currentInfowindow = null;
 	const listEl = document.getElementById('placesList');
 	const paginationEl = document.getElementById('pagination');
 	const pageNum = document.getElementById('pageNum');
 	const params = new URLSearchParams(window.location.search);
 
 	// 카카오 맵 생성 관련
-	const mapContainer = document.getElementById('map');
-	const mapOption = {
+	var mapContainer = document.getElementById('map');
+	var mapOption = {
 	    center: new kakao.maps.LatLng(lat, lng), // 서울 중심 좌표
 	    level: 7
 	};
-	const map = new kakao.maps.Map(mapContainer, mapOption);
+	var map = new kakao.maps.Map(mapContainer, mapOption);
 	
 	
 	// ip로 내 위치 찾기
@@ -30,7 +31,29 @@ $(function() {
 			
 			var newCenter = new kakao.maps.LatLng(lat, lng);
 			map.setCenter(newCenter);
-      
+			
+			// 기존 마커 제거
+			clearMarkers();
+
+			// 현재 위치에 마커 생성
+			var marker = new kakao.maps.Marker({
+			  position: newCenter,
+			  map: map,
+			  title: "현재 위치"
+			});
+
+			markers.push(marker); // 배열에 추가해두면 나중에 clearMarkers()로 제거 가능
+
+			// 인포윈도우 간단 표시 (선택)
+			if (currentInfowindow) {
+			  currentInfowindow.close(); // 기존 인포윈도우 닫기
+			}
+
+			currentInfowindow = new kakao.maps.InfoWindow({
+			  content: '<div style="padding:5px;">현재 위치</div>'
+			});
+			currentInfowindow.open(map, marker);
+			
     }).fail(function() {
 			alert("위치 정보를 불러오지 못했습니다.")
 		});
@@ -57,10 +80,36 @@ $(function() {
 		      },
 		      success: function (res) {
 		        if (res.documents.length > 0) {
-		          const result = res.documents[0];
+		          var result = res.documents[0];
 							console.log("result.x :", result.x, ", result.y : ", result.y)
 							lat = result.y, lng = result.x;
 
+							var newCenter = new kakao.maps.LatLng(lat, lng);
+							map.setCenter(newCenter);
+							
+							// 기존 마커 제거
+							clearMarkers();
+
+							// 현재 위치에 마커 생성
+							var marker = new kakao.maps.Marker({
+							  position: newCenter,
+							  map: map,
+							  title: "현재 위치"
+							});
+
+							markers.push(marker); // 배열에 추가해두면 나중에 clearMarkers()로 제거 가능
+
+							if (currentInfowindow) {
+							  currentInfowindow.close(); // 기존 인포윈도우 닫기
+							}
+
+							currentInfowindow = new kakao.maps.InfoWindow({
+							  content: '<div style="padding:5px;">현재 위치</div>'
+							});
+							currentInfowindow.open(map, marker);
+
+							
+							
 		        } else {
 							alert("좌표를 찾을 수 없습니다.")
 		        }
@@ -73,99 +122,88 @@ $(function() {
 			}
 		}).open();
 		
-		var newCenter = new kakao.maps.LatLng(lat, lng);
-		map.setCenter(newCenter);
-		
   });
 	
 	// 지도에 마커 고정 및 위치 정보 출력창
 	function displayPlaces(places) {
-    clearMarkers();
-    listEl.innerHTML = '';
-		let dataSelect = $("#dataSelect").val();	
-		
-    const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-    const bounds = new kakao.maps.LatLngBounds();
-    const geocoder = new kakao.maps.services.Geocoder();
-    const promises = places.map((place, i) => {
-    	return new Promise((resolve) => {
-      	geocoder.addressSearch(place.address, (result, status) => {
-        	if (status === kakao.maps.services.Status.OK) {
-        	
-						const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	  clearMarkers();
+	  listEl.innerHTML = '';
+	  let dataSelect = $("#dataSelect").val();
 
-            const marker = new kakao.maps.Marker({ map, position: coords });
-            markers.push(marker);
-            bounds.extend(coords);
+	  var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+	  var bounds = new kakao.maps.LatLngBounds();
+	  var geocoder = new kakao.maps.services.Geocoder();
 
-            const listItem = document.createElement('li');
-						const span1 = document.createElement('span');
-						span1.innerHTML = `<strong>${place.place_name}</strong><br>`
-						listItem.appendChild(span1);
-						
-						const span2 = document.createElement('span');
-						span2.innerHTML = `${place.address}<br>`
-						listItem.appendChild(span2);
-						
-						const span3 = document.createElement('span');
-						span3.innerHTML = `전화번호 : ${place.phone}<br>`
-						listItem.appendChild(span3);
-						
-						const span4 = document.createElement('span');
-						span4.innerHTML = `<a href="${place.place_url}" target="_blank">
-														${dataSelect =="hospital" ? "동물병원 정보" : "미용실 정보"}`
-						listItem.appendChild(span4);
-					
-            //listItem.innerHTML = `
-            //  <strong>${place.place_name}</strong><br>
-            //  ${place.address}<br>
-            //  ${place.phone}<br>
-            //  <a href="${place.place_url}" target="_blank">
-						//		${dataSelect =="hospital" ? "동물병원 정보" : "미용실 정보"} 
-						//	</a><br><br>
-            //`;
-						
-						//listEl.style.borderRadius = "8px";
-						//listEl.style.border = "1px solid black";
-						//listEl.style.padding = "15px";
-            listEl.appendChild(listItem);
-            listItem.onclick = () => map.panTo(coords);
+	  var promises = places.map((place, i) => {
+	    return new Promise((resolve) => {
+	      if (!place.address || place.address.trim() === "") {
+	        console.warn("유효하지 않은 주소:", place);
+	        resolve(); // 주소가 없으면 패스
+	        return;
+	      }
 
-            // 마커와 리스트 항목에 인포윈도우 이벤트 추가
-            (function(marker, title, itemEl) {
-            	kakao.maps.event.addListener(marker, 'mouseover', function () {
-                displayInfowindow(marker, title);
-              });
+	      geocoder.addressSearch(place.address, (result, status) => {
+	        if (status === kakao.maps.services.Status.OK && result.length > 0) {
+	          var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	          console.log("마커 생성 위치:", coords.toString());
 
-              kakao.maps.event.addListener(marker, 'mouseout', function () {
-                infowindow.close();
-              });
+	          var marker = new kakao.maps.Marker({ map, position: coords });
+	          markers.push(marker);
+	          bounds.extend(coords);
 
-              itemEl.onmouseover = function () {
-                displayInfowindow(marker, title);
-              };
+	          var listItem = document.createElement('li');
+	          listItem.innerHTML = `
+	            <span><strong>${place.place_name}</strong></span><br>
+	            <span>${place.address}</span><br>
+	            <span>전화번호 : ${place.phone}</span><br>
+	            <span><a href="${place.place_url}" target="_blank">
+	              ${dataSelect === "hospital" ? "동물병원 정보" : "미용실 정보"}
+	            </a></span><br>
+	          `;
 
-              itemEl.onmouseout = function () {
-                infowindow.close();
-              };
-            })(marker, place.place_name, listItem);
-            resolve();
-        	}
-      	});
-      });
-    });
-    Promise.all(promises).then(() => {
-     	map.setBounds(bounds);
-    })
-    .catch((err) => {
-      console.error("Geocoding error:", err);
-    });
+	          listItem.onclick = () => map.panTo(coords);
+	          listEl.appendChild(listItem);
 
-    function displayInfowindow(marker, title) {
-      const content = `<div style="padding:5px;z-index:1;">${title}</div>`;
-      infowindow.setContent(content);
-      infowindow.open(map, marker);
-    }
+	          // 마커 및 리스트에 인포윈도우 바인딩
+	          (function(marker, title, itemEl) {
+	            kakao.maps.event.addListener(marker, 'mouseover', function () {
+	              displayInfowindow(marker, title);
+	            });
+	            kakao.maps.event.addListener(marker, 'mouseout', function () {
+	              infowindow.close();
+	            });
+	            itemEl.onmouseover = function () {
+	              displayInfowindow(marker, title);
+	            };
+	            itemEl.onmouseout = function () {
+	              infowindow.close();
+	            };
+	          })(marker, place.place_name, listItem);
+
+	          resolve();
+	        } else {
+	          console.warn("주소 검색 실패:", place.address);
+	          resolve();
+	        }
+	      });
+	    });
+	  });
+
+	  Promise.all(promises).then(() => {
+	    if (!bounds.isEmpty()) {
+	      map.setBounds(bounds);
+	    } else {
+	      console.warn("지도에 표시할 유효한 마커가 없습니다.");
+	    }
+	  }).catch((err) => {
+	    console.error("Geocoding error:", err);
+	  });
+
+	  function displayInfowindow(marker, title) {
+	    var content = `<div style="padding:5px;z-index:1;">${title}</div>`;
+	    infowindow.setContent(content);
+	    infowindow.open(map, marker);
+	  }
 	}
 	
 
@@ -177,15 +215,15 @@ $(function() {
 
 	// 페이지네이션
 	function displayPagination(data, itemsPerPage = 10) {
-    const totalPages = Math.ceil(data.length / itemsPerPage);
+    var totalPages = Math.ceil(data.length / itemsPerPage);
     pageNum.innerHTML = '';
 		
     for (let i = 1; i <= totalPages; i++) {
-      const btn = document.createElement('button');
+      var btn = document.createElement('button');
       btn.innerText = i;
       btn.onclick = () => {
-          const start = (i - 1) * itemsPerPage;
-          const end = start + itemsPerPage;
+          var start = (i - 1) * itemsPerPage;
+          var end = start + itemsPerPage;
           displayPlaces(data.slice(start, end));
       };
       pageNum.appendChild(btn);
@@ -204,7 +242,7 @@ $(function() {
 			+"&searchOption=" + searchOption +"&nearby=0";
 		
 		// 지도 중심 좌표 변경
-		const newCenter = new kakao.maps.LatLng(lat, lng);
+		var newCenter = new kakao.maps.LatLng(lat, lng);
 		map.setCenter(newCenter);
 		console.log(lat, lng);
 		console.log(data);
@@ -223,7 +261,7 @@ $(function() {
 				if(resData.length > 0) {
 					displayPagination(resData, 10);
 				} else {
-					const listItem = document.createElement('li');
+					var listItem = document.createElement('li');
 					listItem.innerHTML = `<strong>일치하는 검색 결과가 없습니다.</strong><br>`;
 					listEl.appendChild(listItem);
 				}
@@ -263,7 +301,7 @@ $(function() {
 				if(resData.length > 0) {
 					displayPagination(resData, 10);
 				} else {
-					const listItem = document.createElement('li');
+					var listItem = document.createElement('li');
 					listItem.innerHTML = `<strong>일치하는 검색 결과가 없습니다.</strong><br>`;
 					listEl.appendChild(listItem);
 				}

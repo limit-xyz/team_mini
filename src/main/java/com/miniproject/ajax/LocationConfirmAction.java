@@ -30,6 +30,9 @@ public class LocationConfirmAction implements AjaxProcess{
 		nearby = req.getParameter("nearby");
 
 		System.out.println("LocationConfirmAction 실행됨");
+		System.out.println(dataSelect);
+		System.out.println(searchOption);
+		System.out.println(nearby);
 		
 		List<AnimalHospital> animalHospitalList = null;
 		BoardDao dao = new BoardDao();
@@ -55,6 +58,4 @@ public class LocationConfirmAction implements AjaxProcess{
 		PrintWriter out = resp.getWriter();
 		out.println(result);
 	}
-
-	
 }
