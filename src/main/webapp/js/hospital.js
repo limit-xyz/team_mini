@@ -151,7 +151,6 @@ $(function() {
 	          bounds.extend(coords);
 
 	          var listItem = document.createElement('li');
-						listItem.attr("")
 	          listItem.innerHTML = `
 	            <span><strong>${place.place_name}</strong></span><br>
 	            <span>${place.address}</span><br>

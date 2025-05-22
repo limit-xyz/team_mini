@@ -14,7 +14,6 @@
 	<link href="${pageContext.request.contextPath}/bootstrap/bootstrap.min.css" rel="stylesheet" >
 	<script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/member.js"></script>
-	
 	<style>
 	</style>
 </head>
