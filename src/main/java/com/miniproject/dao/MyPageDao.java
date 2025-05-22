@@ -6,14 +6,15 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import com.miniproject.vo.Diary;
+import com.miniproject.vo.MyBoard;
 
-public class DiaryDao {
+public class MyPageDao {
 
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 
-	public DiaryDao() {
+	public MyPageDao() {
 	}
 
 	// 다이어리 갯수 가져오기
@@ -22,7 +23,7 @@ public class DiaryDao {
 		String getDiaryCountSql = "";
 		boolean isSearch = false;
 
-		if (type == null || keyword == null || type.equals("") || keyword.equals("") ) {
+		if (type == null || keyword == null || type.equals("") || keyword.equals("")) {
 			getDiaryCountSql = "SELECT count(*) count FROM diary WHERE member_id=?";
 		} else {
 			getDiaryCountSql = "SELECT count(*) count FROM diary WHERE member_id=? AND " + type + " LIKE ?";
@@ -269,4 +270,141 @@ public class DiaryDao {
 		return isDiaryOwner;
 	}
 
+	// 자신이 쓴 글 목록 가져오기
+	public ArrayList<MyBoard> getMyBoardList(String id, int startRow, int endRow) {
+		
+		String myBoardListSql = "SELECT * FROM (SELECT ROWNUM num, sub.* FROM (SELECT no, '자유 게시판' type, title, writer, "
+				+ "reg_date, read_count FROM cm01 WHERE writer=? UNION ALL SELECT post_id no, '입양/분양 게시판' type, "
+				+ "title, user_id, created_at reg_date, views_count FROM adoption_post WHERE user_id=? ORDER BY reg_date DESC) sub) "
+				+ "WHERE num BETWEEN ? AND ?";
+
+		ArrayList<MyBoard> myBoardList = null;
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(myBoardListSql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, id);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+
+				myBoardList = new ArrayList<>();
+
+				do {
+					MyBoard myBoard = new MyBoard();
+					myBoard.setNo(rs.getInt("no"));
+					myBoard.setType(rs.getString("type"));
+					myBoard.setTitle(rs.getString("title"));
+					myBoard.setWriter(rs.getString("writer"));
+					myBoard.setRegDate(rs.getTimestamp("reg_date"));
+					myBoard.setReadCount(rs.getInt("read_count"));
+
+					myBoardList.add(myBoard);
+
+				} while (rs.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return myBoardList;
+	}
+
+	// 검색한 자신이 쓴 글 목록 가져오기
+	public ArrayList<MyBoard> searchMyBoardList(String id, String saerchType, String keyword, int startRow,
+			int endRow) {
+
+		String myBoardListSql = "SELECT * FROM (SELECT ROWNUM num, sub.* FROM (SELECT no, '자유 게시판' type, title, writer, "
+				+ "reg_date, read_count FROM cm01 WHERE writer=? AND " + saerchType + " LIKE ? UNION ALL SELECT post_id no, "
+				+ "'입양/분양 게시판' type, title, user_id, created_at reg_date, views_count FROM adoption_post WHERE user_id=? "
+				+ "AND " + saerchType + " LIKE ? ORDER BY reg_date DESC) sub) WHERE num BETWEEN ? AND ?";
+
+		ArrayList<MyBoard> myBoardList = null;
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(myBoardListSql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, "%" + keyword + "%");
+			pstmt.setString(3, id);
+			pstmt.setString(4, "%" + keyword + "%");
+			pstmt.setInt(5, startRow);
+			pstmt.setInt(6, endRow);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+
+				myBoardList = new ArrayList<>();
+
+				do {
+					MyBoard myBoard = new MyBoard();
+					myBoard.setNo(rs.getInt("no"));
+					myBoard.setType(rs.getString("type"));
+					myBoard.setTitle(rs.getString("title"));
+					myBoard.setWriter(rs.getString("writer"));
+					myBoard.setRegDate(rs.getTimestamp("reg_date"));
+					myBoard.setReadCount(rs.getInt("read_count"));
+
+					myBoardList.add(myBoard);
+
+				} while (rs.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return myBoardList;
+	}
+
+	// 자신이 쓴 글 목록의 갯수 가져오기
+	public int getMyBoardCount(String id, String type, String keyword) {
+
+		String getMyBoardCountSql = "";
+		boolean isSearch = false;
+
+		if (type == null || keyword == null || type.equals("") || keyword.equals("")) {
+			getMyBoardCountSql = "SELECT count(*) count FROM (SELECT title FROM cm01 WHERE writer=? "
+					+ "UNION SELECT title FROM adoption_post WHERE user_id=?)";
+		} else {
+			getMyBoardCountSql = "SELECT count(*) count FROM (SELECT title FROM cm01 WHERE writer=? AND " + type + " LIKE ? "
+					+ "UNION SELECT title FROM adoption_post WHERE user_id=? AND " + type + " LIKE ?)";
+			isSearch = true;
+		}
+
+		int count = 0;
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(getMyBoardCountSql);
+			if (isSearch) {
+				pstmt.setString(1, id);
+				pstmt.setString(2, "%" + keyword + "%");
+				pstmt.setString(3, id);
+				pstmt.setString(4, "%" + keyword + "%");
+			} else {
+				pstmt.setString(1, id);
+				pstmt.setString(2, id);
+			}
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				count = rs.getInt("count");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+
+		return count;
+	}
 }

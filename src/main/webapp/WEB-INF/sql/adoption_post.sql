@@ -120,6 +120,27 @@ INSERT INTO adoption_post (
 ) VALUES
 (adoption_seq.NEXTVAL, 'shiba_dog', '시바견 입양 원해요', '활발하고 똑똑한 시바견입니다.', '입양', '서울 성북구', '강아지', '중형견', 'images/shiba.jpg', CURRENT_TIMESTAMP, 7, '진행중');
 
+
+INSERT INTO adoption_post (
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
+  animal_type_detail, image_path, created_at, views_count, approval_status
+) VALUES
+(adoption_seq.NEXTVAL, 'user02', '요크셔 입양 원합니다', '활발하고 똑똑한 시바견입니다.', '입양', '서울 성북구', '강아지', '중형견', 'images/shiba.jpg', CURRENT_TIMESTAMP, 7, '진행중');
+
+
+INSERT INTO adoption_post (
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
+  animal_type_detail, image_path, created_at, views_count, approval_status
+) VALUES
+(adoption_seq.NEXTVAL, 'user02', '치와와 입양 원합니다', '활발하고 똑똑한 시바견입니다.', '입양', '서울 성북구', '강아지', '중형견', 'images/shiba.jpg', CURRENT_TIMESTAMP, 7, '진행중');
+
+
+INSERT INTO adoption_post (
+  post_id, user_id, title, content, adoption_type, region, animal_type_main,
+  animal_type_detail, image_path, created_at, views_count, approval_status
+) VALUES
+(adoption_seq.NEXTVAL, 'user02', '강아지랑 안 싸우는 고양이 입양 원해요', '활발하고 똑똑한 시바견입니다.', '입양', '서울 성북구', '강아지', '중형견', 'images/shiba.jpg', CURRENT_TIMESTAMP, 7, '진행중');
+
 COMMIT;
 SELECT * FROM adoption_post;
 

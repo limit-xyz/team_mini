@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 import com.miniproject.common.service.CommandProcess;
-import com.miniproject.dao.DiaryDao;
+import com.miniproject.dao.MyPageDao;
 import com.miniproject.vo.Diary;
 
 import jakarta.servlet.ServletException;
@@ -78,7 +78,7 @@ public class DiaryUpdateService implements CommandProcess {
 			System.out.println("폼에서 전송된 요청이 mutipart/form-data가 아님");
 		}
 
-		DiaryDao dao = new DiaryDao();
+		MyPageDao dao = new MyPageDao();
 		dao.updateDiary(diary, no);
 
 		return "r:diaryList?id=" + diary.getMemberId() + "&pageNum=" + pageNum;
