@@ -54,7 +54,7 @@
                         <div class="pet-card-image-placeholder d-flex align-items-center justify-content-center" style="min-height: 180px; background-color: #f8f9fa; border-bottom: 1px solid #dee2e6;">
                             <img src="filePath.ajax?fileName=${dictionary.image}" 
 							         class="img-fluid rounded d-block mx-auto"
-							         style="width: 100%; height: 100%; object-fit: cover;">
+							         style="width: 100%; height: 300px; object-fit: cover;">
                         </div>
 
                         <div class="card-body p-3 d-flex flex-column">
