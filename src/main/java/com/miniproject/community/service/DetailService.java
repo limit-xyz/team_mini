@@ -33,8 +33,7 @@ public class DetailService implements CommandProcess {
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("	alert('잘못된 접근...')");
-			//out.println("	history.back();");
-			out.println("	location.href='boardList'");
+			out.println("	location.href='freeList'");
 			out.println("</script>");
 			
 			return null;
@@ -48,7 +47,7 @@ public class DetailService implements CommandProcess {
 		ComDao dao = new ComDao();
 		
 		// DB에 가서 no에 해당하는 게시글을 읽어옴
-		Community b = dao.getBoard(Integer.parseInt(no), false);
+		Community b = dao.getBoard(Integer.parseInt(no));
 		
 		// 현재 게시글에 해당하는 댓글 리스트
 		ArrayList <Reply> replyList = dao.getReplyList(b.getNo());

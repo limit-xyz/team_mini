@@ -12,6 +12,8 @@ import com.miniproject.community.service.UpdateFormService;
 import com.miniproject.community.service.UpdateService;
 import com.miniproject.community.service.WriteFormService;
 import com.miniproject.community.service.WriteService;
+import com.miniproject.community.ajax.ComAjaxController;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -22,7 +24,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @MultipartConfig(fileSizeThreshold = 10 * 1024, maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 100)
-@WebServlet(name = "FreeController", urlPatterns="/free/*")
+@WebServlet(name = "FreeController", urlPatterns = "/free/*")
 public class FreeController extends HttpServlet {
 
 	private final String PREFIX = "/WEB-INF/index.jsp?body=";
@@ -60,14 +62,12 @@ public class FreeController extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doProcess(req, resp);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		doProcess(req, resp);
 	}
@@ -75,17 +75,23 @@ public class FreeController extends HttpServlet {
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// 요청 정보를 담고있는 Request 객체로부터 요청 URI를 구한다
 		String requestURI = request.getRequestURI();
-
-		// 요청 정보를 담고있는 Request 객체로 부터 ContextPath를 구한다.
 		String contextPath = request.getContextPath();
-		System.out.println("URI : " + requestURI + ", ctxPath : " + contextPath);
-
-		// 요청 URI에서 ContextPath를 제외한 요청 명령을 추출 한다.
 		String command = requestURI.substring(contextPath.length());
-		System.out.println("command : " + command);
 
+		// ajax 요청 처리
+		String[] splitTest1 = command.split("/");
+		if (splitTest1.length > 0) {
+			String str = splitTest1[splitTest1.length - 1];
+			String[] splitTest2 = str.split("\\.");
+
+			if (splitTest2.length > 1 && splitTest2[1].equals("ajax")) {
+				ComAjaxController ajax = new ComAjaxController();
+				ajax.doAjax(request, response, str);
+				return;
+			}
+		}
+		
 		// 뷰 페이지 정보 저장 변수
 		String viewPage = null;
 		CommandProcess service = null;
@@ -93,44 +99,47 @@ public class FreeController extends HttpServlet {
 		// 서비스 클래스 실행
 		// 어떤 서비스 클래스가 실행될지 결정
 		if (command.equals("/free/*") || command.equals("/free/freeList")) {
-			// 자유게시판 요청 처리하는 service 클래스 실행
 			service = new ListService();
 			viewPage = service.requestProcess(request, response);
-			System.out.println(viewPage);
-			// 게시글 삭제 요청 처리하는 service 클래스 실행
-		} else if (command.equals("/free/deleteProcess")) {
-			service = new DeleteService();
-			viewPage = service.requestProcess(request, response);
+		}
 
-			// 게시 글 상세보기 요청을 처리하는 freeDetailService 클래스 실행
-		} else if (command.equals("/free/freeDetail")) {
+		// 게시 글 상세보기 요청을 처리하는 freeDetailService 클래스 실행
+		else if (command.equals("/free/freeDetail")) {
 			service = new DetailService();
 			viewPage = service.requestProcess(request, response);
 
-			// 게시 글 쓰기 요청을 처리하는 writeProcess 클래스 실행
-		} else if (command.equals("/free/writeProcess")) {
-			service = new WriteService();
-			viewPage = service.requestProcess(request, response);
-
-			// 게시 글 쓰기 폼 요청을 처리하는 writeForm 클래스 실행
-		} else if (command.equals("/free/writeForm")) {
+		}
+		// 게시 글 쓰기 폼 요청을 처리하는 writeForm 클래스 실행
+		else if (command.equals("/free/writeForm")) {
 			service = new WriteFormService();
 			viewPage = service.requestProcess(request, response);
-
-			// 게시 글 수정 요청을 처리하는 updateProcess 클래스 실행
-		} else if (command.equals("/free/updateProcess")) {
-			service = new UpdateService();
-			viewPage = service.requestProcess(request, response);
-
-			// 게시 글 수정 폼 요청을 처리하는 updateForm 클래스 실행
-		} else if (command.equals("/free/updateForm")) {
-			service = new UpdateFormService();
-			viewPage = service.requestProcess(request, response);
-
 		}
 
+		// 게시 글 쓰기 요청을 처리하는 writeProcess 클래스 실행
+		else if (command.equals("/free/writeProcess")) {
+			service = new WriteService();
+			viewPage = service.requestProcess(request, response);
+		}
+
+		// 게시 글 수정 폼 요청을 처리하는 updateForm 클래스 실행
+		else if (command.equals("/free/updateForm")) {
+			service = new UpdateFormService();
+			viewPage = service.requestProcess(request, response);
+		}
+
+		// 게시 글 수정 요청을 처리하는 updateProcess 클래스 실행
+		else if (command.equals("/free/updateProcess")) {
+			service = new UpdateService();
+			viewPage = service.requestProcess(request, response);
+		}
+
+		// 게시글 삭제 요청 처리하는 service 클래스 실행
+		else if (command.equals("/free/deleteProcess")) {
+			service = new DeleteService();
+			viewPage = service.requestProcess(request, response);
+		}
+		
 		if (viewPage != null) {
-			// "boardList", "r:boardList.mvc", "redirect:boardList.mvc"
 			String view = viewPage.split(":")[0];
 			System.out.println("view : " + view);
 
@@ -141,7 +150,6 @@ public class FreeController extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher(viewPage.split(":")[1]);
 				rd.forward(request, response);
 			} else {
-				// "/WEB-INF/index.jsp?body=" + "board/boardList" + ".jsp"
 				RequestDispatcher rd = request.getRequestDispatcher(PREFIX + view + SUFFIX);
 				rd.forward(request, response);
 			}

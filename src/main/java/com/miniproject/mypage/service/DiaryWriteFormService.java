@@ -27,7 +27,7 @@ public class DiaryWriteFormService implements CommandProcess {
 			StringBuilder sb = new StringBuilder();
 			sb.append("<script>");
 			sb.append("	alert('세션이 만료되었습니다.\n다시 로그인해주세요.');");
-			sb.append("	location.href='" + request.getContextPath() + "/admin/main'");
+			sb.append("	location.href='" + request.getContextPath() + "/memebr/loginForm'");
 			sb.append("</script>");
 
 			response.setContentType("text/html; charset=utf-8");
@@ -43,6 +43,7 @@ public class DiaryWriteFormService implements CommandProcess {
 		}
 
 		request.setAttribute("pageNum", request.getParameter("pageNum"));
+		
 		return "member/mypage/diaryWriteForm";
 	}
 
