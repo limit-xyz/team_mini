@@ -1,6 +1,7 @@
 package com.miniproject.vo;
 
 public class GlobalSearch {
+	int no;
 	String title;
 	String content;
 	String type;
@@ -8,6 +9,10 @@ public class GlobalSearch {
 
 	public GlobalSearch() {
 
+	}
+
+	public int getNo() {
+		return no;
 	}
 
 	public String getTitle() {
@@ -26,6 +31,9 @@ public class GlobalSearch {
 		return writer;
 	}
 
+	public void setNo(int no) {
+		this.no = no;
+	}
 
 	public void setTitle(String title) {
 		this.title = title;
@@ -42,5 +50,4 @@ public class GlobalSearch {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
-
 }
