@@ -3,7 +3,7 @@ package com.miniproject.mypage.service;
 import java.io.IOException;
 
 import com.miniproject.common.service.CommandProcess;
-import com.miniproject.dao.DiaryDao;
+import com.miniproject.dao.MyPageDao;
 import com.miniproject.vo.Diary;
 
 import jakarta.servlet.ServletException;
@@ -26,7 +26,7 @@ public class DiaryDetailService implements CommandProcess {
 		if (searchType != null && searchKeyword != null && !searchType.equals("") && !searchKeyword.equals(""))
 			isSearch = true;
 
-		DiaryDao dao = new DiaryDao();
+		MyPageDao dao = new MyPageDao();
 		diary = dao.getDiary(no);
 
 		request.setAttribute("diary", diary);

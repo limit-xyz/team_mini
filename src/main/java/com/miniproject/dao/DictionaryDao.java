@@ -499,6 +499,7 @@ public class DictionaryDao {
 		return (role.equals("expert") || role.equals("admin"));
 	}
 
+	// 임시값 넣는 메소드
 	String checkValue(String str) {
 		if (str == null || str.equals("")) {
 			return "작성중";

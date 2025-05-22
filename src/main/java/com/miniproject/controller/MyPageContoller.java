@@ -101,17 +101,22 @@ public class MyPageContoller extends HttpServlet {
 				return;
 			}
 		}
+		
+		if (command.equals("/member/mypage/main") || command.equals("/member/mypage/*")) {
+			service = new MyPageMainService();
+			viewPage = service.requestProcess(request, response);
+		}
 
 		// 예약 목록 확인
-		if (command.equals("/member/mypage/reservation")) {
+		else if (command.equals("/member/mypage/reservation")) {
 //			service = new AdminMainService();
 //			viewPage = service.requestProcess(request, response);
 		}
 
 		// 자신의 게시글 목록
-		else if (command.equals("/member/mypage/boards")) {
-//			service = new InquiryListService();
-//			viewPage = service.requestProcess(request, response);
+		else if (command.equals("/member/mypage/boardList")) {
+			service = new MyBoardListService();
+			viewPage = service.requestProcess(request, response);
 		}
 
 		// 반려동물 다이어리 리스트
