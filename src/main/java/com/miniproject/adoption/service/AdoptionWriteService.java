@@ -55,31 +55,33 @@ public class AdoptionWriteService implements CommandProcess{
 					System.out.printf("파라미터 : %s, contentType : %s, size : %dByte, \n",
 					part.getName(), part.getContentType(), part.getSize());
 					
-					if("image_path".equals(paramName)) {
+					if("imagepath".equals(paramName)) {
 						if(part.getSize() > 0) {
 							String mimeType = part.getContentType();
 							if (mimeType != null && ALLOWED_IMAGE_TYPES.contains(mimeType.toLowerCase())) { // 추가: 파일 형식 검증
 							
-							UUID uid = UUID.randomUUID();
-							String saveName = uid.toString() + "_" + part.getSubmittedFileName();
-								
-							File parentFile = (File) request.getServletContext().getAttribute("parentFile");
-							String uploadDir = request.getServletContext().getInitParameter(UPLOAD_DIR_PARAM);
-							String savePath = parentFile.getAbsolutePath() + File.separator + saveName;
+								UUID uid = UUID.randomUUID();
+								String saveName = uid.toString() + "_" + part.getSubmittedFileName();
+									
+								File parentFile = (File) request.getServletContext().getAttribute("parentFile");
+								String uploadDir = request.getServletContext().getInitParameter(UPLOAD_DIR_PARAM);
+								String savePath = parentFile.getAbsolutePath() + File.separator + saveName;
 							
-							try {
-							part.write(savePath);
-							dto.setImagePath(uploadDir + "/" + saveName); // DB에 저장할 상대경로
-							} catch(IOException e){
-							e.printStackTrace();
-							response.setContentType("text/html; charset=utf-8");
-							response.getWriter().println("<script>alert('파일 업로드에 실패했습니다.'); history.back();</script>");
-							return null;
+								try {
+									part.write(savePath);
+									dto.setImagePath(uploadDir + "/" + saveName); // DB에 저장할 상대경로
+								} catch(IOException e){
+									e.printStackTrace();
+									response.setContentType("text/html; charset=utf-8");
+									response.getWriter().println("<script>alert('파일 업로드에 실패했습니다.'); history.back();</script>");
+									return null;
+								}
+							} else {
+								System.out.println("파일이 업로드 되지 않음");
 							}
-						} else {
-							System.out.println("파일이 업로드 되지 않음");
-						}
-					} }else {
+						} 
+						
+					}else {
 						String paramValue = request.getParameter(paramName);
 						
 						if(paramName.equals("title")) {
@@ -94,7 +96,10 @@ public class AdoptionWriteService implements CommandProcess{
 							dto.setAnimalTypeMain(paramValue);
 						} else if(paramName.equals("animalTypeDetail")) {
 							dto.setAnimalTypeDetail(paramValue);
+						} else if(paramName.equals("approvalStatus")) {
+							dto.setApprovalStatus(paramValue);
 						}	
+						
 					}
 				}
 			} else {
@@ -111,9 +116,9 @@ public class AdoptionWriteService implements CommandProcess{
 				return null;
 			}
 			AdoptionDao01 dao = new AdoptionDao01();
-			int result = 0;
+			int postId = 0;
 			  try {
-		            result = dao.insertAdoptionPost(dto);
+		            postId = dao.insertAdoptionPost(dto);
 		        } catch (Exception e) {
 		            e.printStackTrace();
 		            response.setContentType("text/html; charest=utf-8");
@@ -122,12 +127,12 @@ public class AdoptionWriteService implements CommandProcess{
 		            return null;
 		        }
 			  
-			if(result > 0) {				
-				return "redirect:adoptionboard/adopboardList";
+			if(postId > 0) {				
+				return "redirect:" + request.getContextPath() + "/adoption/AdoptionDetail?postId=" + postId;
 			} else {
 				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<script> alert('게시글 작성에 실패하였습니다.); history.back(); </script>");
+				response.getWriter().println("<script> alert('게시글 작성에 실패하였습니다.'); history.back(); </script>");
 				return null;
 		}
 	}
-}
+}  

@@ -7,6 +7,7 @@
 <%@ page isELIgnored="false" %>
 <% String loginId = (String) session.getAttribute("id");
 	 String loginRole = (String) session.getAttribute("role");
+	 //String contextPath = request.getContextPath();
 %>
 
 <%-- content --%>
@@ -275,7 +276,7 @@
 			console.log(replyId)
 			console.log(postId)
 			if(confirm("해당 댓글을 삭제 하시겠습니까?")){
-				location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyDelete?replyId=' + replyId + '&postId=' + postId + '&userId';
+				location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyDelete?replyId=' + replyId + '&postId=' + postId + "&pageNum=" + ${param.pageNum};
 			}
 		})
 		});

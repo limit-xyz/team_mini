@@ -34,11 +34,14 @@ public class AdoptionDetailService implements CommandProcess {
 		String keyword = request.getParameter("keyword");
 
 		if (postIdParam == null || postIdParam.equals("") || pageNum == null || pageNum.equals("")) {
+			
+			String url = request.getContextPath() + "/adoption/AdoptionList";
+			
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("	alert('잘못된 접근 입니다.')");
-			out.println("	location.href='${pageContext.request.contextPath}/adoption/AdoptionList'");
+			out.println("	location.href='" + url + "';");
 			out.println("</script>");
 			out.close();
 			return null;

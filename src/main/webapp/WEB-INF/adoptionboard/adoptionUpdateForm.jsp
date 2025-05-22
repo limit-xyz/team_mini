@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:useBean id="post" class="com.miniproject.dao.AdoptionWriteDto" scope="request" />
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page isELIgnored="false" %>
 
 <style>
-/* write 폼과 동일한 CSS 복사 */
+
 .lightform {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -84,89 +83,93 @@
     cursor: not-allowed;
     border: 1px solid #ddd;
 }
+
+
+            
 </style>
 
-<div class="lightform">
+<div class="lightform py-5">
 <!-- content -->			
-		
-						<h2>작성 게시글 수정</h2>
-					</div>
-				</div>
-				<form action="${pageContext.request.contextPath}/adoption/AdoptionUpdateService" 
-				 method="post" enctype="multipart/form-data">		
-					
-					<input type = "hidden" name="postId" value="${post.postId}" />
-					<input type = "hidden" name="userId" value="${post.userId}" />
-				<div>
-					<label for="userId">작성자 ID:</label>
-					<input type="text" id="userId" value="${post.userId}" readonly>
-				</div>
+		<div>
+				<h2>게시글 수정</h2>
+			</div>			
+			<form action="/team_mini/adoption/AdoptionUpdate" 
+			 method="post" enctype="multipart/form-data">			
 				
-				<div>
-					<label for="adoptionType">입양/분양 선택 : </label>
-					<select name="adoptionType" id="adoptionType" required>
-						<option value="입양" ${post.adoptionType == '입양' ? 'selected' : ''}> 입양</option>
-						<option value="분양" ${post.adoptionType == '분양' ? 'selected' : ''}> 입양</option>
+				<input type = "hidden" id="postId" name="postId" value="${post.postId}" />
+				<input type = "hidden" id="userId" name="userId" value="${post.userId}" />
+				<input type = "hidden" id="type" name="type" value="${type}" />
+				<input type = "hidden" id="keyword" name="keyword" value="${keyword}" />
+			<div class="mb-3">
+				<label class="form-label" for="userId">작성자 ID:</label>
+				<input type="text" class="form-control" id="userId" value="${post.userId}" readonly>
+			</div>
+			
+			<div class="mb-3">
+				<label class="form-label" for="adoptionType">입양/분양 선택 : </label>
+				<select class="form-select" name="adoptionType" id="adoptionType" required>
+					<option value="입양" ${post.adoptionType == '입양' ? 'selected' : ''}> 입양</option>
+					<option value="분양" ${post.adoptionType == '분양' ? 'selected' : ''}> 분양</option>
+				</select>
+			</div>
+			
+			<div class="mb-3">
+				<lable class="form-label" for="approvalStatus">진행 상태 : </lable>
+					<select  class="form-select" name="approvalStatus" required>
+						<option value="대기중"${post.approvalStatus == '대기중' ? 'selected' : ''}>대기중</option>
+						<option value="진행중"${post.approvalStatus == '진행중' ? 'selected' : ''}>진행중</option>
+						<option value="분양 완료"${post.approvalStatus == '분양 완료' ? 'selected' : ''}>분양 완료</option>
+						<option value="입양 완료"${post.approvalStatus == '입양 완료' ? 'selected' : ''}>입양 완료</option>
 					</select>
-				</div>
-				
-				<div>
-					<lable for="approvalStatus">진행 상태 : </lable>
-						<select name="approvalStatus" required>
-							<option value="대기중"${post.approvalStatus == '대기중' ? 'selected' : ''}>대기중</option>
-							<option value="진행중"${post.approvalStatus == '진행중' ? 'selected' : ''}>진행중</option>
-							<option value="분양 완료"${post.approvalStatus == '분양 완료' ? 'selected' : ''}>분양 완료</option>
-							<option value="입양 완료"${post.approvalStatus == '입양 완료' ? 'selected' : ''}>입양 완료</option>
-						</select>
-				</div>
-				
-				<div>
-					<label for="animalTypeMain">동물 종류 : </label>
-						<select name="animalTypeMain" id="animalTypeMain" onchange="updateDetailOption()" required>
-							<option value="강아지" ${post.animalTypeMain == '강아지' ? 'selected' : ''}>강아지</option>
-							<option value="고양이" ${post.animalTypeMain == '고양이' ? 'selected' : ''}>고양이</option>
-							<option value="포유류" ${post.animalTypeMain == '포유류' ? 'selected' : ''}>포유류</option>
-							<option value="새" ${post.animalTypeMain == '새' ? 'selected' : ''}>새</option>
-							<option value="파충류" ${post.animalTypeMain == '파충류' ? 'selected' : ''}>파충류</option>
-							<option value="어류" ${post.animalTypeMain == '어류' ? 'selected' : ''}>어류</option>
-						</select>
-				</div>
-				
-	    	<div>
-            <label for="animalTypeDetail">세부 유형 : </label>
-            <select name="animalTypeDetail" id="animalTypeDetail" required>
-                <option value="${post.animalTypeDetail}">${post.animalTypeDetail}</option>
-            </select>
-        </div>
-				
-			    <div>
-            <label for="region">지역 : </label>
-            <input type="text" name="region" value="${post.region}" />
-        </div>
-				
-							
-				<div>
-            <label for="title">제목 : </label>
-            <input type="text" name="title" id="title" value="${post.title}" required />
-        </div>
-				
-				  <div>
-            <label for="content">내용 : </label>
-            <textarea name="content" id="content" rows="6" required>${fn:trim(post.content)}</textarea>
-        </div>
+			</div>
 			
-			 <div>
-            <label for="imagePath">이미지 업로드 : </label>
-            <c:if test="${not empty post.imagePath}">
-                기존 파일: <a href="${pageContext.request.contextPath}/AdoptionDownload?fileName=${post.imagePath}">${post.imagePath}</a><br/>
-            </c:if>
-            <input type="file" name="imagePath" id="imagePath" />
-        </div>
+			<div class="mb-3">
+				<label for="animalTypeMain">동물 종류 : </label>
+					<select  class="form-select" name="animalTypeMain" id="animalTypeMain" onchange="updateDetailOption()" required>
+						<option value="강아지" ${post.animalTypeMain == '강아지' ? 'selected' : ''}>강아지</option>
+						<option value="고양이" ${post.animalTypeMain == '고양이' ? 'selected' : ''}>고양이</option>
+						<option value="포유류" ${post.animalTypeMain == '포유류' ? 'selected' : ''}>포유류</option>
+						<option value="새" ${post.animalTypeMain == '새' ? 'selected' : ''}>새</option>
+						<option value="파충류" ${post.animalTypeMain == '파충류' ? 'selected' : ''}>파충류</option>
+						<option value="어류" ${post.animalTypeMain == '어류' ? 'selected' : ''}>어류</option>
+					</select>
+			</div>
 			
-        <div class="button-container">
-            <input type="submit" value="수정 완료" />
-            <button type="button" id="cancel-button">취소</button>
-        </div>
+    	<div class="mb-3">
+           <label class="form-label" for="animalTypeDetail">세부 유형 : </label>
+           <select  class="form-select" name="animalTypeDetail" id="animalTypeDetail" required>
+               <option value="${post.animalTypeDetail}">${post.animalTypeDetail}</option>
+           </select>
+       </div>
+			
+		    <div class="mb-3">
+           <label class="form-label" for="region">지역 : </label>
+           <input type="text" class="form-control" name="region" value="${post.region}" />
+       </div>
+			
+						
+			<div class="mb-3">
+           <label class="form-label" for="title">제목 : </label>
+           <input type="text"  class="form-control" name="title" id="title" value="${post.title}" required />
+       </div>
+			
+			  <div class="mb-3">
+           <label class="form-label" for="content">내용 : </label>
+           <textarea class="form-control" name="content" id="content" rows="6" required>${fn:trim(post.content)}</textarea>
+       </div>
+		
+		 <div class="mb-3">
+           <label class="form-label" for="imagePath">이미지 업로드 : </label>
+           <c:if test="${not empty post.imagePath}">
+               기존 파일: <a href="${pageContext.request.contextPath}/AdoptionDownload?fileName=${post.imagePath}">${post.imagePath}</a><br/>
+           </c:if>
+           <input type="file" name="imagePath" id="imagePath" />
+       </div>
+		
+       <div class="d-flex justify-content-between">          
+          <input type ="submit" value="수정" id='submit'>
+          <button class="btn btn-danger" type="button" id="cancel-button">취소</button>
+       </div>
     </form>
 </div>
 
@@ -204,11 +207,17 @@ function updateDetailOption() {
     }
 }
 
+
 window.onload = updateDetailOption;
 
 document.getElementById("cancel-button").addEventListener("click", function() {
     if (confirm("수정을 취소하시겠습니까?")) {
-        location.href = "${pageContext.request.contextPath}/adoption/AdoptionDetail?postId=${post.postId}";
+    	const postId = document.getElementById("postId").value;
+    	 const type = document.getElementById("type").value; 
+         const keyword = document.getElementById("keyword").value;
+         
+         const contextPath = "${pageContext.request.contextPath}";
+        history.back();
     }
 });
 </script>

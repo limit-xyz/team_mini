@@ -17,8 +17,10 @@ public class AdoptionReplyDeleteService implements CommandProcess{
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		
+		
 		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
+		String userId = (String) session.getAttribute("id");
 		String userRole = (String) session.getAttribute("userRole"); // 세션에서 사용자 권한 획득
 		
 		
@@ -34,6 +36,7 @@ public class AdoptionReplyDeleteService implements CommandProcess{
 		
 		String replyIdparam = request.getParameter("replyId");
 		String postIdParam = request.getParameter("postId");
+		String pageNum = request.getParameter("pageNum");
 		
 		if (replyIdparam == null || replyIdparam.equals("") 
 				|| postIdParam == null || postIdParam.equals("")) {
@@ -68,8 +71,9 @@ public class AdoptionReplyDeleteService implements CommandProcess{
 		int result = adoptionDao.deleteReply(replyId, userId);
 		
 		if (result > 0) {
-			//댓글 삭제 성공시 해당 게시글 상세 페이지로 리다이렉트
-			return "r:team_mini/adoption/AdoptionDetail.mvc?postId=" + postId + "&increaseViewCount=false";
+			//댓글 삭제 성공시 해당 게시글 상세 페이지로
+			String url = request.getContextPath() + "/adoption/AdoptionDetail?postId=" + postId + "&increaseViewCount=false&pageNum=" + pageNum;
+			return "r:" + url;
 		} else {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
@@ -79,5 +83,6 @@ public class AdoptionReplyDeleteService implements CommandProcess{
 			out.println("</script>");
 			return null;
 		}
+		
 	}
 }
