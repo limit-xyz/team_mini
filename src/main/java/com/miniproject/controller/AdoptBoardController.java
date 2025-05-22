@@ -133,14 +133,12 @@ public class AdoptBoardController extends HttpServlet{
         } else if (command.equals("/adoption/AdoptionReplyDelete")) { 
             service = new AdoptionReplyDeleteService();
             viewPage = service.requestProcess(request, response);
-<<<<<<< HEAD
-=======
+
 
         } else if (command.equals("/adoption/AdoptionReplyUpdateForm")) { 
             service = new AdoptionReplyDeleteService();
             viewPage = service.requestProcess(request, response);
 
->>>>>>> 997e27cc834828ab8a82c08f8dc377068f8d7fe3
         }
 		
 		RequestDispatcher rd = null;
