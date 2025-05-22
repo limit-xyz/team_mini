@@ -62,6 +62,7 @@ public class AdoptBoardController extends HttpServlet{
 	protected void doProcess(
 			HttpServletRequest request, HttpServletResponse response) 
 					throws ServletException, IOException {
+		
 		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String command = requestURI.substring(contextPath.length());
@@ -126,6 +127,10 @@ public class AdoptBoardController extends HttpServlet{
             viewPage = service.requestProcess(request, response);
 
         } else if (command.equals("/adoption/AdoptionReplyDelete")) { 
+            service = new AdoptionReplyDeleteService();
+            viewPage = service.requestProcess(request, response);
+
+        } else if (command.equals("/adoption/AdoptionReplyUpdateForm")) { 
             service = new AdoptionReplyDeleteService();
             viewPage = service.requestProcess(request, response);
 

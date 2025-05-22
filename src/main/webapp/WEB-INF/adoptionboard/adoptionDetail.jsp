@@ -91,7 +91,7 @@
 				
 					<c:if test="${empty boardType}">
 						<input type="button" class="btn btn-warning" value="목록보기"
-							onclick="location.href='${pageContext.request.contextPath}/adoptionboard/adopboardList">
+							onclick="location.href='${pageContext.request.contextPath}/adoptionboard/adopboardList'">
 					</c:if>
 				</c:if>
 				
@@ -231,40 +231,49 @@
 </div>
 
 <script>
-document.getElementById("detailUpdate").addEventListener("click", function(){
-	const postId = document.getElementById("postId").value;
-	location.href = "${pageContext.request.contextPath}/adoption/AdoptionUpdateForm?postId=" + postId;
-});
-
-document.getElementById("detailDelete").addEventListener("click", function(){
-	const postId = document.getElementById("postId").value;
-	if(confirm("정말 게시글을 삭제하시겠습니까?")){
-		location.href = "${pageContext.request.contextPath}/adoption/AdoptionDelete?postId=" + postId;
+	const updateBtn = document.getElementById("detailUpdate");
+	if (updateBtn) {
+	    updateBtn.addEventListener("click", function(){
+	        const postId = document.getElementById("postId").value;
+	        location.href = "${pageContext.request.contextPath}/adoption/AdoptionUpdateForm?postId=" + postId;
+	    });
 	}
-});
 
-document.addEventListener("DOMContentLoaded", function () {
-	const guestReply = document.getElementById("guestReply");
-	if (guestReply) {
-		guestReply.addEventListener("click", function () {
-			alert("댓글을 작성하려면 로그인해주세요.");
-			window.location.href = "${pageContext.request.contextPath}/member/loginForm";
-		});
+	const deleteBtn = document.getElementById("detailDelete");
+	if (deleteBtn) {
+	    deleteBtn.addEventListener("click", function(){
+	        const postId = document.getElementById("postId").value;
+	        if(confirm("정말 게시글을 삭제하시겠습니까?")){
+	            location.href = "${pageContext.request.contextPath}/adoption/AdoptionDelete?postId=" + postId;
+	        }
+	    });
 	}
-});
-document.addEventListener("DOMContentLoaded",function(){
-	document.querySelectorAll(".modifyReply").forEach(function(button){
-		button.addEventListener("click", function(){
-			const replyId = this.getAttribute("data-no")
-			const postId = document.getElementById("postId").value;
-			location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyUpdateForm?replyId=' + replyId + '&postId=' + postId;
-		});
-});
+
+	
+	document.addEventListener("DOMContentLoaded", function () {
+		const guestReply = document.getElementById("guestReply");
+		if (guestReply) {
+			guestReply.addEventListener("click", function () {
+				alert("댓글을 작성하려면 로그인해주세요.");
+				window.location.href = "${pageContext.request.contextPath}/member/loginForm";
+			});
+		}
+	});
+	document.addEventListener("DOMContentLoaded",function(){
+		document.querySelectorAll(".modifyReply").forEach(function(button){
+			button.addEventListener("click", function(){
+				const replyId = this.getAttribute("data-no")
+				const postId = document.getElementById("postId").value;
+				location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyUpdateForm?replyId=' + replyId + '&postId=' + postId;
+			});
+	});
 
 	document.querySelectorAll(".deleteReply").forEach(function(button){
 		button.addEventListener("click", function(){
 			const replyId = this.getAttribute("data-no");
 			const postId = document.getElementById("postId").value;
+			console.log(replyId)
+			console.log(postId)
 			if(confirm("해당 댓글을 삭제 하시겠습니까?")){
 				location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyDelete?replyId=' + replyId + '&postId=' + postId;
 			}

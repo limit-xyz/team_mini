@@ -42,11 +42,10 @@ $(function() {
 			  title: "현재 위치"
 			});
 
-			markers.push(marker); // 배열에 추가해두면 나중에 clearMarkers()로 제거 가능
+			markers.push(marker); 
 
-			// 인포윈도우 간단 표시 (선택)
 			if (currentInfowindow) {
-			  currentInfowindow.close(); // 기존 인포윈도우 닫기
+			  currentInfowindow.close(); 
 			}
 
 			currentInfowindow = new kakao.maps.InfoWindow({
@@ -97,10 +96,10 @@ $(function() {
 							  title: "현재 위치"
 							});
 
-							markers.push(marker); // 배열에 추가해두면 나중에 clearMarkers()로 제거 가능
+							markers.push(marker); 
 
 							if (currentInfowindow) {
-							  currentInfowindow.close(); // 기존 인포윈도우 닫기
+							  currentInfowindow.close(); 
 							}
 
 							currentInfowindow = new kakao.maps.InfoWindow({
@@ -152,6 +151,7 @@ $(function() {
 	          bounds.extend(coords);
 
 	          var listItem = document.createElement('li');
+						listItem.attr("")
 	          listItem.innerHTML = `
 	            <span><strong>${place.place_name}</strong></span><br>
 	            <span>${place.address}</span><br>
