@@ -8,8 +8,6 @@
 <% String loginId = (String) session.getAttribute("id");
 	 String loginRole = (String) session.getAttribute("role");
 %>
-<%= session.getAttribute("id") %> / <%= session.getAttribute("isAdmin") %>
-
 <%-- content --%>
 <div class="row my-5" id="global-content">
 	<div class="col">
