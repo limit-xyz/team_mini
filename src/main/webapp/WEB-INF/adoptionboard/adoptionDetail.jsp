@@ -91,7 +91,7 @@
 				
 					<c:if test="${empty boardType}">
 						<input type="button" class="btn btn-warning" value="목록보기"
-							onclick="location.href='${pageContext.request.contextPath}/adoptionboard/adopboardList'">
+							onclick="location.href='${pageContext.request.contextPath}/adoption/AdoptionList'">
 					</c:if>
 				</c:if>
 				
@@ -275,7 +275,7 @@
 			console.log(replyId)
 			console.log(postId)
 			if(confirm("해당 댓글을 삭제 하시겠습니까?")){
-				location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyDelete?replyId=' + replyId + '&postId=' + postId;
+				location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyDelete?replyId=' + replyId + '&postId=' + postId + '&userId';
 			}
 		})
 		});
