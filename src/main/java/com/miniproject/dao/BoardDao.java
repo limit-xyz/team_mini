@@ -21,9 +21,9 @@ public class BoardDao extends HttpServlet {
 		String getAnimalBuildingLocationSql = "";
 		
 		if(dataSelect.equals("hospital")) {
-			getAnimalBuildingLocationSql = "select * from animal_hospital";
+			getAnimalBuildingLocationSql = "select * from animal_hospital order by id desc";
 		} else if (dataSelect.equals("beauty")) {
-			getAnimalBuildingLocationSql = "select * from animal_beauty";
+			getAnimalBuildingLocationSql = "select * from animal_beauty order by id desc";
 		}
 		ArrayList<com.mimproject.vo.AnimalHospital> animalHospitalList = null;
 		
@@ -61,11 +61,13 @@ public class BoardDao extends HttpServlet {
 		
 		String getAnimalBuildingLocationSql = "";
 		
+	
+			
 		if(dataSelect.equals("hospital")) {
 			getAnimalBuildingLocationSql = "select * from animal_hospital where place_name LIKE '%' || ? || '%'  ";
 		} else if (dataSelect.equals("beauty")) {
 			getAnimalBuildingLocationSql = "select * from animal_beauty where place_name LIKE '%' || ? || '%' ";
-		}
+		} 
 		ArrayList<AnimalHospital> animalHospitalList = new ArrayList<AnimalHospital>();
 
 		

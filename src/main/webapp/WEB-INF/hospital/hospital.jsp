@@ -195,6 +195,7 @@
 				<div>
 						이름으로 검색 : <input type="text" id="searchOption">
 						<input type="button" id="locationConfirm" value="지도에 위치 표시">
+						<input type="button" id="nearbyLocationConfirm" value="가까운 곳만 지도에 위치표시">
 				</div>
 			</div>
 		</div>
