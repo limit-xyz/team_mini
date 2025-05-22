@@ -21,6 +21,7 @@ public class AdoptionUpdateFormService implements CommandProcess {
 		String userIdParam = (String) request.getSession().getAttribute("id");
 		String type = request.getParameter("type");
 		String keyword = request.getParameter("keyword");
+		String isAdminParam = String.valueOf(request.getSession().getAttribute("isAdmin"));
 		
 		if(spostId == null || spostId.equals("") || userIdParam  == null || userIdParam.equals("")
 				) {
@@ -35,7 +36,7 @@ public class AdoptionUpdateFormService implements CommandProcess {
 	
 	try {
 		adoptionDto = dao.getAdoption(postId, false);
-		if (adoptionDto == null || !adoptionDto.getUserId().equals(userIdParam)) {
+		if(adoptionDto == null || (!userIdParam.equals(adoptionDto.getUserId()) && !"true".equals(isAdminParam))) {
 			response.setContentType("text/html; charset=utf-8");
 			response.getWriter().println("<script>alert('수정 권한이 없거나 해당 게시글이 존재하지 않습니다.'); history.back();</script>");
 			return null;

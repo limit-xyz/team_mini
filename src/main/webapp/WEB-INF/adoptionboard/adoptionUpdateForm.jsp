@@ -233,7 +233,7 @@ document.getElementById("cancel-button").addEventListener("click", function() {
          const keyword = document.getElementById("keyword").value;
          
          const contextPath = "${pageContext.request.contextPath}";
-         location.href = `${contextPath}/adoption/AdoptionDetail?postId=${postId}&type=${type}&keyword=${keyword}`;
+        history.back();
     }
 });
 </script>

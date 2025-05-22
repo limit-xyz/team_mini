@@ -18,8 +18,10 @@ public class AdoptionDeleteService implements CommandProcess{
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		HttpSession session = request.getSession();		
 		String postIdStr = request.getParameter("postId");
 		String pageNum = request.getParameter("pageNum");
+		
 		
 		if(postIdStr == null || postIdStr.equals("") 
 				|| pageNum == null || pageNum.equals("")) {
@@ -33,9 +35,16 @@ public class AdoptionDeleteService implements CommandProcess{
 			return null;
 		}			
 		
-		HttpSession session = request.getSession();
+		
 		String loggedInUserId = (String) session.getAttribute("id");  // 세션에서 userId 가져오기
-
+		Object isAdminObj = session.getAttribute("isAdmin");
+		boolean isAdmin = false;
+		 if (isAdminObj instanceof Boolean) {
+	            isAdmin = (Boolean) isAdminObj;
+	        } else if (isAdminObj instanceof String) {
+	            isAdmin = "true".equalsIgnoreCase((String) isAdminObj);
+	        }
+		
 		if(loggedInUserId == null) { //로그인 확인
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
@@ -49,7 +58,13 @@ public class AdoptionDeleteService implements CommandProcess{
 		
 		AdoptionDao01 dao = new AdoptionDao01();
 		int postId = Integer.parseInt(postIdStr);
-		boolean isUserIdCheck = dao.isUserIdCheck(postId,  loggedInUserId); // 세션 userId로 권한 확인
+		boolean isUserIdCheck = true;
+		if(!isAdmin) {
+				dao.isUserIdCheck(postId,  loggedInUserId); // 세션 userId로 권한 확인
+		}
+		if(!isAdmin) {
+			isUserIdCheck = dao.isUserIdCheck(postId, loggedInUserId);
+		}
 		
 		if(!isUserIdCheck) { //로그인 확인
 			response.setContentType("text/html; charset=utf-8");

@@ -70,7 +70,7 @@ public class AdoptionReplyDeleteService implements CommandProcess{
 		
 		if (result > 0) {
 			//댓글 삭제 성공시 해당 게시글 상세 페이지로 리다이렉트
-			return "r:team_mini/adoption/AdoptionDetailpostId=" + postId + "&increaseViewCount=false";
+			return "r:/adoption/AdoptionDetail?postId=" + postId + "&increaseViewCount=false";
 		} else {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
