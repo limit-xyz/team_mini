@@ -54,7 +54,7 @@ public class MyBoardDetailService implements CommandProcess {
 
 			ComDao dao = new ComDao();
 
-			Community b = dao.getBoard(Integer.parseInt(no), false);
+			Community b = dao.getBoard(Integer.parseInt(no));
 
 			ArrayList<Reply> replyList = dao.getReplyList(b.getNo());
 

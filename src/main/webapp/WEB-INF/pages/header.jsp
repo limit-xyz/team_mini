@@ -42,7 +42,7 @@
                   <a class="nav-link" href="${pageContext.request.contextPath}/dictionary/dictionaryList">펫과사전</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="${pageContext.request.contextPath}/free/boardList">커뮤니티</a>
+                  <a class="nav-link" href="${pageContext.request.contextPath}/free/freeList">커뮤니티</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="${pageContext.request.contextPath}/adoption/AdoptionList">입양/분양</a>
