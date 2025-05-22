@@ -1,0 +1,13 @@
+/* dictionaryList.css 파일에 추가 */
+
+.card.dictionaryDetail {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    /* 기존 카드 스타일이 있다면 여기에 유지됩니다.
+       Bootstrap을 사용 중이라면 기본적인 그림자가 이미 있을 수 있습니다. */
+}
+
+.card.dictionaryDetail:hover {
+    transform: translateY(-5px); /* 카드가 위로 약간 이동합니다. */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15); /* 그림자가 더 선명하고 커집니다. */
+    /* cursor: pointer; 이미 인라인 스타일로 적용되어 있지만, CSS로 관리할 수도 있습니다. */
+}

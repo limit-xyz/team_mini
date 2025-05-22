@@ -11,7 +11,6 @@ $(function() {
 	const paginationEl = document.getElementById('pagination');
 	const pageNum = document.getElementById('pageNum');
 	const params = new URLSearchParams(window.location.search);
-	const kakaoApiKey = params.get("restKey");
 
 	// 카카오 맵 생성 관련
 	const mapContainer = document.getElementById('map');
@@ -28,8 +27,6 @@ $(function() {
       lat = data.latitude;
       lng = data.longitude;
       var ip = data.ip;
-			$("#lat").val(lat);
-			$("#lng").val(lng);
       
     }).fail(function() {
 			alert("위치 정보를 불러오지 못했습니다.")
@@ -52,7 +49,8 @@ $(function() {
 		      type: 'GET',
 		      data: { query: addr },
 		      headers: {
-		          'Authorization': 'KakaoAK ' + kakaoApiKey
+		          //'Authorization': 'KakaoAK ' + kakaoApiKey
+							'Authorization': 'KakaoAK ' + restKey
 		      },
 		      success: function (res) {
 		        if (res.documents.length > 0) {
@@ -193,8 +191,7 @@ $(function() {
 
 	// "검색" 버튼 클릭 시 DB에서 데이터 가져와서 ajax로 뿌리는 동작
 	$("#locationConfirm").on("click", function() {
-		lat = $("#lat").val();
-		lng = $("#lng").val();
+	
 		let dataSelect = $("#dataSelect").val();
 		let searchOption = $("#searchOption").val();
 		let data = "lat=" + lat + "&lng=" + lng +"&dataSelect=" + dataSelect 
@@ -203,9 +200,13 @@ $(function() {
 		// 지도 중심 좌표 변경
 		const newCenter = new kakao.maps.LatLng(lat, lng);
 		map.setCenter(newCenter);
-
+		console.log(lat, lng);
+		console.log(data);
+		const requestUrl = contextPath + "/ajax/locationConfirm.ajax"
+		console.log("requestUrl : ", requestUrl);
+		
 		$.ajax({
-			url:"locationConfirm.ajax",
+			url: requestUrl,
 			data:data,
 			"dataType":"json",
 			success:function(resData) {

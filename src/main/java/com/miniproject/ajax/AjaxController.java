@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name="ajaxController", urlPatterns="*.ajax")
+@WebServlet(name="ajaxController", urlPatterns="/ajax/*")
 public class AjaxController extends HttpServlet {
 
 	@Override
@@ -34,15 +34,16 @@ public class AjaxController extends HttpServlet {
 		String reqestURI = req.getRequestURI();
 		String contextPath = req.getContextPath();
 		String command = reqestURI.substring(contextPath.length());
-		
+		System.out.println("AjaxController - command : " + command);
 		AjaxProcess ajaxAction = null;
 		
-		if(command.equals("/locationConfirm.ajax")) {
+		if(command.equals("/ajax/locationConfirm.ajax")) {
 			// 게시 글 리스트 요청을 처리하는 BoardListService 클래스 실행
 			ajaxAction = new LocationConfirmAction();
 			ajaxAction.ajaxProcess(req, resp);
 			
 		}
+		// 지금 페이지
 		
 	}
 }

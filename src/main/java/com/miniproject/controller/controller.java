@@ -17,7 +17,7 @@ public class controller extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
     	// 병원 정보 처리 후 포워딩
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/hospital/index.jsp?body=hospital.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/index.jsp?body=hospital/hospital.jsp");
         dispatcher.forward(request, response);
     }
 }
