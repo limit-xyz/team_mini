@@ -180,8 +180,8 @@ public class DictionaryDao {
 	public ArrayList<Animal> getDictionaryList(int startRow, int endRow) {
 
 		String DictionaryListSql = "SELECT * FROM ( " + "SELECT ROWNUM num, sub.* FROM( "
-				+ "SELECT id, name_ko, name_en, origin, height, weight, 'dog' \"type\" FROM dog "
-				+ "UNION SELECT id, name_ko, name_en, origin, height, weight, 'cat' \"type\" FROM cat ORDER BY name_ko) sub) "
+				+ "SELECT id, name_ko, name_en, origin, height, weight, 'dog' \"type\" , image FROM dog "
+				+ "UNION SELECT id, name_ko, name_en, origin, height, weight, 'cat' \"type\", image FROM cat ORDER BY name_ko) sub) "
 				+ "WHERE num BETWEEN ? AND ?";
 
 		ArrayList<Animal> DictionaryList = null;
@@ -198,7 +198,7 @@ public class DictionaryDao {
 				DictionaryList = new ArrayList<>();
 
 				do {
-					Animal animal = new Dog();
+					Animal animal = new Animal();
 					animal.setId(rs.getInt("id"));
 					animal.setNameKor(rs.getString("name_ko"));
 					animal.setNameEng(rs.getString("name_en"));
@@ -206,6 +206,13 @@ public class DictionaryDao {
 					animal.setHeight(rs.getString("height"));
 					animal.setWeight(rs.getString("weight"));
 					animal.setType(rs.getString("type"));
+					
+					if (animal.getType().equals("dog")){
+						animal.setImage("images/dictionary/dog/" + rs.getString("image") + ".png");
+					}
+					else if (animal.getType().equals("cat"))  {
+						animal.setImage("images/dictionary/cat/" + rs.getString("image") + ".png");
+					}
 
 					DictionaryList.add(animal);
 				} while (rs.next());
@@ -229,13 +236,13 @@ public class DictionaryDao {
 			isType = true;
 			if (keyword.equals("dog") || keyword.equals("강아지")) {
 				DictionaryListSql = "SELECT * FROM ( SELECT ROWNUM num, sub.* FROM ( "
-						+ "SELECT name_ko, name_en, origin, height, weight, 'dog' \"type\" FROM dog) "
+						+ "SELECT name_ko, name_en, origin, height, weight, 'dog' \"type\", image FROM dog) "
 						+ "sub) WHERE num BETWEEN ? AND ?";
 			}
 
 			else if (keyword.equals("cat") || keyword.equals("고양이")) {
 				DictionaryListSql = "SELECT * FROM ( SELECT ROWNUM num, sub.* FROM ( "
-						+ "SELECT name_ko, name_en, origin, height, weight, 'cat' \"type\" FROM cat) "
+						+ "SELECT name_ko, name_en, origin, height, weight, 'cat' \"type\", image FROM cat) "
 						+ "sub) WHERE num BETWEEN ? AND ?";
 			}
 		}
@@ -270,13 +277,20 @@ public class DictionaryDao {
 				DictionaryList = new ArrayList<>();
 
 				do {
-					Animal animal = new Dog();
+					Animal animal = new Animal();
 					animal.setNameKor(rs.getString("name_ko"));
 					animal.setNameEng(rs.getString("name_en"));
 					animal.setOrigin(rs.getString("origin"));
 					animal.setHeight(rs.getString("height"));
 					animal.setWeight(rs.getString("weight"));
 					animal.setType(rs.getString("type"));
+					
+					if (animal.getType().equals("dog")){
+						animal.setImage("images/dictionary/dog/" + rs.getString("image") + ".png");
+					}
+					else if (animal.getType().equals("cat"))  {
+						animal.setImage("images/dictionary/cat/" + rs.getString("image") + ".png");
+					}
 
 					DictionaryList.add(animal);
 				} while (rs.next());
