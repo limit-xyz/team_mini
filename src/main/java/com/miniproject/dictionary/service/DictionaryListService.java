@@ -32,7 +32,7 @@ public class DictionaryListService implements CommandProcess {
 			pageNum = "1";
 		}
 		int currentPage = Integer.parseInt(pageNum);
-		int PAGE_SIZE = (int) request.getServletContext().getAttribute("PAGE_SIZE");
+		int PAGE_SIZE = (int) request.getServletContext().getAttribute("PAGE_SIZE")-1;
 		int PAGE_GROUP = (int) request.getServletContext().getAttribute("PAGE_GROUP");
 
 		int startRow = currentPage * PAGE_SIZE - (PAGE_SIZE - 1);
