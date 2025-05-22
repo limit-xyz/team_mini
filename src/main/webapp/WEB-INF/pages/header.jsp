@@ -36,16 +36,10 @@
             <div class="collapse navbar-collapse" id="navbarScroll">
               <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll fs-6" style="--bs-scroll-height: 100px;">
                 <li class="nav-item">
-                  <a class="nav-link active" href="#">미용 예약</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">병원 예약</a>
+                  <a class="nav-link active" href="${pageContext.request.contextPath}/hospital/hospital">병원/미용 정보</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="${pageContext.request.contextPath}/dictionary/dictionaryList">펫과사전</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">상품 정보</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="${pageContext.request.contextPath}/free/boardList">커뮤니티</a>

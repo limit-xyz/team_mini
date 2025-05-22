@@ -227,6 +227,47 @@ $(function() {
 			}	
 		});	
 	});
+	
+	
+	
+	$("#nearbyLocationConfirm").on("click", function() {
+
+		let dataSelect = $("#dataSelect").val();
+		let searchOption = $("#searchOption").val();
+		let data = "lat=" + lat + "&lng=" + lng +"&dataSelect=" + dataSelect 
+			+"&searchOption=nearby";
+
+		// 지도 중심 좌표 변경
+		const newCenter = new kakao.maps.LatLng(lat, lng);
+		map.setCenter(newCenter);
+		console.log(lat, lng);
+		console.log(data);
+		const requestUrl = contextPath + "/ajax/locationConfirm.ajax"
+		console.log("requestUrl : ", requestUrl);
+
+		$.ajax({
+			url: requestUrl,
+			data:data,
+			"dataType":"json",
+			success:function(resData) {
+				
+				console.log(resData);
+				listEl.innerHTML = '';
+				
+				if(resData.length > 0) {
+					displayPagination(resData, 10);
+				} else {
+					const listItem = document.createElement('li');
+					listItem.innerHTML = `<strong>일치하는 검색 결과가 없습니다.</strong><br>`;
+					listEl.appendChild(listItem);
+				}
+			},
+			error: function(xhr) {
+				console.log("error : ",xhr);
+			}	
+		})
+	});
+	
 });
 
 
