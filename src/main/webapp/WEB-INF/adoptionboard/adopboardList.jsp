@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<link rel="stylesheet"href="${pageContext.request.contextPath}/css/faq.css" />
 <!--  content -->
 <div class="row my-5" id="global-content">
 	<div class="col">
@@ -26,11 +26,11 @@
 			
 			<!--  검색 요청 -->
 			<div class="col-4">
-				<input type="text" name="keyword" class="form-control form-control-sm" 
+				<input type="text" name="keyword" class="form-control " 
 				id="keyword" value="${keyword }">
 			</div>
 			<div class="col-auto">
-				<button type="submit" class="btn btn-primary btn-sm" value="검색">검색</button>
+				<button type="submit" class="btn btn-primary " value="검색">검색</button>
 			</div>
 		</form>
 		<div class="row mb-3">
@@ -51,10 +51,10 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row qna-content-area">
 			<div class="col">
-				<table class="table table-hover table-boardered">
-					<thead class="table-dark">
+				<table class="table table-hover text-center">
+					<thead class="">
 						<tr>
 							<th class = "text-center" style='width: 8%;'>no</th>
 							<th class = "text-center" style='width: 10%;'>상태</th>
@@ -139,3 +139,42 @@
 			window.location.href="${pageContext.request.contextPath}/member/loginForm";
 		}
 </script>
+
+
+<style>
+.pagination {
+    --bs-pagination-padding-x: 0.75rem;
+    --bs-pagination-padding-y: 0.375rem;
+    --bs-pagination-font-size: 1rem;
+    --bs-pagination-color: var(--bs-link-color);
+    --bs-pagination-bg: var(--bs-body-bg);
+    --bs-pagination-border-width: var(--bs-border-width);
+    --bs-pagination-border-color: var(--bs-border-color);
+    --bs-pagination-border-radius: var(--bs-border-radius);
+    --bs-pagination-hover-color: var(--bs-link-hover-color);
+    --bs-pagination-hover-bg: var(--bs-tertiary-bg);
+    --bs-pagination-hover-border-color: var(--bs-border-color);
+    --bs-pagination-focus-color: var(--bs-link-hover-color);
+    --bs-pagination-focus-bg: var(--bs-secondary-bg);
+    --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    --bs-pagination-active-color: #fff;
+    --bs-pagination-active-bg: #0d6efd;
+    --bs-pagination-active-border-color: #0d6efd;
+    --bs-pagination-disabled-color: var(--bs-secondary-color);
+    --bs-pagination-disabled-bg: var(--bs-secondary-bg);
+    --bs-pagination-disabled-border-color: var(--bs-border-color);
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+}
+
+.active>.page-link, .page-link.active {
+--main-theme-darker-text: #2c5c49;
+    background-color: var(--main-theme-color);
+    border-color: var(--main-theme-border-color);
+    color: var(--main-theme-darker-text);
+    z-index: 1;
+}
+
+
+</style>
