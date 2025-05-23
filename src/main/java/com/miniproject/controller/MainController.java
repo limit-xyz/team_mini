@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.miniproject.common.service.CommandProcess;
 import com.miniproject.main.service.MainSearchService;
-import com.miniproject.main.service.MainService;
+import com.miniproject.main.service.*;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -60,9 +60,15 @@ public class MainController extends HttpServlet {
 			viewPage = service.requestProcess(request, response);
 		}
 		
-		else if(command.equals("/main/search")) {
+		else if(command.equals("/main/searchList")) {
 			// 게시 글 리스트 요청을 처리하는 BoardListService 클래스 실행
 			service = new MainSearchService();
+			viewPage = service.requestProcess(request, response);
+		}
+		
+		else if(command.equals("/main/searchDetail")) {
+			// 게시 글 리스트 요청을 처리하는 BoardListService 클래스 실행
+			service = new SearchDetailService();
 			viewPage = service.requestProcess(request, response);
 		}
 		

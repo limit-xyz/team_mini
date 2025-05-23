@@ -291,7 +291,7 @@ public class ComDao {
 	// 게시글 하나를 받아서 DB에 저장하는 메서드
 	public void insertBoard(Community b) {
 
-		String insertBoard = "INSERT INTO cm01_reply(no, title, writer, content, reg_date, read_count, file1, recommend, thank) "
+		String insertBoard = "INSERT INTO cm01 (no, title, writer, content, reg_date, read_count, file1, recommend, thank) "
 				+ "VALUES(cm01_seq.NEXTVAL, ?, ?, ?, SYSDATE, 0, ?, 0, 0)";
 
 		try {

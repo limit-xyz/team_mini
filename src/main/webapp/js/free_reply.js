@@ -14,7 +14,7 @@ $(function() { // DOM이 준비되면
 		// 현재 폼을 백업 - 댓글 쓰고 날아가기 전에  
 		let $replyForm = $("#replyForm").slideUp(300)
 
-		let result = confirm(writer + "님의 작성한" + no + "번 댓글을 삭제할까요?")
+		let result = confirm(writer + "님이 작성한 " + no + "번 댓글을 삭제할까요?")
 
 		if (result) {
 

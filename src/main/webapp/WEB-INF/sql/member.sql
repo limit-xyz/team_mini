@@ -1,4 +1,4 @@
-DROP TABLE member;
+DROP TABLE member CASCADE CONSTRAINTS;
 
 CREATE TABLE member (
     id            VARCHAR2(50) PRIMARY KEY,

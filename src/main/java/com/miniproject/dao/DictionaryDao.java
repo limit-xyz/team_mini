@@ -230,21 +230,21 @@ public class DictionaryDao {
 			isType = true;
 			if (keyword.equals("dog") || keyword.equals("강아지")) {
 				DictionaryListSql = "SELECT * FROM ( SELECT ROWNUM num, sub.* FROM ( "
-						+ "SELECT name_ko, name_en, origin, height, weight, 'dog' \"type\", image FROM dog) "
+						+ "SELECT id, name_ko, name_en, origin, height, weight, 'dog' \"type\", image FROM dog) "
 						+ "sub) WHERE num BETWEEN ? AND ?";
 			}
 
 			else if (keyword.equals("cat") || keyword.equals("고양이")) {
 				DictionaryListSql = "SELECT * FROM ( SELECT ROWNUM num, sub.* FROM ( "
-						+ "SELECT name_ko, name_en, origin, height, weight, 'cat' \"type\", image FROM cat) "
+						+ "SELECT id, name_ko, name_en, origin, height, weight, 'cat' \"type\", image FROM cat) "
 						+ "sub) WHERE num BETWEEN ? AND ?";
 			}
 		}
 
 		else {
 			DictionaryListSql = "SELECT * FROM ( SELECT ROWNUM num, sub.* FROM ( "
-					+ "SELECT name_ko, name_en, origin, height, weight, 'dog' \"type\" FROM dog "
-					+ "UNION SELECT name_ko, name_en, origin, height, weight, 'cat' \"type\" FROM cat "
+					+ "SELECT id, name_ko, name_en, origin, height, weight, 'dog' \"type\" , image FROM dog "
+					+ "UNION ALL SELECT id, name_ko, name_en, origin, height, weight, 'cat' \"type\", image  FROM cat "
 					+ "ORDER BY name_ko) sub WHERE " + type + " LIKE ?) WHERE num BETWEEN ? AND ?";
 		}
 
@@ -272,6 +272,7 @@ public class DictionaryDao {
 
 				do {
 					Animal animal = new Animal();
+					animal.setId(rs.getInt("id"));
 					animal.setNameKor(rs.getString("name_ko"));
 					animal.setNameEng(rs.getString("name_en"));
 					animal.setOrigin(rs.getString("origin"));
