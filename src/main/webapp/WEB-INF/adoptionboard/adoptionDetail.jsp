@@ -143,8 +143,10 @@
 										
 										<%-- 댓글 작성자 또는 관리자에게만 보일 버튼 --%>
 										<c:if test="${sessionScope.id == reply.userId || sessionScope.isAdmin }">
+											<!-- 
 											<button class="modifyReply btn btn-outline-success btn-sm" data-no='${reply.replyId}'>
 												<i class="bi bi-file-text"> 수정</i></button>
+											-->
 											<button class="deleteReply btn btn-outline-warning btn-sm" data-no='${reply.replyId}'>
 												<i class="bi bi-trash-fill"> 삭제</i></button>
 										</c:if>
