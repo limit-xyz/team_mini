@@ -26,7 +26,7 @@ public class BoardDao  {
 		}
 		
 		System.out.println(getAnimalBuildingLocationSql);
-		ArrayList<com.mimproject.vo.AnimalHospital> animalHospitalList = null;
+		ArrayList<AnimalHospital> animalHospitalList = null;
 		
 		try {
 			conn = DBManager.getConnection();

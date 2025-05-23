@@ -24,7 +24,7 @@ $(function() {
 	// 신규 동물병원 정보 보기
 	if (sessionStorage.getItem('runAjaxOnLoad1') === 'true') {
 		sessionStorage.removeItem('runAjaxOnLoad1');
-		
+		let dataSelect = "hospital";
 		let data = "firstOption=1" + "&dataSelect=hospital";	 
 		const requestUrl = contextPath + "/ajax/locationConfirm.ajax"
 		console.log("requestUrl : ", requestUrl);
@@ -330,32 +330,32 @@ $(function() {
 		})
 	});
 	
+	function displayCurrentLocationMarker(lat, lng) {
+	  var newCenter = new kakao.maps.LatLng(lat, lng);
+	  map.setCenter(newCenter);
+	
+	  // 기존 마커 제거
+	  clearMarkers();
+	
+	  // 현재 위치에 마커 생성
+	  var marker = new kakao.maps.Marker({
+	    position: newCenter,
+	    map: map,
+	    title: "현재 위치"
+	  });
+	
+	  markers.push(marker); 
+	
+	  if (currentInfowindow) {
+	    currentInfowindow.close(); 
+	  }
+	
+	  currentInfowindow = new kakao.maps.InfoWindow({
+	    content: '<div style="padding:5px;">현재 위치</div>'
+	  });
+	  currentInfowindow.open(map, marker);
+	}
 });
 
-function displayCurrentLocationMarker(lat, lng) {
-  var newCenter = new kakao.maps.LatLng(lat, lng);
-  map.setCenter(newCenter);
-
-  // 기존 마커 제거
-  clearMarkers();
-
-  // 현재 위치에 마커 생성
-  var marker = new kakao.maps.Marker({
-    position: newCenter,
-    map: map,
-    title: "현재 위치"
-  });
-
-  markers.push(marker); 
-
-  if (currentInfowindow) {
-    currentInfowindow.close(); 
-  }
-
-  currentInfowindow = new kakao.maps.InfoWindow({
-    content: '<div style="padding:5px;">현재 위치</div>'
-  });
-  currentInfowindow.open(map, marker);
-}
 
 

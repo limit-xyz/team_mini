@@ -3,7 +3,6 @@ package com.miniproject.hospital.ajax;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-
 import com.google.gson.Gson;
 import com.miniproject.common.service.AjaxProcess;
 import com.miniproject.dao.BoardDao;
