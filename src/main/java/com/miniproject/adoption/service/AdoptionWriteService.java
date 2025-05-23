@@ -55,7 +55,7 @@ public class AdoptionWriteService implements CommandProcess{
 					System.out.printf("파라미터 : %s, contentType : %s, size : %dByte, \n",
 					part.getName(), part.getContentType(), part.getSize());
 					
-					if("imagepath".equals(paramName)) {
+					if("imagePath".equals(paramName)) {
 						if(part.getSize() > 0) {
 							String mimeType = part.getContentType();
 							if (mimeType != null && ALLOWED_IMAGE_TYPES.contains(mimeType.toLowerCase())) { // 추가: 파일 형식 검증
@@ -69,7 +69,7 @@ public class AdoptionWriteService implements CommandProcess{
 							
 								try {
 									part.write(savePath);
-									dto.setImagePath(uploadDir + "/" + saveName); // DB에 저장할 상대경로
+									dto.setImagePath(saveName); // DB에 저장할 상대경로
 								} catch(IOException e){
 									e.printStackTrace();
 									response.setContentType("text/html; charset=utf-8");

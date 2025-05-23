@@ -23,8 +23,7 @@ public class AdoptionDeleteService implements CommandProcess{
 		String pageNum = request.getParameter("pageNum");
 		
 		
-		if(postIdStr == null || postIdStr.equals("") 
-				|| pageNum == null || pageNum.equals("")) {
+		if(postIdStr == null || postIdStr.equals("")) {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");

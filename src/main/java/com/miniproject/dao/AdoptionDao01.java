@@ -455,7 +455,7 @@ public class AdoptionDao01 {
 					rs.getString("image_path"),
 					rs.getTimestamp("created_at"),
 					rs.getInt("views_count"),
-					rs.getString("approvalStatus")
+					rs.getString("approval_status")
 					);
 			
 			}

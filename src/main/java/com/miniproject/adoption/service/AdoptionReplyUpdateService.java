@@ -25,7 +25,7 @@ public class AdoptionReplyUpdateService implements CommandProcess {
 		String animalTypeMain = request.getParameter("animalTypeMain");
 		String keyword = request.getParameter("keyword");
 
-		if (postIdParam == null || postIdParam.equals("") || pageNum == null || pageNum.equals("")) {
+		if (postIdParam == null || postIdParam.equals("")) {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");

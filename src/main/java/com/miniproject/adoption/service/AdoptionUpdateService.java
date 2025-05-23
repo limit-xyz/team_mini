@@ -63,7 +63,7 @@ public class AdoptionUpdateService implements CommandProcess{
 				String partHeader = part.getHeader("Content-Disposition");
 				String paramName = part.getName();
 				
-				if (partHeader.contains("name=\"image_path\"")) {
+				if (partHeader.contains("filename=")) {
 					if(part.getSize() > 0) {
 						UUID uid = UUID.randomUUID();
 						String saveName = uid.toString() + "_" + part.getSubmittedFileName();
@@ -74,7 +74,7 @@ public class AdoptionUpdateService implements CommandProcess{
 						
 						try {
 							part.write(savePath);
-							dto.setImagePath(uploadDir + "/" + saveName); //DB에 저장할 상대경로
+							dto.setImagePath(saveName); //DB에 저장할 상대경로
 						} catch(IOException e) {
 							e.printStackTrace();
 							 response.setContentType("text/html; charset=utf-8");
