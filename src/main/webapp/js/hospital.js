@@ -21,6 +21,69 @@ $(function() {
 	};
 	var map = new kakao.maps.Map(mapContainer, mapOption);
 	
+	// 신규 동물병원 정보 보기
+	if (sessionStorage.getItem('runAjaxOnLoad1') === 'true') {
+		sessionStorage.removeItem('runAjaxOnLoad1');
+		
+		let data = "firstOption=1" + "&dataSelect=hospital";	 
+		const requestUrl = contextPath + "/ajax/locationConfirm.ajax"
+		console.log("requestUrl : ", requestUrl);
+
+		$.ajax({
+			url: requestUrl,
+			data:data,
+			"dataType":"json",
+			success:function(resData) {
+				
+				console.log(resData);
+				listEl.innerHTML = '';
+				
+				if(resData.length > 0) {
+					displayPagination(resData, 10);
+				} else {
+					var listItem = document.createElement('li');
+					listItem.innerHTML = `<strong>일치하는 검색 결과가 없습니다.</strong><br>`;
+					listEl.appendChild(listItem);
+				}
+			},
+			error: function(xhr) {
+				console.log("error : ",xhr);
+			}	
+		})	 
+	}
+	
+	// 신규 미용실 정보 보기
+	if (sessionStorage.getItem('runAjaxOnLoad2') === 'true') {
+	     sessionStorage.removeItem('runAjaxOnLoad2');
+		let dataSelect = "beauty";
+ 		let data = "firstOption=1" + "&dataSelect=beauty";	 
+ 		const requestUrl = contextPath + "/ajax/locationConfirm.ajax"
+ 		console.log("requestUrl : ", requestUrl);
+
+ 		$.ajax({
+ 			url: requestUrl,
+ 			data:data,
+ 			"dataType":"json",
+ 			success:function(resData) {
+ 				
+ 				console.log(resData);
+ 				listEl.innerHTML = '';
+ 				
+ 				if(resData.length > 0) {
+ 					displayPagination(resData, 10);
+ 				} else {
+ 					var listItem = document.createElement('li');
+ 					listItem.innerHTML = `<strong>일치하는 검색 결과가 없습니다.</strong><br>`;
+ 					listEl.appendChild(listItem);
+ 				}
+ 			},
+ 			error: function(xhr) {
+ 				console.log("error : ",xhr);
+ 			}	
+ 		})	
+			 
+	}
+	
 	
 	// ip로 내 위치 찾기
 	$("#findLocation").on("click", function() {
@@ -28,30 +91,9 @@ $(function() {
       lat = data.latitude;
       lng = data.longitude;
       var ip = data.ip;
-			
-			var newCenter = new kakao.maps.LatLng(lat, lng);
-			map.setCenter(newCenter);
-			
-			// 기존 마커 제거
-			clearMarkers();
 
 			// 현재 위치에 마커 생성
-			var marker = new kakao.maps.Marker({
-			  position: newCenter,
-			  map: map,
-			  title: "현재 위치"
-			});
-
-			markers.push(marker); 
-
-			if (currentInfowindow) {
-			  currentInfowindow.close(); 
-			}
-
-			currentInfowindow = new kakao.maps.InfoWindow({
-			  content: '<div style="padding:5px;">현재 위치</div>'
-			});
-			currentInfowindow.open(map, marker);
+			displayCurrentLocationMarker(lat, lng);
 			
     }).fail(function() {
 			alert("위치 정보를 불러오지 못했습니다.")
@@ -83,31 +125,8 @@ $(function() {
 							console.log("result.x :", result.x, ", result.y : ", result.y)
 							lat = result.y, lng = result.x;
 
-							var newCenter = new kakao.maps.LatLng(lat, lng);
-							map.setCenter(newCenter);
-							
-							// 기존 마커 제거
-							clearMarkers();
-
 							// 현재 위치에 마커 생성
-							var marker = new kakao.maps.Marker({
-							  position: newCenter,
-							  map: map,
-							  title: "현재 위치"
-							});
-
-							markers.push(marker); 
-
-							if (currentInfowindow) {
-							  currentInfowindow.close(); 
-							}
-
-							currentInfowindow = new kakao.maps.InfoWindow({
-							  content: '<div style="padding:5px;">현재 위치</div>'
-							});
-							currentInfowindow.open(map, marker);
-
-							
+							displayCurrentLocationMarker(lat, lng);
 							
 		        } else {
 							alert("좌표를 찾을 수 없습니다.")
@@ -312,5 +331,31 @@ $(function() {
 	});
 	
 });
+
+function displayCurrentLocationMarker(lat, lng) {
+  var newCenter = new kakao.maps.LatLng(lat, lng);
+  map.setCenter(newCenter);
+
+  // 기존 마커 제거
+  clearMarkers();
+
+  // 현재 위치에 마커 생성
+  var marker = new kakao.maps.Marker({
+    position: newCenter,
+    map: map,
+    title: "현재 위치"
+  });
+
+  markers.push(marker); 
+
+  if (currentInfowindow) {
+    currentInfowindow.close(); 
+  }
+
+  currentInfowindow = new kakao.maps.InfoWindow({
+    content: '<div style="padding:5px;">현재 위치</div>'
+  });
+  currentInfowindow.open(map, marker);
+}
 
 

@@ -79,7 +79,7 @@
 <div class="row">
 	<div class="col" id="topLine">
 		<div class="row-container">
-			<a href="${pageContext.request.contextPath}/hospital/*" class="card-link">
+			<a href="${pageContext.request.contextPath}/hospital/*" class="card-link" id="hospital">
 				<div class="outer-container">
 					<div class="circle-image">
 						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkuIadwwXvaQ3aaa6rnbRYCyg9_5nwQWksGQ&s" alt="동물병원 찾기">
@@ -89,7 +89,7 @@
 					</div>
 				</div>
 			</a>
-			<a href="${pageContext.request.contextPath}/hospital/*" class="card-link">
+			<a href="${pageContext.request.contextPath}/hospital/*" class="card-link" id="beauty">
 				<div class="outer-container">
 					<div class="circle-image">
 						<img src="https://cdn.mkhealth.co.kr/news/photo/202106/53700_55215_4051.jpg" alt="미용실 찾기">
@@ -132,3 +132,21 @@
 		<img src="https://image.dongascience.com/Photo/2023/07/2a8a3655edb9a187db216dc4adc13b7e.jpg" alt="반려동물과 함께하는 모습" style="width: 100%; height: auto; border-radius: 8px;">
 	</div>
 </div>
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		const link1 = document.querySelector("#hospital");
+		const link2 = document.querySelector("#beauty");
+		
+		if(link1) {
+			link1.addEventListener('click', function() {
+				sessionStorage.setItem('runAjaxOnLoad1', 'true');
+			});			
+		} 
+		
+		if(link2) {
+			link2.addEventListener('click', function() {
+				sessionStorage.setItem('runAjaxOnLoad2', 'true');
+			});	
+		}
+	});
+</script>

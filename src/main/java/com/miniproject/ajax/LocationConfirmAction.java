@@ -19,15 +19,10 @@ public class LocationConfirmAction implements AjaxProcess{
 	public void ajaxProcess(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 		
-		String dataSelect = "";
-		String searchOption = "";
-		String nearby = "";
-		Double lat = Double.parseDouble(req.getParameter("lat"));
-		Double lng = Double.parseDouble(req.getParameter("lng"));
-		
-		dataSelect = req.getParameter("dataSelect");
-		searchOption = req.getParameter("searchOption");
-		nearby = req.getParameter("nearby");
+		String dataSelect = req.getParameter("dataSelect");
+		String searchOption = req.getParameter("searchOption");
+		String nearby = req.getParameter("nearby");
+		String firstOption = req.getParameter("firstOption");
 
 		System.out.println("LocationConfirmAction 실행됨");
 		System.out.println(dataSelect);
@@ -37,19 +32,27 @@ public class LocationConfirmAction implements AjaxProcess{
 		List<AnimalHospital> animalHospitalList = null;
 		BoardDao dao = new BoardDao();
 		
-		if(nearby == "1" || nearby.equals("1") ) {
-			if(searchOption.equals("")||searchOption==null) {
-				 animalHospitalList = dao.locationConfirmNearby(dataSelect, lat, lng);
+		if(firstOption != null) {
+			animalHospitalList = dao.newLocationConfirm(dataSelect);
+		}
+		else {
+			Double lat = Double.parseDouble(req.getParameter("lat"));
+			Double lng = Double.parseDouble(req.getParameter("lng"));
+		
+			if(nearby == "1" || nearby.equals("1")) {
+				if(searchOption.equals("")||searchOption==null) {
+					 animalHospitalList = dao.locationConfirmNearby(dataSelect, lat, lng);
+				} else {
+					 animalHospitalList = dao.locationConfirmNearby(dataSelect, lat, lng, searchOption);
+				} 
+			}
+			
+			else if(searchOption.equals("")||searchOption==null) {
+				 animalHospitalList = dao.locationConfirm(dataSelect);
 			} else {
-				 animalHospitalList = dao.locationConfirmNearby(dataSelect, lat, lng, searchOption);
+				 animalHospitalList = dao.locationConfirm(dataSelect,searchOption);
 			} 
 		}
-		
-		else if(searchOption.equals("")||searchOption==null) {
-			 animalHospitalList = dao.locationConfirm(dataSelect);
-		} else {
-			 animalHospitalList = dao.locationConfirm(dataSelect,searchOption);
-		} 
 		
 		Gson gson = new Gson();
 		String result = gson.toJson(animalHospitalList);
