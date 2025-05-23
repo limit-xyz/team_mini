@@ -51,7 +51,7 @@
 		top: 0;
 		left: 0;
 		bottom: 0;
-		width: 250px;
+		width: 340px;
 		margin: 10px 0 30px 10px;
 		padding: 5px;
 		overflow-y: auto;
@@ -72,33 +72,17 @@
 		margin: 3px 0;
 	}
 	
-	#menu_wrap .option {text-align: center;}
-	
-	#menu_wrap .option p {margin: 10px 0;}
-	
 	#menu_wrap button {margin-left: 5px;}
 	
-	#placesList li {list-style: none;}
-	
-	#placesList .item {
+	#placesList li {
+		list-style: none;
 		position: relative;
 		border-bottom: 1px solid #888;
 		overflow: hidden;
 		cursor: pointer;
 		min-height: 65px;
 	}
-	
-	#placesList .item span {
-		display: block;
-		margin-top: 4px;
-	}
-	
-	#placesList .item h5, #placesList .item .info {
-		text-overflow: ellipsis;
-		overflow: hidden;
-		white-space: nowrap;
-	}
-	
+
 	#placesList .item .info {padding: 10px 0 10px 55px;}
 	
 	#placesList .info .jibun {
@@ -110,20 +94,33 @@
 	
 	#placesList .info .tel {color: #009900;}
 	
+	.container1 {
+  	min-height: 300px;
+  	margin-top: 40px;
+  	margin-bottom: 50px;
+  	display: flex;
+  	flex-direction: column;
+  	justify-content: center;
+  }
 	
+  h1 {
+    color: #406400; /* 진한 녹색 (dark green) */
+    font-weight: bold; /* 글자 굵게 */
+  }
+  
 </style>
 <body>
-	<div class="container">
+	<div class="container1">
 		<div class="col-md-10 offset-md-1">
-			<div class="row my-3">
-				<h2>병원/미용실 정보</h2>
-				<div>
+			<div class="row">
+				<h1>병원/미용실 정보</h2>
+				<div class="content my-3" class="me-5">
 					<select id="dataSelect">
 						<option value="hospital" selected>반려동물 병원</option>
 						<option value="beauty">반려동물 미용실</option>
 					</select>
-					<input type="button" id="findLocation" value="현재 위치를 선택"> 
-					<button id="findLocationByAddress">직접 위치 설정하기</button>
+					<input type="button" class="rounded-pill bg-white ms-5" id="findLocation" value="현재 위치를 선택">
+					<input type="button" class="rounded-pill bg-white ms-3" id="findLocationByAddress" value="직접 위치 설정하기">
 				</div>
 			</div>
 			
@@ -146,11 +143,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="row my-3">
+			<div class="row my-4">
 				<div>
-						이름으로 검색 : <input type="text" id="searchOption">
-						<input type="button" id="locationConfirm" value="지도에 위치 표시">
-						<input type="button" id="nearbyLocationConfirm" value="가까운 곳만 지도에 위치표시">
+						<input type="text" class="rounded-pill bg-white" id="searchOption" placeholder="이름으로 검색">
+						<input type="button" class="mx-2 rounded-pill bg-white" id="locationConfirm" value="지도에 위치 표시">
+						<input type="button" class="rounded-pill bg-white" id="nearbyLocationConfirm" value="가까운 곳 지도에 표시">
 				</div>
 			</div>
 		</div>
