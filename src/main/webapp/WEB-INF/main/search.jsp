@@ -17,10 +17,10 @@
 				<table class="table table-hover">
 					<thead class="table-success">
 						<tr>
-							<th>no</th>
+							<th>게시판</th>
 							<th>제목</th>
+							<th>내용</th>
 							<th>작성자</th>
-							<th>작성일</th>
 						</tr>
 					</thead>
 					
@@ -29,9 +29,36 @@
 						<c:if test="${not empty searchList}">
 							<c:forEach var="board" items="${ searchList }">
 								<tr class="boardDetail" data-board-no="${board.no}" style="cursor: pointer;">
-									<td>${board.type}</td>
+									<td>
+										<c:choose>
+										    <c:when test="${board.type == 'free'}">
+										        자유게시판
+										    </c:when>
+										    <c:when test="${board.type == 'adoption'}">
+										        입양/분양 게시판
+										    </c:when>
+										    <c:when test="${board.type == 'qna'}">
+										        펫과사전
+										    </c:when>
+										    <c:when test="${board.type == 'review'}">
+										        펫과사전
+										    </c:when>
+										    <c:when test="${board.type == 'faq'}">
+										        FAQ
+										    </c:when>
+										    <c:when test="${board.type == 'qna'}">
+										        문의 게시판
+										    </c:when>
+										    <c:otherwise>
+										        기타
+										    </c:otherwise>
+										</c:choose>
+									</td>
+									
 									<td>${board.title}</td>
+									
 									<td>${board.content}</td>
+									
 									<td>${board.writer}</td>
 								</tr>
 							</c:forEach>

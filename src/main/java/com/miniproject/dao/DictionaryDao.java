@@ -206,13 +206,7 @@ public class DictionaryDao {
 					animal.setHeight(rs.getString("height"));
 					animal.setWeight(rs.getString("weight"));
 					animal.setType(rs.getString("type"));
-					
-					if (animal.getType().equals("dog")){
-						animal.setImage("images/dictionary/dog/" + rs.getString("image") + ".png");
-					}
-					else if (animal.getType().equals("cat"))  {
-						animal.setImage("images/dictionary/cat/" + rs.getString("image") + ".png");
-					}
+					animal.setImage("images/dictionary/" + rs.getString("image"));
 
 					DictionaryList.add(animal);
 				} while (rs.next());
@@ -284,13 +278,7 @@ public class DictionaryDao {
 					animal.setHeight(rs.getString("height"));
 					animal.setWeight(rs.getString("weight"));
 					animal.setType(rs.getString("type"));
-					
-					if (animal.getType().equals("dog")){
-						animal.setImage("images/dictionary/dog/" + rs.getString("image") + ".png");
-					}
-					else if (animal.getType().equals("cat"))  {
-						animal.setImage("images/dictionary/cat/" + rs.getString("image") + ".png");
-					}
+					animal.setImage("images/dictionary/" + rs.getString("image"));
 
 					DictionaryList.add(animal);
 				} while (rs.next());
