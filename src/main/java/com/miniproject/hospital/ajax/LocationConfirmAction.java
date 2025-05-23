@@ -1,4 +1,4 @@
-package com.miniproject.ajax;
+package com.miniproject.hospital.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,7 +11,7 @@ import com.miniproject.dao.BoardDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import com.mimproject.vo.*;
+import com.miniproject.vo.*;
 
 public class LocationConfirmAction implements AjaxProcess{
 

@@ -1,4 +1,4 @@
-package com.miniproject.ajax;
+package com.miniproject.hospital.ajax;
 
 import java.io.IOException;
 
