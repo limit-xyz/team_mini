@@ -78,4 +78,4 @@
 		</div>
 	</div>
 </div>
-
+<script src="${pageContext.request.contextPath}/js/search.js"></script>

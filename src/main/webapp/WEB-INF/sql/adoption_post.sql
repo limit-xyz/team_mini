@@ -2,7 +2,7 @@
  **/
  -- 게시글 번호, 제목, 글쓴이, 내용, 날짜, 조회수, 비밀번호, 파일정보, 추천, 땡큐
 -- no, title, writer, content, reg_date, read_count, pass, file1, recommend, thank
-drop table adoption_post;
+drop table adoption_post CASCADE CONSTRAINTS;
 CREATE TABLE adoption_post(
   post_id	  NUMBER PRIMARY KEY,
   user_id	 VARCHAR2(50 CHAR) NOT NULL,
