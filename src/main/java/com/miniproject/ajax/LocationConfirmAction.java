@@ -11,7 +11,7 @@ import com.miniproject.dao.BoardDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import com.mimproject.vo.*;
+import com.miniproject.vo.*;
 
 public class LocationConfirmAction implements AjaxProcess{
 

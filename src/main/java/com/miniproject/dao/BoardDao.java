@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.mimproject.vo.AnimalHospital;
+import com.miniproject.vo.AnimalHospital;
 
 public class BoardDao  {
 
@@ -23,7 +23,7 @@ public class BoardDao  {
 		} else if (dataSelect.equals("beauty")) {
 			getAnimalBuildingLocationSql = "select * from animal_beauty order by id desc";
 		}
-		ArrayList<com.mimproject.vo.AnimalHospital> animalHospitalList = null;
+		ArrayList<AnimalHospital> animalHospitalList = null;
 		
 		try {
 			conn = DBManager.getConnection();
@@ -107,7 +107,7 @@ public class BoardDao  {
 		} else if (dataSelect.equals("beauty")) {
 			getAnimalBuildingLocationSql = "select * from animal_beauty where power((longitude - ?),2) + power((latitude - ?),2) <= power(0.03,2) order by id desc";
 		}
-		ArrayList<com.mimproject.vo.AnimalHospital> animalHospitalList = null;
+		ArrayList<AnimalHospital> animalHospitalList = null;
 		
 		try {
 			conn = DBManager.getConnection();
