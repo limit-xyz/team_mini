@@ -39,7 +39,7 @@ $(function() {
 				listEl.innerHTML = '';
 				
 				if(resData.length > 0) {
-					displayPagination(resData, 10);
+					displayPagination(resData, 10, dataSelect);
 				} else {
 					var listItem = document.createElement('li');
 					listItem.innerHTML = `<strong>일치하는 검색 결과가 없습니다.</strong><br>`;
@@ -70,7 +70,7 @@ $(function() {
  				listEl.innerHTML = '';
  				
  				if(resData.length > 0) {
- 					displayPagination(resData, 10);
+ 					displayPagination(resData, 10, dataSelect);
  				} else {
  					var listItem = document.createElement('li');
  					listItem.innerHTML = `<strong>일치하는 검색 결과가 없습니다.</strong><br>`;
@@ -143,10 +143,9 @@ $(function() {
   });
 	
 	// 지도에 마커 고정 및 위치 정보 출력창
-	function displayPlaces(places) {
+	function displayPlaces(places, dataSelect) {
 	  clearMarkers();
 	  listEl.innerHTML = '';
-	  let dataSelect = $("#dataSelect").val();
 
 	  var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 	  var bounds = new kakao.maps.LatLngBounds();
@@ -232,7 +231,7 @@ $(function() {
 	}
 
 	// 페이지네이션
-	function displayPagination(data, itemsPerPage = 10) {
+	function displayPagination(data, itemsPerPage = 10, dataSelect) {
     var totalPages = Math.ceil(data.length / itemsPerPage);
     pageNum.innerHTML = '';
 		
@@ -248,7 +247,7 @@ $(function() {
     }
 
     // 처음 1페이지 표시
-    displayPlaces(data.slice(0, itemsPerPage));
+    displayPlaces(data.slice(0, itemsPerPage), dataSelect);
 	}
 
 	// "지도에 위치 표시" 버튼 클릭 시 DB에서 데이터 가져와서 ajax로 뿌리는 동작
@@ -277,7 +276,7 @@ $(function() {
 				listEl.innerHTML = '';
 				
 				if(resData.length > 0) {
-					displayPagination(resData, 10);
+					displayPagination(resData, 10, dataSelect);
 				} else {
 					var listItem = document.createElement('li');
 					listItem.innerHTML = `<strong>일치하는 검색 결과가 없습니다.</strong><br>`;
@@ -317,7 +316,7 @@ $(function() {
 				listEl.innerHTML = '';
 				
 				if(resData.length > 0) {
-					displayPagination(resData, 10);
+					displayPagination(resData, 10, dataSelect);
 				} else {
 					var listItem = document.createElement('li');
 					listItem.innerHTML = `<strong>일치하는 검색 결과가 없습니다.</strong><br>`;
