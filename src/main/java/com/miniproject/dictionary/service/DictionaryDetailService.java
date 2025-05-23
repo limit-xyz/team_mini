@@ -42,7 +42,7 @@ public class DictionaryDetailService implements CommandProcess {
 
 		if (type.equals("dog")) {
 			Dog dog = dao.getDogDictionary(animalId);
-			String imagePath = "images/dictionary/dog/" + dog.getImage() + ".png";
+			String imagePath = "images/dictionary/" + dog.getImage();
 			dog.setImage(imagePath);
 
 			request.setAttribute("dog", dog);
@@ -51,7 +51,7 @@ public class DictionaryDetailService implements CommandProcess {
 
 		else if (type.equals("cat")) {
 			Cat cat = dao.getCatDictionary(animalId);
-			String imagePath = "images/dictionary/cat/" + cat.getImage() + ".png";
+			String imagePath = "images/dictionary/" + cat.getImage();
 			cat.setImage(imagePath);
 
 			request.setAttribute("cat", cat);

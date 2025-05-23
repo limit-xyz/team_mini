@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import com.miniproject.vo.Diary;
-import com.miniproject.vo.MyBoard;
 import com.miniproject.vo.GlobalSearch;
 
 public class GlobalSearchDao {
@@ -46,10 +44,20 @@ public class GlobalSearchDao {
 				do {
 					GlobalSearch search = new GlobalSearch();
 					search.setNo(rs.getInt("no"));
-					search.setTitle(rs.getString("title"));
-					search.setContent(rs.getString("content"));
 					search.setType(rs.getString("type"));
 					search.setWriter(rs.getString("writer"));
+					
+					String title = rs.getString("title");
+					if (title.length() > 12) {
+						title = title.substring(0, 12) + "...";
+					}		
+					search.setTitle(title);
+					
+					String content = rs.getString("content");
+					if (content.length() > 30) {
+						 content = content.substring(0, 30) + "...";
+					}		
+					search.setContent(content);
 
 					searchList.add(search);
 

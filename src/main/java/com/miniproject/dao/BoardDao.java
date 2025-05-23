@@ -8,9 +8,7 @@ import java.util.ArrayList;
 
 import com.mimproject.vo.AnimalHospital;
 
-import jakarta.servlet.http.HttpServlet;
-
-public class BoardDao extends HttpServlet {
+public class BoardDao  {
 
 	private Connection conn;
 	private PreparedStatement pstmt;
