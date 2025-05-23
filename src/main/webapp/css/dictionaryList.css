@@ -1,3 +1,58 @@
+/* =============================================== */
+
+/* 0. 루트 변수 정의 */
+
+/* =============================================== */
+:root {
+	--main-theme-color: #C5E1D4 !important;
+	--main-theme-darker-text: #2c5c49 !important;
+	--main-theme-border-color: #b0d1c0 !important;
+	--pill-button-text-color: #198754 !important; /* 탭 버튼 기본 텍스트 색상 */
+	--main-theme-light-bg: #eef3f1 !important; /* 테마색의 아주 연한 버전 (배경용) */
+	--text-muted-custom: #5a6670 !important; /* 부가 정보용 텍스트 색상 */
+	--bs-link-color:#b0d1c0 !important;
+	--bs-pagination-hover-color: #2c5c49 !important;
+}
+
+/* =============================================== */
+
+/* 1. 기본 & 공통 스타일 */
+
+/* =============================================== */
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #f9fbfd;
+}
+
+/* 탭 페이지 상단 공통 제목 (예: Q&A 게시판, FAQ 자체 페이지의 #title 등) */
+#title {
+	font-size: 1.5rem; /* 사용자님 지정 크기 */
+	font-weight: bold;
+	color: var(--main-theme-darker-text);
+	margin-top: 1.5rem;
+	margin-bottom: 1.5rem;
+	text-align: center;
+}
+
+/* 공통 테마 버튼 스타일 (전역 적용) */
+.btn-custom-theme {
+	background-color: var(--main-theme-color);
+	border-color: var(--main-theme-border-color);
+	color: var(--main-theme-darker-text);
+	font-weight: 500;
+}
+
+.btn-custom-theme:hover, .btn-custom-theme:focus {
+	background-color: #b3d6c6;
+	border-color: #a0c3b3;
+	color: var(--main-theme-darker-text);
+}
+
+/* 버튼 내 아이콘 공통 정렬 */
+.btn .bi {
+	vertical-align: text-bottom;
+	margin-bottom: 0.05em;
+}
 /* dictionaryList.css 파일에 추가 */
 
 .card.dictionaryDetail {
@@ -10,4 +65,77 @@
     transform: translateY(-5px); /* 카드가 위로 약간 이동합니다. */
     box-shadow: 0 8px 16px rgba(0,0,0,0.15); /* 그림자가 더 선명하고 커집니다. */
     /* cursor: pointer; 이미 인라인 스타일로 적용되어 있지만, CSS로 관리할 수도 있습니다. */
+}
+
+/* =============================================== */
+
+/* 6. 페이지네이션 스타일 (공통 적용) */
+
+/* =============================================== */
+
+.pagination{
+		--main-theme-color: #C5E1D4 !important;
+	--main-theme-darker-text: #2c5c49 !important;
+	--main-theme-border-color: #b0d1c0 !important;
+	--pill-button-text-color: #198754 !important; /* 탭 버튼 기본 텍스트 색상 */
+	--main-theme-light-bg: #eef3f1 !important; /* 테마색의 아주 연한 버전 (배경용) */
+	--text-muted-custom: #5a6670 !important; /* 부가 정보용 텍스트 색상 */
+	--bs-link-color:#b0d1c0 !important;
+	--bs-pagination-hover-color: #2c5c49 !important;
+	
+}
+
+.active>.page-link, .page-link.active{
+	background-color: #198754 !important;
+    border-color: #b0d1c0 !important;
+    color:#fff !important;
+}
+
+.pagination .page-link.active {
+	background-color: var(--main-theme-color);
+	border-color: var(--main-theme-border-color);
+	color: var(--main-theme-darker-text);
+	z-index: 1;
+}
+
+.pagination .page-link {
+	color: var(--main-theme-darker-text);
+}
+
+.pagination .page-link:hover {
+	background-color: #e0f0e8;
+}
+
+.pagination .page-item.disabled .page-link {
+	color: #868e96;
+	background-color: transparent;
+	border-color: #dee2e6;
+}
+
+
+
+
+.pagination .page-item.active {
+	background-color: var(--main-theme-color);
+	border-color: var(--main-theme-border-color);
+	color: var(--main-theme-darker-text);
+	z-index: 1;
+}
+
+.pagination .page-item {
+	color: var(--main-theme-darker-text);
+}
+
+.pagination .page-item:hover {
+	background-color: #e0f0e8;
+}
+
+.pagination .page-item.disabled .page-link {
+	color: #868e96;
+	background-color: transparent;
+	border-color: #dee2e6;
+}
+
+.btn.btn-custom-theme.btn-sm{
+	width:150px;
 }
