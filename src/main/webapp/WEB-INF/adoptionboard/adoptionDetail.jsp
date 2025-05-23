@@ -14,6 +14,7 @@
 	<div style="visibility: hidden;">
 		<p id="contextPath">${pageContext.request.contextPath}</p>
 		<p id="pageNum">${pageNum}</p>
+		<p id="userId">${sessionScope.id}</p>
 	</div>
 
 	<div class="col">
@@ -40,7 +41,7 @@
 					<tbody>
 						<tr>
 							<th class="table-secondary"> 제 목</th>
-							<td class="mb-0 fw-bold" colspan = "3" >${adopboard.title}</td>
+							<td class="amb-0 fw-bold" colspan = "3" id="boardTitle">${adopboard.title}</td>
 						</tr>
 						
 						<tr>
@@ -148,7 +149,8 @@
 												<i class="bi bi-trash-fill"> 삭제</i></button>
 										</c:if>
 										
-										<button class="reportReply btn btn-outline-danger btn-sm" data-no='${reply.replyId}'>
+										<button class="reportReply btn btn-outline-danger btn-sm" data-no='${reply.replyId}'
+											data-reply-content='${reply.content}'>
 											<i class="bi bi-exclamation-triangle-fill"> 신고</i></button>
 									</div>
 								</div>

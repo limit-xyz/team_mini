@@ -127,6 +127,11 @@ public class AdoptBoardController extends HttpServlet {
 		} else if (command.equals("/adoption/AdoptionReplyDelete")) {
 			service = new AdoptionReplyDeleteService();
 			viewPage = service.requestProcess(request, response);
+			
+		} else if (command.equals("/adoption/AdoptionReplyReport")) {
+			service = new AdoptionReplyReportService();
+			viewPage = service.requestProcess(request, response);
+
 		}
 
 		RequestDispatcher rd = null;
