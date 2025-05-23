@@ -1,3 +1,4 @@
+DROP TABLE animal_beauty;
 CREATE TABLE animal_beauty (
   id NUMBER PRIMARY KEY,
   place_name VARCHAR2(100 CHAR) NOT NULL,
@@ -8,6 +9,7 @@ CREATE TABLE animal_beauty (
   place_url VARCHAR2(300 CHAR)
 );
 
+DROP SEQUENCE animal_beauty_seq;
 CREATE SEQUENCE animal_beauty_seq;
 
 INSERT INTO animal_beauty (id, place_name, address, phone, longitude, latitude, place_url) VALUES (animal_beauty_seq.NEXTVAL, '애니살롱 본점', '서울 강남구 역삼동 687-1', '02-542-1555', 127.04036023599129, 37.50781272030771, 'http://place.map.kakao.com/944340882');

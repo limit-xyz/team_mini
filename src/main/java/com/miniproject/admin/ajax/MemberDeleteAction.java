@@ -23,34 +23,13 @@ public class MemberDeleteAction implements AjaxProcess {
 		String id = request.getParameter("id");
 		dao.deleteMember(id);
 
-		int PAGE_SIZE = (int) request.getServletContext().getAttribute("PAGE_SIZE");
-		int PAGE_GROUP = (int) request.getServletContext().getAttribute("PAGE_GROUP");
-		String pageNum = request.getParameter("pageNum");
-		if (pageNum == null) {
-			pageNum = "1";
-		}
-		int currentPage = Integer.parseInt(pageNum);
-
-		int startRow = currentPage * PAGE_SIZE - (PAGE_SIZE - 1);
-		int endRow = startRow + PAGE_SIZE - 1;
-		int listCount = 0;
-
 		String searchId = request.getParameter("serachMemberId");
-		listCount = dao.getMemberCount(searchId);
-
-		int pageCount = listCount / PAGE_SIZE + (listCount % PAGE_SIZE == 0 ? 0 : 1);
-
-		int startPage = (currentPage / PAGE_GROUP) * PAGE_GROUP + 1 - (currentPage % PAGE_GROUP == 0 ? PAGE_GROUP : 0);
-		int endPage = startPage + PAGE_GROUP - 1;
-		if (endPage > pageCount) {
-			endPage = pageCount;
-		}
 
 		ArrayList<Member> memberList;
 		if (searchId == null)
-			memberList = dao.getMemberList(startRow, endRow, false);
+			memberList = dao.getMemberList(false);
 		else
-			memberList = dao.searchMemberList(searchId, startRow, endRow);
+			memberList = dao.searchMemberList(searchId);
 
 		Gson gson = new Gson();
 		String result = gson.toJson(memberList);
