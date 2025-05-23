@@ -131,7 +131,7 @@
 				<div class="col">
 					<div class="map_wrap" id="map_wrap">
 					
-						<div id="map" style="width: 100%; height: 100%; position: relative;"></div>
+						<div style="width: 100%; height: 100%; position: relative;"></div>
 						<div id="menu_border">
 							<div id="menu_wrap" class="bg_white">
 								<hr>
