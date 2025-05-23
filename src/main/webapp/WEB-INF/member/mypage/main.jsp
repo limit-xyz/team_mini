@@ -11,12 +11,6 @@
 
             <div class="row g-4"> 
                 <div class="col-md-6 col-lg-4">
-                    <a href="${pageContext.request.contextPath}/member/mypage/reservation" class="admin-dashboard-card-link">
-                        <div class="card-icon"><i class="bi bi-calendar-check-fill"></i></div>
-                        <h5 class="card-link-title">예약 내역 보기</h5>
-                    </a>
-                </div>
-                <div class="col-md-6 col-lg-4">
                     <a href="${pageContext.request.contextPath}/member/mypage/diaryList" class="admin-dashboard-card-link">
                         <div class="card-icon"><i class="bi bi-journal-richtext"></i></div>
                         <h5 class="card-link-title">다이어리 보기</h5>

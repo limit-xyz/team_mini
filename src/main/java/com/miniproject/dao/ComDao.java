@@ -156,7 +156,7 @@ public class ComDao {
 				b.setReadCount(rs.getInt("read_count"));
 				b.setPass(rs.getString("pass"));
 				b.setFile1(rs.getString("file1"));
-
+				
 				bList.add(b);
 			}
 		} catch (SQLException e) {
@@ -247,6 +247,32 @@ public class ComDao {
 		}
 
 		return b;
+	}
+	
+	public int getReplyCount(int no) {
+
+		String getReplyCountSql = "SELECT count(*) count FROM cm01_reply WHERE board_no = ?";
+		int count = 0;
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(getReplyCountSql);
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				count = rs.getInt("count");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+
+		return count;
 	}
 
 	public ArrayList<Reply> getReplyList(int bbsNo) {

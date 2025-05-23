@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <a href="inquiry" class="admin-dashboard-card-link"> 
+                    <a href="${pageContext.request.contextPath}/support/qnaList" class="admin-dashboard-card-link"> 
                         <div class="card-icon"><i class="bi bi-chat-left-text-fill"></i></div>
                         <h5 class="card-link-title">문의 관리</h5>
                     </a>

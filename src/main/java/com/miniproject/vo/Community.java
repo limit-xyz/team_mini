@@ -111,5 +111,4 @@ public class Community {
 	public void setThank(int thank) {
 		this.thank = thank;
 	};
-
 }

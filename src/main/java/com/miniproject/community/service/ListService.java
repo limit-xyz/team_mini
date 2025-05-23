@@ -65,6 +65,11 @@ public class ListService implements CommandProcess {
 			listCount = dao.getBoardCount(type, keyword);
 		}
 		
+		for (Community b : bList) {
+			String title = String.format("%s [%s]",b.getTitle() ,dao.getReplyCount(b.getNo()));
+			b.setTitle(title);
+		}
+		
 		// 전체 페이지 수
 		// 153 / 10 = 15 + 1(어느때 해야하는지)
 		int pageCount = listCount / PAGE_SIZE

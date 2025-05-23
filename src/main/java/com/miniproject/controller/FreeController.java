@@ -5,13 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 import com.miniproject.common.service.CommandProcess;
-import com.miniproject.community.service.DeleteService;
-import com.miniproject.community.service.DetailService;
-import com.miniproject.community.service.ListService;
-import com.miniproject.community.service.UpdateFormService;
-import com.miniproject.community.service.UpdateService;
-import com.miniproject.community.service.WriteFormService;
-import com.miniproject.community.service.WriteService;
+import com.miniproject.community.service.*;
 import com.miniproject.community.ajax.ComAjaxController;
 
 import jakarta.servlet.RequestDispatcher;
@@ -136,6 +130,11 @@ public class FreeController extends HttpServlet {
 		// 게시글 삭제 요청 처리하는 service 클래스 실행
 		else if (command.equals("/free/deleteProcess")) {
 			service = new DeleteService();
+			viewPage = service.requestProcess(request, response);
+		}
+		
+		else if ((command.equals("/free/fileDownload"))) {
+			service = new DownloadService();
 			viewPage = service.requestProcess(request, response);
 		}
 		
