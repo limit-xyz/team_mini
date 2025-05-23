@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpServletResponse;
 public class controller extends HttpServlet {
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    	request.setAttribute("menu", "hospital");
         
     	// 병원 정보 처리 후 포워딩
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/index.jsp?body=hospital/hospital.jsp");

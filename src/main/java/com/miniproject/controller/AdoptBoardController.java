@@ -132,6 +132,8 @@ public class AdoptBoardController extends HttpServlet {
 		RequestDispatcher rd = null;
 
 		if (viewPage != null) {
+			request.setAttribute("menu", "adopt");
+			
 			String view = viewPage.split(":")[0];
 			if (view.equals("r") || view.equals("redirect")) {
 				response.sendRedirect(viewPage.split(":")[1]);

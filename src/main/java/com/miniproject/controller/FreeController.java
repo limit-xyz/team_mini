@@ -140,6 +140,8 @@ public class FreeController extends HttpServlet {
 		}
 		
 		if (viewPage != null) {
+			request.setAttribute("menu", "free");
+			
 			String view = viewPage.split(":")[0];
 			System.out.println("view : " + view);
 

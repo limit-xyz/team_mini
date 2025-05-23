@@ -3,7 +3,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 
-    
     <div class="headerWrap bg-success p-2 text-dark bg-opacity-25">
       <div class="container ">
         <div class="row text-end">
@@ -35,16 +34,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarScroll">
               <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll fs-6" style="--bs-scroll-height: 100px;">
-                <li class="nav-item">
-                  <a class="nav-link active" href="${pageContext.request.contextPath}/hospital/hospital">병원/미용 정보</a>
+                <li class="nav-item ${menu == 'hospital' ? 'fw-bold' : ''}">
+                  <a class="nav-link" href="${pageContext.request.contextPath}/hospital/hospital">병원/미용 정보</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item ${menu == 'dict' ? 'fw-bold' : ''}">
                   <a class="nav-link" href="${pageContext.request.contextPath}/dictionary/dictionaryList">펫과사전</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item ${menu == 'free' ? 'fw-bold' : ''}">
                   <a class="nav-link" href="${pageContext.request.contextPath}/free/freeList">커뮤니티</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item ${menu == 'adopt' ? 'fw-bold' : ''}">
                   <a class="nav-link" href="${pageContext.request.contextPath}/adoption/AdoptionList">입양/분양</a>
                 </li>
               </ul>

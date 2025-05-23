@@ -131,6 +131,8 @@ public class DictionaryController extends HttpServlet {
 		}
 
 		if (viewPage != null) {
+			request.setAttribute("menu", "dict");
+			
 			String view = viewPage.split(":")[0];
 
 			if (view.equals("r") || view.equals("redirect")) {
