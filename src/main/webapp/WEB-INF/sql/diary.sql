@@ -8,7 +8,7 @@ CREATE TABLE diary (
     title       VARCHAR2(100) NOT NULL,
     content     VARCHAR2(400) NOT NULL,
     reg_date    DATE DEFAULT SYSDATE NOT NULL,
-    photo       VARCHAR2(100),
+    photo       VARCHAR2(200),
     
     CONSTRAINT fk_diary_member 
         FOREIGN KEY (member_id)

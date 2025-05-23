@@ -12,9 +12,14 @@ import com.miniproject.dao.AdoptionReplyDto;
 import com.miniproject.dao.AdoptionWriteDto;
 import com.miniproject.dao.ComDao;
 import com.miniproject.dao.DictionaryDao;
+import com.miniproject.dao.FaqDao;
+import com.miniproject.dao.QnaDao;
 import com.miniproject.vo.Cat;
 import com.miniproject.vo.Community;
 import com.miniproject.vo.Dog;
+import com.miniproject.vo.Faq;
+import com.miniproject.vo.QnaAnswer;
+import com.miniproject.vo.QnaBoard;
 import com.miniproject.vo.Reply;
 
 import jakarta.servlet.ServletException;
@@ -84,13 +89,24 @@ public class SearchDetailService implements CommandProcess {
 		}
 
 		else if (type.equals("faq")) {
-			return null;
+			FaqDao dao = new FaqDao();
+			ArrayList<Faq> faqList = new ArrayList<>();
+			faqList.add(dao.getFaq(no));
+			request.setAttribute("faqList", faqList);
+			return "support/faq";
 		}
 
 		else if (type.equals("qna")) {
-			
-			
-			return null;
+			QnaDao qnaDao = new QnaDao();
+			QnaBoard qnaBoard = qnaDao.getQnaDetail(no);
+			QnaAnswer qnaAnswer = qnaDao.getAnswerByQnaNo(no);
+
+			if (qnaAnswer != null) {
+				request.setAttribute("qnaAnswer", qnaAnswer);
+			}
+			request.setAttribute("qnaBoard", qnaBoard);
+
+			return "support/qnaDetail";
 		}
 
 		StringBuilder sb = new StringBuilder();
