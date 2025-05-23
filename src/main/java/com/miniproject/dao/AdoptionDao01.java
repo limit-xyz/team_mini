@@ -327,7 +327,7 @@ public class AdoptionDao01 {
 		
 		
 		// 게시글 상세 조회
-		public AdoptionWriteDto getAdoption(int postId, boolean state) throws SQLException{
+		public AdoptionWriteDto getAdoption(int postId, boolean state) {
 			
 			String sqlAdoptionList = "Select * From adoption_post WHERE Post_Id=?";
 			String countSql = "UPDATE adoption_post SET views_count = views_count + 1 WHERE post_id=?";

@@ -238,7 +238,7 @@ public class FaqDao {
 			
 			
 			String faqSql = "SELECT * FROM (SELECT ROWNUM num, sub.* "
-					+ "    FROM (SELECT * FROM faq WHERE faq_title LIKE ? ORDER BY faq_no DESC) sub) "
+					+ "    FROM (SELECT * FROM faq WHERE faq_title || faq_content LIKE ? ORDER BY faq_no DESC) sub) "
 					+ " WHERE num >= ? AND num <= ?";
 			
 			ArrayList<Faq> faqList = null;

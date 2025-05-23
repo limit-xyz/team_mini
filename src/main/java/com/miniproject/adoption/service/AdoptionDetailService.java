@@ -34,7 +34,7 @@ public class AdoptionDetailService implements CommandProcess {
 		String keyword = request.getParameter("keyword");
 
 
-		if (postIdParam == null || postIdParam.equals("") || pageNum == null || pageNum.equals("")) {
+		if (postIdParam == null || postIdParam.equals("")) {
 			
 			String url = request.getContextPath() + "/adoption/AdoptionList";
 			response.setContentType("text/html; charset=utf-8");
@@ -67,6 +67,7 @@ public class AdoptionDetailService implements CommandProcess {
 	        session.setAttribute("viewedPostIds", viewedPostIds);
 	    }
 	    
+
 	    
 		boolean searchOption = false;
 		
@@ -90,7 +91,7 @@ public class AdoptionDetailService implements CommandProcess {
 		try {
 			adoptionDetail = dao.getAdoption(postId, increaseViewCount);
 			 System.out.println("AdoptionDetailService - 게시글 조회 결과: " + (adoptionDetail == null ? "null" : "not null"));
-		} catch (SQLException e) {
+		} catch (Exception e) {
 
 			e.printStackTrace(); // 오류를 로그에 기록합니다.
 			response.setContentType("text/html; charset=utf-8");

@@ -1,3 +1,4 @@
+DROP TABLE FAQ;
 CREATE TABLE FAQ (
     faq_no      NUMBER          CONSTRAINT PK_FAQ_NO PRIMARY KEY, -- 번호 (프라이머리 키)
     faq_title   VARCHAR2(300)   NOT NULL,                       -- 제목
@@ -5,11 +6,8 @@ CREATE TABLE FAQ (
     faq_author  VARCHAR2(100)   NULL                            -- 작성자 (NULL 허용 가능)
 );
 
-CREATE SEQUENCE SEQ_FAQ_NO
-    START WITH 1
-    INCREMENT BY 1
-    NOMAXVALUE
-    NOCACHE;
+DROP SEQUENCE SEQ_FAQ_NO;
+CREATE SEQUENCE SEQ_FAQ_NO;
 
 -- 테이블 및 시퀀스 생성 확인을 위한 주석
 -- DESC FAQ;
@@ -17,6 +15,7 @@ CREATE SEQUENCE SEQ_FAQ_NO
 
 SELECT * FROM FAQ;
 
+SET DEFINE OFF;
 
 -- 샘플 데이터 삽입 예시
 
@@ -371,5 +370,6 @@ VALUES (SEQ_FAQ_NO.NEXTVAL, '고객센터 운영 시간은 어떻게 되나요?'
 
 COMMIT;
 
+SET DEFINE ON;
 -- 모든 FAQ 조회 (최신순 확인용)
 -- SELECT faq_no, faq_title, faq_author FROM FAQ ORDER BY faq_no DESC;

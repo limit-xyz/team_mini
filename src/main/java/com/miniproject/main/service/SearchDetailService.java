@@ -2,16 +2,24 @@ package com.miniproject.main.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.miniproject.common.service.CommandProcess;
+import com.miniproject.dao.AdoptionDao01;
+import com.miniproject.dao.AdoptionReplyDto;
+import com.miniproject.dao.AdoptionWriteDto;
 import com.miniproject.dao.ComDao;
 import com.miniproject.dao.DictionaryDao;
-import com.miniproject.dao.GlobalSearchDao;
+import com.miniproject.dao.FaqDao;
+import com.miniproject.dao.QnaDao;
 import com.miniproject.vo.Cat;
 import com.miniproject.vo.Community;
 import com.miniproject.vo.Dog;
-import com.miniproject.vo.GlobalSearch;
+import com.miniproject.vo.Faq;
+import com.miniproject.vo.QnaAnswer;
+import com.miniproject.vo.QnaBoard;
 import com.miniproject.vo.Reply;
 
 import jakarta.servlet.ServletException;
@@ -27,7 +35,7 @@ public class SearchDetailService implements CommandProcess {
 		int no = Integer.parseInt(request.getParameter("no"));
 		String type = request.getParameter("type");
 
-//		adoption, dog, cat, faq, qna
+		request.setAttribute("pageNum", 1);
 
 		if (type.equals("free")) {
 			ComDao dao = new ComDao();
@@ -42,7 +50,18 @@ public class SearchDetailService implements CommandProcess {
 
 		else if (type.equals("adoption")) {
 
-			return null;
+			AdoptionDao01 dao = new AdoptionDao01();
+			AdoptionWriteDto adoptionDetail;
+
+			adoptionDetail = dao.getAdoption(no, true);
+			List<AdoptionReplyDto> replyList = dao.getReplyList(no);
+			int replyCount = dao.getReplyCount(no);
+
+			request.setAttribute("adopboard", adoptionDetail);
+			request.setAttribute("adopreplyList", replyList);
+			request.setAttribute("replyCount", replyCount);
+
+			return "adoptionboard/adoptionDetail";
 		}
 
 		else if (type.equals("dog") || type.equals("cat")) {
@@ -70,11 +89,24 @@ public class SearchDetailService implements CommandProcess {
 		}
 
 		else if (type.equals("faq")) {
-			return null;
+			FaqDao dao = new FaqDao();
+			ArrayList<Faq> faqList = new ArrayList<>();
+			faqList.add(dao.getFaq(no));
+			request.setAttribute("faqList", faqList);
+			return "support/faq";
 		}
 
 		else if (type.equals("qna")) {
-			return null;
+			QnaDao qnaDao = new QnaDao();
+			QnaBoard qnaBoard = qnaDao.getQnaDetail(no);
+			QnaAnswer qnaAnswer = qnaDao.getAnswerByQnaNo(no);
+
+			if (qnaAnswer != null) {
+				request.setAttribute("qnaAnswer", qnaAnswer);
+			}
+			request.setAttribute("qnaBoard", qnaBoard);
+
+			return "support/qnaDetail";
 		}
 
 		StringBuilder sb = new StringBuilder();

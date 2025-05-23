@@ -65,7 +65,7 @@ public class AdoptionReplyUpdateService implements CommandProcess {
 
 		try {
 			adoptionDetail = dao.getAdoption(postId, true);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 
 			e.printStackTrace(); // 오류를 로그에 기록합니다.
 			response.setContentType("text/html; charset=utf-8");
