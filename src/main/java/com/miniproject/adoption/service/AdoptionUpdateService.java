@@ -3,7 +3,6 @@ package com.miniproject.adoption.service;
 import java.io.*;
 import java.util.*;
 import java.text.SimpleDateFormat;
-import java.sql.Timestamp;
 
 import com.miniproject.common.service.CommandProcess;
 import com.miniproject.dao.AdoptionDao01;
@@ -18,8 +17,6 @@ import jakarta.servlet.http.Part;
 public class AdoptionUpdateService implements CommandProcess{
 
 	private static final String UPLOAD_DIR_PARAM = "uploadDir";
-    private static final String ALLOWED_IMAGE_TYPES = "image/jpeg,image/png,image/gif";
-
     private String uploadDir; // 멤버 변수로 선언
 
 	
@@ -122,7 +119,6 @@ public class AdoptionUpdateService implements CommandProcess{
         }
         
         //date 관련 수정
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         int result = adoptionDao.updateAdoption(dto);
 		
         if(result > 0) {

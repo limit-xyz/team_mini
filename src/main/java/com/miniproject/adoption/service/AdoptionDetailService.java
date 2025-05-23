@@ -2,7 +2,6 @@ package com.miniproject.adoption.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.miniproject.common.service.CommandProcess;
@@ -14,7 +13,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.SQLException;
 
 public class AdoptionDetailService implements CommandProcess {
 
@@ -23,9 +21,7 @@ public class AdoptionDetailService implements CommandProcess {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		boolean isLogin = session.getAttribute("isLogin") != null && (Boolean) session.getAttribute("isLogin");
 
-		
 		String postIdParam = request.getParameter("postId");
 		String pageNum = request.getParameter("pageNum");
 		String searchColumn = request.getParameter("searchColumn");

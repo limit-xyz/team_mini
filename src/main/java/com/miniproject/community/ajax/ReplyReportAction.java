@@ -2,14 +2,11 @@ package com.miniproject.community.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import com.google.gson.Gson;
 import com.miniproject.common.service.AjaxProcess;
-import com.miniproject.dao.ComDao;
 import com.miniproject.dao.QnaDao;
 import com.miniproject.vo.QnaBoard;
-import com.miniproject.vo.Reply;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

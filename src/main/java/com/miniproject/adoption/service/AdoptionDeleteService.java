@@ -82,8 +82,8 @@ public class AdoptionDeleteService implements CommandProcess{
 		
 		String type = request.getParameter("type");
 		String keyword = request.getParameter("keyword");
-		boolean searchOption = (type != null || !type.equals("")
-				|| keyword != null || !keyword.equals("")); 
+		boolean searchOption = !(type == null || type.equals("")
+				|| keyword == null || keyword.equals("")); 
 		
 		String url = request.getContextPath() +"/adoption/AdoptionList?pageNum=" + pageNum;
 		
