@@ -12,7 +12,7 @@
 	<div style="visibility: hidden; height:0; overflow:hidden;">
 		<p id="pageNum">${pageNum}</p>
 		<p id="searchDictionaryTypePara">${searchDictionaryType}</p>
-		<p id="searchDictionaryKeyword">${searchDictionaryKeyword}</p>
+		<p id="searchDictionaryKeywordPara">${searchDictionaryKeyword}</p>
 	</div>
 
 	<div class="row text-center my-4">

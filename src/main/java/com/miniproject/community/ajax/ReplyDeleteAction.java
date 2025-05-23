@@ -19,7 +19,7 @@ public class ReplyDeleteAction implements AjaxProcess {
 	public void ajaxProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String replyNo = request.getParameter("no");
+		String replyNo = request.getParameter("replyNo");
 		String boardNo = request.getParameter("boardNo");
 
 		Reply reply = new Reply();

@@ -28,7 +28,7 @@
 					<%-- 검색 요청이면서 게시글이 있는 경우 --%>
 						<c:if test="${not empty searchList}">
 							<c:forEach var="board" items="${ searchList }">
-								<tr class="boardDetail" data-board-no="${board.no}" style="cursor: pointer;">
+								<tr class="boardDetail" data-board-no="${board.no}" data-board-type="${board.type}" style="cursor: pointer;">
 									<td>
 										<c:choose>
 										    <c:when test="${board.type == 'free'}">
@@ -37,10 +37,10 @@
 										    <c:when test="${board.type == 'adoption'}">
 										        입양/분양 게시판
 										    </c:when>
-										    <c:when test="${board.type == 'qna'}">
+										    <c:when test="${board.type == 'dog'}">
 										        펫과사전
 										    </c:when>
-										    <c:when test="${board.type == 'review'}">
+										    <c:when test="${board.type == 'cat'}">
 										        펫과사전
 										    </c:when>
 										    <c:when test="${board.type == 'faq'}">
@@ -78,4 +78,4 @@
 		</div>
 	</div>
 </div>
-
+<script src="${pageContext.request.contextPath}/js/search.js"></script>

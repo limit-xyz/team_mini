@@ -48,7 +48,7 @@
                   <a class="nav-link" href="${pageContext.request.contextPath}/adoption/AdoptionList">입양/분양</a>
                 </li>
               </ul>
-              <form class="d-flex " role="search" action="${pageContext.request.contextPath}/main/search">
+              <form class="d-flex " role="search" action="${pageContext.request.contextPath}/main/searchList">
                 <input class="form-control me-2 rounded-pill" type="search" placeholder="검색어를 입력해주세요." aria-label="Search" name="searchKeyword">
                 <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
               </form>
