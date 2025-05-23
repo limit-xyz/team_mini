@@ -55,20 +55,20 @@ public class MemberDao {
 	}
 
 	// 멤버 목록 가져오기
-	public ArrayList<Member> getMemberList(int startRow, int endRow, boolean isBanSort) {
+	public ArrayList<Member> getMemberList(boolean isBanSort) {
 
-		String memberListSql = "SELECT * FROM (SELECT ROWNUM num, sub.* FROM "
-				+ (isBanSort ? "(SELECT * FROM member ORDER BY ban_date desc, role) sub)"
-						: "(SELECT * FROM member ORDER BY role) sub)")
-				+ " WHERE num BETWEEN ? AND ?";
+		String memberListSql;
+		if (isBanSort) {
+			memberListSql = "SELECT * FROM member ORDER BY ban_date DESC";
+		} else {
+			memberListSql = "SELECT * FROM member ORDER BY role";
+		}
 
 		ArrayList<Member> memberList = null;
 
 		try {
 			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(memberListSql);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -109,10 +109,9 @@ public class MemberDao {
 	}
 
 	// 검색된 멤버 목록 가져오기
-	public ArrayList<Member> searchMemberList(String memberId, int startRow, int endRow) {
+	public ArrayList<Member> searchMemberList(String memberId) {
 
-		String searchMemberListSql = "SELECT * FROM (SELECT ROWNUM num, sub.* FROM "
-				+ "(SELECT * FROM member WHERE id LIKE ? ORDER BY role) sub) WHERE num BETWEEN ? AND ?";
+		String searchMemberListSql = "SELECT * FROM member WHERE id LIKE ? ORDER BY role";
 
 		ArrayList<Member> memberList = null;
 
@@ -120,8 +119,6 @@ public class MemberDao {
 			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(searchMemberListSql);
 			pstmt.setString(1, "%" + memberId + "%");
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -493,8 +490,7 @@ public class MemberDao {
 		}
 		return result;
 	}
-	
-	
+
 	// 차단 상태인지 확인하는 메소드
 	public String isBan(String id) {
 		String CheckBanSql = "SELECT * FROM member WHERE id=?";
@@ -508,8 +504,8 @@ public class MemberDao {
 			if (rs.next()) {
 				LocalDate banDate = rs.getDate("ban_date").toLocalDate();
 				LocalDate nowDate = LocalDate.now();
-				
-				if(nowDate.isBefore(banDate)) {
+
+				if (nowDate.isBefore(banDate)) {
 					banReason = rs.getString("ban_reason");
 				}
 			}
@@ -521,8 +517,7 @@ public class MemberDao {
 		}
 		return banReason;
 	}
-	
-	
+
 	// 차단 날짜 가져오는 메소드
 	public String getBanDate(String id) {
 		String getBanDateSql = "SELECT ban_date FROM member WHERE id=?";
@@ -534,7 +529,7 @@ public class MemberDao {
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				LocalDateTime date = rs.getTimestamp("ban_date").toLocalDateTime();		
+				LocalDateTime date = rs.getTimestamp("ban_date").toLocalDateTime();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				formatted = date.format(formatter);
 			}
@@ -546,7 +541,6 @@ public class MemberDao {
 		}
 		return formatted;
 	}
-	
 
 	// admin 인지 체크하는 메소드, 아직 틀만 잡아놓고 사용은 안하는중
 	public boolean isAdmin(String id) {
@@ -569,5 +563,5 @@ public class MemberDao {
 		}
 		return role.equals("admin");
 	}
-		
+
 }

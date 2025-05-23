@@ -23,7 +23,6 @@
 							<th>작성자</th>
 						</tr>
 					</thead>
-					
 					<tbody class="text-secondary">
 					<%-- 검색 요청이면서 게시글이 있는 경우 --%>
 						<c:if test="${not empty searchList}">

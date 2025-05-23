@@ -20,6 +20,8 @@ public class SearchDetailService implements CommandProcess {
 		int no = Integer.parseInt(request.getParameter("no"));
 		String type = request.getParameter("type");
 
+//		adoption, dog, cat, faq, qna
+		
 		if (type.equals("free")) {
 			
 		}

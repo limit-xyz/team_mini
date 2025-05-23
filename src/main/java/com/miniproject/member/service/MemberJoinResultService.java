@@ -24,9 +24,9 @@ public class MemberJoinResultService implements CommandProcess {
 
         // 요청 파라미터 받기
         String name = request.getParameter("name");
-        String id = request.getParameter("id");
+        String id = request.getParameter("userId");
         String password = request.getParameter("password");
-        String gender = request.getParameter("gender"); // gender 필드도 Member 객체에 설정 필요
+        String gender = request.getParameter("gender"); // gender 필드도 Member 객체에 설정 필요	
         String emailId = request.getParameter("emailId");
         String emailDomain = request.getParameter("emailDomain");
         String mobile1 = request.getParameter("mobile1");

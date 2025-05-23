@@ -97,7 +97,7 @@
             
             <div class="row mb-4">
                 <div class="col text-center">
-                    <a href="${pageContext.request.contextPath}/main/main" class="btn btn-outline-secondary"><i class="bi bi-arrow-left-circle"></i> 메인으로 돌아가기</a>
+                    <a href="main" class="btn btn-outline-secondary"><i class="bi bi-arrow-left-circle"></i> 메인으로 돌아가기</a>
                 </div>
             </div>
 
