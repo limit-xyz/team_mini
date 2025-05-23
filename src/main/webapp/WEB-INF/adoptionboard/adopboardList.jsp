@@ -35,13 +35,11 @@
 		</form>
 		<div class="row mb-3">
 			<div class="col text-end">
-					
-					
-					
-					<c:choose>
-						<c:when test="${sessionScope.id !=null }">
+				<c:choose>
+					<c:when test="${sessionScope.id !=null }">
 						<a href="${pageContext.request.contextPath}/adoption/AdoptionWriteForm" class="btn btn-success btn-sm">글쓰기</a>
 					</c:when>
+					
 					<c:otherwise>
 						<a href="#" class="btn btn-secondary btn-sm" onclick="alertLogin()">글쓰기</a>
 					</c:otherwise>
@@ -81,7 +79,7 @@
 									</td>
 									<td class="text-center">${adopboard.userId}</td>
 									<td class="text-center">${adopboard.adoptionType}</td>
-									<td class="text-center"><fmt:formatDate value="${adopboard.createdAt}" pattern="yyyy/MM/dd HH:mm" /></td>
+									<td class="text-center"><fmt:formatDate value="${adopboard.createdAt}" pattern="yyyy/MM/dd HH:mm:ss" /></td>
 									
 									<td class="text-center">${adopboard.viewsCount }</td>
 								</tr>

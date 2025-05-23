@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!-- content -->			
 <div class="row my-5" id="global-content">
@@ -82,7 +83,9 @@
 									<td>${board.no}</td> 
 									<td>${board.title}</td>
 									<td>${board.writer}</td>
-									<td>${board.regDate}</td>
+									<td>
+										<fmt:formatDate value="${board.regDate}" pattern="yyyy/MM/dd HH:mm:ss" />
+									</td>
 									<td>${board.readCount}</td>
 								</tr>
 							</c:forEach>
@@ -95,7 +98,9 @@
 									<td>${board.no}</td> 
 									<td>${board.title}</td>
 									<td>${board.writer}</td>
-									<td>${board.regDate}</td>
+									<td>
+										<fmt:formatDate value="${board.regDate}" pattern="yyyy/MM/dd HH:mm:ss" />
+									</td>
 									<td>${board.readCount}</td>
 								</tr>
 							</c:forEach>
