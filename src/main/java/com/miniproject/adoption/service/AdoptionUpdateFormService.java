@@ -47,7 +47,7 @@ public class AdoptionUpdateFormService implements CommandProcess {
 		
 		return "adoptionboard/adoptionUpdateForm";
 		
-	} catch(SQLException e){
+	} catch(Exception e){
 		e.printStackTrace();
 		request.setAttribute("errorMessage", "데이터베이스 오류가 발생했습니다.");
 		return "error/errorPage"; // 오류 페이지로 이동

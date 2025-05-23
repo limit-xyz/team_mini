@@ -27,7 +27,7 @@
 						<tr>
 							<td colspan="12">
 							  <div style="width: 100%; max-width: 500px; aspect-ratio: 1 / 1;" class="mx-auto">
-								<img src="filePath.ajax?fileName=${dog.image}" 
+								<img src="${pageContext.request.contextPath}/dictionary/filePath.ajax?fileName=${dog.image}" 
 							       class="img-fluid rounded d-block mx-auto"
 							       style="width: 100%; height: 100%; object-fit: cover;">
 							  </div>
@@ -132,7 +132,7 @@
 				</c:if>
 				
 				<input class="btn btn-primary" type="button" value="목록보기" 
-				onclick="location.href='dictionaryList?pageNum=${pageNum}&searchDictionaryType=${searchDictionaryType}&searchDictionaryKeyword=${searchDictionaryKeyword}'"/>
+				onclick="location.href='${pageContext.request.contextPath}/dictionary/dictionaryList?pageNum=${pageNum}&searchDictionaryType=${searchDictionaryType}&searchDictionaryKeyword=${searchDictionaryKeyword}'"/>
 			</div>		
 		</div>
 	</div>	

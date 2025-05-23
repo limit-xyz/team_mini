@@ -95,21 +95,8 @@ public class MyBoardDetailService implements CommandProcess {
 			AdoptionDao01 dao = new AdoptionDao01();
 
 			AdoptionWriteDto adoptionDetail;
-
-			try {
-				adoptionDetail = dao.getAdoption(postId, true);
-			} catch (SQLException e) {
-
-				e.printStackTrace(); // 오류를 로그에 기록합니다.
-				response.setContentType("text/html; charset=utf-8");
-				PrintWriter out = response.getWriter();
-				out.println("<script>");
-				out.println("	alert('데이터베이스 오류가 발생했습니다. 잠시 후 다시 시도해주세요.')");
-				out.println("	history.back();"); // 또는 오류 페이지로 리디렉션합니다.
-				out.println("</script>");
-				out.close();
-				return null;
-			}
+			adoptionDetail = dao.getAdoption(postId, true);
+		
 
 			List<AdoptionReplyDto> replyList = dao.getReplyList(postId);
 			int replyCount = dao.getReplyCount(postId); // 댓글수 조회
