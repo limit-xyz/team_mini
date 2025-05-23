@@ -389,8 +389,10 @@ public class AdoptionDao01 {
 			// 게시글 작성
 		public int insertAdoptionPost(AdoptionWriteDto dto){
 			int postId = 0;
+			
 			String sql = "INSERT INTO adoption_post (post_id, user_id, title, content, adoption_type, region, animal_type_main, animal_type_detail, image_path, created_at, views_count, approval_status) "
 					   + "VALUES (adoption_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSTIMESTAMP, 0, ?) ";
+			
 			String selectSql = "SELECT MAX(post_id) FROM adoption_post WHERE user_id = ?";		
 			try{
 			 conn = DBManager.getConnection();

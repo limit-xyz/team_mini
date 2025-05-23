@@ -33,10 +33,10 @@ public class AdoptionDetailService implements CommandProcess {
 		String animalTypeMain = request.getParameter("animalTypeMain");
 		String keyword = request.getParameter("keyword");
 
+
 		if (postIdParam == null || postIdParam.equals("") || pageNum == null || pageNum.equals("")) {
 			
 			String url = request.getContextPath() + "/adoption/AdoptionList";
-			
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
@@ -44,11 +44,32 @@ public class AdoptionDetailService implements CommandProcess {
 			out.println("	location.href='" + url + "';");
 			out.println("</script>");
 			out.close();
+		
 			return null;
 		}
+		if(pageNum == null || pageNum.equals("")) {
+			pageNum ="1";
+		}
 		int postId = Integer.parseInt(postIdParam);
+		System.out.println("AdoptionDetailService - postIdParam: " + postIdParam);
+		System.out.println("AdoptionDetailService - postId: " + postId);
 
+			@SuppressWarnings("unchecked")
+	    java.util.Set<Integer> viewedPostIds = (java.util.Set<Integer>) session.getAttribute("viewedPostIds");
+	    if (viewedPostIds == null) {
+	        viewedPostIds = new java.util.HashSet<>();
+	    }
+	    boolean increaseViewCount = false;
+		
+	    if(!viewedPostIds.contains(postId)) {
+	    	increaseViewCount = true;
+	    	viewedPostIds.add(postId);
+	        session.setAttribute("viewedPostIds", viewedPostIds);
+	    }
+	    
+	    
 		boolean searchOption = false;
+		
 		if (searchColumn != null && !searchColumn.isEmpty()) {
 			searchOption = true;
 		}
@@ -67,7 +88,8 @@ public class AdoptionDetailService implements CommandProcess {
 		AdoptionWriteDto adoptionDetail;
 
 		try {
-			adoptionDetail = dao.getAdoption(postId, true);
+			adoptionDetail = dao.getAdoption(postId, increaseViewCount);
+			 System.out.println("AdoptionDetailService - 게시글 조회 결과: " + (adoptionDetail == null ? "null" : "not null"));
 		} catch (SQLException e) {
 
 			e.printStackTrace(); // 오류를 로그에 기록합니다.

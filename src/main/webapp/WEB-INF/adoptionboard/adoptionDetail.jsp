@@ -9,7 +9,6 @@
 	 String loginRole = (String) session.getAttribute("role");
 	 //String contextPath = request.getContextPath();
 %>
-
 <%-- content --%>
 <div class="row my-5" id="global-content">
 	<div class="col">
@@ -80,7 +79,7 @@
 			</div>
 		<div class="row my-3"> 
 			<div class="col text-center">			
-			<c:if test="${sessionScope.id == adopboard.userId || sessionScope.user_role == 'admin' }">
+			<c:if test="${sessionScope.id == adopboard.userId || sessionScope.isAdmin}">
 				<input type="button" class="btn btn-primary" id="detailUpdate" value="수정하기">
 				<input type="button" class="btn btn-danger ms-2 me-2" id="detailDelete" value="삭제하기">
 				</c:if>
@@ -128,7 +127,7 @@
 										<fmt:formatDate value="${reply.createdAt}" pattern="yyyy-MM-dd : HH:mm:ss" />
 										</span>
 										<%-- 댓글 작성자 또는 관리자에게만 보일 버튼 --%>
-										<c:if test="${sessionScope.id == reply.userId || sessionScope.user_role == 'admin' }">
+										<c:if test="${sessionScope.id == reply.userId || sessionScope.isAdmin }">
 										
 										<button class="modifyReply btn btn-outline-success btn-sm" data-no='${reply.replyId}'>
 										<i class="bi bi-file-text"> 수정</i></button>
@@ -146,7 +145,7 @@
 											<c:choose>
 												<c:when test="${sessionScope.id == reply.replyWriter 
 																		|| sessionScope.id == adopboard.userId
-																		|| sessionScope.id == 'admin'}">
+																		|| sessionScope.id == 'isAdmin'}">
 																	
 																	<div>[🔒 비밀 댓글 입니다.]<br>	${reply.content} </div>
 											</c:when>
@@ -232,60 +231,59 @@
 </div>
 
 <script>
-	const updateBtn = document.getElementById("detailUpdate");
-	if (updateBtn) {
-	    updateBtn.addEventListener("click", function(){
-	        const postId = document.getElementById("postId").value;
-	        location.href = "${pageContext.request.contextPath}/adoption/AdoptionUpdateForm?postId=" + postId;
-	    });
-	}
-
-	const deleteBtn = document.getElementById("detailDelete");
-	if (deleteBtn) {
-	    deleteBtn.addEventListener("click", function(){
-	        const postId = document.getElementById("postId").value;
-	        if(confirm("정말 게시글을 삭제하시겠습니까?")){
-	            location.href = "${pageContext.request.contextPath}/adoption/AdoptionDelete?postId=" + postId;
-	        }
-	    });
-	}
-
-	
-	document.addEventListener("DOMContentLoaded", function () {
-		const guestReply = document.getElementById("guestReply");
-		if (guestReply) {
-			guestReply.addEventListener("click", function () {
-				alert("댓글을 작성하려면 로그인해주세요.");
-				window.location.href = "${pageContext.request.contextPath}/member/loginForm";
-			});
+		const updateBtn = document.getElementById("detailUpdate");
+		if (updateBtn) {
+		    updateBtn.addEventListener("click", function(){
+		        const postId = document.getElementById("postId").value;
+		        location.href = "${pageContext.request.contextPath}/adoption/AdoptionUpdateForm?postId=" + postId;
+		    });
 		}
-	});
-	document.addEventListener("DOMContentLoaded",function(){
-		document.querySelectorAll(".modifyReply").forEach(function(button){
-			button.addEventListener("click", function(){
-				const replyId = this.getAttribute("data-no")
-				const postId = document.getElementById("postId").value;
-				location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyUpdateForm?replyId=' + replyId + '&postId=' + postId;
-			});
-	});
-
-	document.querySelectorAll(".deleteReply").forEach(function(button){
-		button.addEventListener("click", function(){
-			const replyId = this.getAttribute("data-no");
-			const postId = document.getElementById("postId").value;
-			console.log(replyId)
-			console.log(postId)
-			if(confirm("해당 댓글을 삭제 하시겠습니까?")){
-				location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyDelete?replyId=' + replyId + '&postId=' + postId + "&pageNum=" + ${param.pageNum};
+		
+		const deleteBtn = document.getElementById("detailDelete");
+		if (deleteBtn) {
+		    deleteBtn.addEventListener("click", function(){
+		        const postId = document.getElementById("postId").value;
+		        if(confirm("정말 게시글을 삭제하시겠습니까?")){
+		            location.href = "${pageContext.request.contextPath}/adoption/AdoptionDelete?postId=" + postId;
+		        }
+		    });
+		}
+		
+		
+		document.addEventListener("DOMContentLoaded", function () {
+			const guestReply = document.getElementById("guestReply");
+			if (guestReply) {
+				guestReply.addEventListener("click", function () {
+					alert("댓글을 작성하려면 로그인해주세요.");
+					window.location.href = "${pageContext.request.contextPath}/member/loginForm";
+				});
 			}
-		})
 		});
-	});
-	function reportReply(replyId){
-		if(confirm("댓글을 신고하시겠습니까?")){
-			location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyReport?replyId=' + replyId;
+		document.addEventListener("DOMContentLoaded",function(){
+			document.querySelectorAll(".modifyReply").forEach(function(button){
+				button.addEventListener("click", function(){
+					const replyId = this.getAttribute("data-no")
+					const postId = document.getElementById("postId").value;
+					location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyUpdateForm?replyId=' + replyId + '&postId=' + postId;
+				});
+		});
+		
+		document.querySelectorAll(".deleteReply").forEach(function(button){
+			button.addEventListener("click", function(){
+				const replyId = this.getAttribute("data-no");
+				const postId = document.getElementById("postId").value;
+				console.log(replyId)
+				console.log(postId)
+				if(confirm("해당 댓글을 삭제 하시겠습니까?")){
+					location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyDelete?replyId=' + replyId + '&postId=' + postId + "&pageNum=" + ${param.pageNum};
+				}
+			})
+			});
+		});
+		function reportReply(replyId){
+			if(confirm("댓글을 신고하시겠습니까?")){
+				location.href='${pageContext.request.contextPath}/adoption/AdoptionReplyReport?replyId=' + replyId;
+			}
 		}
-	}
-
 </script>
 

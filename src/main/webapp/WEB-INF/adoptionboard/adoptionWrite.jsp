@@ -96,7 +96,7 @@
         
 </style>
 
-<div class="lightform">
+<div class="lightform py-5">
     <!-- content -->
     <div>
     <h2> 입양/분양 게시글 작성</h2>
@@ -157,7 +157,7 @@
    </div>
    
    <div>
-   		<label for="content">내용 : <textarea name="content" rews="6" cols="50" placeholder="내용을 입력하세요" required></textarea>
+   		<label for="content">내용 : <textarea name="content" rows="6" cols="50" placeholder="내용을 입력하세요" required></textarea>
    </div>
     
     <div>

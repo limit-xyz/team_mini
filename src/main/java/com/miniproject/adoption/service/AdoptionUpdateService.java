@@ -66,7 +66,7 @@ public class AdoptionUpdateService implements CommandProcess{
 				String partHeader = part.getHeader("Content-Disposition");
 				String paramName = part.getName();
 				
-				if (partHeader.contains("image_path=")) {
+				if (partHeader.contains("name=\"image_path\"")) {
 					if(part.getSize() > 0) {
 						UUID uid = UUID.randomUUID();
 						String saveName = uid.toString() + "_" + part.getSubmittedFileName();
@@ -126,7 +126,8 @@ public class AdoptionUpdateService implements CommandProcess{
         int result = adoptionDao.updateAdoption(dto);
 		
         if(result > 0) {
-        	return "r:team_mini/adoption/AdoptionDetailpostId=" + postId + "&increaseViewCount=false";
+        	
+        	return "r:" + request.getContextPath() + "/adoption/AdoptionDetail?postId=" + postId + "&increaseViewCount=false";
         	//수정된 게시글 상세 페이지로 리다이렉트
         } else {
         	response.setContentType("text/html; charset=utf-8");
