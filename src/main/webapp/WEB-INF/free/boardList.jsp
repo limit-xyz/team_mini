@@ -5,7 +5,7 @@
 <!-- content -->			
 <div class="row my-5" id="global-content">
 
-	<div style="visibility: hidden;">
+	<div style="visibility: hidden;height: 0;">
 		<p id="pageNum">${currentPage}</p>
 		<p id="searchTypePara">${type}</p>
 		<p id="searchKeywordPara">${keyword}</p>
