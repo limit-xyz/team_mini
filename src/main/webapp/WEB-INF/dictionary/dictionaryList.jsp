@@ -94,7 +94,7 @@
     <div class="row mt-4">
         <div class="col">
             <nav aria-label="Page navigation">
-              <ul class="pagination justify-content-center">
+              <ul class="pagination justify-content-center" >
                 <c:if test="${ startPage > PAGE_GROUP }">
                     <li class="page-item">
                       <a class="page-link"
